@@ -1,0 +1,62 @@
+{% comment %}
+  SECTION: Motion Hero (TRUST.NO.OUTPUT)
+  Reine Struktur (CSS in assets/custom.css)
+{% endcomment %}
+
+<section class="tno-hero tno-hero--center reveal" data-parallax>
+  <div class="tno-hero-media">
+    {%- if section.settings.hero_image != blank -%}
+      {{ section.settings.hero_image
+        | image_url: width: 2200
+        | image_tag: loading: 'lazy', alt: section.settings.headline, class: 'tno-hero-img' }}
+    {%- else -%}
+      <img
+        src="{{ 'glitch-bg.jpg' | asset_url }}"
+        alt="Hero Fallback"
+        width="1600"
+        height="900"
+        loading="lazy"
+        class="tno-hero-img">
+    {%- endif -%}
+  </div>
+
+  <div class="tno-hero-overlay" aria-hidden="true"></div>
+
+  <div class="tno-hero-caption">
+    <h1 class="tno-title tno-glitch-strong"
+        data-text="{{ section.settings.headline | default: 'REALITY IS UNDER CONSTRUCTION.' }}">
+      {{ section.settings.headline | default: 'REALITY IS UNDER CONSTRUCTION.' }}
+    </h1>
+
+    {%- if section.settings.subtext != blank -%}
+      <p class="tno-subtext tno-glitch-soft"
+         data-text="{{ section.settings.subtext }}">
+        {{ section.settings.subtext }}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank -%}
+      <a href="{{ section.settings.button_link | default: '/collections/all' }}"
+         class="tno-btn tno-btn-glitch tno-glitch-outline"
+         data-text="{{ section.settings.button_label }}">
+        {{ section.settings.button_label }}
+      </a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Motion Hero (TNO)",
+  "settings": [
+    { "type": "text", "id": "headline", "label": "Überschrift", "default": "TRUST.NO.OUTPUT" },
+    { "type": "textarea", "id": "subtext", "label": "Untertitel / Text", "default": "DESIGNS FOR SIMULATED MIND" },
+    { "type": "image_picker", "id": "hero_image", "label": "Hero-Bild" },
+    { "type": "url", "id": "button_link", "label": "Button-Link", "default": "/collections/all" },
+    { "type": "text", "id": "button_label", "label": "Button-Text", "default": "Explore" }
+  ],
+  "presets": [
+    { "name": "Motion Hero (TNO)" }
+  ]
+}
+{% endschema %}
