@@ -10,7 +10,7 @@
 {
   "sections": {
     "section_test_motion_wc3hka": {
-      "type": "section-test-motion",
+      "type": "motion-hero-tno.liquid",
       "name": "Test Motion Section",
       "settings": {
         "headline": "REALITY IS UNDER CONSTRUCTION.",
@@ -49,8 +49,5 @@
       }
     }
   },
-  "order": [
-    "section_test_motion_wc3hka",
-    "featured_collection"
-  ]
+  "order": ["section_test_motion_wc3hka", "featured_collection"]
 }
