@@ -1,0 +1,56 @@
+node_modules
+.git
+.github
+.vscode
+.idea
+dist
+build
+# ======================================
+# TRUST.NO.OUTPUT Shopify Theme Ignore
+# ======================================
+
+# Node & dependencies
+node_modules/
+package-lock.json
+package.json
+
+# Build tools & configs
+postcss.config.js
+bs-config.js
+*.log
+*.map
+
+# VS Code & editor files
+.vscode/
+*.code-workspace
+
+# Git
+.git/
+.gitignore
+.github/
+
+# Environment files
+.env
+.env.*
+
+# Local Shopify CLI metadata
+.shopify/
+shopifyignore
+
+# Local test files & backups
+*.zip
+*.bak
+*.tmp
+*.DS_Store
+
+# Custom build outputs
+assets/custom.min.css
+assets/*.min.js
+assets/*.tmp.js
+
+# BrowserSync cache
+.browsersync-cache/
+
+# OS-specific
+Thumbs.db
+Desktop.ini
