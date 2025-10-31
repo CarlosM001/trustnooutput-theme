@@ -1,61 +1,62 @@
 /**
- * BrowserSync Configuration - FIXED
- * For TRUST.NO.OUTPUT Shopify Theme
+ * BrowserSync Configuration – Optimized for TRUST.NO.OUTPUT Theme
+ * ---------------------------------------------------------------
+ * Syncs local CSS/JS/Liquid changes with Shopify CLI Dev Server.
+ * Works seamlessly with: `npm run dev`
  */
 
 module.exports = {
-  // Proxy the Shopify CLI dev server (CORRECTED PORT)
+  // ✅ Proxy Shopify CLI dev server (port shown in your CLI output)
   proxy: "http://127.0.0.1:9292",
 
-  // Use a fixed port for BrowserSync
+  // ✅ Local BrowserSync port (frontend preview)
   port: 3000,
 
-  // Watch these files for changes
+  // 🔍 Watch these files for live reloads
   files: [
     "assets/**/*.css",
     "assets/**/*.js",
+    "layout/**/*.liquid",
     "sections/**/*.liquid",
     "snippets/**/*.liquid",
     "templates/**/*.liquid",
-    "layout/**/*.liquid",
     "config/*.json",
-    // Exclude node_modules to prevent watch loops
-    "!node_modules/**"
+    "!node_modules/**" // prevent watch loops
   ],
 
-  // Don't open browser automatically
+  // 🚫 Don’t open browser automatically
   open: false,
 
-  // Show notifications
+  // 💬 Show visual reload notifications in browser (good for debugging)
   notify: true,
 
-  // Reload delay to ensure Shopify processes changes
+  // 🕓 Delay reload slightly so Shopify has time to process changes
   reloadDelay: 1000,
 
-  // Don't inject CSS changes, reload instead (more reliable with Shopify)
+  // ⚙️ Don’t inject CSS (Shopify caches asset URLs) → reload fully
   injectChanges: false,
 
-  // UI options
+  // 🎛️ Optional BrowserSync UI (accessible at localhost:3001)
   ui: {
     port: 3001
   },
 
-  // Ghost mode (syncs scrolls, clicks, forms)
+  // 👻 Disable Ghost Mode (prevents weird scroll/input syncing)
   ghostMode: {
     clicks: false,
     forms: false,
     scroll: false
   },
 
-  // Ignore node_modules
+  // 🧠 Watch settings
   watchOptions: {
     ignoreInitial: true,
     ignored: /node_modules/
   },
 
-  // Logging
-  logLevel: "info",
-  logPrefix: "TNO-Sync",
+  // 🧾 Logging settings
+  logLevel: "info",        // "silent", "info", or "debug"
+  logPrefix: "TNO-SYNC",   // shows prefix in console logs
   logConnections: false,
   logFileChanges: true
 };

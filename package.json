@@ -4,12 +4,16 @@
   "description": "TRUST.NO.OUTPUT Shopify Theme Development",
   "scripts": {
     "dev": "npm-run-all --parallel dev:theme dev:sync",
-    "dev:theme": "shopify theme dev --store=9csvgi-16.myshopify.com",
+    "dev:theme": "shopify theme dev --store=9csvgi-16.myshopify.com --theme=186444382583",
     "dev:sync": "browser-sync start --config bs-config.js",
+
     "dev:windows": "concurrently \"npm:dev:theme\" \"npm:dev:sync\"",
-    "theme:push": "shopify theme push",
-    "theme:pull": "shopify theme pull",
+
+    "theme:push:dev": "shopify theme push --store=9csvgi-16.myshopify.com --theme=186444382583",
+    "theme:push:live": "shopify theme push --store=9csvgi-16.myshopify.com --theme=186572767607 --live",
+    "theme:pull": "shopify theme pcustom.min.cssull --store=9csvgi-16.myshopify.com --theme=186444382583",
     "theme:check": "shopify theme check",
+
     "build:css": "postcss assets/custom.css -o assets/custom.min.css",
     "watch:css": "postcss assets/custom.css -o assets/custom.min.css --watch"
   },

@@ -5,40 +5,57 @@
 
 <section class="tno-hero tno-hero--center reveal" data-parallax>
   <div class="tno-hero-media">
+    {%- liquid
+      if section.index == 0
+        assign loading_strategy = 'eager'
+      else
+        assign loading_strategy = 'lazy'
+      endif
+    -%}
+
     {%- if section.settings.hero_image != blank -%}
-      {{ section.settings.hero_image
+      {{
+        section.settings.hero_image
         | image_url: width: 2200
-        | image_tag: loading: 'lazy', alt: section.settings.headline, class: 'tno-hero-img' }}
+        | image_tag: loading: loading_strategy, alt: section.settings.headline, class: 'tno-hero-img'
+      }}
     {%- else -%}
       <img
         src="{{ 'glitch-bg.jpg' | asset_url }}"
         alt="Hero Fallback"
         width="1600"
         height="900"
-        loading="lazy"
-        class="tno-hero-img">
+        loading="{{ loading_strategy }}"
+        class="tno-hero-img"
+      >
     {%- endif -%}
   </div>
 
   <div class="tno-hero-overlay" aria-hidden="true"></div>
 
   <div class="tno-hero-caption">
-    <h1 class="tno-title tno-glitch-strong"
-        data-text="{{ section.settings.headline | default: 'REALITY IS UNDER CONSTRUCTION.' }}">
+    <h1
+      class="tno-title tno-glitch-strong"
+      data-text="{{ section.settings.headline | default: 'REALITY IS UNDER CONSTRUCTION.' }}"
+    >
       {{ section.settings.headline | default: 'REALITY IS UNDER CONSTRUCTION.' }}
     </h1>
 
     {%- if section.settings.subtext != blank -%}
-      <p class="tno-subtext tno-glitch-soft"
-         data-text="{{ section.settings.subtext }}">
+      <p
+        class="tno-subtext tno-glitch-soft"
+        data-text="{{ section.settings.subtext }}"
+      >
         {{ section.settings.subtext }}
       </p>
     {%- endif -%}
 
     {%- if section.settings.button_label != blank -%}
-      <a href="{{ section.settings.button_link | default: '/collections/all' }}"
-         class="tno-btn tno-btn-glitch tno-glitch-outline"
-         data-text="{{ section.settings.button_label }}">
+      <a
+        href="{{ section.settings.button_link | default: '/collections/all' }}"
+        class="tno-btn tno-btn-glitch tno-glitch-outline"
+        data-text="{{ section.settings.button_label }}"
+      >
         {{ section.settings.button_label }}
       </a>
     {%- endif -%}
@@ -55,8 +72,6 @@
     { "type": "url", "id": "button_link", "label": "Button-Link", "default": "/collections/all" },
     { "type": "text", "id": "button_label", "label": "Button-Text", "default": "Explore" }
   ],
-  "presets": [
-    { "name": "Motion Hero (TNO)" }
-  ]
+  "presets": [{ "name": "Motion Hero (TNO)" }]
 }
 {% endschema %}
