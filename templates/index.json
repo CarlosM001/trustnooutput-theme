@@ -1,23 +1,13 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "section_test_motion_wc3hka": {
-      "type": "motion-hero-tno.liquid",
-      "name": "Test Motion Section",
+      "type": "motion-hero-tno",
       "settings": {
         "headline": "REALITY IS UNDER CONSTRUCTION.",
         "subtext": "DESIGNED FOR SIMULATED MIND",
         "hero_image": "shopify://shop_images/unisex-classic-tee-white-front-2-68fd8e6f55fae.png",
-        "button_link": "shopify://collections/all",
-        "button_label": "ENTER SIMULATION"
+        "button1_link": "shopify://collections/all",
+        "button1_label": "ENTER SIMULATION"
       }
     },
     "featured_collection": {

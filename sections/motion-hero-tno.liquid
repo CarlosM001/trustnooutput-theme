@@ -34,32 +34,59 @@
   <div class="tno-hero-overlay" aria-hidden="true"></div>
 
   <div class="tno-hero-caption">
-    <h1
-      class="tno-title tno-glitch-strong"
-      data-text="{{ section.settings.headline | default: 'REALITY IS UNDER CONSTRUCTION.' }}"
-    >
-      {{ section.settings.headline | default: 'REALITY IS UNDER CONSTRUCTION.' }}
-    </h1>
-
-    {%- if section.settings.subtext != blank -%}
-      <p
-        class="tno-subtext tno-glitch-soft"
-        data-text="{{ section.settings.subtext }}"
+    <div class="tno-hero-caption__content">
+      <h1
+        class="tno-title tno-glitch-strong"
+        data-text="{{ section.settings.headline | default: 'REALITY IS UNDER CONSTRUCTION.' }}"
       >
-        {{ section.settings.subtext }}
-      </p>
-    {%- endif -%}
+        {{ section.settings.headline | default: 'REALITY IS UNDER CONSTRUCTION.' }}
+      </h1>
 
-    {%- if section.settings.button_label != blank -%}
-      <a
-        href="{{ section.settings.button_link | default: '/collections/all' }}"
-        class="tno-btn tno-btn-glitch tno-glitch-outline"
-        data-text="{{ section.settings.button_label }}"
-      >
-        {{ section.settings.button_label }}
-      </a>
-    {%- endif -%}
+      {%- if section.settings.subtext != blank -%}
+        <p
+          class="tno-subtext tno-glitch-soft"
+          data-text="{{ section.settings.subtext }}"
+        >
+          {{ section.settings.subtext }}
+        </p>
+      {%- endif -%}
+
+      <div class="tno-hero-ctas" role="group" aria-label="Primary actions">
+        {%- if section.settings.button1_label != blank -%}
+          <a
+            href="{{ section.settings.button1_link }}"
+            class="tno-btn tno-btn--primary tno-btn-glitch"
+            data-cta="enter"
+            data-delay="600"
+          >
+            {{ section.settings.button1_label | default: 'ENTER SIMULATION' }}
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.button2_label != blank -%}
+          <a
+            href="{{ section.settings.button2_link }}"
+            class="tno-btn tno-btn--secondary tno-btn-glitch"
+            data-cta="manifesto"
+          >
+            {{ section.settings.button2_label | default: 'READ MANIFESTO' }}
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.button3_label != blank -%}
+          <a
+            href="{{ section.settings.button3_link | default: '#' }}"
+            class="tno-btn tno-btn--ghost"
+            data-cta="refuse"
+          >
+            {{ section.settings.button3_label | default: 'REFUSE' }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
   </div>
+
+  <div class="tno-scroll-indicator" aria-hidden="true"></div>
 </section>
 
 {% schema %}
@@ -69,8 +96,13 @@
     { "type": "text", "id": "headline", "label": "Überschrift", "default": "TRUST.NO.OUTPUT" },
     { "type": "textarea", "id": "subtext", "label": "Untertitel / Text", "default": "DESIGNS FOR SIMULATED MIND" },
     { "type": "image_picker", "id": "hero_image", "label": "Hero-Bild" },
-    { "type": "url", "id": "button_link", "label": "Button-Link", "default": "/collections/all" },
-    { "type": "text", "id": "button_label", "label": "Button-Text", "default": "Explore" }
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "button1_label", "label": "Button 1 – Label", "default": "ENTER SIMULATION" },
+    { "type": "url", "id": "button1_link", "label": "Button 1 – Link" },
+    { "type": "text", "id": "button2_label", "label": "Button 2 – Label", "default": "READ MANIFESTO" },
+    { "type": "url", "id": "button2_link", "label": "Button 2 – Link" },
+    { "type": "text", "id": "button3_label", "label": "Button 3 – Label", "default": "REFUSE" },
+    { "type": "url", "id": "button3_link", "label": "Button 3 – Link" }
   ],
   "presets": [{ "name": "Motion Hero (TNO)" }]
 }

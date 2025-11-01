@@ -1,0 +1,596 @@
+{% comment %}
+  TRUST.NO.OUTPUT — Footer Section
+
+  A minimalist cyberpunk-inspired footer featuring:
+  - System status display ("System online | 2025")
+  - Terminal-style navigation columns
+  - Social media as terminal commands
+  - Optional inline newsletter signup
+  - Copyright output message
+  - Subtle glitch accents on hover
+  - Mobile-responsive stacked layout
+
+  Philosophy: The footer is the system's output—
+  a final transmission before disconnection.
+{% endcomment %}
+
+<style>
+  /* ========================================
+     Footer Base Styles
+     ======================================== */
+
+  .site-footer {
+    position: relative;
+    background: var(--color-void-black, #000000);
+    border-top: 1px solid rgba(0, 255, 255, 0.2);
+    padding: var(--space-xl, 6rem) var(--space-md, 2rem) var(--space-md, 2rem);
+    overflow: hidden;
+  }
+
+  .site-footer__container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* Subtle grid background pattern */
+  .site-footer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(0, 255, 255, 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 255, 0.015) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  /* ========================================
+     System Status Display (Top)
+     ======================================== */
+
+  .footer-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: var(--space-lg, 4rem);
+    margin-bottom: var(--space-lg, 4rem);
+    border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+  }
+
+  .footer-status__text {
+    font-family: var(--font-mono, 'Space Mono', monospace);
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    color: var(--color-terminal-green, #00ff41);
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .footer-status__text::before {
+    content: '>';
+    opacity: 0.5;
+  }
+
+  /* Blinking cursor */
+  .footer-status__cursor {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background: var(--color-terminal-green, #00ff41);
+    animation: cursor-blink 1s step-end infinite;
+    margin-left: 0.25em;
+  }
+
+  @keyframes cursor-blink {
+    0%,
+    50% {
+      opacity: 1;
+    }
+    51%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  .footer-status__year {
+    font-family: var(--font-mono, monospace);
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    color: var(--color-gray-ghost, #6a6a7a);
+    letter-spacing: 0.1em;
+  }
+
+  /* ========================================
+     Footer Content Grid
+     ======================================== */
+
+  .footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-lg, 4rem);
+    margin-bottom: var(--space-xl, 6rem);
+  }
+
+  /* ========================================
+     Footer Column
+     ======================================== */
+
+  .footer-column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .footer-column__title {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-cyan, #00fff0);
+    margin: 0 0 var(--space-sm, 1rem);
+  }
+
+  .footer-column__title::before {
+    content: '//';
+    margin-right: 0.5em;
+    opacity: 0.5;
+  }
+
+  .footer-column__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .footer-column__link {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.875rem;
+    color: var(--color-gray-ghost, #6a6a7a);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+  }
+
+  .footer-column__link::before {
+    content: '>';
+    margin-right: 0.5em;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .footer-column__link:hover {
+    color: var(--color-cyan, #00fff0);
+    transform: translateX(4px);
+  }
+
+  .footer-column__link:hover::before {
+    opacity: 1;
+  }
+
+  /* ========================================
+     Social Links (Terminal Commands)
+     ======================================== */
+
+  .footer-social {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .footer-social__link {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.875rem;
+    color: var(--color-gray-ghost, #6a6a7a);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .footer-social__link::before {
+    content: '>';
+    color: var(--color-terminal-green, #00ff41);
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+  }
+
+  .footer-social__link:hover {
+    color: var(--color-cyan, #00fff0);
+  }
+
+  .footer-social__link:hover::before {
+    opacity: 1;
+    animation: terminal-flicker 0.3s ease-in-out;
+  }
+
+  @keyframes terminal-flicker {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  /* ========================================
+     Inline Newsletter (Optional)
+     ======================================== */
+
+  .footer-newsletter {
+    background: var(--color-deep-black, #0a0a0f);
+    border: 1px solid var(--color-gray-dim, #3a3a4a);
+    padding: var(--space-md, 2rem);
+    margin-bottom: var(--space-xl, 6rem);
+  }
+
+  .footer-newsletter__title {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-cyan, #00fff0);
+    margin: 0 0 var(--space-sm, 1rem);
+  }
+
+  .footer-newsletter__form {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .footer-newsletter__input {
+    flex: 1;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.875rem;
+    padding: 0.75rem 1rem;
+    background: var(--color-void-black, #000000);
+    border: 1px solid var(--color-gray-dim, #3a3a4a);
+    color: var(--color-terminal-green, #00ff41);
+    transition: border-color 0.3s ease;
+  }
+
+  .footer-newsletter__input::placeholder {
+    color: var(--color-gray-dim, #3a3a4a);
+    font-style: italic;
+  }
+
+  .footer-newsletter__input:focus {
+    outline: none;
+    border-color: var(--color-cyan, #00fff0);
+  }
+
+  .footer-newsletter__submit {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    border: 1px solid var(--color-terminal-green, #00ff41);
+    color: var(--color-terminal-green, #00ff41);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .footer-newsletter__submit:hover {
+    background: rgba(0, 255, 65, 0.1);
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+  }
+
+  /* ========================================
+     Footer Bottom (Copyright)
+     ======================================== */
+
+  .footer-bottom {
+    padding-top: var(--space-lg, 4rem);
+    border-top: 1px solid rgba(0, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .footer-copyright {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.875rem;
+    color: var(--color-gray-ghost, #6a6a7a);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-copyright::before {
+    content: '> output: ';
+    color: var(--color-terminal-green, #00ff41);
+    margin-right: 0.5em;
+  }
+
+  .footer-copyright__link {
+    color: var(--color-cyan, #00fff0);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .footer-copyright__link:hover {
+    color: var(--color-magenta, #ff00ff);
+  }
+
+  /* Payment Icons */
+  .footer-payment {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .footer-payment__icon {
+    width: 32px;
+    height: 20px;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+  }
+
+  .footer-payment__icon:hover {
+    opacity: 1;
+  }
+
+  /* ========================================
+     Responsive Design
+     ======================================== */
+
+  @media (max-width: 768px) {
+    .site-footer {
+      padding: var(--space-lg, 4rem) var(--space-sm, 1rem) var(--space-md, 2rem);
+    }
+
+    .footer-status {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .footer-content {
+      grid-template-columns: 1fr;
+      gap: var(--space-md, 2rem);
+    }
+
+    .footer-newsletter__form {
+      flex-direction: column;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+  }
+
+  /* ========================================
+     Accessibility: Reduced Motion
+     ======================================== */
+
+  @media (prefers-reduced-motion: reduce) {
+    .footer-status__cursor,
+    .footer-social__link::before {
+      animation: none;
+    }
+
+    .footer-column__link,
+    .footer-social__link {
+      transition: none;
+    }
+  }
+</style>
+
+{%- liquid
+  assign show_newsletter = section.settings.show_newsletter
+  assign copyright_text = section.settings.copyright_text | default: 'YEAR TRUST.NO.OUTPUT. All rights reserved.'
+  assign current_year = 'now' | date: '%Y'
+-%}
+
+<footer class="site-footer" id="site-footer">
+  <div class="site-footer__container">
+    {%- comment %} System Status Display {%- endcomment %}
+    <div class="footer-status">
+      <div class="footer-status__text">System online<span class="footer-status__cursor"></span></div>
+      <div class="footer-status__year">
+        {{ current_year }}
+      </div>
+    </div>
+
+    {%- comment %} Footer Content Grid {%- endcomment %}
+    <div class="footer-content">
+      {%- comment %} Shop Column {%- endcomment %}
+      <div class="footer-column">
+        <h3 class="footer-column__title">Shop</h3>
+        <ul class="footer-column__list">
+          <li>
+            <a href="{{ routes.all_products_collection_url }}" class="footer-column__link">All Products</a>
+          </li>
+          <li>
+            <a href="{{ routes.collections_url }}" class="footer-column__link">Collections</a>
+          </li>
+          <li>
+            <a href="/pages/about" class="footer-column__link">About</a>
+          </li>
+          <li>
+            <a href="/blogs/news" class="footer-column__link">Blog</a>
+          </li>
+        </ul>
+      </div>
+
+      {%- comment %} Info Column {%- endcomment %}
+      <div class="footer-column">
+        <h3 class="footer-column__title">Info</h3>
+        <ul class="footer-column__list">
+          <li>
+            <a href="/pages/shipping" class="footer-column__link">Shipping</a>
+          </li>
+          <li>
+            <a href="/pages/returns" class="footer-column__link">Returns</a>
+          </li>
+          <li>
+            <a href="/pages/faq" class="footer-column__link">FAQ</a>
+          </li>
+          <li>
+            <a href="/pages/contact" class="footer-column__link">Contact</a>
+          </li>
+        </ul>
+      </div>
+
+      {%- comment %} Legal Column {%- endcomment %}
+      <div class="footer-column">
+        <h3 class="footer-column__title">Legal</h3>
+        <ul class="footer-column__list">
+          <li>
+            <a href="{{ shop.privacy_policy.url }}" class="footer-column__link">Privacy</a>
+          </li>
+          <li>
+            <a href="{{ shop.terms_of_service.url }}" class="footer-column__link">Terms</a>
+          </li>
+          <li>
+            <a href="{{ shop.refund_policy.url }}" class="footer-column__link">Refunds</a>
+          </li>
+          <li>
+            <a href="{{ shop.shipping_policy.url }}" class="footer-column__link">Shipping Policy</a>
+          </li>
+        </ul>
+      </div>
+
+      {%- comment %} Social Column (Terminal Commands) {%- endcomment %}
+      <div class="footer-column">
+        <h3 class="footer-column__title">Connect</h3>
+        <div class="footer-social">
+          {%- if section.settings.instagram_url != blank -%}
+            <a href="{{ section.settings.instagram_url }}" class="footer-social__link" target="_blank" rel="noopener">
+              connect.instagram
+            </a>
+          {%- endif -%}
+
+          {%- if section.settings.twitter_url != blank -%}
+            <a href="{{ section.settings.twitter_url }}" class="footer-social__link" target="_blank" rel="noopener">
+              follow.twitter
+            </a>
+          {%- endif -%}
+
+          {%- if section.settings.youtube_url != blank -%}
+            <a href="{{ section.settings.youtube_url }}" class="footer-social__link" target="_blank" rel="noopener">
+              watch.youtube
+            </a>
+          {%- endif -%}
+
+          {%- if section.settings.tiktok_url != blank -%}
+            <a href="{{ section.settings.tiktok_url }}" class="footer-social__link" target="_blank" rel="noopener">
+              view.tiktok
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+
+    {%- comment %} Optional: Inline Newsletter {%- endcomment %}
+    {%- if show_newsletter -%}
+      <div class="footer-newsletter">
+        <h3 class="footer-newsletter__title">Subscribe</h3>
+        <form class="footer-newsletter__form" action="/contact#newsletter" method="post">
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <input
+            type="email"
+            name="contact[email]"
+            class="footer-newsletter__input"
+            placeholder="your.email@system.net"
+            required
+            aria-label="Email address"
+          >
+          <button type="submit" class="footer-newsletter__submit">> Join</button>
+        </form>
+      </div>
+    {%- endif -%}
+
+    {%- comment %} Footer Bottom (Copyright) {%- endcomment %}
+    <div class="footer-bottom">
+      <p class="footer-copyright">
+        {{ copyright_text | replace: 'YEAR', current_year }}
+      </p>
+
+      {%- comment %} Optional: Payment Icons {%- endcomment %}
+      {%- if section.settings.show_payment_icons -%}
+        <div class="footer-payment">
+          {% for type in shop.enabled_payment_types %}
+            {{ type | payment_type_svg_tag: class: 'footer-payment__icon' }}
+          {% endfor %}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer (TNO)",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Footer Content"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright Text",
+      "default": "YEAR TRUST.NO.OUTPUT. All rights reserved.",
+      "info": "Use YEAR as placeholder for current year"
+    },
+    {
+      "type": "header",
+      "content": "Newsletter"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Show Newsletter Signup",
+      "default": false,
+      "info": "Display inline newsletter form"
+    },
+    {
+      "type": "header",
+      "content": "Social Media"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "twitter_url",
+      "label": "Twitter URL"
+    },
+    {
+      "type": "url",
+      "id": "youtube_url",
+      "label": "YouTube URL"
+    },
+    {
+      "type": "url",
+      "id": "tiktok_url",
+      "label": "TikTok URL"
+    },
+    {
+      "type": "header",
+      "content": "Payment Icons"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show Payment Icons",
+      "default": true,
+      "info": "Display accepted payment methods"
+    }
+  ]
+}
+{% endschema %}

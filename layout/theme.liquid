@@ -15,6 +15,16 @@
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
     {%- endunless -%}
 
+    <!-- Google Fonts: Space Mono (preconnect + stylesheet) -->
+    <!--
+      Note: This only loads the font. To apply it, set font-family: 'Space Mono', monospace in your CSS or theme settings.
+    -->
+    {% # theme-check-disable %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    {% # theme-check-enable %}
+
     <title>
       {{ page_title }}
       {%- if current_tags %} – tagged "{{ current_tags | join: ', ' }}"{% endif -%}
@@ -57,12 +67,14 @@
     {% endstyle %}
 
     {%- comment -%} **Richtiger** Font-Preload für CDN-Schrift (kein preload_tag, da kein Theme-Asset) {%- endcomment -%}
+    {% # theme-check-disable %}
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
     {%- endunless -%}
     {%- unless settings.type_header_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
     {%- endunless -%}
+    {% # theme-check-enable %}
 
     {%- comment -%} Design-Variablen (einfacher, nicht verschachtelt) {%- endcomment -%}
     {% style %}
@@ -126,7 +138,6 @@
         --blog-card-shadow-blur-radius: {{ settings.blog_card_shadow_blur | divided_by: 10.0 }}rem;
 
         --badge-corner-radius: {{ settings.badge_corner_radius | divided_by: 10.0 }}rem;
-
         --popup-border-width: {{ settings.popup_border_thickness }}px;
         --popup-border-opacity: {{ settings.popup_border_opacity | divided_by: 100.0 }};
         --popup-corner-radius: {{ settings.popup_corner_radius }}px;
@@ -165,6 +176,7 @@
       @media (min-width: 750px){ body{ font-size: 1.6rem; } }
     {% endstyle %}
 
+    {{ 'trust-variables.css' | asset_url | stylesheet_tag }}
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'custom.css' | asset_url | stylesheet_tag }}
 

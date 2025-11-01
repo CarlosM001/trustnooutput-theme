@@ -1,0 +1,74 @@
+{% comment %}
+  TRUST.NO.OUTPUT — Blog Card Snippet
+
+  Reusable article card component for system update feeds.
+
+  Usage:
+  {% render 'blog-card-trust', article: article %}
+
+  Parameters:
+  - article (required): Shopify article object
+{% endcomment %}
+
+{%- liquid
+  assign article_url = article.url
+  assign article_title = article.title
+  assign article_excerpt = article.excerpt_or_content | strip_html | truncatewords: 30
+  assign article_date = article.published_at
+  assign article_tags = article.tags
+
+  # Determine category from tags
+  assign category = 'default'
+  assign category_label = 'Update'
+
+  for tag in article_tags
+    assign tag_lowercase = tag | downcase
+    if tag_lowercase contains 'philosophy'
+      assign category = 'philosophy'
+      assign category_label = 'Philosophy'
+      break
+    elsif tag_lowercase contains 'release'
+      assign category = 'release'
+      assign category_label = 'Release'
+      break
+    elsif tag_lowercase contains 'update'
+      assign category = 'update'
+      assign category_label = 'System Update'
+      break
+    endif
+  endfor
+-%}
+
+<article class="article-card-trust" data-scroll-reveal>
+  {%- comment %} Unix-style Timestamp {%- endcomment %}
+  <time
+    class="article-card-trust__timestamp"
+    datetime="{{ article_date | date: '%Y-%m-%d' }}"
+  >
+    {{ article_date | date: '%Y.%m.%d — %H:%M' }}
+  </time>
+
+  {%- comment %} Category Tag {%- endcomment %}
+  <span class="article-card-trust__category article-card-trust__category--{{ category }}">
+    {{ category_label }}
+  </span>
+
+  {%- comment %} Headline with Glitch Effect {%- endcomment %}
+  <h3 class="article-card-trust__title" data-text="{{ article_title }}">
+    <a href="{{ article_url }}" class="article-card-trust__title-link">
+      {{ article_title }}
+    </a>
+  </h3>
+
+  {%- comment %} Excerpt {%- endcomment %}
+  {%- if article_excerpt != blank -%}
+    <p class="article-card-trust__excerpt">
+      {{ article_excerpt }}
+    </p>
+  {%- endif -%}
+
+  {%- comment %} Read More Button {%- endcomment %}
+  <a href="{{ article_url }}" class="article-card-trust__button">
+    <span>> Read More</span>
+  </a>
+</article>

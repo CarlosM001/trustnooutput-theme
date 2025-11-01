@@ -113,11 +113,15 @@
     });
   };
 
-  /* 4) Scroll Parallax */
+  /* 4) Scroll Parallax (desktop only) */
   const initScrollParallax = () => {
-    const parallaxElements = document.querySelectorAll(
-      "[data-parallax].in-view"
-    );
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    const isDesktop = window.innerWidth >= 768;
+    if (prefersReducedMotion || !isDesktop) return;
+
+    const parallaxElements = document.querySelectorAll("[data-parallax].in-view");
     if (!parallaxElements.length) return;
 
     let ticking = false;
@@ -146,8 +150,14 @@
     window.addEventListener("scroll", requestTick, { passive: true });
   };
 
-  /* 5) Mouse Parallax */
+  /* 5) Mouse Parallax (desktop only) */
   const initMouseParallax = () => {
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    const isDesktop = window.innerWidth >= 768;
+    if (prefersReducedMotion || !isDesktop) return;
+
     const mouseElements = document.querySelectorAll("[data-mouse-parallax]");
     if (!mouseElements.length) return;
 
@@ -200,6 +210,8 @@
         initGlitchEffects();
         initScrollParallax();
         initMouseParallax();
+        initDelayedCtas();
+        initCtaKeyboardSupport();
       });
     } else {
       // DOM already loaded
@@ -207,6 +219,8 @@
       initGlitchEffects();
       initScrollParallax();
       initMouseParallax();
+      initDelayedCtas();
+      initCtaKeyboardSupport();
     }
   };
 
@@ -221,3 +235,38 @@
     };
   }
 })();
+
+/* 7) CTA Enhancements: delayed navigation + Space activation */
+function initDelayedCtas() {
+  const links = document.querySelectorAll('a[data-delay]');
+  links.forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const delay = parseInt(link.getAttribute('data-delay') || '0', 10);
+      if (!delay) return; // no delay specified
+
+      // Respect CMD/CTRL clicks and middle-click (open in new tab)
+      if (e.metaKey || e.ctrlKey || e.button === 1) return;
+
+      e.preventDefault();
+      const href = link.getAttribute('href');
+      link.setAttribute('aria-busy', 'true');
+
+      setTimeout(() => {
+        window.location.href = href;
+      }, delay);
+    });
+  });
+}
+
+function initCtaKeyboardSupport() {
+  const ctas = document.querySelectorAll('a[data-cta]');
+  ctas.forEach((el) => {
+    el.setAttribute('role', 'button');
+    el.addEventListener('keydown', (e) => {
+      if (e.code === 'Space' || e.key === ' ') {
+        e.preventDefault();
+        el.click();
+      }
+    });
+  });
+}

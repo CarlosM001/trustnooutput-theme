@@ -1,0 +1,680 @@
+{% comment %}
+  TRUST.NO.OUTPUT — Product Grid Section
+
+  A cyberpunk-inspired product collection grid featuring:
+  - RGB glitch effects on hover
+  - Terminal-style color variant display
+  - Conscious "Add to Cart" interaction with delay
+  - Sold out state with glitch overlay
+  - Responsive grid layout (3-col → 1-col)
+
+  Philosophy: Products as digital artifacts. Shopping becomes
+  an act of conscious selection rather than impulse consumption.
+{% endcomment %}
+
+<style>
+  /* ========================================
+     Product Grid Section
+     ======================================== */
+
+  .product-grid-trust {
+    position: relative;
+    padding: var(--space-xl, 6rem) var(--space-md, 2rem);
+    background: var(--color-void-black, #000000);
+    overflow: hidden;
+  }
+
+  .product-grid-trust__container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* Subtle grid background pattern */
+  .product-grid-trust::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(0, 255, 240, 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 240, 0.015) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  /* ========================================
+     Section Header
+     ======================================== */
+
+  .product-grid-trust__header {
+    text-align: center;
+    margin-bottom: var(--space-lg, 4rem);
+  }
+
+  .product-grid-trust__eyebrow {
+    font-family: var(--font-mono, 'Space Mono', monospace);
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-cyan, #00fff0);
+    margin: 0 0 var(--space-sm, 1rem);
+  }
+
+  .product-grid-trust__headline {
+    font-family: var(--font-mono, 'Space Mono', monospace);
+    font-size: clamp(1.75rem, 5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #ffffff;
+    margin: 0 0 var(--space-md, 2rem);
+    position: relative;
+  }
+
+  /* Animated underline */
+  .product-grid-trust__headline::after {
+    content: '';
+    display: block;
+    width: 120px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-cyan, #00fff0), var(--color-magenta, #ff00ff));
+    margin: var(--space-sm, 1rem) auto 0;
+    animation: pulse-width 2.4s ease-in-out infinite;
+  }
+
+  @keyframes pulse-width {
+    0%,
+    100% {
+      width: 120px;
+      opacity: 1;
+    }
+    50% {
+      width: 90px;
+      opacity: 0.7;
+    }
+  }
+
+  .product-grid-trust__intro {
+    font-family: var(--font-clean, sans-serif);
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--color-gray-ghost, #6a6a7a);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  /* ========================================
+     Product Grid Layout
+     ======================================== */
+
+  .product-grid-trust__grid {
+    display: grid;
+    /* Columns controlled via section setting (desktop). Fallback to 3. */
+    grid-template-columns: repeat(var(--tno-columns, 3), minmax(0, 1fr));
+    gap: var(--space-md, 2rem);
+    margin-top: var(--space-lg, 4rem);
+  }
+
+  /* ========================================
+     Individual Product Card
+     ======================================== */
+
+  .product-card-trust {
+    position: relative;
+    background: var(--color-deep-black, #0a0a0f);
+    border: 1px solid var(--color-gray-dim, #3a3a4a);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-card-trust:hover {
+    border-color: var(--color-cyan, #00fff0);
+    box-shadow: 0 0 30px rgba(0, 255, 240, 0.15);
+    transform: translateY(-4px);
+  }
+
+  /* ========================================
+     Product Image with Glitch Effect
+     ======================================== */
+
+  .product-card-trust__image-wrapper {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: var(--color-void-black, #000000);
+  }
+
+  .product-card-trust__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  .product-card-trust:hover .product-card-trust__image {
+    transform: scale(1.05);
+  }
+
+  /* RGB Glitch Effect on Hover */
+  .product-card-trust__image-wrapper::before,
+  .product-card-trust__image-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: inherit;
+    opacity: 0;
+    mix-blend-mode: screen;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .product-card-trust__image-wrapper::before {
+    background: var(--color-cyan, #00fff0);
+    transform: translate(-3px, -3px);
+  }
+
+  .product-card-trust__image-wrapper::after {
+    background: var(--color-magenta, #ff00ff);
+    transform: translate(3px, 3px);
+  }
+
+  .product-card-trust:hover .product-card-trust__image-wrapper::before,
+  .product-card-trust:hover .product-card-trust__image-wrapper::after {
+    opacity: 0.15;
+    animation: glitch-shift 0.4s ease;
+  }
+
+  @keyframes glitch-shift {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    25% {
+      transform: translate(-3px, 3px);
+    }
+    50% {
+      transform: translate(3px, -3px);
+    }
+    75% {
+      transform: translate(-2px, -2px);
+    }
+  }
+
+  /* Sold Out Overlay */
+  .product-card-trust__sold-out {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+
+  .product-card-trust__sold-out-text {
+    font-family: var(--font-mono, monospace);
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-magenta, #ff00ff);
+    animation: glitch-text 1.2s ease-in-out infinite;
+  }
+
+  @keyframes glitch-text {
+    0%,
+    100% {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+    25% {
+      opacity: 0.8;
+      transform: translate(-2px, 2px);
+    }
+    50% {
+      opacity: 0.9;
+      transform: translate(2px, -2px);
+    }
+    75% {
+      opacity: 0.85;
+      transform: translate(-1px, -1px);
+    }
+  }
+
+  /* ========================================
+     Product Info
+     ======================================== */
+
+  .product-card-trust__info {
+    padding: var(--space-md, 2rem);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-card-trust__vendor {
+    font-family: var(--font-mono, monospace);
+    font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-gray-dim, #3a3a4a);
+    margin: 0 0 var(--space-xs, 0.5rem);
+  }
+
+  .product-card-trust__title {
+    font-family: var(--font-mono, monospace);
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #ffffff;
+    margin: 0 0 var(--space-sm, 1rem);
+    line-height: 1.4;
+    transition: color 0.3s ease;
+  }
+
+  .product-card-trust:hover .product-card-trust__title {
+    color: var(--color-cyan, #00fff0);
+  }
+
+  /* Price with Glitch Effect */
+  .product-card-trust__price {
+    font-family: var(--font-mono, monospace);
+    font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+    font-weight: 700;
+    color: var(--color-terminal-green, #00ff41);
+    margin: 0 0 var(--space-sm, 1rem);
+    position: relative;
+  }
+
+  .product-card-trust__price--compare {
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    color: var(--color-gray-dim, #3a3a4a);
+    text-decoration: line-through;
+    margin-left: 0.5em;
+  }
+
+  /* ========================================
+     Color Variants (Terminal Pills)
+     ======================================== */
+
+  .product-card-trust__variants {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: var(--space-sm, 1rem) 0;
+  }
+
+  .product-card-trust__variant {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid var(--color-gray-dim, #3a3a4a);
+    color: var(--color-gray-ghost, #6a6a7a);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .product-card-trust__variant:hover {
+    border-color: var(--color-cyan, #00fff0);
+    color: var(--color-cyan, #00fff0);
+    box-shadow: 0 0 10px rgba(0, 255, 240, 0.2);
+  }
+
+  .product-card-trust__variant--selected {
+    border-color: var(--color-magenta, #ff00ff);
+    color: var(--color-magenta, #ff00ff);
+    background: rgba(255, 0, 255, 0.1);
+  }
+
+  /* ========================================
+     Add to Cart Button (Terminal Style)
+     ======================================== */
+
+  .product-card-trust__cta {
+    margin-top: auto;
+  }
+
+  .product-card-trust__button {
+    width: 100%;
+    font-family: var(--font-mono, monospace);
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 1rem;
+    border: 2px solid var(--color-cyan, #00fff0);
+    background: transparent;
+    color: var(--color-cyan, #00fff0);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-card-trust__button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--color-cyan, #00fff0);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .product-card-trust__button:hover::before {
+    opacity: 0.1;
+  }
+
+  .product-card-trust__button:hover {
+    box-shadow: 0 0 20px rgba(0, 255, 240, 0.4);
+    animation: terminal-flicker 0.3s ease-in-out;
+  }
+
+  .product-card-trust__button span {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Loading State */
+  .product-card-trust__button--loading {
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  .product-card-trust__button--loading span::after {
+    content: '...';
+    animation: loading-dots 1.2s infinite;
+  }
+
+  @keyframes loading-dots {
+    0%,
+    20% {
+      content: '.';
+    }
+    40% {
+      content: '..';
+    }
+    60%,
+    100% {
+      content: '...';
+    }
+  }
+
+  /* Success State */
+  .product-card-trust__button--success {
+    border-color: var(--color-terminal-green, #00ff41);
+    color: var(--color-terminal-green, #00ff41);
+  }
+
+  /* ========================================
+     Responsive Design
+     ======================================== */
+
+  @media (max-width: 768px) {
+    .product-grid-trust {
+      padding: var(--space-lg, 4rem) var(--space-sm, 1rem);
+    }
+
+    .product-grid-trust__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-sm, 1rem);
+    }
+
+    .product-card-trust__info {
+      padding: var(--space-sm, 1rem);
+    }
+
+    /* Simplify glitch on mobile */
+    .product-card-trust__image-wrapper::before,
+    .product-card-trust__image-wrapper::after {
+      display: none;
+    }
+  }
+
+  /* ========================================
+     Accessibility: Reduced Motion
+     ======================================== */
+
+  @media (prefers-reduced-motion: reduce) {
+    .product-card-trust,
+    .product-card-trust__image,
+    .product-card-trust__button {
+      transition: none;
+      animation: none;
+    }
+
+    .product-card-trust:hover {
+      transform: none;
+    }
+
+    .product-card-trust__image-wrapper::before,
+    .product-card-trust__image-wrapper::after {
+      display: none;
+    }
+
+    .product-card-trust__sold-out-text {
+      animation: none;
+    }
+  }
+</style>
+
+{%- liquid
+  assign collection = collections[section.settings.collection] | default: collections.all
+  assign products_per_row = section.settings.products_per_row | default: 3
+  assign eyebrow = section.settings.eyebrow | default: 'Digital Artifacts'
+  assign headline = section.settings.headline | default: 'Products'
+  assign intro = section.settings.intro | default: ''
+-%}
+
+<section class="product-grid-trust" id="product-grid-section">
+  <div class="product-grid-trust__container">
+    {%- comment %} Section Header {%- endcomment %}
+    <div class="product-grid-trust__header">
+      {%- if eyebrow != blank -%}
+        <p class="product-grid-trust__eyebrow">{{ eyebrow }}</p>
+      {%- endif -%}
+
+      {%- if headline != blank -%}
+        <h2 class="product-grid-trust__headline">{{ headline }}</h2>
+      {%- endif -%}
+
+      {%- if intro != blank -%}
+        <p class="product-grid-trust__intro">{{ intro }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- comment %} Product Grid {%- endcomment %}
+    <div class="product-grid-trust__grid" style="--tno-columns: {{ products_per_row }};">
+      {%- for product in collection.products limit: section.settings.products_to_show -%}
+        {% render 'product-card-trust', product: product %}
+      {%- else -%}
+        {%- comment %} Empty State {%- endcomment %}
+        <div style="grid-column: 1 / -1; text-align: center; padding: 4rem; color: var(--color-gray-ghost);">
+          <p style="font-family: var(--font-mono); letter-spacing: 0.05em;">
+            System.Message: No products found in the selected collection.
+          </p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<script>
+  /**
+   * TRUST.NO.OUTPUT — Product Grid Interactions
+   *
+   * Features:
+   * - Conscious delay on "Add to Cart" (400ms resistance to impulse)
+   * - Color variant selection
+   * - Loading and success states
+   */
+
+  (function () {
+    'use strict';
+
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /**
+     * Add to Cart with Conscious Delay
+     */
+    const addToCartButtons = document.querySelectorAll('.product-card-trust__button');
+
+    addToCartButtons.forEach((button) => {
+      button.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const form = this.closest('form');
+        if (!form) return;
+
+        // Visual feedback: Loading state
+        this.classList.add('product-card-trust__button--loading');
+        const textEl = this.querySelector('span');
+        const originalText = textEl ? textEl.textContent : '';
+        if (textEl) textEl.textContent = 'Processing';
+
+        const doRequest = () => {
+          const formData = new FormData(form);
+          fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { Accept: 'application/json' },
+            body: formData,
+          })
+            .then((res) => (res.ok ? res.json() : Promise.reject(res)))
+            .then(() => {
+              this.classList.remove('product-card-trust__button--loading');
+              this.classList.add('product-card-trust__button--success');
+              if (textEl) textEl.textContent = 'Added';
+              // Optional: update cart count if theme exposes helper
+              if (window.theme && typeof window.theme.updateCartCount === 'function') {
+                try {
+                  window.theme.updateCartCount();
+                } catch (err) {}
+              }
+              // Reset after 2s
+              setTimeout(() => {
+                this.classList.remove('product-card-trust__button--success');
+                if (textEl) textEl.textContent = originalText;
+              }, 2000);
+            })
+            .catch(() => {
+              this.classList.remove('product-card-trust__button--loading');
+              if (textEl) textEl.textContent = 'Error';
+              setTimeout(() => {
+                if (textEl) textEl.textContent = originalText;
+              }, 2000);
+            });
+        };
+
+        if (prefersReducedMotion) {
+          doRequest();
+        } else {
+          setTimeout(doRequest, 400); // Conscious delay
+        }
+      });
+    });
+
+    /**
+     * Color Variant Selection
+     */
+    const variantButtons = document.querySelectorAll('.product-card-trust__variant');
+
+    variantButtons.forEach((button) => {
+      button.addEventListener('click', function () {
+        const card = this.closest('.product-card-trust');
+        if (!card) return;
+        const variantId = this.dataset.variantId;
+        const variantInput = card.querySelector('input[name="id"]');
+        const allButtons = card.querySelectorAll('.product-card-trust__variant');
+        const newPrice = this.dataset.price;
+
+        // Update selected state
+        allButtons.forEach((b) => b.classList.remove('product-card-trust__variant--selected'));
+        this.classList.add('product-card-trust__variant--selected');
+
+        // Update form hidden input
+        if (variantInput && variantId) {
+          variantInput.value = variantId;
+        }
+
+        // Update price display (basic)
+        const priceEl = card.querySelector('.product-card-trust__price');
+        if (priceEl && newPrice) {
+          priceEl.textContent = newPrice;
+        }
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Product Grid (TNO)",
+  "class": "section-product-grid-trust",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collection Settings"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "Select which collection to display"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 3,
+      "max": 24,
+      "step": 3,
+      "default": 9,
+      "label": "Products to Show"
+    },
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "Digital Artifacts"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Products"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Introduction Text",
+      "info": "Optional description below headline"
+    },
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3,
+      "label": "Products per Row (Desktop)",
+      "info": "Mobile always shows 1 per row"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Grid (TNO)",
+      "category": "Trust.No.Output"
+    }
+  ]
+}
+{% endschema %}

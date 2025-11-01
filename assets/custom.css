@@ -681,6 +681,52 @@ button.shopify-payment-button__button--unbranded {
   margin-inline: auto;
 }
 
+/* Hero CTAs */
+.tno-hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.6rem, 2vw, 1rem);
+}
+
+.tno-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1.25rem;
+  border-radius: var(--tno-r-sm);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  line-height: 1;
+  transition: transform var(--tno-fast) var(--tno-ease), box-shadow var(--tno-fast) var(--tno-ease);
+}
+
+.tno-btn--primary {
+  background: var(--tno-black);
+  color: #fff;
+  border: 2px solid var(--tno-black);
+  box-shadow: var(--tno-shadow-2);
+}
+.tno-btn--primary:hover { transform: translateY(-2px); }
+
+.tno-btn--secondary {
+  background: linear-gradient(135deg, var(--tno-cyan), color-mix(in oklab, var(--tno-cyan) 40%, #fff));
+  color: var(--tno-black);
+  border: 2px solid transparent;
+  box-shadow: var(--tno-shadow-2);
+}
+.tno-btn--secondary:hover { transform: translateY(-2px); }
+
+.tno-btn--ghost {
+  background: transparent;
+  color: var(--tno-black);
+  border: 2px solid var(--color-gray-dim, #3a3a4a);
+}
+.tno-btn--ghost:hover { transform: translateY(-1px); }
+
 /* ==========================================================================
    06) GLITCH EFFECTS
    ========================================================================== */
@@ -890,6 +936,20 @@ button.shopify-payment-button__button--unbranded {
   .tno-subtext {
     font-size: clamp(0.875rem, 2vw, 1.25rem);
   }
+
+  /* Stack buttons vertically on mobile */
+  .tno-hero-ctas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Simplify glitch on mobile (performance) */
+  .tno-glitch-strong::before,
+  .tno-glitch-strong::after,
+  .tno-glitch-soft::before,
+  .tno-glitch-soft::after {
+    opacity: 0.25;
+  }
 }
 
 @media (min-width: 1280px) {
@@ -897,6 +957,57 @@ button.shopify-payment-button__button--unbranded {
     max-width: 1440px;
     margin-inline: auto;
   }
+}
+
+/* Scroll Indicator */
+.tno-scroll-indicator {
+  position: absolute;
+  left: 50%;
+  bottom: 1.25rem;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 28px;
+  background: color-mix(in oklab, var(--tno-black) 30%, transparent);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.tno-scroll-indicator::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 40%;
+  background: var(--tno-black);
+  animation: tno-scroll 1.6s cubic-bezier(.2,.8,.2,1) infinite;
+}
+@keyframes tno-scroll {
+  0% { transform: translateY(-100%); opacity: 0; }
+  30% { opacity: 1; }
+  70% { transform: translateY(200%); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* Optional: subtle scanlines using overlay pseudo (hardware-accelerated) */
+.tno-hero-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.06) 0px,
+    rgba(0,0,0,0.06) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  mix-blend-mode: multiply;
+  opacity: 0.12;
+  transform: translateZ(0);
+}
+
+@media (max-width: 768px) {
+  .tno-hero-overlay::after { opacity: 0.06; }
 }
 
 

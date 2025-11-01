@@ -54,3 +54,4 @@ assets/*.tmp.js
 # OS-specific
 Thumbs.db
 Desktop.ini
+git push origin main

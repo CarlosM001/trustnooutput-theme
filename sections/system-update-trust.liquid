@@ -1,0 +1,683 @@
+{% comment %}
+  TRUST.NO.OUTPUT — System Update Section
+
+  A terminal-inspired blog/news feed featuring:
+  - Unix-style timestamps
+  - Glitch hover effects on headlines
+  - Terminal typography throughout
+  - Category tags (Philosophy, Release, Update)
+  - Read more buttons with conscious delay
+  - Scroll-reveal animations
+
+  Philosophy: Information as system updates. Reading becomes
+  a conscious act of staying informed rather than passive scrolling.
+{% endcomment %}
+
+<style>
+  /* ========================================
+     System Update Section
+     ======================================== */
+
+  .system-update-trust {
+    position: relative;
+    padding: var(--space-xl, 6rem) var(--space-md, 2rem);
+    background: var(--color-void-black, #000000);
+    overflow: hidden;
+  }
+
+  .system-update-trust__container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Terminal grid background */
+  .system-update-trust::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(0, 255, 65, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 65, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  /* ========================================
+     Section Header (Terminal Style)
+     ======================================== */
+
+  .system-update-trust__header {
+    margin-bottom: var(--space-lg, 4rem);
+    border-left: 3px solid var(--color-terminal-green, #00ff41);
+    padding-left: var(--space-md, 2rem);
+  }
+
+  .system-update-trust__prompt {
+    font-family: var(--font-mono, 'Space Mono', monospace);
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    color: var(--color-terminal-green, #00ff41);
+    margin: 0 0 var(--space-xs, 0.5rem);
+  }
+
+  .system-update-trust__prompt::before {
+    content: '> ';
+    opacity: 0.5;
+  }
+
+  .system-update-trust__headline {
+    font-family: var(--font-mono, 'Space Mono', monospace);
+    font-size: clamp(1.75rem, 5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #ffffff;
+    margin: 0 0 var(--space-sm, 1rem);
+    text-transform: uppercase;
+  }
+
+  /* Blinking cursor */
+  .system-update-trust__headline::after {
+    content: '▮';
+    margin-left: 0.25em;
+    animation: cursor-blink 1s step-end infinite;
+    color: var(--color-terminal-green, #00ff41);
+  }
+
+  @keyframes cursor-blink {
+    0%,
+    50% {
+      opacity: 1;
+    }
+    51%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  .system-update-trust__intro {
+    font-family: var(--font-mono, monospace);
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    line-height: 1.7;
+    color: var(--color-gray-ghost, #6a6a7a);
+    max-width: 700px;
+  }
+
+  /* ========================================
+     Article Grid/List
+     ======================================== */
+
+  .system-update-trust__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: var(--space-md, 2rem);
+    margin-top: var(--space-lg, 4rem);
+  }
+
+  /* List layout variant */
+  .system-update-trust__grid--list {
+    grid-template-columns: 1fr;
+    max-width: 900px;
+  }
+
+  /* ========================================
+     Article Card
+     ======================================== */
+
+  .article-card-trust {
+    position: relative;
+    background: var(--color-deep-black, #0a0a0f);
+    border: 1px solid var(--color-gray-dim, #3a3a4a);
+    padding: var(--space-md, 2rem);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .article-card-trust.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Staggered animation */
+  .article-card-trust:nth-child(1).is-visible {
+    transition-delay: 0.1s;
+  }
+  .article-card-trust:nth-child(2).is-visible {
+    transition-delay: 0.2s;
+  }
+  .article-card-trust:nth-child(3).is-visible {
+    transition-delay: 0.3s;
+  }
+  .article-card-trust:nth-child(4).is-visible {
+    transition-delay: 0.4s;
+  }
+  .article-card-trust:nth-child(5).is-visible {
+    transition-delay: 0.5s;
+  }
+  .article-card-trust:nth-child(6).is-visible {
+    transition-delay: 0.6s;
+  }
+
+  .article-card-trust:hover {
+    border-color: var(--color-terminal-green, #00ff41);
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
+    transform: translateY(-4px);
+  }
+
+  /* Terminal border glitch on hover */
+  .article-card-trust::before,
+  .article-card-trust::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .article-card-trust::before {
+    border-color: var(--color-cyan, #00fff0);
+    transform: translate(-2px, -2px);
+  }
+
+  .article-card-trust::after {
+    border-color: var(--color-magenta, #ff00ff);
+    transform: translate(2px, 2px);
+  }
+
+  .article-card-trust:hover::before,
+  .article-card-trust:hover::after {
+    opacity: 0.2;
+  }
+
+  /* ========================================
+     Timestamp (Unix Style)
+     ======================================== */
+
+  .article-card-trust__timestamp {
+    font-family: var(--font-mono, monospace);
+    font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+    color: var(--color-terminal-green, #00ff41);
+    margin: 0 0 var(--space-sm, 1rem);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .article-card-trust__timestamp::before {
+    content: '[';
+    opacity: 0.5;
+  }
+
+  .article-card-trust__timestamp::after {
+    content: ']';
+    opacity: 0.5;
+  }
+
+  /* Timestamp blink effect */
+  .article-card-trust:hover .article-card-trust__timestamp {
+    animation: terminal-flicker 0.4s ease-in-out;
+  }
+
+  @keyframes terminal-flicker {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.85;
+    }
+    55% {
+      opacity: 1;
+    }
+    60% {
+      opacity: 0.9;
+    }
+  }
+
+  /* ========================================
+     Category Tags
+     ======================================== */
+
+  .article-card-trust__category {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid;
+    display: inline-block;
+    margin: 0 0 var(--space-sm, 1rem);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+  }
+
+  /* Category color variants */
+  .article-card-trust__category--philosophy {
+    border-color: var(--color-magenta, #ff00ff);
+    color: var(--color-magenta, #ff00ff);
+  }
+
+  .article-card-trust__category--release {
+    border-color: var(--color-cyan, #00fff0);
+    color: var(--color-cyan, #00fff0);
+  }
+
+  .article-card-trust__category--update {
+    border-color: var(--color-terminal-green, #00ff41);
+    color: var(--color-terminal-green, #00ff41);
+  }
+
+  .article-card-trust__category--default {
+    border-color: var(--color-gray-dim, #3a3a4a);
+    color: var(--color-gray-ghost, #6a6a7a);
+  }
+
+  .article-card-trust:hover .article-card-trust__category {
+    box-shadow: 0 0 10px currentColor;
+  }
+
+  /* ========================================
+     Headline with Glitch Effect
+     ======================================== */
+
+  .article-card-trust__title {
+    font-family: var(--font-mono, monospace);
+    font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #ffffff;
+    margin: 0 0 var(--space-sm, 1rem);
+    line-height: 1.4;
+    position: relative;
+    display: inline-block;
+  }
+
+  .article-card-trust__title-link {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+  }
+
+  .article-card-trust:hover .article-card-trust__title-link {
+    color: var(--color-terminal-green, #00ff41);
+  }
+
+  /* Glitch effect on hover */
+  .article-card-trust__title::before,
+  .article-card-trust__title::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .article-card-trust__title::before {
+    color: var(--color-cyan, #00fff0);
+    z-index: -1;
+  }
+
+  .article-card-trust__title::after {
+    color: var(--color-magenta, #ff00ff);
+    z-index: -2;
+  }
+
+  .article-card-trust:hover .article-card-trust__title::before {
+    opacity: 0.7;
+    animation: glitch-title-1 0.3s ease;
+  }
+
+  .article-card-trust:hover .article-card-trust__title::after {
+    opacity: 0.7;
+    animation: glitch-title-2 0.3s ease;
+  }
+
+  @keyframes glitch-title-1 {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    33% {
+      transform: translate(-2px, 1px);
+    }
+    66% {
+      transform: translate(2px, -1px);
+    }
+  }
+
+  @keyframes glitch-title-2 {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    33% {
+      transform: translate(2px, -1px);
+    }
+    66% {
+      transform: translate(-2px, 1px);
+    }
+  }
+
+  /* ========================================
+     Excerpt
+     ======================================== */
+
+  .article-card-trust__excerpt {
+    font-family: var(--font-clean, sans-serif);
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    line-height: 1.7;
+    color: var(--color-gray-ghost, #6a6a7a);
+    margin: 0 0 var(--space-md, 2rem);
+  }
+
+  /* ========================================
+     Read More Button
+     ======================================== */
+
+  .article-card-trust__button {
+    font-family: var(--font-mono, monospace);
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--color-terminal-green, #00ff41);
+    background: transparent;
+    color: var(--color-terminal-green, #00ff41);
+    display: inline-block;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .article-card-trust__button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--color-terminal-green, #00ff41);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .article-card-trust__button:hover::before {
+    opacity: 0.1;
+  }
+
+  .article-card-trust__button:hover {
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+    animation: terminal-flicker 0.3s ease-in-out;
+  }
+
+  .article-card-trust__button span {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ========================================
+     Empty State
+     ======================================== */
+
+  .system-update-trust__empty {
+    text-align: center;
+    padding: var(--space-xl, 6rem) var(--space-md, 2rem);
+    border: 1px dashed var(--color-gray-dim, #3a3a4a);
+    background: var(--color-deep-black, #0a0a0f);
+  }
+
+  .system-update-trust__empty-text {
+    font-family: var(--font-mono, monospace);
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    color: var(--color-gray-ghost, #6a6a7a);
+    margin: 0;
+  }
+
+  .system-update-trust__empty-cursor {
+    display: inline-block;
+    margin-left: 0.25em;
+    animation: cursor-blink 1s step-end infinite;
+    color: var(--color-terminal-green, #00ff41);
+  }
+
+  /* ========================================
+     Responsive Design
+     ======================================== */
+
+  @media (max-width: 768px) {
+    .system-update-trust {
+      padding: var(--space-lg, 4rem) var(--space-sm, 1rem);
+    }
+
+    .system-update-trust__header {
+      padding-left: var(--space-sm, 1rem);
+      border-left-width: 2px;
+    }
+
+    .system-update-trust__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-sm, 1rem);
+    }
+
+    .article-card-trust {
+      padding: var(--space-sm, 1rem);
+    }
+
+    /* Simplify glitch on mobile */
+    .article-card-trust::before,
+    .article-card-trust::after,
+    .article-card-trust__title::before,
+    .article-card-trust__title::after {
+      display: none;
+    }
+  }
+
+  /* ========================================
+     Accessibility: Reduced Motion
+     ======================================== */
+
+  @media (prefers-reduced-motion: reduce) {
+    .article-card-trust {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .article-card-trust:hover {
+      transform: none;
+    }
+
+    .system-update-trust__headline::after,
+    .system-update-trust__empty-cursor {
+      animation: none;
+    }
+
+    .article-card-trust__title::before,
+    .article-card-trust__title::after {
+      display: none;
+    }
+  }
+</style>
+
+{%- liquid
+  assign blog = blogs[section.settings.blog] | default: blogs.news
+  assign articles_to_show = section.settings.articles_to_show | default: 6
+  assign layout_style = section.settings.layout_style | default: 'grid'
+
+  assign prompt = section.settings.prompt | default: 'system.log'
+  assign headline = section.settings.headline | default: 'System Updates'
+  assign intro = section.settings.intro | default: ''
+-%}
+
+<section class="system-update-trust" id="system-update-section">
+  <div class="system-update-trust__container">
+    {%- comment %} Terminal Header {%- endcomment %}
+    <div class="system-update-trust__header">
+      {%- if prompt != blank -%}
+        <p class="system-update-trust__prompt">{{ prompt }}</p>
+      {%- endif -%}
+
+      {%- if headline != blank -%}
+        <h2 class="system-update-trust__headline">{{ headline }}</h2>
+      {%- endif -%}
+
+      {%- if intro != blank -%}
+        <p class="system-update-trust__intro">{{ intro }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- comment %} Articles Grid/List {%- endcomment %}
+    {%- if blog.articles.size > 0 -%}
+      <div class="system-update-trust__grid {% if layout_style == 'list' %}system-update-trust__grid--list{% endif %}">
+        {%- for article in blog.articles limit: articles_to_show -%}
+          {% render 'blog-card-trust', article: article %}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      {%- comment %} Empty State {%- endcomment %}
+      <div class="system-update-trust__empty">
+        <p class="system-update-trust__empty-text">
+          > No updates found<span class="system-update-trust__empty-cursor">▮</span>
+        </p>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+  /**
+   * TRUST.NO.OUTPUT — System Update Interactions
+   *
+   * Features:
+   * - Scroll-reveal animation for article cards
+   * - Conscious delay on "Read More" clicks
+   */
+
+  (function () {
+    'use strict';
+
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion) {
+      // Show all articles immediately
+      const articles = document.querySelectorAll('.article-card-trust');
+      articles.forEach((article) => article.classList.add('is-visible'));
+      return;
+    }
+
+    /**
+     * Scroll-Reveal Animation
+     */
+    if ('IntersectionObserver' in window) {
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.2,
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      const articles = document.querySelectorAll('.article-card-trust');
+      articles.forEach((article) => observer.observe(article));
+    } else {
+      // Fallback: Show all immediately
+      const articles = document.querySelectorAll('.article-card-trust');
+      articles.forEach((article) => article.classList.add('is-visible'));
+    }
+
+    /**
+     * Conscious Delay on Read More
+     */
+    const readMoreButtons = document.querySelectorAll('.article-card-trust__button');
+
+    readMoreButtons.forEach((button) => {
+      button.addEventListener('click', function (e) {
+        if (!prefersReducedMotion) {
+          e.preventDefault();
+          const href = this.getAttribute('href');
+          this.style.opacity = '0.6';
+          setTimeout(() => {
+            window.location.href = href;
+          }, 300);
+        }
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "System Update (TNO)",
+  "class": "section-system-update-trust",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Blog Settings"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog",
+      "info": "Select which blog to display"
+    },
+    {
+      "type": "range",
+      "id": "articles_to_show",
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "default": 6,
+      "label": "Articles to Show"
+    },
+    {
+      "type": "select",
+      "id": "layout_style",
+      "label": "Layout Style",
+      "options": [
+        { "value": "grid", "label": "Grid" },
+        { "value": "list", "label": "List" }
+      ],
+      "default": "grid"
+    },
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "text",
+      "id": "prompt",
+      "label": "Terminal Prompt",
+      "default": "system.log",
+      "info": "Text before headline (e.g. 'system.log', 'updates.txt')"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "System Updates"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Introduction Text",
+      "info": "Optional description below headline"
+    }
+  ],
+  "presets": [
+    {
+      "name": "System Update (TNO)",
+      "category": "Trust.No.Output"
+    }
+  ]
+}
+{% endschema %}

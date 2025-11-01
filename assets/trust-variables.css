@@ -1,0 +1,141 @@
+/*
+  TRUST.NO.OUTPUT – Design Tokens
+  Purpose: Central source of truth for brand variables used across the theme.
+  Philosophy: digital minimalism + subtle simulation/glitch aesthetics.
+
+  Usage:
+  - Reference these variables in CSS: var(--tno-*)
+  - Keep motion subtle and accessible; honor prefers-reduced-motion.
+  - Avoid inline styles; consume tokens in component styles.
+*/
+
+:root{
+  /* Brand palette */
+  --tno-color-cyan: #00FFFF;
+  --tno-color-magenta: #FF00FF;
+  --tno-color-black: #0A0A0A;
+  --tno-color-white: #F2F2F2;
+
+  /* Aliases (user-specified exact hex) */
+  /* These are convenience variables you can use directly alongside the TNO tokens. */
+  --color-cyan: #00fff0;            /* Haupt-Cyan für Glitch */
+  --color-magenta: #ff00ff;         /* Haupt-Magenta für Glitch */
+  --color-terminal-green: #00ff41;  /* Terminal-Cursor */
+  --color-deep-black: #0a0a0f;      /* Background */
+  --color-gray-dim: #3a3a4a;        /* Ghost Button Border */
+
+  /* Neutrals (derived) */
+  --tno-gray-900: #111215;
+  --tno-gray-800: #1A1B1F;
+  --tno-gray-700: #24262B;
+  --tno-gray-600: #2F3137;
+  --tno-gray-500: #3B3E45;
+  --tno-gray-400: #696D76;
+  --tno-gray-300: #9AA0AA;
+  --tno-gray-200: #C7CCD6;
+  --tno-gray-100: #E6E9EF;
+
+  /* Core UI tokens */
+  --tno-bg: var(--tno-color-black);
+  --tno-fg: var(--tno-color-white);
+  --tno-accent-1: var(--tno-color-cyan);
+  --tno-accent-2: var(--tno-color-magenta);
+  --tno-border: color-mix(in oklab, var(--tno-fg) 16%, transparent);
+
+  /* Typography mapping: align to theme variables set in theme.liquid */
+  --tno-font-body: var(--font-body-family, system-ui, -apple-system, Segoe UI, Roboto, sans-serif);
+  --tno-font-heading: var(--font-heading-family, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif);
+  --tno-font-mono: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --tno-font-weight-regular: 400;
+  --tno-font-weight-medium: 500;
+  --tno-font-weight-bold: 700;
+
+  /* Spacing scale (4pt grid) */
+  --tno-space-1: 4px;
+  --tno-space-2: 8px;
+  --tno-space-3: 12px;
+  --tno-space-4: 16px;
+  --tno-space-5: 24px;
+  --tno-space-6: 32px;
+  --tno-space-7: 48px;
+  --tno-space-8: 64px;
+
+  /* Radii */
+  --tno-radius-sm: 4px;
+  --tno-radius-md: 8px;
+  --tno-radius-lg: 12px;
+  --tno-radius-full: 999px;
+
+  /* Elevation / Shadows */
+  --tno-shadow-color: 0 0 0; /* r g b */
+  --tno-shadow-sm: 0 1px 2px rgba(var(--tno-shadow-color) / 0.12);
+  --tno-shadow-md: 0 6px 16px rgba(var(--tno-shadow-color) / 0.18);
+  --tno-shadow-lg: 0 14px 40px rgba(var(--tno-shadow-color) / 0.24);
+
+  /* Motion – subtle and elegant */
+  --tno-duration-xs: 120ms;
+  --tno-duration-sm: 200ms;
+  --tno-duration-md: 320ms;
+  --tno-duration-lg: 520ms;
+  --tno-ease-standard: cubic-bezier(.2,.8,.2,1);
+  --tno-ease-emphasized: cubic-bezier(.2, 0, 0, 1);
+
+  /* Glitch controls (keep minimal; use sparingly) */
+  --tno-glitch-scanline-opacity: 0.06;    /* 0..1 */
+  --tno-glitch-rgb-shift: 1.5px;          /* <= 2px on mobile */
+  --tno-glitch-rgb-cyan: rgb(0 255 255 / 0.5);
+  --tno-glitch-rgb-magenta: rgb(255 0 255 / 0.5);
+
+  /* Z-layers */
+  --tno-z-header: 100;
+  --tno-z-overlay: 1000;
+  --tno-z-modal: 2000;
+  --tno-z-toast: 3000;
+
+  /* ----------------------------------------
+     Aliases for legacy/section usage
+     ---------------------------------------- */
+  /* Color aliases used in some sections */
+  --color-void-black: #000000;        /* True black background */
+  --color-gray-ghost: #6a6a7a;        /* Muted gray text */
+
+  /* Typography aliases */
+  --font-mono: 'Space Mono', 'IBM Plex Mono', 'Courier New', monospace;
+  --font-clean: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Spacing aliases (rem-based) */
+  --space-xs: 0.5rem;   /* 8px */
+  --space-sm: 1rem;     /* 16px */
+  --space-md: 2rem;     /* 32px */
+  --space-lg: 4rem;     /* 64px */
+  --space-xl: 6rem;     /* 96px */
+  --space-2xl: 8rem;    /* 128px */
+
+  /* Animation duration aliases */
+  --anim-instant: 0.1s;
+  --anim-fast: 0.3s;
+  --anim-medium: 0.6s;
+  --anim-slow: 1.2s;
+  --anim-glacial: 2.4s;
+}
+
+/* Accessibility: limit motion/intensity if user prefers reduced motion */
+@media (prefers-reduced-motion: reduce){
+  :root{
+    --tno-duration-xs: 0ms;
+    --tno-duration-sm: 0ms;
+    --tno-duration-md: 0ms;
+    --tno-duration-lg: 0ms;
+    --tno-glitch-scanline-opacity: 0.02;
+    --tno-glitch-rgb-shift: 0.5px;
+  }
+}
+
+/* Theming hook (optional): allow future theme switching via data-theme attribute) */
+/*
+:root[data-theme="light"]{
+  --tno-bg: var(--tno-color-white);
+  --tno-fg: var(--tno-color-black);
+  --tno-border: color-mix(in oklab, var(--tno-fg) 12%, transparent);
+}
+*/

@@ -1,0 +1,119 @@
+{% comment %}
+  TRUST.NO.OUTPUT — Product Card Snippet
+
+  Reusable product card component with glitch effects and terminal styling.
+
+  Usage:
+  {% render 'product-card-trust', product: product %}
+
+  Parameters:
+  - product (required): Shopify product object
+{% endcomment %}
+
+{%- liquid
+  assign product_available = product.available
+  assign current_variant = product.selected_or_first_available_variant
+  assign featured_image = product.featured_image
+  assign product_url = product.url
+-%}
+
+<article class="product-card-trust">
+  {%- comment %} Product Image with Glitch Effect {%- endcomment %}
+  <a href="{{ product_url }}" class="product-card-trust__image-wrapper">
+    {%- if featured_image -%}
+      <img
+        src="{{ featured_image | image_url: width: 800 }}"
+        alt="{{ featured_image.alt | escape }}"
+        width="{{ featured_image.width }}"
+        height="{{ featured_image.height }}"
+        loading="lazy"
+        class="product-card-trust__image"
+      >
+    {%- else -%}
+      <div style="width: 100%; height: 100%; background: var(--color-deep-black); display: flex; align-items: center; justify-content: center;">
+        <span style="font-family: var(--font-mono); color: var(--color-gray-dim); font-size: 3rem;">?</span>
+      </div>
+    {%- endif -%}
+
+    {%- comment %} Sold Out Overlay {%- endcomment %}
+    {%- unless product_available -%}
+      <div class="product-card-trust__sold-out">
+        <span class="product-card-trust__sold-out-text">System.Error</span>
+      </div>
+    {%- endunless -%}
+  </a>
+
+  {%- comment %} Product Info {%- endcomment %}
+  <div class="product-card-trust__info">
+    {%- comment %} Vendor (Optional) {%- endcomment %}
+    {%- if product.vendor != blank -%}
+      <p class="product-card-trust__vendor">{{ product.vendor }}</p>
+    {%- endif -%}
+
+    {%- comment %} Product Title {%- endcomment %}
+    <h3 class="product-card-trust__title">
+      <a href="{{ product_url }}" style="text-decoration: none; color: inherit;">
+        {{ product.title }}
+      </a>
+    </h3>
+
+    {%- comment %} Price {%- endcomment %}
+    <div class="product-card-trust__price">
+      {%- if product.compare_at_price > product.price -%}
+        <span class="product-card-trust__price--compare">
+          {{ product.compare_at_price | money }}
+        </span>
+      {%- endif -%}
+      {{ product.price | money }}
+    </div>
+
+    {%- comment %} Color Variants (if product has color options) {%- endcomment %}
+    {%- if product.options_with_values.size > 0 -%}
+      {%- for option in product.options_with_values -%}
+        {%- if option.name == 'Color' or option.name == 'Colour' -%}
+          <div class="product-card-trust__variants">
+            {%- for value in option.values limit: 5 -%}
+              {%- assign variant = product.variants | where: 'option1', value | first -%}
+              <button
+                type="button"
+                class="product-card-trust__variant {% if forloop.first %}product-card-trust__variant--selected{% endif %}"
+                data-variant-id="{{ variant.id }}"
+                data-price="{{ variant.price | money }}"
+              >
+                {{ value }}
+              </button>
+            {%- endfor -%}
+            {%- if option.values.size > 5 -%}
+              <span style="font-family: var(--font-mono); color: var(--color-gray-dim); font-size: 0.75rem;">
+                +{{ option.values.size | minus: 5 }} more
+              </span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+
+    {%- comment %} Add to Cart Form {%- endcomment %}
+    <div class="product-card-trust__cta">
+      <form method="post" action="{{ routes.cart_add_url }}" class="product-card-trust__form">
+        <input type="hidden" name="id" value="{{ current_variant.id }}">
+
+        <button
+          type="submit"
+          class="product-card-trust__button"
+          {% unless product_available %}
+            disabled
+          {% endunless %}
+        >
+          <span>
+            {%- if product_available -%}
+              > Add to Cart
+            {%- else -%}
+              > Sold Out
+            {%- endif -%}
+          </span>
+        </button>
+      </form>
+    </div>
+  </div>
+</article>

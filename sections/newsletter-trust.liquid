@@ -1,0 +1,757 @@
+{% comment %}
+  TRUST.NO.OUTPUT — Newsletter Subscribe Section
+
+  A terminal-inspired newsletter signup featuring:
+  - Command-line style email input with blinking cursor
+  - Conscious delay on submit (400ms resistance to impulse)
+  - Glitch animation on success
+  - Terminal-style error/success messages
+  - GDPR-compliant consent checkbox
+  - Shopify Customer API integration
+
+  Philosophy: Newsletter signup becomes a conscious commitment
+  rather than an impulse action. The terminal aesthetic suggests
+  direct access to the system—subscribers become participants.
+{% endcomment %}
+
+<style>
+  /* ========================================
+     Newsletter Section
+     ======================================== */
+
+  .newsletter-trust {
+    position: relative;
+    padding: var(--space-xl, 6rem) var(--space-md, 2rem);
+    background: var(--color-void-black, #000000);
+    overflow: hidden;
+  }
+
+  .newsletter-trust__container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  /* Terminal scanlines background */
+  .newsletter-trust::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent 0px, rgba(0, 255, 65, 0.03) 1px, transparent 2px);
+    opacity: 0.4;
+    pointer-events: none;
+    animation: scanline-drift 8s linear infinite;
+  }
+
+  @keyframes scanline-drift {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(20px);
+    }
+  }
+
+  /* ========================================
+     Section Header (Terminal Prompt)
+     ======================================== */
+
+  .newsletter-trust__header {
+    text-align: center;
+    margin-bottom: var(--space-lg, 4rem);
+    border: 2px solid var(--color-gray-dim, #3a3a4a);
+    padding: var(--space-lg, 4rem) var(--space-md, 2rem);
+    background: var(--color-deep-black, #0a0a0f);
+    position: relative;
+  }
+
+  /* Terminal window buttons */
+  .newsletter-trust__header::before {
+    content: '';
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    width: 12px;
+    height: 12px;
+    background: var(--color-magenta, #ff00ff);
+    border-radius: 50%;
+    box-shadow: 20px 0 0 var(--color-cyan, #00fff0), 40px 0 0 var(--color-terminal-green, #00ff41);
+  }
+
+  .newsletter-trust__prompt {
+    font-family: var(--font-mono, 'Space Mono', monospace);
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    color: var(--color-terminal-green, #00ff41);
+    margin: 0 0 var(--space-sm, 1rem);
+    text-align: left;
+  }
+
+  .newsletter-trust__prompt::before {
+    content: '> ';
+  }
+
+  .newsletter-trust__headline {
+    font-family: var(--font-mono, 'Space Mono', monospace);
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #ffffff;
+    margin: 0 0 var(--space-sm, 1rem);
+    text-transform: uppercase;
+  }
+
+  /* Blinking cursor on headline */
+  .newsletter-trust__headline::after {
+    content: '▮';
+    margin-left: 0.25em;
+    animation: cursor-blink 1s step-end infinite;
+    color: var(--color-terminal-green, #00ff41);
+  }
+
+  .newsletter-trust__description {
+    font-family: var(--font-clean, sans-serif);
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    line-height: 1.7;
+    color: var(--color-gray-ghost, #6a6a7a);
+    margin: 0;
+  }
+
+  /* ========================================
+     Newsletter Form (Terminal Style)
+     ======================================== */
+
+  .newsletter-trust__form {
+    margin-top: var(--space-lg, 4rem);
+  }
+
+  .newsletter-trust__input-wrapper {
+    position: relative;
+    margin-bottom: var(--space-sm, 1rem);
+  }
+
+  /* Terminal prompt before input */
+  .newsletter-trust__input-wrapper::before {
+    content: '>';
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--font-mono, monospace);
+    font-size: 1rem;
+    color: var(--color-terminal-green, #00ff41);
+    font-weight: 700;
+    pointer-events: none;
+  }
+
+  .newsletter-trust__input {
+    width: 100%;
+    font-family: var(--font-mono, monospace);
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    padding: 1rem 1rem 1rem 2.5rem;
+    background: var(--color-void-black, #000000);
+    border: 2px solid var(--color-gray-dim, #3a3a4a);
+    color: var(--color-terminal-green, #00ff41);
+    caret-color: var(--color-terminal-green, #00ff41);
+    transition: all 0.3s ease;
+  }
+
+  .newsletter-trust__input::placeholder {
+    color: var(--color-gray-dim, #3a3a4a);
+    font-style: italic;
+  }
+
+  .newsletter-trust__input:focus {
+    outline: none;
+    border-color: var(--color-cyan, #00fff0);
+    box-shadow: 0 0 20px rgba(0, 255, 240, 0.2);
+    background: rgba(0, 255, 240, 0.02);
+  }
+
+  /* Blinking cursor effect in empty input */
+  .newsletter-trust__input:focus:placeholder-shown::after {
+    content: '▮';
+    margin-left: 0.25em;
+    animation: cursor-blink 1s step-end infinite;
+  }
+
+  /* ========================================
+     GDPR Consent Checkbox
+     ======================================== */
+
+  .newsletter-trust__consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin: var(--space-sm, 1rem) 0;
+    font-family: var(--font-mono, monospace);
+    font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+    color: var(--color-gray-ghost, #6a6a7a);
+  }
+
+  .newsletter-trust__checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--color-gray-dim, #3a3a4a);
+    background: var(--color-void-black, #000000);
+    cursor: pointer;
+    appearance: none;
+    position: relative;
+    flex-shrink: 0;
+    margin-top: 0.25rem;
+    transition: all 0.3s ease;
+  }
+
+  .newsletter-trust__checkbox:checked {
+    border-color: var(--color-terminal-green, #00ff41);
+    background: rgba(0, 255, 65, 0.1);
+  }
+
+  .newsletter-trust__checkbox:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--color-terminal-green, #00ff41);
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .newsletter-trust__checkbox:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+  }
+
+  .newsletter-trust__consent-label {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .newsletter-trust__consent-label a {
+    color: var(--color-cyan, #00fff0);
+    text-decoration: underline;
+    transition: color 0.3s ease;
+  }
+
+  .newsletter-trust__consent-label a:hover {
+    color: var(--color-terminal-green, #00ff41);
+  }
+
+  /* ========================================
+     Submit Button (Conscious Delay)
+     ======================================== */
+
+  .newsletter-trust__submit {
+    width: 100%;
+    font-family: var(--font-mono, monospace);
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 1.25rem;
+    border: 2px solid var(--color-terminal-green, #00ff41);
+    background: transparent;
+    color: var(--color-terminal-green, #00ff41);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .newsletter-trust__submit::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--color-terminal-green, #00ff41);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .newsletter-trust__submit:hover::before {
+    opacity: 0.1;
+  }
+
+  .newsletter-trust__submit:hover {
+    box-shadow: 0 0 30px rgba(0, 255, 65, 0.4);
+    animation: terminal-flicker 0.3s ease-in-out;
+  }
+
+  .newsletter-trust__submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .newsletter-trust__submit span {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Loading state */
+  .newsletter-trust__submit--loading span::after {
+    content: '...';
+    animation: loading-dots 1.2s infinite;
+  }
+
+  @keyframes loading-dots {
+    0%,
+    20% {
+      content: '.';
+    }
+    40% {
+      content: '..';
+    }
+    60%,
+    100% {
+      content: '...';
+    }
+  }
+
+  /* ========================================
+     Success/Error Messages (Terminal Style)
+     ======================================== */
+
+  .newsletter-trust__message {
+    margin-top: var(--space-md, 2rem);
+    padding: var(--space-md, 2rem);
+    border: 2px solid;
+    font-family: var(--font-mono, monospace);
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    line-height: 1.6;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.5s ease;
+  }
+
+  .newsletter-trust__message.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Success state */
+  .newsletter-trust__message--success {
+    border-color: var(--color-terminal-green, #00ff41);
+    color: var(--color-terminal-green, #00ff41);
+    background: rgba(0, 255, 65, 0.05);
+    animation: glitch-success 0.6s ease;
+  }
+
+  .newsletter-trust__message--success::before {
+    content: '> SUCCESS: ';
+    font-weight: 700;
+  }
+
+  @keyframes glitch-success {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    10% {
+      transform: translate(-2px, 2px);
+    }
+    20% {
+      transform: translate(2px, -2px);
+    }
+    30% {
+      transform: translate(-2px, -2px);
+    }
+    40% {
+      transform: translate(2px, 2px);
+    }
+    50% {
+      transform: translateY(0);
+    }
+  }
+
+  /* Error state */
+  .newsletter-trust__message--error {
+    border-color: var(--color-magenta, #ff00ff);
+    color: var(--color-magenta, #ff00ff);
+    background: rgba(255, 0, 255, 0.05);
+  }
+
+  .newsletter-trust__message--error::before {
+    content: '> ERROR: ';
+    font-weight: 700;
+  }
+
+  /* ========================================
+     Responsive Design
+     ======================================== */
+
+  @media (max-width: 768px) {
+    .newsletter-trust {
+      padding: var(--space-lg, 4rem) var(--space-sm, 1rem);
+    }
+
+    .newsletter-trust__header {
+      padding: var(--space-md, 2rem) var(--space-sm, 1rem);
+    }
+
+    .newsletter-trust__header::before {
+      width: 8px;
+      height: 8px;
+      box-shadow: 14px 0 0 var(--color-cyan, #00fff0), 28px 0 0 var(--color-terminal-green, #00ff41);
+    }
+
+    .newsletter-trust__input {
+      font-size: 16px; /* Prevents iOS zoom */
+    }
+  }
+
+  /* ========================================
+     Accessibility: Reduced Motion
+     ======================================== */
+
+  @media (prefers-reduced-motion: reduce) {
+    .newsletter-trust::before {
+      animation: none;
+    }
+
+    .newsletter-trust__headline::after {
+      animation: none;
+    }
+
+    .newsletter-trust__message {
+      animation: none;
+    }
+
+    @keyframes glitch-success {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+    }
+  }
+
+  @keyframes cursor-blink {
+    0%,
+    50% {
+      opacity: 1;
+    }
+    51%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes terminal-flicker {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.85;
+    }
+    55% {
+      opacity: 1;
+    }
+    60% {
+      opacity: 0.9;
+    }
+  }
+</style>
+
+{%- liquid
+  assign prompt = section.settings.prompt | default: 'subscribe.sh'
+  assign headline = section.settings.headline | default: 'Join the System'
+  assign description = section.settings.description | default: 'Receive updates on reality construction, new releases, and philosophical transmissions.'
+  assign button_text = section.settings.button_text | default: 'Submit'
+  assign success_message = section.settings.success_message | default: 'Subscription confirmed. Welcome to the system.'
+  assign require_consent = section.settings.require_consent
+  assign consent_text = section.settings.consent_text | default: 'I consent to receive updates and understand I can unsubscribe at any time.'
+-%}
+
+<section class="newsletter-trust" id="newsletter-section">
+  <div class="newsletter-trust__container">
+    {%- comment %} Terminal Header {%- endcomment %}
+    <div class="newsletter-trust__header">
+      {%- if prompt != blank -%}
+        <p class="newsletter-trust__prompt">{{ prompt }}</p>
+      {%- endif -%}
+
+      {%- if headline != blank -%}
+        <h2 class="newsletter-trust__headline">{{ headline }}</h2>
+      {%- endif -%}
+
+      {%- if description != blank -%}
+        <p class="newsletter-trust__description">{{ description }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- comment %} Newsletter Form {%- endcomment %}
+    <form
+      id="newsletter-form"
+      class="newsletter-trust__form"
+      data-newsletter-form
+    >
+      {%- comment %} Email Input {%- endcomment %}
+      <div class="newsletter-trust__input-wrapper">
+        <input
+          type="email"
+          id="newsletter-email"
+          name="email"
+          class="newsletter-trust__input"
+          placeholder="your.email@system.net"
+          required
+          autocomplete="email"
+          aria-label="Email address"
+        >
+      </div>
+
+      {%- comment %} GDPR Consent Checkbox {%- endcomment %}
+      {%- if require_consent -%}
+        <div class="newsletter-trust__consent">
+          <input
+            type="checkbox"
+            id="newsletter-consent"
+            class="newsletter-trust__checkbox"
+            required
+            aria-label="Consent to receive updates"
+          >
+          <label for="newsletter-consent" class="newsletter-trust__consent-label">
+            {{ consent_text }}
+          </label>
+        </div>
+      {%- endif -%}
+
+      {%- comment %} Submit Button {%- endcomment %}
+      <button
+        type="submit"
+        id="newsletter-submit"
+        class="newsletter-trust__submit"
+      >
+        <span>> {{ button_text }}</span>
+      </button>
+    </form>
+
+    {%- comment %} Success/Error Messages {%- endcomment %}
+    <div
+      id="newsletter-success"
+      class="newsletter-trust__message newsletter-trust__message--success"
+      role="status"
+      aria-live="polite"
+    >
+      {{ success_message }}
+    </div>
+
+    <div
+      id="newsletter-error"
+      class="newsletter-trust__message newsletter-trust__message--error"
+      role="alert"
+      aria-live="assertive"
+    >
+      <span id="newsletter-error-text"></span>
+    </div>
+  </div>
+</section>
+
+<script>
+  /**
+   * TRUST.NO.OUTPUT — Newsletter Subscription Logic
+   *
+   * Features:
+   * - Conscious 400ms delay on submit
+   * - Client-side email validation
+   * - Shopify Customer API integration
+   * - Success glitch animation
+   * - Terminal-style error messages
+   * - GDPR consent handling
+   */
+
+  (function () {
+    'use strict';
+
+    const form = document.getElementById('newsletter-form');
+    const emailInput = document.getElementById('newsletter-email');
+    const submitButton = document.getElementById('newsletter-submit');
+    const successMessage = document.getElementById('newsletter-success');
+    const errorMessage = document.getElementById('newsletter-error');
+    const errorText = document.getElementById('newsletter-error-text');
+    const consentCheckbox = document.getElementById('newsletter-consent');
+
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /**
+     * Email Validation (Regex)
+     */
+    function isValidEmail(email) {
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return regex.test(email);
+    }
+
+    /**
+     * Show Success Message
+     */
+    function showSuccess() {
+      successMessage.classList.add('is-visible');
+      errorMessage.classList.remove('is-visible');
+      form.style.display = 'none';
+
+      // Auto-hide after 5 seconds
+      setTimeout(() => {
+        successMessage.classList.remove('is-visible');
+      }, 5000);
+    }
+
+    /**
+     * Show Error Message
+     */
+    function showError(message) {
+      errorText.textContent = message;
+      errorMessage.classList.add('is-visible');
+      successMessage.classList.remove('is-visible');
+
+      // Auto-hide after 5 seconds
+      setTimeout(() => {
+        errorMessage.classList.remove('is-visible');
+      }, 5000);
+    }
+
+    /**
+     * Subscribe to Newsletter (Shopify Customer API)
+     */
+    function subscribeToNewsletter(email) {
+      const formData = new FormData();
+      formData.append('form_type', 'customer');
+      formData.append('utf8', '✓');
+      formData.append('contact[tags]', 'newsletter');
+      formData.append('contact[email]', email);
+
+      return fetch('/contact', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: formData,
+      })
+        .then((response) => {
+          if (response.ok || response.status === 303) {
+            return { success: true };
+          }
+          throw new Error('Network response was not ok');
+        })
+        .catch((error) => {
+          console.error('Subscription error:', error);
+          return { success: false, error: error.message };
+        });
+    }
+
+    /**
+     * Form Submit Handler (with Conscious Delay)
+     */
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const email = emailInput.value.trim();
+
+      // Validation: Email format
+      if (!isValidEmail(email)) {
+        showError('Invalid email format');
+        return;
+      }
+
+      // Validation: Consent (if required)
+      if (consentCheckbox && !consentCheckbox.checked) {
+        showError('Please consent to receive updates');
+        return;
+      }
+
+      // UI: Loading state
+      submitButton.disabled = true;
+      submitButton.classList.add('newsletter-trust__submit--loading');
+      const originalText = submitButton.querySelector('span').textContent;
+      submitButton.querySelector('span').textContent = '> Processing';
+
+      // Conscious Delay: 400ms
+      const delay = prefersReducedMotion ? 0 : 400;
+
+      setTimeout(() => {
+        subscribeToNewsletter(email).then((result) => {
+          // Reset button
+          submitButton.disabled = false;
+          submitButton.classList.remove('newsletter-trust__submit--loading');
+          submitButton.querySelector('span').textContent = originalText;
+
+          if (result.success) {
+            showSuccess();
+            form.reset();
+          } else {
+            showError('Connection error. Please try again');
+          }
+        });
+      }, delay);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Newsletter (TNO)",
+  "class": "section-newsletter-trust",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Terminal Header"
+    },
+    {
+      "type": "text",
+      "id": "prompt",
+      "label": "Terminal Prompt",
+      "default": "subscribe.sh",
+      "info": "Command-line style prompt (e.g., 'subscribe.sh', 'join.exe')"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Join the System"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Receive updates on reality construction, new releases, and philosophical transmissions."
+    },
+    {
+      "type": "header",
+      "content": "Form Settings"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Submit"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success Message",
+      "default": "Subscription confirmed. Welcome to the system."
+    },
+    {
+      "type": "header",
+      "content": "GDPR Compliance"
+    },
+    {
+      "type": "checkbox",
+      "id": "require_consent",
+      "label": "Require Consent Checkbox",
+      "default": true,
+      "info": "GDPR-compliant opt-in"
+    },
+    {
+      "type": "text",
+      "id": "consent_text",
+      "label": "Consent Text",
+      "default": "I consent to receive updates and understand I can unsubscribe at any time."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter (TNO)",
+      "category": "Trust.No.Output"
+    }
+  ]
+}
+{% endschema %}

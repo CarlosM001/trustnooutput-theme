@@ -1,0 +1,177 @@
+{% comment %}
+  TRUST.NO.OUTPUT — Terminal Quote Snippet
+
+  Reusable component for displaying quotes in terminal/monospace style
+  with optional cursor, glitch effects, and author attribution.
+
+  Usage:
+  {% render 'terminal-quote',
+    quote: 'Your quote text here',
+    author: 'Author Name',
+    prefix: '>',
+    show_cursor: true
+  %}
+
+  Parameters:
+  - quote (required): The quote text
+  - author (optional): Author name/attribution
+  - prefix (optional): Character before quote (default: '>')
+  - show_cursor (optional): Show blinking cursor (default: false)
+  - style (optional): 'default', 'glitch', 'minimal'
+{% endcomment %}
+
+{%- liquid
+  assign quote_text = quote | default: 'Reality is under construction'
+  assign quote_author = author | default: ''
+  assign quote_prefix = prefix | default: '>'
+  assign show_cursor = show_cursor | default: false
+  assign quote_style = style | default: 'default'
+-%}
+
+<style>
+  /* Terminal Quote Component Styles */
+  .terminal-quote {
+    font-family: var(--font-mono, 'Space Mono', monospace);
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    line-height: 1.7;
+    color: var(--color-gray-ghost, #6a6a7a);
+    padding-left: var(--space-sm, 1rem);
+    border-left: 2px solid var(--color-gray-dim, #3a3a4a);
+    margin: var(--space-sm, 1rem) 0;
+    position: relative;
+  }
+
+  /* Quote Prefix (Terminal Prompt) */
+  .terminal-quote__prefix {
+    position: absolute;
+    left: 0;
+    color: var(--color-terminal-green, #00ff41);
+    font-weight: 700;
+  }
+
+  /* Style Variant: Default */
+  .terminal-quote--default .terminal-quote__prefix {
+    animation: terminal-flicker 1.2s ease-in-out infinite;
+  }
+
+  /* Style Variant: Glitch */
+  .terminal-quote--glitch .terminal-quote__text {
+    position: relative;
+  }
+
+  .terminal-quote--glitch .terminal-quote__text::before,
+  .terminal-quote--glitch .terminal-quote__text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .terminal-quote--glitch:hover .terminal-quote__text::before {
+    color: var(--color-cyan, #00fff0);
+    opacity: 0.3;
+    transform: translate(-1px, -1px);
+  }
+
+  .terminal-quote--glitch:hover .terminal-quote__text::after {
+    color: var(--color-magenta, #ff00ff);
+    opacity: 0.3;
+    transform: translate(1px, 1px);
+  }
+
+  /* Style Variant: Minimal */
+  .terminal-quote--minimal {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .terminal-quote--minimal .terminal-quote__prefix {
+    position: relative;
+    margin-right: 0.5em;
+  }
+
+  /* Quote Text */
+  .terminal-quote__text {
+    display: inline;
+  }
+
+  /* Cursor */
+  .terminal-quote__cursor {
+    display: inline-block;
+    margin-left: 0.25em;
+    color: var(--color-terminal-green, #00ff41);
+    animation: cursor-blink 1s step-end infinite;
+  }
+
+  @keyframes cursor-blink {
+    0%,
+    50% {
+      opacity: 1;
+    }
+    51%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes terminal-flicker {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.85;
+    }
+    55% {
+      opacity: 1;
+    }
+    60% {
+      opacity: 0.9;
+    }
+  }
+
+  /* Author Attribution */
+  .terminal-quote__author {
+    display: block;
+    margin-top: 0.5em;
+    font-size: 0.875em;
+    color: var(--color-gray-dim, #3a3a4a);
+    font-style: normal;
+  }
+
+  .terminal-quote__author::before {
+    content: '— ';
+  }
+
+  /* Accessibility: Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    .terminal-quote__prefix,
+    .terminal-quote__cursor {
+      animation: none;
+    }
+  }
+</style>
+
+<blockquote class="terminal-quote terminal-quote--{{ quote_style }}">
+  <span class="terminal-quote__prefix">{{ quote_prefix }}</span>
+
+  {%- if quote_style == 'glitch' -%}
+    <span class="terminal-quote__text" data-text="{{ quote_text }}">
+      {{ quote_text }}
+    </span>
+  {%- else -%}
+    <span class="terminal-quote__text">
+      {{ quote_text }}
+    </span>
+  {%- endif -%}
+
+  {%- if show_cursor -%}
+    <span class="terminal-quote__cursor">▮</span>
+  {%- endif -%}
+
+  {%- if quote_author != blank -%}
+    <cite class="terminal-quote__author">{{ quote_author }}</cite>
+  {%- endif -%}
+</blockquote>
