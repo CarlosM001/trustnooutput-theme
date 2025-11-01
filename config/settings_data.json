@@ -129,6 +129,27 @@
     "cart_drawer_collection": "",
     "cart_color_scheme": "scheme-1",
     "sections": {
+      "header": {
+        "type": "header-trust",
+        "settings": {
+          "sticky_header": true,
+          "show_search": true,
+          "show_account": true,
+          "menu": "main-menu"
+        }
+      },
+      "footer": {
+        "type": "footer-trust",
+        "settings": {
+          "copyright_text": "YEAR TRUST.NO.OUTPUT. All rights reserved.",
+          "show_newsletter": false,
+          "instagram_url": "",
+          "twitter_url": "",
+          "youtube_url": "",
+          "tiktok_url": "",
+          "show_payment_icons": true
+        }
+      },
       "main-password-header": {
         "type": "main-password-header",
         "settings": {
