@@ -25,7 +25,7 @@
     left: 0;
     right: 0;
     z-index: 1000;
-    background: transparent;
+    background: rgba(0, 0, 0, 0.95);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     padding: 1.5rem 2rem;
   }
@@ -521,21 +521,21 @@
         </ul>
       {%- else -%}
         {%- comment %}
-          Fallback navigation shown when no menu is selected or it's empty.
-          Uses core site destinations to ensure a working header out-of-the-box.
+          Fallback navigation: Product-Type Collections
+          APPAREL | ACCESSORIES | PRINTS | ALL
         {%- endcomment %}
         <ul class="header-nav__list">
           <li class="header-nav__item">
-            <a href="{{ routes.all_products_collection_url }}" class="header-nav__link">Products</a>
+            <a href="{{ routes.collections_url }}/apparel" class="header-nav__link">Apparel</a>
           </li>
           <li class="header-nav__item">
-            <a href="/blogs/news" class="header-nav__link">Blog</a>
+            <a href="{{ routes.collections_url }}/accessories" class="header-nav__link">Accessories</a>
           </li>
           <li class="header-nav__item">
-            <a href="/pages/about" class="header-nav__link">About</a>
+            <a href="{{ routes.collections_url }}/prints" class="header-nav__link">Prints</a>
           </li>
           <li class="header-nav__item">
-            <a href="/pages/contact" class="header-nav__link">Contact</a>
+            <a href="{{ routes.all_products_collection_url }}" class="header-nav__link">All</a>
           </li>
         </ul>
       {%- endif -%}
@@ -598,16 +598,16 @@
         {% endfor %}
       {%- else -%}
         <li class="mobile-menu__item">
-          <a href="{{ routes.all_products_collection_url }}" class="mobile-menu__link">Products</a>
+          <a href="{{ routes.collections_url }}/apparel" class="mobile-menu__link">Apparel</a>
         </li>
         <li class="mobile-menu__item">
-          <a href="/blogs/news" class="mobile-menu__link">Blog</a>
+          <a href="{{ routes.collections_url }}/accessories" class="mobile-menu__link">Accessories</a>
         </li>
         <li class="mobile-menu__item">
-          <a href="/pages/about" class="mobile-menu__link">About</a>
+          <a href="{{ routes.collections_url }}/prints" class="mobile-menu__link">Prints</a>
         </li>
         <li class="mobile-menu__item">
-          <a href="/pages/contact" class="mobile-menu__link">Contact</a>
+          <a href="{{ routes.all_products_collection_url }}" class="mobile-menu__link">All</a>
         </li>
       {%- endif -%}
     </ul>
