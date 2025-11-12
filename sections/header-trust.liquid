@@ -25,7 +25,7 @@
     left: 0;
     right: 0;
     z-index: 1000;
-    background: rgba(0, 0, 0, 0.95);
+    background: transparent; /* Transparent by default; tno-header CSS will handle scrolled state */
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     padding: 1.5rem 2rem;
   }
@@ -489,7 +489,7 @@
   }
 </style>
 
-<header class="site-header" id="site-header">
+<header class="site-header tno-header" id="site-header">
   <div class="site-header__inner">
     {%- comment %} Logo (Left) {%- endcomment %}
     <div class="header-logo">
@@ -504,18 +504,78 @@
     </div>
 
     {%- comment %} Navigation (Center) {%- endcomment %}
-    <nav class="header-nav" aria-label="Main Navigation">
-      {%- assign menu_ref = linklists[section.settings.menu] -%}
+    <nav class="header-nav tno-nav" role="navigation" aria-label="Main">
+      {%- assign menu_handle = section.settings.main_menu | default: section.settings.menu -%}
+      {%- assign menu_ref = linklists[menu_handle] -%}
       {%- if menu_ref.links and menu_ref.links.size > 0 -%}
-        <ul class="header-nav__list">
+        <ul class="header-nav__list tno-nav__list">
           {% for link in menu_ref.links %}
-            <li class="header-nav__item">
+            {%- assign has_mega = false -%}
+            {%- assign mega_block = nil -%}
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'mega_menu' -%}
+                {%- assign block_title = block.settings.title_match | strip | downcase -%}
+                {%- assign link_title_down = link.title | strip | downcase -%}
+                {%- if block_title != blank and block_title == link_title_down -%}
+                  {%- assign has_mega = true -%}
+                  {%- assign mega_block = block -%}
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+            <li class="header-nav__item tno-nav__item {% if has_mega %}tno-has-mega{% elsif link.links.size > 0 %}tno-has-dropdown{% endif %}">
               <a
                 href="{{ link.url }}"
-                class="header-nav__link {% if link.active %}is-active{% endif %}"
+                class="header-nav__link tno-nav__link {% if link.active %}is-active{% endif %}"
               >
                 {{ link.title }}
               </a>
+              {%- if has_mega and mega_block -%}
+                <button class="tno-nav__toggle" aria-expanded="false" aria-controls="mega-{{ forloop.index }}-{{ section.id }}" aria-label="Toggle {{ link.title }} menu"></button>
+                <div class="tno-mega" id="mega-{{ forloop.index }}-{{ section.id }}" data-panel="mega" tabindex="-1">
+                  <div class="tno-mega__col">
+                    <p class="tno-mega__title">{{ mega_block.settings.col1_title | default: "// Shop by Category" }}</p>
+                    {%- assign col1_list = linklists[mega_block.settings.col1] -%}
+                    {%- if col1_list and col1_list.links and col1_list.links.size > 0 -%}
+                      <ul class="tno-mega__list">
+                        {%- for l in col1_list.links -%}
+                          <li><a class="tno-mega__link" href="{{ l.url }}">{{ l.title }}</a></li>
+                        {%- endfor -%}
+                      </ul>
+                    {%- endif -%}
+                  </div>
+                  <div class="tno-mega__col">
+                    <p class="tno-mega__title">{{ mega_block.settings.col2_title | default: "// Shop by Style" }}</p>
+                    {%- assign col2_list = linklists[mega_block.settings.col2] -%}
+                    {%- if col2_list and col2_list.links and col2_list.links.size > 0 -%}
+                      <ul class="tno-mega__list">
+                        {%- for l in col2_list.links -%}
+                          <li><a class="tno-mega__link" href="{{ l.url }}">{{ l.title }}</a></li>
+                        {%- endfor -%}
+                      </ul>
+                    {%- endif -%}
+                  </div>
+                  <div class="tno-mega__col">
+                    <p class="tno-mega__title">{{ mega_block.settings.col3_title | default: "// Drops" }}</p>
+                    {%- assign col3_list = linklists[mega_block.settings.col3] -%}
+                    {%- if col3_list and col3_list.links and col3_list.links.size > 0 -%}
+                      <ul class="tno-mega__list">
+                        {%- for l in col3_list.links -%}
+                          <li><a class="tno-mega__link" href="{{ l.url }}">{{ l.title }}</a></li>
+                        {%- endfor -%}
+                      </ul>
+                    {%- endif -%}
+                  </div>
+                </div>
+              {%- elsif link.links and link.links.size > 0 -%}
+                <button class="tno-nav__toggle" aria-expanded="false" aria-controls="dropdown-{{ forloop.index }}-{{ section.id }}" aria-label="Toggle {{ link.title }} menu"></button>
+                <div class="tno-dropdown" id="dropdown-{{ forloop.index }}-{{ section.id }}" data-panel="dropdown">
+                  <ul class="tno-dropdown__list">
+                    {%- for child in link.links -%}
+                      <li class="tno-dropdown__item"><a class="tno-dropdown__link" href="{{ child.url }}">{{ child.title }}</a></li>
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              {%- endif -%}
             </li>
           {% endfor %}
         </ul>
@@ -524,25 +584,25 @@
           Fallback navigation: Product-Type Collections
           APPAREL | ACCESSORIES | PRINTS | ALL
         {%- endcomment %}
-        <ul class="header-nav__list">
-          <li class="header-nav__item">
-            <a href="{{ routes.collections_url }}/apparel" class="header-nav__link">Apparel</a>
+        <ul class="header-nav__list tno-nav__list">
+          <li class="header-nav__item tno-nav__item">
+            <a href="{{ routes.collections_url }}/apparel" class="header-nav__link tno-nav__link">Apparel</a>
           </li>
-          <li class="header-nav__item">
-            <a href="{{ routes.collections_url }}/accessories" class="header-nav__link">Accessories</a>
+          <li class="header-nav__item tno-nav__item">
+            <a href="{{ routes.collections_url }}/accessories" class="header-nav__link tno-nav__link">Accessories</a>
           </li>
-          <li class="header-nav__item">
-            <a href="{{ routes.collections_url }}/prints" class="header-nav__link">Prints</a>
+          <li class="header-nav__item tno-nav__item">
+            <a href="{{ routes.collections_url }}/prints" class="header-nav__link tno-nav__link">Prints</a>
           </li>
-          <li class="header-nav__item">
-            <a href="{{ routes.all_products_collection_url }}" class="header-nav__link">All</a>
+          <li class="header-nav__item tno-nav__item">
+            <a href="{{ routes.all_products_collection_url }}" class="header-nav__link tno-nav__link">All</a>
           </li>
         </ul>
       {%- endif -%}
     </nav>
 
     {%- comment %} Icons (Right) {%- endcomment %}
-    <div class="header-icons">
+  <div class="header-icons tno-nav__utility">
       {%- comment %} Search Icon {%- endcomment %}
       {% if section.settings.show_search %}
         <button class="header-icon header-icon--search" aria-label="Search" id="search-toggle">
@@ -564,13 +624,13 @@
       {% endif %}
 
       {%- comment %} Cart Icon with Badge {%- endcomment %}
-      <a href="{{ routes.cart_url }}" class="header-icon header-icon--cart" aria-label="Cart">
+      <a href="{{ routes.cart_url }}" class="header-icon header-icon--cart tno-ico" aria-label="Cart">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <circle cx="9" cy="21" r="1"/>
           <circle cx="20" cy="21" r="1"/>
           <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
         </svg>
-        <span class="cart-badge" id="cart-count">
+        <span class="cart-badge tno-badge" id="cart-count">
           {{ cart.item_count }}
         </span>
       </a>
@@ -628,18 +688,18 @@
   (function () {
     'use strict';
 
-    const header = document.getElementById('site-header');
+  const header = document.getElementById('site-header');
     const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     let lastScrollTop = 0;
 
     /**
-     * Scroll Detection: Add 'is-scrolled' class after 50px
+     * Scroll Detection: Add 'is-scrolled' class after 24px
      */
     function handleScroll() {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-      if (scrollTop > 50) {
+      if (scrollTop > 24) {
         header.classList.add('is-scrolled');
       } else {
         header.classList.remove('is-scrolled');
@@ -649,6 +709,79 @@
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+
+    /**
+     * Mega/Dropdown keyboard interactions (basic)
+     * - Toggle buttons manage aria-expanded
+     * - ESC closes open panels
+     * - Basic focus trap within the open mega panel
+     */
+    const nav = document.querySelector('.tno-nav');
+    const toggles = nav ? nav.querySelectorAll('.tno-nav__toggle') : [];
+    let openPanel = null;
+    let openToggle = null;
+
+    function closeOpenPanel() {
+      if (!openPanel || !openToggle) return;
+      openPanel.classList.remove('is-open');
+      openToggle.setAttribute('aria-expanded', 'false');
+      openPanel = null;
+      openToggle = null;
+    }
+
+    toggles.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const li = btn.closest('.tno-nav__item');
+        const panelId = btn.getAttribute('aria-controls');
+        const panel = document.getElementById(panelId);
+        if (!panel || !li) return;
+
+        const isOpen = btn.getAttribute('aria-expanded') === 'true';
+        if (isOpen) {
+          btn.setAttribute('aria-expanded', 'false');
+          panel.classList.remove('is-open');
+          if (openPanel === panel) {
+            openPanel = null;
+            openToggle = null;
+          }
+        } else {
+          // Close any other panel
+          closeOpenPanel();
+          btn.setAttribute('aria-expanded', 'true');
+          panel.classList.add('is-open');
+          openPanel = panel;
+          openToggle = btn;
+          // Move focus to first focusable inside panel
+          const focusables = panel.querySelectorAll('a, button, [tabindex]:not([tabindex="-1"])');
+          if (focusables.length) {
+            focusables[0].focus();
+          } else {
+            panel.focus();
+          }
+        }
+      });
+    });
+
+    // ESC to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeOpenPanel();
+      }
+      // Very basic focus trap
+      if (e.key === 'Tab' && openPanel) {
+        const focusables = openPanel.querySelectorAll('a, button, [tabindex]:not([tabindex="-1"])');
+        if (!focusables.length) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    });
 
     /**
      * Mobile Menu Toggle
@@ -740,10 +873,63 @@
     },
     {
       "type": "link_list",
+      "id": "main_menu",
+      "label": "Main menu",
+      "info": "Select the primary navigation menu"
+    },
+    {
+      "type": "link_list",
       "id": "menu",
       "label": "Menu",
       "default": "main-menu",
-      "info": "Select the navigation menu to display"
+      "info": "Deprecated: use 'Main menu'. Left for backward compatibility."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "mega_menu",
+      "name": "Mega Menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title_match",
+          "label": "Title to match (top-level nav)",
+          "info": "Example: SHOP"
+        },
+        {
+          "type": "link_list",
+          "id": "col1",
+          "label": "Column 1 links"
+        },
+        {
+          "type": "text",
+          "id": "col1_title",
+          "label": "Column 1 title",
+          "default": "// Shop by Category"
+        },
+        {
+          "type": "link_list",
+          "id": "col2",
+          "label": "Column 2 links"
+        },
+        {
+          "type": "text",
+          "id": "col2_title",
+          "label": "Column 2 title",
+          "default": "// Shop by Style"
+        },
+        {
+          "type": "link_list",
+          "id": "col3",
+          "label": "Column 3 links"
+        },
+        {
+          "type": "text",
+          "id": "col3_title",
+          "label": "Column 3 title",
+          "default": "// Drops"
+        }
+      ]
     }
   ],
   "enabled_on": {
