@@ -1,0 +1,33 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vscode/master/extensions/json-language-features/server/service/schema/tasks.schema.json",
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Open: Copilot Instructions",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-NoProfile",
+        "-Command",
+        "try { code -g 'copilot-instructions.md' } catch { Write-Host 'Open copilot-instructions.md manually if the code CLI is not available.' }; exit 0"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Dev: Shopify + BrowserSync",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "dev"],
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Getting Started",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "Open: Copilot Instructions",
+        "Dev: Shopify + BrowserSync"
+      ]
+    }
+  ]
+}
