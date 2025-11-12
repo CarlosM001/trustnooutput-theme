@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/microsoft/vscode/master/extensions/json-language-features/server/service/schema/tasks.schema.json",
+  "$schema": "vscode://schemas/tasks",
   "version": "2.0.0",
   "tasks": [
     {
@@ -28,6 +28,40 @@
         "Open: Copilot Instructions",
         "Dev: Shopify + BrowserSync"
       ]
+    },
+    {
+      "label": "QA: Theme Check",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "theme:check"],
+      "problemMatcher": []
+    },
+    {
+      "label": "QA: Hygiene",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "hygiene"],
+      "problemMatcher": []
+    },
+    {
+      "label": "QA: All",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "QA: Theme Check",
+        "QA: Hygiene"
+      ]
+    },
+    {
+      "label": "Open: Live Theme",
+      "type": "shell",
+      "command": "shopify",
+      "args": [
+        "theme",
+        "open",
+        "--store=9csvgi-16.myshopify.com",
+        "--theme=186572767607"
+      ],
+      "problemMatcher": []
     }
   ]
 }
