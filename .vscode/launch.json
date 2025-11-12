@@ -1,0 +1,24 @@
+{
+  "$schema": "vscode://schemas/launch",
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug: BrowserSync (Port 3000)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "preLaunchTask": "Getting Started",
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true
+    },
+    {
+      "name": "Debug: Shopify Dev (Port 9292)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://127.0.0.1:9292",
+      "preLaunchTask": "Dev: Shopify + BrowserSync",
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true
+    }
+  ]
+}
