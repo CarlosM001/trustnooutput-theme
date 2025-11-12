@@ -15,10 +15,9 @@
   flex-grow: initial;
 }
 
-@media screen and (max-width: 749px) {
+@media screen and (width <= 749px) {
   .collage {
-    grid-column-gap: var(--grid-mobile-horizontal-spacing);
-    grid-row-gap: var(--grid-mobile-vertical-spacing);
+    grid-gap: var(--grid-mobile-vertical-spacing) var(--grid-mobile-horizontal-spacing);
   }
 
   .collage--mobile {
@@ -54,11 +53,10 @@
   }
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (width >= 750px) {
   .collage {
     grid-auto-flow: column;
-    grid-column-gap: var(--grid-desktop-horizontal-spacing);
-    grid-row-gap: var(--grid-desktop-vertical-spacing);
+    grid-gap: var(--grid-desktop-vertical-spacing) var(--grid-desktop-horizontal-spacing);
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
@@ -123,13 +121,13 @@
   transform: perspective(0);
 }
 
-.collage-card:after {
+.collage-card::after {
   content: '';
   position: absolute;
   z-index: -1;
   border-radius: var(--border-radius);
-  box-shadow: var(--shadow-horizontal-offset) var(--shadow-vertical-offset) var(--shadow-blur-radius)
-    rgba(var(--color-shadow), var(--shadow-opacity));
+  box-shadow: var(--shadow-horizontal-offset) var(--shadow-vertical-offset)
+    var(--shadow-blur-radius) rgba(var(--color-shadow), var(--shadow-opacity));
   width: calc(var(--border-width) * 2 + 100%);
   height: calc(var(--border-width) * 2 + 100%);
   top: calc(var(--border-width) * -1);
@@ -169,29 +167,30 @@
   border: 0;
 }
 
-.collage-card .deferred-media__poster:after {
+.collage-card .deferred-media__poster::after {
   content: '';
   position: absolute;
   z-index: 1;
   outline-offset: 0.3rem;
-  bottom: calc(var(--border-width) * -1);
-  left: calc(var(--border-width) * -1);
-  right: calc(var(--border-width) * -1);
-  top: calc(var(--border-width) * -1);
+  inset: calc(var(--border-width) * -1);
 }
 
-.collage-card .deferred-media__poster:focus:after {
-  box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.3);
+.collage-card .deferred-media__poster:focus::after {
+  box-shadow:
+    0 0 0 0.3rem rgb(var(--color-background)),
+    0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.3);
   outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
 }
 
-.collage-card .deferred-media__poster:focus-visible:after {
-  box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.3);
+.collage-card .deferred-media__poster:focus-visible::after {
+  box-shadow:
+    0 0 0 0.3rem rgb(var(--color-background)),
+    0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.3);
   outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
 }
 
 .collage-card .deferred-media__poster:focus:not(:focus-visible),
-.collage-card .deferred-media__poster:focus:not(:focus-visible):after {
+.collage-card .deferred-media__poster:focus:not(:focus-visible)::after {
   outline: none;
   box-shadow: none;
 }

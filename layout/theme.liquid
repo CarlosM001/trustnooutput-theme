@@ -1,5 +1,35 @@
+{%- liquid
+  comment
+    Server-Side A/B Bucketing for Glitch Mode
+    SEO-safe: variant determined on server, no client-side flash
+  endcomment
+
+  assign forced_mode = settings.tno_glitch_override | default: 'auto'
+
+  if forced_mode == 'pulse'
+    assign tno_ab_variant = 'glitch_pulse'
+  elsif forced_mode == 'continuous'
+    assign tno_ab_variant = 'glitch_continuous'
+  else
+      comment
+        Random coin flip for A/B variant (server-side)
+      endcomment
+      assign timestamp = 'now' | date: '%s'
+    assign coin = timestamp | modulo: 2
+    if coin == 0
+      assign tno_ab_variant = 'glitch_pulse'
+    else
+      assign tno_ab_variant = 'glitch_continuous'
+    endif
+  endif
+-%}
 <!doctype html>
-<html class="js" lang="{{ request.locale.iso_code }}">
+<html
+  class="js"
+  lang="{{ request.locale.iso_code }}"
+  data-ab-variant="{{ tno_ab_variant }}"
+  data-glitch-override="{{ forced_mode }}"
+>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +38,11 @@
     <link rel="canonical" href="{{ canonical_url }}">
 
     {%- if settings.favicon != blank -%}
-      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+      <link
+        rel="icon"
+        type="image/png"
+        href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
+      >
     {%- endif -%}
 
     {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
@@ -22,7 +56,10 @@
     {% # theme-check-disable %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    >
     {% # theme-check-enable %}
 
     <title>
@@ -69,10 +106,22 @@
     {%- comment -%} **Richtiger** Font-Preload für CDN-Schrift (kein preload_tag, da kein Theme-Asset) {%- endcomment -%}
     {% # theme-check-disable %}
     {%- unless settings.type_body_font.system? -%}
-      <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
+      <link
+        rel="preload"
+        as="font"
+        href="{{ settings.type_body_font | font_url }}"
+        type="font/woff2"
+        crossorigin
+      >
     {%- endunless -%}
     {%- unless settings.type_header_font.system? -%}
-      <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
+      <link
+        rel="preload"
+        as="font"
+        href="{{ settings.type_header_font | font_url }}"
+        type="font/woff2"
+        crossorigin
+      >
     {%- endunless -%}
     {% # theme-check-enable %}
 
@@ -90,6 +139,10 @@
 
         --font-body-scale: {{ settings.body_scale | divided_by: 100.0 }};
         --font-heading-scale: {{ settings.heading_scale | times: 1.0 | divided_by: settings.body_scale }};
+
+        /* TNO Motion & Glitch Variables */
+        --glitch-intensity: {{ settings.tno_glitch_intensity | default: 50 | divided_by: 100.0 }};
+        --parallax-strength: {{ settings.tno_parallax_strength | default: 20 | divided_by: 100.0 }};
 
         --media-padding: {{ settings.media_padding }}px;
         --media-border-opacity: {{ settings.media_border_opacity | divided_by: 100.0 }};
@@ -180,7 +233,12 @@
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'custom.css' | asset_url | stylesheet_tag }}
 
-    <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
+    <link
+      rel="stylesheet"
+      href="{{ 'component-cart-items.css' | asset_url }}"
+      media="print"
+      onload="this.media='all'"
+    >
 
     {%- if settings.cart_type == 'drawer' -%}
       {{ 'component-cart-drawer.css' | asset_url | stylesheet_tag }}
@@ -190,7 +248,9 @@
       {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
 
-    {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
+    {%- if localization.available_countries.size > 1
+      or localization.available_languages.size > 1
+    -%}
       {{ 'component-localization-form.css' | asset_url | stylesheet_tag: preload: true }}
       <script src="{{ 'localization-form.js' | asset_url }}" defer></script>
     {%- endif -%}

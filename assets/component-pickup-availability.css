@@ -50,15 +50,17 @@ pickup-availability-drawer {
   top: 0;
   right: 0;
   z-index: 4;
-  transition: opacity var(--duration-default) ease, transform var(--duration-default) ease;
+  transition:
+    opacity var(--duration-default) ease,
+    transform var(--duration-default) ease;
   transform: translateX(100%);
   width: 100%;
   border-width: 0 0 0 var(--drawer-border-width);
   border-color: rgba(var(--color-foreground), var(--drawer-border-opacity));
   border-style: solid;
   filter: drop-shadow(
-    var(--drawer-shadow-horizontal-offset) var(--drawer-shadow-vertical-offset) var(--drawer-shadow-blur-radius)
-      rgba(var(--color-shadow), var(--drawer-shadow-opacity))
+    var(--drawer-shadow-horizontal-offset) var(--drawer-shadow-vertical-offset)
+      var(--drawer-shadow-blur-radius) rgba(var(--color-shadow), var(--drawer-shadow-opacity))
   );
 }
 
@@ -67,7 +69,7 @@ pickup-availability-drawer[open] {
   opacity: 1;
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (width >= 750px) {
   pickup-availability-drawer {
     transform: translateX(100%);
     width: 37.5rem;
@@ -149,7 +151,7 @@ pickup-availability-drawer[open] {
 }
 
 @keyframes animateDrawerOpen {
-  @media screen and (max-width: 749px) {
+  @media screen and (width <= 749px) {
     0% {
       opacity: 0;
       transform: translateX(100%);
@@ -161,7 +163,7 @@ pickup-availability-drawer[open] {
     }
   }
 
-  @media screen and (min-width: 750px) {
+  @media screen and (width >= 750px) {
     0% {
       opacity: 0;
       transform: translateX(100%);

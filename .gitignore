@@ -20,3 +20,6 @@ pnpm-debug.log*
 .env.*
 # Wenn du eine lokale Vorschau speicherst
 /tmp/
+
+# Reports
+/reports/*.html

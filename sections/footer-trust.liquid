@@ -37,7 +37,8 @@
     content: '';
     position: absolute;
     inset: 0;
-    background-image: linear-gradient(rgba(0, 255, 255, 0.015) 1px, transparent 1px),
+    background-image:
+      linear-gradient(rgba(0, 255, 255, 0.015) 1px, transparent 1px),
       linear-gradient(90deg, rgba(0, 255, 255, 0.015) 1px, transparent 1px);
     background-size: 50px 50px;
     opacity: 0.5;
@@ -397,7 +398,9 @@
   <div class="site-footer__container">
     {%- comment %} System Status Display {%- endcomment %}
     <div class="footer-status">
-      <div class="footer-status__text">System online<span class="footer-status__cursor"></span></div>
+      <div class="footer-status__text">
+        System online<span class="footer-status__cursor"></span>
+      </div>
       <div class="footer-status__year">
         {{ current_year }}
       </div>
@@ -413,7 +416,9 @@
             <a href="{{ routes.collections_url }}/apparel" class="footer-column__link">Apparel</a>
           </li>
           <li>
-            <a href="{{ routes.collections_url }}/accessories" class="footer-column__link">Accessories</a>
+            <a href="{{ routes.collections_url }}/accessories" class="footer-column__link"
+              >Accessories</a
+            >
           </li>
           <li>
             <a href="{{ routes.collections_url }}/prints" class="footer-column__link">Prints</a>
@@ -467,25 +472,45 @@
         <h3 class="footer-column__title">Connect</h3>
         <div class="footer-social">
           {%- if section.settings.instagram_url != blank -%}
-            <a href="{{ section.settings.instagram_url }}" class="footer-social__link" target="_blank" rel="noopener">
+            <a
+              href="{{ section.settings.instagram_url }}"
+              class="footer-social__link"
+              target="_blank"
+              rel="noopener"
+            >
               connect.instagram
             </a>
           {%- endif -%}
 
           {%- if section.settings.twitter_url != blank -%}
-            <a href="{{ section.settings.twitter_url }}" class="footer-social__link" target="_blank" rel="noopener">
+            <a
+              href="{{ section.settings.twitter_url }}"
+              class="footer-social__link"
+              target="_blank"
+              rel="noopener"
+            >
               follow.twitter
             </a>
           {%- endif -%}
 
           {%- if section.settings.youtube_url != blank -%}
-            <a href="{{ section.settings.youtube_url }}" class="footer-social__link" target="_blank" rel="noopener">
+            <a
+              href="{{ section.settings.youtube_url }}"
+              class="footer-social__link"
+              target="_blank"
+              rel="noopener"
+            >
               watch.youtube
             </a>
           {%- endif -%}
 
           {%- if section.settings.tiktok_url != blank -%}
-            <a href="{{ section.settings.tiktok_url }}" class="footer-social__link" target="_blank" rel="noopener">
+            <a
+              href="{{ section.settings.tiktok_url }}"
+              class="footer-social__link"
+              target="_blank"
+              rel="noopener"
+            >
               view.tiktok
             </a>
           {%- endif -%}

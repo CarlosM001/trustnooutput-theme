@@ -32,10 +32,14 @@ if (!customElements.get('localization-form')) {
         }
         if (this.elements.resetButton) {
           this.elements.resetButton.addEventListener('click', this.resetFilter.bind(this));
-          this.elements.resetButton.addEventListener('mousedown', (event) => event.preventDefault());
+          this.elements.resetButton.addEventListener('mousedown', (event) =>
+            event.preventDefault()
+          );
         }
 
-        this.querySelectorAll('a').forEach((item) => item.addEventListener('click', this.onItemClick.bind(this)));
+        this.querySelectorAll('a').forEach((item) =>
+          item.addEventListener('click', this.onItemClick.bind(this))
+        );
       }
 
       hidePanel() {
@@ -62,23 +66,32 @@ if (!customElements.get('localization-form')) {
           case 'ARROWUP':
             event.preventDefault();
             itemToFocus =
-              focusedItemIndex > 0 ? focusableItems[focusedItemIndex - 1] : focusableItems[focusableItems.length - 1];
+              focusedItemIndex > 0
+                ? focusableItems[focusedItemIndex - 1]
+                : focusableItems[focusableItems.length - 1];
             itemToFocus.focus();
             break;
           case 'ARROWDOWN':
             event.preventDefault();
             itemToFocus =
-              focusedItemIndex < focusableItems.length - 1 ? focusableItems[focusedItemIndex + 1] : focusableItems[0];
+              focusedItemIndex < focusableItems.length - 1
+                ? focusableItems[focusedItemIndex + 1]
+                : focusableItems[0];
             itemToFocus.focus();
             break;
         }
 
-        if (!this.elements.search) return;
+        if (!this.elements.search) {
+          return;
+        }
 
         setTimeout(() => {
           focusedItemIndex = focusableItems.findIndex((item) => item === document.activeElement);
           if (focusedItemIndex > -1) {
-            this.elements.search.setAttribute('aria-activedescendant', focusableItems[focusedItemIndex].id);
+            this.elements.search.setAttribute(
+              'aria-activedescendant',
+              focusableItems[focusedItemIndex].id
+            );
           } else {
             this.elements.search.setAttribute('aria-activedescendant', '');
           }
@@ -90,13 +103,17 @@ if (!customElements.get('localization-form')) {
 
         switch (event.code.toUpperCase()) {
           case 'ESCAPE':
-            if (this.elements.button.getAttribute('aria-expanded') == 'false') return;
+            if (this.elements.button.getAttribute('aria-expanded') == 'false') {
+              return;
+            }
             this.hidePanel();
             event.stopPropagation();
             this.elements.button.focus();
             break;
           case 'SPACE':
-            if (this.elements.button.getAttribute('aria-expanded') == 'true') return;
+            if (this.elements.button.getAttribute('aria-expanded') == 'true') {
+              return;
+            }
             this.openSelector();
             break;
         }
@@ -106,7 +123,9 @@ if (!customElements.get('localization-form')) {
         event.preventDefault();
         const form = this.querySelector('form');
         this.elements.input.value = event.currentTarget.dataset.value;
-        if (form) form.submit();
+        if (form) {
+          form.submit();
+        }
       }
 
       openSelector() {
@@ -169,10 +188,11 @@ if (!customElements.get('localization-form')) {
         });
 
         if (this.elements.liveRegion) {
-          this.elements.liveRegion.innerHTML = window.accessibilityStrings.countrySelectorSearchCount.replace(
-            '[count]',
-            visibleCountries
-          );
+          this.elements.liveRegion.innerHTML =
+            window.accessibilityStrings.countrySelectorSearchCount.replace(
+              '[count]',
+              visibleCountries
+            );
         }
 
         this.querySelector('.country-selector').scrollTop = 0;

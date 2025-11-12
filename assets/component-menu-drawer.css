@@ -16,13 +16,17 @@
   opacity: 0;
   visibility: hidden;
   z-index: 2;
-  transition: opacity 0s, visibility 0s;
+  transition:
+    opacity 0s,
+    visibility 0s;
 }
 
 menu-drawer > details[open] > summary::before {
   visibility: visible;
   opacity: 1;
-  transition: opacity var(--duration-default) ease, visibility var(--duration-default) ease;
+  transition:
+    opacity var(--duration-default) ease,
+    visibility var(--duration-default) ease;
 }
 
 .menu-drawer {
@@ -37,8 +41,8 @@ menu-drawer > details[open] > summary::before {
   background-color: rgb(var(--color-background));
   overflow-x: hidden;
   filter: drop-shadow(
-    var(--drawer-shadow-horizontal-offset) var(--drawer-shadow-vertical-offset) var(--drawer-shadow-blur-radius)
-      rgba(var(--color-shadow), var(--drawer-shadow-opacity))
+    var(--drawer-shadow-horizontal-offset) var(--drawer-shadow-vertical-offset)
+      var(--drawer-shadow-blur-radius) rgba(var(--color-shadow), var(--drawer-shadow-opacity))
   );
 }
 
@@ -49,7 +53,9 @@ menu-drawer > details[open] > summary::before {
 
 .js details[open] > .menu-drawer,
 .js details[open] > .menu-drawer__submenu {
-  transition: transform var(--duration-default) ease, visibility var(--duration-default) ease;
+  transition:
+    transform var(--duration-default) ease,
+    visibility var(--duration-default) ease;
 }
 
 .js details[open].menu-opening > .menu-drawer,
@@ -62,7 +68,7 @@ details[open].menu-opening > .menu-drawer__submenu {
   visibility: hidden; /* hide menus from screen readers when hidden by submenu */
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (width >= 750px) {
   .menu-drawer {
     width: 40rem;
     border-width: 0 var(--drawer-border-width) 0 0;
@@ -90,8 +96,7 @@ details[open].menu-opening > .menu-drawer__submenu {
 
 .menu-drawer__inner-submenu {
   height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden auto;
 }
 
 .js .menu-drawer__menu li {
@@ -179,13 +184,14 @@ details[open].menu-opening > .menu-drawer__submenu {
   padding: 2rem 3rem;
 }
 
-@media screen and (max-width: 749px) {
-  .header--has-account:where(:not(.header--has-social):not(.header--has-localizations)) .menu-drawer__utility-links {
+@media screen and (width <= 749px) {
+  .header--has-account:where(:not(.header--has-social, .header--has-localizations))
+    .menu-drawer__utility-links {
     padding: 2rem 3rem;
   }
 }
 
-@media screen and (max-width: 989px) {
+@media screen and (width <= 989px) {
   .header--has-localizations:where(:not(.header--has-social)) .menu-drawer__utility-links {
     padding: 2rem 3rem;
   }
@@ -213,6 +219,7 @@ details[open].menu-opening > .menu-drawer__submenu {
 
 .menu-drawer__account shop-user-avatar {
   --shop-avatar-size: 2.4rem;
+
   margin-right: 0.55rem;
   margin-left: -0.45rem;
 }
@@ -231,10 +238,10 @@ details[open].menu-opening > .menu-drawer__submenu {
 }
 
 .menu-drawer .list-social__link {
-  padding: 1.1rem 1.1rem;
+  padding: 1.1rem;
 }
 
-@media screen and (max-width: 749px) {
+@media screen and (width <= 749px) {
   .menu-drawer.country-selector-open {
     transform: none !important;
     filter: none !important;

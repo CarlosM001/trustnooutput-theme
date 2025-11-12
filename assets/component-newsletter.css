@@ -7,7 +7,7 @@
   position: relative;
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (width >= 750px) {
   .newsletter-form {
     align-items: flex-start;
     margin: 0 auto;
@@ -36,7 +36,7 @@
   margin-top: 2rem;
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (width >= 750px) {
   .newsletter-form__message {
     justify-content: flex-start;
   }
@@ -52,16 +52,20 @@
 }
 
 .newsletter-form__button:focus-visible {
-  box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0 0.4rem rgba(var(--color-foreground));
+  box-shadow:
+    0 0 0 0.3rem rgb(var(--color-background)),
+    0 0 0 0.4rem rgba(var(--color-foreground));
   background-color: rgb(var(--color-background));
 }
 
 .newsletter-form__button:focus {
-  box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0 0.4rem rgba(var(--color-foreground));
+  box-shadow:
+    0 0 0 0.3rem rgb(var(--color-background)),
+    0 0 0 0.4rem rgba(var(--color-foreground));
   background-color: rgb(var(--color-background));
 }
 
-.newsletter-form__button:not(:focus-visible):not(.focused) {
+.newsletter-form__button:not(:focus-visible, .focused) {
   box-shadow: inherit;
   background-color: inherit;
 }

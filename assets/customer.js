@@ -15,7 +15,9 @@ const attributes = {
 class CustomerAddresses {
   constructor() {
     this.elements = this._getElements();
-    if (Object.keys(this.elements).length === 0) return;
+    if (Object.keys(this.elements).length === 0) {
+      return;
+    }
     this._setupCountries();
     this._setupEventListeners();
   }
@@ -36,16 +38,19 @@ class CustomerAddresses {
 
   _setupCountries() {
     if (Shopify && Shopify.CountryProvinceSelector) {
-      // eslint-disable-next-line no-new
       new Shopify.CountryProvinceSelector('AddressCountryNew', 'AddressProvinceNew', {
         hideElement: 'AddressProvinceContainerNew',
       });
       this.elements.countrySelects.forEach((select) => {
         const formId = select.dataset.formId;
-        // eslint-disable-next-line no-new
-        new Shopify.CountryProvinceSelector(`AddressCountry_${formId}`, `AddressProvince_${formId}`, {
-          hideElement: `AddressProvinceContainer_${formId}`,
-        });
+
+        new Shopify.CountryProvinceSelector(
+          `AddressCountry_${formId}`,
+          `AddressProvince_${formId}`,
+          {
+            hideElement: `AddressProvinceContainer_${formId}`,
+          }
+        );
       });
     }
   }
@@ -63,7 +68,10 @@ class CustomerAddresses {
   }
 
   _toggleExpanded(target) {
-    target.setAttribute(attributes.expanded, (target.getAttribute(attributes.expanded) === 'false').toString());
+    target.setAttribute(
+      attributes.expanded,
+      (target.getAttribute(attributes.expanded) === 'false').toString()
+    );
   }
 
   _handleAddEditButtonClick = ({ currentTarget }) => {
@@ -71,11 +79,12 @@ class CustomerAddresses {
   };
 
   _handleCancelButtonClick = ({ currentTarget }) => {
-    this._toggleExpanded(currentTarget.closest(selectors.addressContainer).querySelector(`[${attributes.expanded}]`));
+    this._toggleExpanded(
+      currentTarget.closest(selectors.addressContainer).querySelector(`[${attributes.expanded}]`)
+    );
   };
 
   _handleDeleteButtonClick = ({ currentTarget }) => {
-    // eslint-disable-next-line no-alert
     if (confirm(currentTarget.getAttribute(attributes.confirmMessage))) {
       Shopify.postLink(currentTarget.dataset.target, {
         parameters: { _method: 'delete' },

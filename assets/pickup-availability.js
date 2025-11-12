@@ -5,7 +5,9 @@ if (!customElements.get('pickup-availability')) {
       constructor() {
         super();
 
-        if (!this.hasAttribute('available')) return;
+        if (!this.hasAttribute('available')) {
+          return;
+        }
 
         this.errorHtml = this.querySelector('template').content.firstElementChild.cloneNode(true);
         this.onClickRefreshList = this.onClickRefreshList.bind(this);
@@ -13,7 +15,9 @@ if (!customElements.get('pickup-availability')) {
       }
 
       fetchAvailability(variantId) {
-        if (!variantId) return;
+        if (!variantId) {
+          return;
+        }
 
         let rootUrl = this.dataset.rootUrl;
         if (!rootUrl.endsWith('/')) {
@@ -31,7 +35,9 @@ if (!customElements.get('pickup-availability')) {
           })
           .catch((e) => {
             const button = this.querySelector('button');
-            if (button) button.removeEventListener('click', this.onClickRefreshList);
+            if (button) {
+              button.removeEventListener('click', this.onClickRefreshList);
+            }
             this.renderError();
           });
       }
@@ -58,7 +64,9 @@ if (!customElements.get('pickup-availability')) {
 
       renderPreview(sectionInnerHTML) {
         const drawer = document.querySelector('pickup-availability-drawer');
-        if (drawer) drawer.remove();
+        if (drawer) {
+          drawer.remove();
+        }
         if (!sectionInnerHTML.querySelector('pickup-availability-preview')) {
           this.innerHTML = '';
           this.removeAttribute('available');
@@ -75,10 +83,11 @@ if (!customElements.get('pickup-availability')) {
         });
 
         const button = this.querySelector('button');
-        if (button)
+        if (button) {
           button.addEventListener('click', (evt) => {
             document.querySelector('pickup-availability-drawer').show(evt.target);
           });
+        }
       }
     }
   );
@@ -98,7 +107,9 @@ if (!customElements.get('pickup-availability-drawer')) {
         });
 
         this.addEventListener('keyup', (event) => {
-          if (event.code.toUpperCase() === 'ESCAPE') this.hide();
+          if (event.code.toUpperCase() === 'ESCAPE') {
+            this.hide();
+          }
         });
       }
 

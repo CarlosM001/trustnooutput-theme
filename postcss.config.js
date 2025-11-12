@@ -9,7 +9,7 @@ module.exports = {
 
     // Komprimiert das CSS (entfernt Leerzeichen, Kommentare usw.)
     cssnano: {
-      preset: 'default'
-    }
-  }
+      preset: 'default',
+    },
+  },
 };

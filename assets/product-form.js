@@ -8,18 +8,23 @@ if (!customElements.get('product-form')) {
         this.form = this.querySelector('form');
         this.variantIdInput.disabled = false;
         this.form.addEventListener('submit', this.onSubmitHandler.bind(this));
-        this.cart = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
+        this.cart =
+          document.querySelector('cart-notification') || document.querySelector('cart-drawer');
         this.submitButton = this.querySelector('[type="submit"]');
         this.submitButtonText = this.submitButton.querySelector('span');
 
-        if (document.querySelector('cart-drawer')) this.submitButton.setAttribute('aria-haspopup', 'dialog');
+        if (document.querySelector('cart-drawer')) {
+          this.submitButton.setAttribute('aria-haspopup', 'dialog');
+        }
 
         this.hideErrors = this.dataset.hideErrors === 'true';
       }
 
       onSubmitHandler(evt) {
         evt.preventDefault();
-        if (this.submitButton.getAttribute('aria-disabled') === 'true') return;
+        if (this.submitButton.getAttribute('aria-disabled') === 'true') {
+          return;
+        }
 
         this.handleErrorMessage();
 
@@ -55,7 +60,9 @@ if (!customElements.get('product-form')) {
               this.handleErrorMessage(response.description);
 
               const soldOutMessage = this.submitButton.querySelector('.sold-out-message');
-              if (!soldOutMessage) return;
+              if (!soldOutMessage) {
+                return;
+              }
               this.submitButton.setAttribute('aria-disabled', true);
               this.submitButtonText.classList.add('hidden');
               soldOutMessage.classList.remove('hidden');
@@ -67,7 +74,7 @@ if (!customElements.get('product-form')) {
             }
 
             const startMarker = CartPerformance.createStartingMarker('add:wait-for-subscribers');
-            if (!this.error)
+            if (!this.error) {
               publish(PUB_SUB_EVENTS.cartUpdate, {
                 source: 'product-form',
                 productVariantId: formData.get('id'),
@@ -75,6 +82,7 @@ if (!customElements.get('product-form')) {
               }).then(() => {
                 CartPerformance.measureFromMarker('add:wait-for-subscribers', startMarker);
               });
+            }
             this.error = false;
             const quickAddModal = this.closest('quick-add-modal');
             if (quickAddModal) {
@@ -82,7 +90,7 @@ if (!customElements.get('product-form')) {
                 'modalClosed',
                 () => {
                   setTimeout(() => {
-                    CartPerformance.measure("add:paint-updated-sections", () => {
+                    CartPerformance.measure('add:paint-updated-sections', () => {
                       this.cart.renderContents(response);
                     });
                   });
@@ -91,7 +99,7 @@ if (!customElements.get('product-form')) {
               );
               quickAddModal.hide(true);
             } else {
-              CartPerformance.measure("add:paint-updated-sections", () => {
+              CartPerformance.measure('add:paint-updated-sections', () => {
                 this.cart.renderContents(response);
               });
             }
@@ -101,21 +109,31 @@ if (!customElements.get('product-form')) {
           })
           .finally(() => {
             this.submitButton.classList.remove('loading');
-            if (this.cart && this.cart.classList.contains('is-empty')) this.cart.classList.remove('is-empty');
-            if (!this.error) this.submitButton.removeAttribute('aria-disabled');
+            if (this.cart && this.cart.classList.contains('is-empty')) {
+              this.cart.classList.remove('is-empty');
+            }
+            if (!this.error) {
+              this.submitButton.removeAttribute('aria-disabled');
+            }
             this.querySelector('.loading__spinner').classList.add('hidden');
 
-            CartPerformance.measureFromEvent("add:user-action", evt);
+            CartPerformance.measureFromEvent('add:user-action', evt);
           });
       }
 
       handleErrorMessage(errorMessage = false) {
-        if (this.hideErrors) return;
+        if (this.hideErrors) {
+          return;
+        }
 
         this.errorMessageWrapper =
           this.errorMessageWrapper || this.querySelector('.product-form__error-message-wrapper');
-        if (!this.errorMessageWrapper) return;
-        this.errorMessage = this.errorMessage || this.errorMessageWrapper.querySelector('.product-form__error-message');
+        if (!this.errorMessageWrapper) {
+          return;
+        }
+        this.errorMessage =
+          this.errorMessage ||
+          this.errorMessageWrapper.querySelector('.product-form__error-message');
 
         this.errorMessageWrapper.toggleAttribute('hidden', !errorMessage);
 
@@ -127,7 +145,9 @@ if (!customElements.get('product-form')) {
       toggleSubmitButton(disable = true, text) {
         if (disable) {
           this.submitButton.setAttribute('disabled', 'disabled');
-          if (text) this.submitButtonText.textContent = text;
+          if (text) {
+            this.submitButtonText.textContent = text;
+          }
         } else {
           this.submitButton.removeAttribute('disabled');
           this.submitButtonText.textContent = window.variantStrings.addToCart;
