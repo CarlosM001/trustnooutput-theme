@@ -1039,7 +1039,8 @@ button.shopify-payment-button__button--unbranded {
   color: var(--tno-fg, #0f0f14); text-decoration: none; position: relative;
 }
 .tno-nav__link:hover { color: var(--tno-accent); }
-.tno-nav__toggle { position: absolute; inset: 0; background: none; border: 0; color: transparent; cursor: pointer; }
+.tno-nav__toggle { position: relative; margin-left: 6px; width: 16px; height: 16px; background: none; border: 0; cursor: pointer; vertical-align: middle; }
+.tno-nav__toggle::after { content: '▾'; font-size: 0.8rem; line-height: 1; color: currentColor; }
 .tno-nav__toggle:focus-visible { outline: 2px solid var(--tno-accent); outline-offset: 2px; }
 
 /* Utility area */
