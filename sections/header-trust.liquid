@@ -25,7 +25,7 @@
     left: 0;
     right: 0;
     z-index: 1000;
-    background: transparent; /* Transparent by default; tno-header CSS will handle scrolled state */
+    /* Background handled by global CSS (.header--tno / .tno-header) and transparency setting */
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     padding: 1.5rem 2rem;
   }
@@ -489,7 +489,10 @@
   }
 </style>
 
-<header class="site-header tno-header header--tno {% if section.settings.transparent_header %}is-transparent{% endif %}" id="site-header">
+<header
+  class="site-header tno-header header--tno {% if section.settings.transparent_header %}is-transparent{% endif %}"
+  id="site-header"
+>
   <div class="site-header__inner">
     {%- comment %} Logo (Left) {%- endcomment %}
     <div class="header-logo">
@@ -623,10 +626,12 @@
   <div class="header-icons tno-nav__utility">
       {%- comment %} Search Field {%- endcomment %}
       {% if section.settings.show_search %}
-        <form class="tno-search" action="{{ routes.search_url }}" method="get" role="search">
-          <input class="tno-search__input" type="search" name="q" placeholder="Search..." aria-label="Search" />
-          <button class="tno-search__btn" type="submit" aria-label="Submit search">⌕</button>
-        </form>
+        <div class="tno-search">
+          <form action="{{ routes.search_url }}" method="get" role="search">
+            <input type="search" name="q" placeholder="Search..." class="tno-search__input" aria-label="Search">
+            <button type="submit" class="tno-search__button" aria-label="Submit search">⌕</button>
+          </form>
+        </div>
       {% endif %}
 
       {%- comment %} Account Icon {%- endcomment %}

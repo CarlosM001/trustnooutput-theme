@@ -416,6 +416,9 @@ button,
   --tno-amber: #ffb000;
   --tno-black: #0a0a0f;
   --tno-white: #ffffff;
+  /* Header/Nav Typography */
+  --tno-nav-size: 1.12rem;
+  --tno-nav-tracking: 0.08em;
 
   /* Semantic Colors */
   --tno-bg: #ffffff;
@@ -1042,10 +1045,23 @@ button.shopify-payment-button__button--unbranded {
 .tno-nav__item { position: relative; }
 .tno-nav__link {
   font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);
-  font-size: 1.05rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;
-  color: #ffffff; text-decoration: none; position: relative; transition: color var(--tno-fast) var(--tno-ease);
+  font-size: var(--tno-nav-size); letter-spacing: var(--tno-nav-tracking); text-transform: uppercase; font-weight: 600;
+  color: #e8e8ea; text-decoration: none; position: relative; transition: color var(--tno-fast) var(--tno-ease);
 }
-.tno-nav__link:hover { color: #00FF66; text-shadow: 0 0 0 rgba(0,0,0,0), 0 0 0 rgba(0,0,0,0), 1px 0 0 var(--tno-cyan), -1px 0 0 var(--tno-magenta); }
+.tno-nav__link:hover { color: #00FF66; text-shadow: 0 0 8px rgba(0,255,102,.35), -1px 0 #ff00ff80, 1px 0 #00ffff80; }
+
+/* Also target any nav anchors nested directly under .tno-nav for safety */
+.header--tno .tno-nav a {
+  font-size: var(--tno-nav-size);
+  letter-spacing: var(--tno-nav-tracking);
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #e8e8ea;
+}
+.header--tno .tno-nav a:hover {
+  color: #00ff66;
+  text-shadow: 0 0 8px rgba(0,255,102,.35), -1px 0 #ff00ff80, 1px 0 #00ffff80;
+}
 .tno-nav__toggle { position: relative; margin-left: 6px; width: 16px; height: 16px; background: none; border: 0; cursor: pointer; vertical-align: middle; }
 .tno-nav__toggle::after { content: '▾'; font-size: 0.8rem; line-height: 1; color: currentColor; }
 .tno-nav__toggle:focus-visible { outline: 2px solid var(--tno-accent); outline-offset: 2px; }
@@ -1103,7 +1119,28 @@ button.shopify-payment-button__button--unbranded {
 .tno-search { display: flex; align-items: center; gap: 6px; height: 36px; background: rgba(0,0,0,0.4); padding: 0 6px 0 10px; border: 1px solid rgba(255,255,255,0.14); border-radius: 999px; }
 .tno-search__input { height: 100%; width: 170px; min-width: 120px; background: transparent; border: 0; outline: none; color: #fff; font-family: var(--tno-mono, ui-monospace, monospace); font-size: 0.95rem; }
 .tno-search__input::placeholder { color: rgba(255,255,255,0.6); }
-.tno-search__btn { height: 28px; min-width: 36px; padding: 0 10px; border: 0; border-radius: 999px; background: #00FF66; color: #001b0d; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
-.tno-search__btn:hover { filter: saturate(1.2); }
+.tno-search__button { height: 28px; min-width: 36px; padding: 0 10px; border: 0; border-radius: 999px; background: #00FF66; color: #001b0d; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+.tno-search__button:hover { filter: saturate(1.2); }
+
+/* ==========================================================================
+   13) HEADER—REQUESTED STYLE RULES (HIGHER PRIORITY)
+   ========================================================================== */
+.header--tno {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(8, 8, 10, 0.92);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  transition: background 200ms ease, backdrop-filter 200ms ease;
+}
+.header--tno.is-transparent {
+  background: transparent;
+  border-bottom-color: rgba(255,255,255,0.12);
+}
+.header--tno.is-transparent.is-scrolled {
+  background: rgba(8, 8, 10, 0.85);
+  backdrop-filter: blur(6px);
+  border-bottom-color: rgba(255,255,255,0.08);
+}
 
 
