@@ -24,8 +24,10 @@ if (!customElements.get('quick-add-bulk')) {
         this.cartUpdateUnsubscriber = subscribe(PUB_SUB_EVENTS.cartUpdate, (event) => {
           if (
             event.source === 'quick-add' ||
-            (event.cartData.items && !event.cartData.items.some((item) => item.id === parseInt(this.dataset.index))) ||
-            (event.cartData.variant_id && !(event.cartData.variant_id === parseInt(this.dataset.index)))
+            (event.cartData.items &&
+              !event.cartData.items.some((item) => item.id === parseInt(this.dataset.index))) ||
+            (event.cartData.variant_id &&
+              !(event.cartData.variant_id === parseInt(this.dataset.index)))
           ) {
             return;
           }
@@ -91,7 +93,9 @@ if (!customElements.get('quick-add-bulk')) {
             .then((response) => response.text())
             .then((responseText) => {
               const html = new DOMParser().parseFromString(responseText, 'text/html');
-              const sourceQty = html.querySelector(`#quick-add-bulk-${this.dataset.index}-${this.sectionId}`);
+              const sourceQty = html.querySelector(
+                `#quick-add-bulk-${this.dataset.index}-${this.sectionId}`
+              );
               if (sourceQty) {
                 this.innerHTML = sourceQty.innerHTML;
               }
@@ -167,11 +171,15 @@ if (!customElements.get('quick-add-bulk')) {
 
       renderSections(parsedState, ids) {
         const intersection = this.queue.filter((element) => ids.includes(element.id));
-        if (intersection.length !== 0) return;
+        if (intersection.length !== 0) {
+          return;
+        }
         this.getSectionsToRender().forEach((section) => {
           const sectionElement = document.getElementById(section.id);
           if (section.section === 'cart-drawer') {
-            sectionElement.closest('cart-drawer')?.classList.toggle('is-empty', parsedState.items.length.length === 0);
+            sectionElement
+              .closest('cart-drawer')
+              ?.classList.toggle('is-empty', parsedState.items.length.length === 0);
           }
           const elementToReplace =
             sectionElement && sectionElement.querySelector(section.selector)

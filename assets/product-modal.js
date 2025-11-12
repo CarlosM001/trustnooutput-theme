@@ -21,7 +21,9 @@ if (!customElements.get('product-modal')) {
         ).forEach((element) => {
           element.classList.remove('active');
         });
-        const activeMedia = this.querySelector(`[data-media-id="${this.openedBy.getAttribute('data-media-id')}"]`);
+        const activeMedia = this.querySelector(
+          `[data-media-id="${this.openedBy.getAttribute('data-media-id')}"]`
+        );
         const activeMediaTemplate = activeMedia.querySelector('template');
         const activeMediaContent = activeMediaTemplate ? activeMediaTemplate.content : null;
         activeMedia.classList.add('active');
@@ -34,8 +36,9 @@ if (!customElements.get('product-modal')) {
           activeMedia.nodeName == 'DEFERRED-MEDIA' &&
           activeMediaContent &&
           activeMediaContent.querySelector('.js-youtube')
-        )
+        ) {
           activeMedia.loadContent();
+        }
       }
     }
   );

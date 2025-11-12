@@ -36,7 +36,12 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: repeating-linear-gradient(0deg, transparent 0px, rgba(0, 255, 65, 0.03) 1px, transparent 2px);
+    background: repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      rgba(0, 255, 65, 0.03) 1px,
+      transparent 2px
+    );
     opacity: 0.4;
     pointer-events: none;
     animation: scanline-drift 8s linear infinite;
@@ -74,7 +79,9 @@
     height: 12px;
     background: var(--color-magenta, #ff00ff);
     border-radius: 50%;
-    box-shadow: 20px 0 0 var(--color-cyan, #00fff0), 40px 0 0 var(--color-terminal-green, #00ff41);
+    box-shadow:
+      20px 0 0 var(--color-cyan, #00fff0),
+      40px 0 0 var(--color-terminal-green, #00ff41);
   }
 
   .newsletter-trust__prompt {
@@ -390,7 +397,9 @@
     .newsletter-trust__header::before {
       width: 8px;
       height: 8px;
-      box-shadow: 14px 0 0 var(--color-cyan, #00fff0), 28px 0 0 var(--color-terminal-green, #00ff41);
+      box-shadow:
+        14px 0 0 var(--color-cyan, #00fff0),
+        28px 0 0 var(--color-terminal-green, #00ff41);
     }
 
     .newsletter-trust__input {

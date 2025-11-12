@@ -13,23 +13,6 @@
   "sections": {
     "header": {
       "type": "header-trust",
-      "blocks": {
-        "mega_menu_GQVdcE": {
-          "type": "mega_menu",
-          "settings": {
-            "title_match": "",
-            "col1": "",
-            "col1_title": "// Shop by Category",
-            "col2": "",
-            "col2_title": "// Shop by Style",
-            "col3": "",
-            "col3_title": "// Drops"
-          }
-        }
-      },
-      "block_order": [
-        "mega_menu_GQVdcE"
-      ],
       "settings": {
         "sticky_header": true,
         "show_search": true,
@@ -40,7 +23,5 @@
       }
     }
   },
-  "order": [
-    "header"
-  ]
+  "order": ["header"]
 }

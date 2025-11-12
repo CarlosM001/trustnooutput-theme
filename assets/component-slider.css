@@ -3,6 +3,7 @@ slider-component {
     5rem,
     calc((100vw - var(--page-width) + 10rem - var(--grid-desktop-horizontal-spacing)) / 2)
   );
+
   position: relative;
   display: block;
 }
@@ -11,13 +12,13 @@ slider-component.slider-component-full-width {
   --desktop-margin-left-first-item: 1.5rem;
 }
 
-@media screen and (max-width: 749px) {
+@media screen and (width <= 749px) {
   slider-component.page-width {
     padding: 0 1.5rem;
   }
 }
 
-@media screen and (min-width: 749px) and (max-width: 990px) {
+@media screen and (width >= 749px) and (width <= 990px) {
   slider-component.page-width {
     padding: 0 5rem;
   }
@@ -25,14 +26,19 @@ slider-component.slider-component-full-width {
 
 .slider__slide {
   --focus-outline-padding: 0.5rem;
-  --shadow-padding-top: calc((var(--shadow-vertical-offset) * -1 + var(--shadow-blur-radius)) * var(--shadow-visible));
-  --shadow-padding-bottom: calc((var(--shadow-vertical-offset) + var(--shadow-blur-radius)) * var(--shadow-visible));
+  --shadow-padding-top: calc(
+    (var(--shadow-vertical-offset) * -1 + var(--shadow-blur-radius)) * var(--shadow-visible)
+  );
+  --shadow-padding-bottom: calc(
+    (var(--shadow-vertical-offset) + var(--shadow-blur-radius)) * var(--shadow-visible)
+  );
+
   scroll-snap-align: start;
   flex-shrink: 0;
   padding-bottom: 0;
 }
 
-@media screen and (max-width: 749px) {
+@media screen and (width <= 749px) {
   .slider.slider--mobile {
     position: relative;
     flex-wrap: inherit;
@@ -45,7 +51,7 @@ slider-component.slider-component-full-width {
   }
 
   /* Fix to show some space at the end of our sliders in all browsers */
-  .slider--mobile:after {
+  .slider--mobile::after {
     content: '';
     width: 0;
     padding-left: 1.5rem;
@@ -57,7 +63,8 @@ slider-component.slider-component-full-width {
     padding-bottom: max(var(--focus-outline-padding), var(--shadow-padding-bottom));
   }
 
-  .slider.slider--mobile.contains-card--standard .slider__slide:not(.collection-list__item--no-media) {
+  .slider.slider--mobile.contains-card--standard
+    .slider__slide:not(.collection-list__item--no-media) {
     padding-bottom: var(--focus-outline-padding);
   }
 
@@ -66,7 +73,7 @@ slider-component.slider-component-full-width {
   }
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (width >= 750px) {
   .slider.slider--tablet-up {
     position: relative;
     flex-wrap: inherit;
@@ -82,7 +89,7 @@ slider-component.slider-component-full-width {
   }
 }
 
-@media screen and (max-width: 989px) {
+@media screen and (width <= 989px) {
   .slider.slider--tablet {
     position: relative;
     flex-wrap: inherit;
@@ -95,7 +102,7 @@ slider-component.slider-component-full-width {
   }
 
   /* Fix to show some space at the end of our sliders in all browsers */
-  .slider--tablet:after {
+  .slider--tablet::after {
     content: '';
     width: 0;
     padding-left: 1.5rem;
@@ -108,7 +115,8 @@ slider-component.slider-component-full-width {
     padding-bottom: max(var(--focus-outline-padding), var(--shadow-padding-bottom));
   }
 
-  .slider.slider--tablet.contains-card--standard .slider__slide:not(.collection-list__item--no-media) {
+  .slider.slider--tablet.contains-card--standard
+    .slider__slide:not(.collection-list__item--no-media) {
     padding-bottom: var(--focus-outline-padding);
   }
 
@@ -132,7 +140,7 @@ slider-component.slider-component-full-width {
   scroll-snap-align: center;
 }
 
-@media screen and (min-width: 990px) {
+@media screen and (width >= 990px) {
   .slider-component-desktop.page-width {
     max-width: none;
   }
@@ -149,7 +157,7 @@ slider-component.slider-component-full-width {
   }
 
   /* Fix to show some space at the end of our sliders in all browsers */
-  .slider--desktop:after {
+  .slider--desktop::after {
     content: '';
     width: 0;
     padding-left: 5rem;
@@ -177,31 +185,46 @@ slider-component.slider-component-full-width {
   }
 
   /* Fix to show some space at the end of our sliders in all browsers */
-  .slider-component-full-width .slider--desktop:after {
+  .slider-component-full-width .slider--desktop::after {
     padding-left: 1.5rem;
   }
 
   .slider--desktop.grid--5-col-desktop .grid__item {
-    width: calc((100% - var(--desktop-margin-left-first-item)) / 5 - var(--grid-desktop-horizontal-spacing) * 2);
+    width: calc(
+      (100% - var(--desktop-margin-left-first-item)) / 5 - var(--grid-desktop-horizontal-spacing) *
+        2
+    );
   }
 
   .slider--desktop.grid--4-col-desktop .grid__item {
-    width: calc((100% - var(--desktop-margin-left-first-item)) / 4 - var(--grid-desktop-horizontal-spacing) * 3);
+    width: calc(
+      (100% - var(--desktop-margin-left-first-item)) / 4 - var(--grid-desktop-horizontal-spacing) *
+        3
+    );
   }
 
   .slider--desktop.grid--3-col-desktop .grid__item {
-    width: calc((100% - var(--desktop-margin-left-first-item)) / 3 - var(--grid-desktop-horizontal-spacing) * 4);
+    width: calc(
+      (100% - var(--desktop-margin-left-first-item)) / 3 - var(--grid-desktop-horizontal-spacing) *
+        4
+    );
   }
 
   .slider--desktop.grid--2-col-desktop .grid__item {
-    width: calc((100% - var(--desktop-margin-left-first-item)) / 2 - var(--grid-desktop-horizontal-spacing) * 5);
+    width: calc(
+      (100% - var(--desktop-margin-left-first-item)) / 2 - var(--grid-desktop-horizontal-spacing) *
+        5
+    );
   }
 
   .slider--desktop.grid--1-col-desktop .grid__item {
-    width: calc((100% - var(--desktop-margin-left-first-item)) - var(--grid-desktop-horizontal-spacing) * 9);
+    width: calc(
+      (100% - var(--desktop-margin-left-first-item)) - var(--grid-desktop-horizontal-spacing) * 9
+    );
   }
 
-  .slider.slider--desktop.contains-card--standard .slider__slide:not(.collection-list__item--no-media) {
+  .slider.slider--desktop.contains-card--standard
+    .slider__slide:not(.collection-list__item--no-media) {
     padding-bottom: var(--focus-outline-padding);
   }
 
@@ -247,7 +270,7 @@ slider-component.slider-component-full-width {
   min-width: 4.4rem;
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (width >= 750px) {
   .slider-counter--dots {
     margin: 0 1.2rem;
   }
@@ -257,7 +280,7 @@ slider-component.slider-component-full-width {
   padding: 1rem;
 }
 
-@media screen and (max-width: 749px) {
+@media screen and (width <= 749px) {
   .slider-counter__link {
     padding: 0.7rem;
   }
@@ -317,19 +340,19 @@ slider-component.slider-component-full-width {
   justify-content: center;
 }
 
-@media screen and (min-width: 990px) {
-  .slider:not(.slider--everywhere):not(.slider--desktop) + .slider-buttons {
+@media screen and (width >= 990px) {
+  .slider:not(.slider--everywhere, .slider--desktop) + .slider-buttons {
     display: none;
   }
 }
 
-@media screen and (max-width: 989px) {
+@media screen and (width <= 989px) {
   .slider--desktop:not(.slider--tablet) + .slider-buttons {
     display: none;
   }
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (width >= 750px) {
   .slider--mobile + .slider-buttons {
     display: none;
   }
