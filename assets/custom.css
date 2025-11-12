@@ -45,6 +45,7 @@ html {
   --glitch-duration: 2.5s;
   --glitch-intensity: 0.5;
   --parallax-strength: 0.15;
+  --rgb-shift: 0.08; /* Default fallback (8%) until Liquid overrides */
 }
 
 /* 02) Typo & links */
@@ -823,6 +824,7 @@ button.shopify-payment-button__button--unbranded {
   color: var(--tno-cyan);
   opacity: calc(0.8 * var(--glitch-intensity));
   z-index: -1;
+  transform: translateX(calc(var(--rgb-shift) * 14px));
 }
 
 .tno-glitch-strong::after {
@@ -830,6 +832,7 @@ button.shopify-payment-button__button--unbranded {
   color: var(--tno-magenta);
   opacity: calc(0.8 * var(--glitch-intensity));
   z-index: -1;
+  transform: translateX(calc(var(--rgb-shift) * -14px));
 }
 
 /* Soft Glitch */
@@ -838,6 +841,7 @@ button.shopify-payment-button__button--unbranded {
   color: var(--tno-cyan);
   opacity: calc(0.5 * var(--glitch-intensity));
   z-index: -1;
+  transform: translateX(calc(var(--rgb-shift) * 8px));
 }
 
 .tno-glitch-soft::after {
@@ -845,6 +849,7 @@ button.shopify-payment-button__button--unbranded {
   color: var(--tno-magenta);
   opacity: calc(0.5 * var(--glitch-intensity));
   z-index: -1;
+  transform: translateX(calc(var(--rgb-shift) * -8px));
 }
 
 /* Glitch mode controls (pulse/off) */
