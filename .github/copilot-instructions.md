@@ -1,5 +1,7 @@
 # 🧬 GitHub Copilot Instructions – TRUST.NO.OUTPUT Shopify Theme
 
+Note: A more detailed and operational version of these instructions also lives at `/copilot-instructions.md` in the project root and should be treated as the source of truth. Keep both files aligned; if in doubt, prefer the root file.
+
 ## 🧭 Project Overview
 
 This project is a **Shopify theme** for the cyber-philosophical fashion label **TRUST.NO.OUTPUT**.
