@@ -10,20 +10,20 @@
   margin-top: 0;
 }
 
-@media screen and (max-width: 749px) {
+@media screen and (width <= 749px) {
   .multicolumn .title-wrapper-with-link {
     margin-bottom: 3rem;
   }
 }
 
-@media screen and (min-width: 750px) and (max-width: 989px) {
+@media screen and (width >= 750px) and (width <= 989px) {
   .multicolumn__title {
     padding-left: 5rem;
     padding-right: 5rem;
   }
 }
 
-@media screen and (max-width: 989px) {
+@media screen and (width <= 989px) {
   .multicolumn .page-width {
     padding-left: 0;
     padding-right: 0;
@@ -38,7 +38,8 @@
   width: 50%;
 }
 
-.multicolumn-list__item.center .multicolumn-card__image-wrapper:not(.multicolumn-card__image-wrapper--full-width),
+.multicolumn-list__item.center
+  .multicolumn-card__image-wrapper:not(.multicolumn-card__image-wrapper--full-width),
 .multicolumn-list__item:only-child {
   margin-left: auto;
   margin-right: auto;
@@ -48,7 +49,7 @@
   margin-top: 1.5rem;
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (width >= 750px) {
   .multicolumn .button {
     margin-top: 4rem;
   }
@@ -107,7 +108,7 @@
   transform: translateX(-50%);
 }
 
-@media screen and (max-width: 749px) {
+@media screen and (width <= 749px) {
   .multicolumn-list {
     margin: 0;
     width: 100%;
@@ -119,14 +120,14 @@
   }
 }
 
-@media screen and (min-width: 750px) and (max-width: 989px) {
+@media screen and (width >= 750px) and (width <= 989px) {
   .multicolumn-list:not(.slider) {
     padding-left: 5rem;
     padding-right: 5rem;
   }
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (width >= 750px) {
   .multicolumn-list.slider {
     padding: 0;
   }
@@ -177,17 +178,17 @@
   padding-right: 2.5rem;
 }
 
-@media screen and (max-width: 749px) {
+@media screen and (width <= 749px) {
   .background-none .slider .multicolumn-card__info {
     padding-bottom: 1rem;
   }
 
   .multicolumn.background-none .slider.slider--mobile {
-    margin-bottom: 0rem;
+    margin-bottom: 0;
   }
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (width >= 750px) {
   .background-none .multicolumn-card__image-wrapper {
     margin-left: 1.5rem;
     margin-right: 1.5rem;
@@ -226,7 +227,7 @@
   white-space: nowrap;
 }
 
-@media screen and (min-width: 990px) {
+@media screen and (width >= 990px) {
   .multicolumn-list__item--empty {
     display: list-item;
   }

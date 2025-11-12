@@ -8,9 +8,9 @@
   padding-bottom: 2rem;
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (width >= 750px) {
   .collection-hero.collection-hero--with-image {
-    padding: calc(4rem + var(--page-width-margin)) 0 calc(4rem + var(--page-width-margin));
+    padding: calc(4rem + var(--page-width-margin)) 0;
     overflow: hidden;
   }
 
@@ -23,7 +23,7 @@
   flex-basis: 100%;
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (width >= 750px) {
   .collection-hero {
     padding: 0;
   }
@@ -46,7 +46,7 @@
   line-height: calc(1 + 0.5 / var(--font-body-scale));
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (width >= 750px) {
   .collection-hero__title + .collection-hero__description {
     font-size: 1.8rem;
     margin-top: 2rem;
@@ -73,17 +73,17 @@
 .collection-hero__image-container {
   border: var(--media-border-width) solid rgba(var(--color-foreground), var(--media-border-opacity));
   border-radius: var(--media-radius);
-  box-shadow: var(--media-shadow-horizontal-offset) var(--media-shadow-vertical-offset) var(--media-shadow-blur-radius)
-    rgba(var(--color-shadow), var(--media-shadow-opacity));
+  box-shadow: var(--media-shadow-horizontal-offset) var(--media-shadow-vertical-offset)
+    var(--media-shadow-blur-radius) rgba(var(--color-shadow), var(--media-shadow-opacity));
 }
 
-@media screen and (max-width: 749px) {
+@media screen and (width <= 749px) {
   .collection-hero__image-container {
     height: 20rem;
   }
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (width >= 750px) {
   .collection-hero--with-image .collection-hero__text-wrapper {
     padding: 4rem 2rem 4rem 0;
     flex-basis: 50%;

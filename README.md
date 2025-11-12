@@ -20,13 +20,12 @@ Cyber‑philosophical streetwear theme built on a customized Spotlight base. Gli
   ## Debugging
 
   Two launch configs (open Run & Debug panel):
-
   1. "Debug: BrowserSync (Port 3000)" – launches against the BrowserSync proxy (preferred for live reload + injected CSS).
   2. "Debug: Shopify Dev (Port 9292)" – launches directly against the Shopify CLI server (raw output, helpful if proxy issues).
 
   Both can auto-start tasks:
-  - BrowserSync config runs the compound *Getting Started* (opens instructions + starts dev stack).
-  - Shopify Dev config runs only *Dev: Shopify + BrowserSync*.
+  - BrowserSync config runs the compound _Getting Started_ (opens instructions + starts dev stack).
+  - Shopify Dev config runs only _Dev: Shopify + BrowserSync_.
 
   Breakpoints: Place in `assets/*.js`; source maps use project root (`webRoot`).
 
@@ -44,4 +43,4 @@ Cyber‑philosophical streetwear theme built on a customized Spotlight base. Gli
 - `assets/custom.css` / `assets/custom.js` — TNO styles & motion logic
 - `sections/motion-hero-tno.liquid` — hero section
 - `postcss.config.js`, `bs-config.js`, `package.json` — tooling
- - `.vscode/tasks.json` / `.vscode/launch.json` — tasks and debug configs
+- `.vscode/tasks.json` / `.vscode/launch.json` — tasks and debug configs

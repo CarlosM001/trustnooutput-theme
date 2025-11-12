@@ -6,7 +6,9 @@ function hideProductModal() {
 document.addEventListener('shopify:block:select', function (event) {
   hideProductModal();
   const blockSelectedIsSlide = event.target.classList.contains('slideshow__slide');
-  if (!blockSelectedIsSlide) return;
+  if (!blockSelectedIsSlide) {
+    return;
+  }
 
   const parentSlideshowComponent = event.target.closest('slideshow-component');
   parentSlideshowComponent.pause();
@@ -20,15 +22,21 @@ document.addEventListener('shopify:block:select', function (event) {
 
 document.addEventListener('shopify:block:deselect', function (event) {
   const blockDeselectedIsSlide = event.target.classList.contains('slideshow__slide');
-  if (!blockDeselectedIsSlide) return;
+  if (!blockDeselectedIsSlide) {
+    return;
+  }
   const parentSlideshowComponent = event.target.closest('slideshow-component');
-  if (parentSlideshowComponent.autoplayButtonIsSetToPlay) parentSlideshowComponent.play();
+  if (parentSlideshowComponent.autoplayButtonIsSetToPlay) {
+    parentSlideshowComponent.play();
+  }
 });
 
 document.addEventListener('shopify:section:load', () => {
   hideProductModal();
   const zoomOnHoverScript = document.querySelector('[id^=EnableZoomOnHover]');
-  if (!zoomOnHoverScript) return;
+  if (!zoomOnHoverScript) {
+    return;
+  }
   if (zoomOnHoverScript) {
     const newScriptTag = document.createElement('script');
     newScriptTag.src = zoomOnHoverScript.src;

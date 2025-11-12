@@ -4,12 +4,12 @@
   "description": "TRUST.NO.OUTPUT Shopify Theme Development",
   "scripts": {
     "dev": "npm-run-all --parallel dev:theme dev:sync",
-    "dev:theme": "shopify theme dev --store=9csvgi-16.myshopify.com --theme=186444382583",
+    "dev:theme": "shopify theme dev --store=9csvgi-16.myshopify.com --theme=186572767607",
     "dev:sync": "browser-sync start --config bs-config.js",
     "dev:windows": "concurrently \"npm:dev:theme\" \"npm:dev:sync\"",
-    "theme:push:dev": "shopify theme push --store=9csvgi-16.myshopify.com --theme=186444382583",
+    "theme:push:dev": "shopify theme push --store=9csvgi-16.myshopify.com --theme=186572767607",
     "theme:push:live": "shopify theme push --store=9csvgi-16.myshopify.com --theme=186572767607 --live",
-    "theme:pull": "shopify theme pcustom.min.cssull --store=9csvgi-16.myshopify.com --theme=186444382583",
+    "theme:pull": "shopify theme pull --store=9csvgi-16.myshopify.com --theme=186572767607",
     "theme:check": "shopify theme check",
     "build:css": "postcss assets/custom.css -o assets/custom.min.css",
     "watch:css": "postcss assets/custom.css -o assets/custom.min.css --watch",
@@ -18,7 +18,8 @@
     "lint:css:fix": "stylelint \"assets/**/*.css\" --fix --allow-empty-input",
     "lint:js": "eslint \"assets/**/*.js\" --no-error-on-unmatched-pattern",
     "lint:js:fix": "eslint \"assets/**/*.js\" --fix --no-error-on-unmatched-pattern",
-    "hygiene": "npm-run-all -s fmt lint:css:fix lint:js:fix"
+    "hygiene": "npm-run-all -s fmt lint:css:fix lint:js:fix",
+    "lh:report": "lighthouse http://localhost:3000 --quiet --chrome-flags='--headless' --output html --output-path ./reports/lh.html"
   },
   "devDependencies": {
     "browser-sync": "^2.29.3",

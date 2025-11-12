@@ -40,6 +40,11 @@ html {
   --tno-fast: 0.2s var(--tno-ease);
   --tno-base: 0.4s var(--tno-ease);
   --tno-slow: 0.8s var(--tno-ease);
+
+  /* Motion & Glitch Controls (Brand Tuning) */
+  --glitch-duration: 2.5s;
+  --glitch-intensity: 0.5;
+  --parallax-strength: 0.15;
 }
 
 /* 02) Typo & links */
@@ -252,7 +257,7 @@ button,
     ui-sans-serif,
     system-ui,
     -apple-system,
-    "Segoe UI",
+    'Segoe UI',
     Roboto,
     'Helvetica Neue',
     Arial,
@@ -814,30 +819,87 @@ button.shopify-payment-button__button--unbranded {
 
 /* Strong Glitch */
 .tno-glitch-strong::before {
-  animation: glitch-1 2.5s infinite;
+  animation: glitch-1 var(--glitch-duration) infinite;
   color: var(--tno-cyan);
+  opacity: calc(0.8 * var(--glitch-intensity));
   z-index: -1;
 }
 
 .tno-glitch-strong::after {
-  animation: glitch-2 2.5s infinite;
+  animation: glitch-2 var(--glitch-duration) infinite;
   color: var(--tno-magenta);
+  opacity: calc(0.8 * var(--glitch-intensity));
   z-index: -1;
 }
 
 /* Soft Glitch */
 .tno-glitch-soft::before {
-  animation: glitch-1 3.5s infinite;
+  animation: glitch-1 calc(var(--glitch-duration) * 1.4) infinite;
   color: var(--tno-cyan);
-  opacity: 0.5;
+  opacity: calc(0.5 * var(--glitch-intensity));
   z-index: -1;
 }
 
 .tno-glitch-soft::after {
-  animation: glitch-2 3.5s infinite;
+  animation: glitch-2 calc(var(--glitch-duration) * 1.4) infinite;
   color: var(--tno-magenta);
-  opacity: 0.5;
+  opacity: calc(0.5 * var(--glitch-intensity));
   z-index: -1;
+}
+
+/* Glitch mode controls (pulse/off) */
+
+/* When glitch mode is "off", suppress pseudo elements entirely */
+[data-glitch-mode='off'] .tno-glitch-strong::before,
+[data-glitch-mode='off'] .tno-glitch-strong::after,
+[data-glitch-mode='off'] .tno-glitch-soft::before,
+[data-glitch-mode='off'] .tno-glitch-soft::after,
+[data-glitch-mode='off'] .glitch::before,
+[data-glitch-mode='off'] .glitch::after {
+  animation: none !important;
+  opacity: 0 !important;
+}
+
+/* Pulse variant: no continuous animation; short burst when .is-glitching */
+.tno-glitch-pulse::before,
+.tno-glitch-pulse::after {
+  animation: none !important;
+  opacity: calc(0.3 * var(--glitch-intensity));
+}
+
+.tno-glitch-pulse.is-glitching::before {
+  animation: glitch-1 0.9s steps(12) 1;
+}
+
+.tno-glitch-pulse.is-glitching::after {
+  animation: glitch-2 0.9s steps(12) 1;
+}
+
+/* A/B Test Variants: Apply glitch behavior based on HTML class */
+
+/* Pulse variant: disable continuous animation */
+html.tno-ab-pulse .tno-glitch-strong::before,
+html.tno-ab-pulse .tno-glitch-strong::after,
+html.tno-ab-pulse .tno-glitch-soft::before,
+html.tno-ab-pulse .tno-glitch-soft::after {
+  animation: none !important;
+}
+
+/* Continuous variant: always animate (default behavior, explicit for clarity) */
+html.tno-ab-continuous .tno-glitch-strong::before {
+  animation: glitch-1 var(--glitch-duration) infinite;
+}
+
+html.tno-ab-continuous .tno-glitch-strong::after {
+  animation: glitch-2 var(--glitch-duration) infinite;
+}
+
+html.tno-ab-continuous .tno-glitch-soft::before {
+  animation: glitch-1 calc(var(--glitch-duration) * 1.4) infinite;
+}
+
+html.tno-ab-continuous .tno-glitch-soft::after {
+  animation: glitch-2 calc(var(--glitch-duration) * 1.4) infinite;
 }
 
 /* ==========================================================================
@@ -868,8 +930,9 @@ button.shopify-payment-button__button--unbranded {
   will-change: transform;
 }
 
-/* Reduced Motion */
+/* Reduced Motion – Complete fallback with soft fade */
 @media (prefers-reduced-motion: reduce) {
+  /* Disable all motion */
   .reveal,
   [data-parallax],
   [data-mouse-parallax],
@@ -882,7 +945,29 @@ button.shopify-payment-button__button--unbranded {
     animation: none !important;
     transition: none !important;
     transform: none !important;
-    opacity: 1 !important;
+  }
+
+  /* Soft fade alternative for reveal elements */
+  .reveal {
+    opacity: 0;
+    transition: opacity 0.4s ease !important;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+  }
+
+  /* Ensure glitch pseudo-elements are hidden */
+  .tno-glitch-strong::before,
+  .tno-glitch-strong::after,
+  .tno-glitch-soft::before,
+  .tno-glitch-soft::after {
+    opacity: 0 !important;
+  }
+
+  /* Hero image stays static */
+  .tno-hero-img {
+    transform: scale(1) !important;
   }
 }
 

@@ -232,6 +232,83 @@
     ]
   },
   {
+    "name": "Motion & Visuals",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Glitch & Motion Settings"
+      },
+      {
+        "type": "paragraph",
+        "content": "Control the default glitch behavior and motion strength across the theme. Individual sections may override these settings."
+      },
+      {
+        "type": "select",
+        "id": "tno_default_glitch_mode",
+        "label": "Default Glitch Mode",
+        "default": "pulse",
+        "options": [
+          {
+            "value": "pulse",
+            "label": "Pulse (Recommended)"
+          },
+          {
+            "value": "continuous",
+            "label": "Continuous"
+          },
+          {
+            "value": "off",
+            "label": "Off"
+          }
+        ],
+        "info": "Pulse: Short, randomized bursts. Continuous: Always animating. Off: No glitch effects."
+      },
+      {
+        "type": "select",
+        "id": "tno_glitch_override",
+        "label": "Glitch Mode Override (A/B Test)",
+        "default": "auto",
+        "options": [
+          {
+            "value": "auto",
+            "label": "Auto (A/B Test 50/50)"
+          },
+          {
+            "value": "pulse",
+            "label": "Force Pulse"
+          },
+          {
+            "value": "continuous",
+            "label": "Force Continuous"
+          }
+        ],
+        "info": "Auto: Users are randomly assigned Pulse or Continuous mode (persisted in localStorage). Force options override A/B testing for all users."
+      },
+      {
+        "type": "range",
+        "id": "tno_glitch_intensity",
+        "label": "Glitch Intensity",
+        "min": 0,
+        "max": 100,
+        "step": 10,
+        "unit": "%",
+        "default": 50,
+        "info": "Controls the visual strength of glitch effects (pseudo-element opacity and displacement)."
+      },
+      {
+        "type": "range",
+        "id": "tno_parallax_strength",
+        "label": "Parallax Strength",
+        "min": 0,
+        "max": 50,
+        "step": 5,
+        "unit": "%",
+        "default": 20,
+        "info": "Controls how much elements move during scroll. 0% = no parallax, 50% = maximum movement."
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.buttons.name",
     "settings": [
       {

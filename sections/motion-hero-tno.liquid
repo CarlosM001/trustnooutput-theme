@@ -3,7 +3,11 @@
   Reine Struktur (CSS in assets/custom.css)
 {% endcomment %}
 
-<section class="tno-hero tno-hero--center reveal" data-parallax>
+<section
+  class="tno-hero tno-hero--center reveal"
+  data-parallax="{{ section.settings.parallax_strength | default: 0.25 }}"
+  data-glitch-mode="{{ section.settings.glitch_mode | default: 'pulse' }}"
+>
   <div class="tno-hero-media">
     {%- liquid
       if section.index == 0
@@ -17,7 +21,10 @@
       {{
         section.settings.hero_image
         | image_url: width: 2200
-        | image_tag: loading: loading_strategy, alt: section.settings.headline, class: 'tno-hero-img'
+        | image_tag:
+          loading: loading_strategy,
+          alt: section.settings.headline,
+          class: 'tno-hero-img'
       }}
     {%- else -%}
       <img
@@ -36,7 +43,7 @@
   <div class="tno-hero-caption">
     <div class="tno-hero-caption__content">
       <h1
-        class="tno-title tno-glitch-strong"
+        class="tno-title tno-glitch-strong tno-glitch-pulse"
         data-text="{{ section.settings.headline | default: 'REALITY IS UNDER CONSTRUCTION.' }}"
       >
         {{ section.settings.headline | default: 'REALITY IS UNDER CONSTRUCTION.' }}
@@ -44,7 +51,7 @@
 
       {%- if section.settings.subtext != blank -%}
         <p
-          class="tno-subtext tno-glitch-soft"
+          class="tno-subtext tno-glitch-soft tno-glitch-pulse"
           data-text="{{ section.settings.subtext }}"
         >
           {{ section.settings.subtext }}
@@ -94,12 +101,48 @@
   "name": "Motion Hero (TNO)",
   "settings": [
     { "type": "text", "id": "headline", "label": "Überschrift", "default": "TRUST.NO.OUTPUT" },
-    { "type": "textarea", "id": "subtext", "label": "Untertitel / Text", "default": "DESIGNS FOR SIMULATED MIND" },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Untertitel / Text",
+      "default": "DESIGNS FOR SIMULATED MIND"
+    },
+    {
+      "type": "select",
+      "id": "glitch_mode",
+      "label": "Glitch Modus",
+      "default": "pulse",
+      "options": [
+        { "value": "pulse", "label": "Pulse (empfohlen)" },
+        { "value": "continuous", "label": "Kontinuierlich" },
+        { "value": "off", "label": "Aus" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "parallax_strength",
+      "label": "Parallax Stärke",
+      "default": 0.2,
+      "min": 0,
+      "max": 0.5,
+      "step": 0.1,
+      "unit": "ratio"
+    },
     { "type": "image_picker", "id": "hero_image", "label": "Hero-Bild" },
     { "type": "header", "content": "Buttons" },
-    { "type": "text", "id": "button1_label", "label": "Button 1 – Label", "default": "ENTER SIMULATION" },
+    {
+      "type": "text",
+      "id": "button1_label",
+      "label": "Button 1 – Label",
+      "default": "ENTER SIMULATION"
+    },
     { "type": "url", "id": "button1_link", "label": "Button 1 – Link" },
-    { "type": "text", "id": "button2_label", "label": "Button 2 – Label", "default": "READ MANIFESTO" },
+    {
+      "type": "text",
+      "id": "button2_label",
+      "label": "Button 2 – Label",
+      "default": "READ MANIFESTO"
+    },
     { "type": "url", "id": "button2_link", "label": "Button 2 – Link" },
     { "type": "text", "id": "button3_label", "label": "Button 3 – Label", "default": "REFUSE" },
     { "type": "url", "id": "button3_link", "label": "Button 3 – Link" }

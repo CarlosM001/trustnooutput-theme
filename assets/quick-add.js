@@ -12,11 +12,16 @@ if (!customElements.get('quick-add-modal')) {
       }
 
       hide(preventFocus = false) {
-        const cartNotification = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
-        if (cartNotification) cartNotification.setActiveElement(this.openedBy);
+        const cartNotification =
+          document.querySelector('cart-notification') || document.querySelector('cart-drawer');
+        if (cartNotification) {
+          cartNotification.setActiveElement(this.openedBy);
+        }
         this.modalContent.innerHTML = '';
 
-        if (preventFocus) this.openedBy = null;
+        if (preventFocus) {
+          this.openedBy = null;
+        }
         super.hide();
       }
 
@@ -37,7 +42,9 @@ if (!customElements.get('quick-add-modal')) {
             if (window.Shopify && Shopify.PaymentButton) {
               Shopify.PaymentButton.init();
             }
-            if (window.ProductModel) window.ProductModel.loadShopifyXR();
+            if (window.ProductModel) {
+              window.ProductModel.loadShopifyXR();
+            }
 
             super.show(opener);
           })
@@ -50,8 +57,9 @@ if (!customElements.get('quick-add-modal')) {
 
       preprocessHTML(productElement) {
         productElement.classList.forEach((classApplied) => {
-          if (classApplied.startsWith('color-') || classApplied === 'gradient')
+          if (classApplied.startsWith('color-') || classApplied === 'gradient') {
             this.modalContent.classList.add(classApplied);
+          }
         });
         this.preventDuplicatedIDs(productElement);
         this.removeDOMElements(productElement);
@@ -66,13 +74,19 @@ if (!customElements.get('quick-add-modal')) {
 
       removeDOMElements(productElement) {
         const pickupAvailability = productElement.querySelector('pickup-availability');
-        if (pickupAvailability) pickupAvailability.remove();
+        if (pickupAvailability) {
+          pickupAvailability.remove();
+        }
 
         const productModal = productElement.querySelector('product-modal');
-        if (productModal) productModal.remove();
+        if (productModal) {
+          productModal.remove();
+        }
 
         const modalDialog = productElement.querySelectorAll('modal-dialog');
-        if (modalDialog) modalDialog.forEach((modal) => modal.remove());
+        if (modalDialog) {
+          modalDialog.forEach((modal) => modal.remove());
+        }
       }
 
       preventDuplicatedIDs(productElement) {
@@ -92,19 +106,27 @@ if (!customElements.get('quick-add-modal')) {
 
       removeGalleryListSemantic(productElement) {
         const galleryList = productElement.querySelector('[id^="Slider-Gallery"]');
-        if (!galleryList) return;
+        if (!galleryList) {
+          return;
+        }
 
         galleryList.setAttribute('role', 'presentation');
-        galleryList.querySelectorAll('[id^="Slide-"]').forEach((li) => li.setAttribute('role', 'presentation'));
+        galleryList
+          .querySelectorAll('[id^="Slide-"]')
+          .forEach((li) => li.setAttribute('role', 'presentation'));
       }
 
       updateImageSizes(productElement) {
         const product = productElement.querySelector('.product');
         const desktopColumns = product?.classList.contains('product--columns');
-        if (!desktopColumns) return;
+        if (!desktopColumns) {
+          return;
+        }
 
         const mediaImages = product.querySelectorAll('.product__media img');
-        if (!mediaImages.length) return;
+        if (!mediaImages.length) {
+          return;
+        }
 
         let mediaImageSizes =
           '(min-width: 1000px) 715px, (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw - 4rem)';

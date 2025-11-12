@@ -37,8 +37,5 @@
       }
     }
   },
-  "order": [
-    "newsletter_trust_jREXLt",
-    "footer"
-  ]
+  "order": ["newsletter_trust_jREXLt", "footer"]
 }

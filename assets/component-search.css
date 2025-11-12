@@ -42,8 +42,8 @@
   z-index: 4;
 }
 
-.search__button:not(:focus-visible):not(.focused),
-.reset__button:not(:focus-visible):not(.focused) {
+.search__button:not(:focus-visible, .focused),
+.reset__button:not(:focus-visible, .focused) {
   box-shadow: inherit;
   background-color: inherit;
 }
@@ -66,7 +66,7 @@
 
 /* Remove extra spacing for search inputs in Safari */
 input::-webkit-search-decoration {
-  -webkit-appearance: none;
+  appearance: none;
 }
 
 .template-search__results {

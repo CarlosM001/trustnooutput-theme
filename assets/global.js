@@ -43,7 +43,8 @@ class HTMLUpdateUtility {
     const uniqueKey = Date.now();
     oldNode.querySelectorAll('[id], [form]').forEach((element) => {
       element.id && (element.id = `${element.id}-${uniqueKey}`);
-      element.form && element.setAttribute('form', `${element.form.getAttribute('id')}-${uniqueKey}`);
+      element.form &&
+        element.setAttribute('form', `${element.form.getAttribute('id')}-${uniqueKey}`);
     });
 
     oldNode.parentNode.insertBefore(newNode, oldNode);
@@ -77,10 +78,15 @@ document.querySelectorAll('[id^="Details-"] summary').forEach((summary) => {
   }
 
   summary.addEventListener('click', (event) => {
-    event.currentTarget.setAttribute('aria-expanded', !event.currentTarget.closest('details').hasAttribute('open'));
+    event.currentTarget.setAttribute(
+      'aria-expanded',
+      !event.currentTarget.closest('details').hasAttribute('open')
+    );
   });
 
-  if (summary.closest('header-drawer, menu-drawer')) return;
+  if (summary.closest('header-drawer, menu-drawer')) {
+    return;
+  }
   summary.parentElement.addEventListener('keyup', onKeyUpEscape);
 });
 
@@ -94,7 +100,9 @@ function trapFocus(container, elementToFocus = container) {
   removeTrapFocus();
 
   trapFocusHandlers.focusin = (event) => {
-    if (event.target !== container && event.target !== last && event.target !== first) return;
+    if (event.target !== container && event.target !== last && event.target !== first) {
+      return;
+    }
 
     document.addEventListener('keydown', trapFocusHandlers.keydown);
   };
@@ -104,7 +112,9 @@ function trapFocus(container, elementToFocus = container) {
   };
 
   trapFocusHandlers.keydown = function (event) {
-    if (event.code.toUpperCase() !== 'TAB') return; // If not TAB key
+    if (event.code.toUpperCase() !== 'TAB') {
+      return;
+    } // If not TAB key
     // On the last focusable element and tab forward, focus the first element.
     if (event.target === last && !event.shiftKey) {
       event.preventDefault();
@@ -170,9 +180,13 @@ function focusVisiblePolyfill() {
   window.addEventListener(
     'focus',
     () => {
-      if (currentFocusedElement) currentFocusedElement.classList.remove('focused');
+      if (currentFocusedElement) {
+        currentFocusedElement.classList.remove('focused');
+      }
 
-      if (mouseClick) return;
+      if (mouseClick) {
+        return;
+      }
 
       currentFocusedElement = document.activeElement;
       currentFocusedElement.classList.add('focused');
@@ -183,14 +197,19 @@ function focusVisiblePolyfill() {
 
 function pauseAllMedia() {
   document.querySelectorAll('.js-youtube').forEach((video) => {
-    video.contentWindow.postMessage('{"event":"command","func":"' + 'pauseVideo' + '","args":""}', '*');
+    video.contentWindow.postMessage(
+      '{"event":"command","func":"' + 'pauseVideo' + '","args":""}',
+      '*'
+    );
   });
   document.querySelectorAll('.js-vimeo').forEach((video) => {
     video.contentWindow.postMessage('{"method":"pause"}', '*');
   });
   document.querySelectorAll('video').forEach((video) => video.pause());
   document.querySelectorAll('product-model').forEach((model) => {
-    if (model.modelViewerUI) model.modelViewerUI.pause();
+    if (model.modelViewerUI) {
+      model.modelViewerUI.pause();
+    }
   });
 }
 
@@ -199,14 +218,20 @@ function removeTrapFocus(elementToFocus = null) {
   document.removeEventListener('focusout', trapFocusHandlers.focusout);
   document.removeEventListener('keydown', trapFocusHandlers.keydown);
 
-  if (elementToFocus) elementToFocus.focus();
+  if (elementToFocus) {
+    elementToFocus.focus();
+  }
 }
 
 function onKeyUpEscape(event) {
-  if (event.code.toUpperCase() !== 'ESCAPE') return;
+  if (event.code.toUpperCase() !== 'ESCAPE') {
+    return;
+  }
 
   const openDetailsElement = event.target.closest('details[open]');
-  if (!openDetailsElement) return;
+  if (!openDetailsElement) {
+    return;
+  }
 
   const summaryElement = openDetailsElement.querySelector('summary');
   openDetailsElement.removeAttribute('open');
@@ -229,7 +254,10 @@ class QuantityInput extends HTMLElement {
 
   connectedCallback() {
     this.validateQtyRules();
-    this.quantityUpdateUnsubscriber = subscribe(PUB_SUB_EVENTS.quantityUpdate, this.validateQtyRules.bind(this));
+    this.quantityUpdateUnsubscriber = subscribe(
+      PUB_SUB_EVENTS.quantityUpdate,
+      this.validateQtyRules.bind(this)
+    );
   }
 
   disconnectedCallback() {
@@ -256,7 +284,9 @@ class QuantityInput extends HTMLElement {
       this.input.stepDown();
     }
 
-    if (previousValue !== this.input.value) this.input.dispatchEvent(this.changeEvent);
+    if (previousValue !== this.input.value) {
+      this.input.dispatchEvent(this.changeEvent);
+    }
 
     if (this.input.dataset.min === previousValue && event.target.name === 'minus') {
       this.input.value = parseInt(this.input.min);
@@ -286,7 +316,6 @@ function debounce(fn, wait) {
     t = setTimeout(() => fn.apply(this, args), wait);
   };
 }
-
 
 function throttle(fn, delay) {
   let lastCall = 0;
@@ -440,10 +469,14 @@ class MenuDrawer extends HTMLElement {
   }
 
   onKeyUp(event) {
-    if (event.code.toUpperCase() !== 'ESCAPE') return;
+    if (event.code.toUpperCase() !== 'ESCAPE') {
+      return;
+    }
 
     const openDetailsElement = event.target.closest('details[open]');
-    if (!openDetailsElement) return;
+    if (!openDetailsElement) {
+      return;
+    }
 
     openDetailsElement === this.mainDetailsToggle
       ? this.closeMenuDrawer(event, this.mainDetailsToggle.querySelector('summary'))
@@ -463,7 +496,9 @@ class MenuDrawer extends HTMLElement {
     }
 
     if (detailsElement === this.mainDetailsToggle) {
-      if (isOpen) event.preventDefault();
+      if (isOpen) {
+        event.preventDefault();
+      }
       isOpen ? this.closeMenuDrawer(event, summaryElement) : this.openMenuDrawer(summaryElement);
 
       if (window.matchMedia('(max-width: 990px)')) {
@@ -491,7 +526,9 @@ class MenuDrawer extends HTMLElement {
   }
 
   closeMenuDrawer(event, elementToFocus = false) {
-    if (event === undefined) return;
+    if (event === undefined) {
+      return;
+    }
 
     this.mainDetailsToggle.classList.remove('menu-opening');
     this.mainDetailsToggle.querySelectorAll('details').forEach((details) => {
@@ -505,13 +542,19 @@ class MenuDrawer extends HTMLElement {
     removeTrapFocus(elementToFocus);
     this.closeAnimation(this.mainDetailsToggle);
 
-    if (event instanceof KeyboardEvent) elementToFocus?.setAttribute('aria-expanded', false);
+    if (event instanceof KeyboardEvent) {
+      elementToFocus?.setAttribute('aria-expanded', false);
+    }
   }
 
   onFocusOut() {
     setTimeout(() => {
-      if (this.mainDetailsToggle.hasAttribute('open') && !this.mainDetailsToggle.contains(document.activeElement))
+      if (
+        this.mainDetailsToggle.hasAttribute('open') &&
+        !this.mainDetailsToggle.contains(document.activeElement)
+      ) {
         this.closeMenuDrawer();
+      }
     });
   }
 
@@ -544,7 +587,10 @@ class MenuDrawer extends HTMLElement {
       } else {
         detailsElement.removeAttribute('open');
         if (detailsElement.closest('details[open]')) {
-          trapFocus(detailsElement.closest('details[open]'), detailsElement.querySelector('summary'));
+          trapFocus(
+            detailsElement.closest('details[open]'),
+            detailsElement.querySelector('summary')
+          );
         }
       }
     };
@@ -563,7 +609,10 @@ class HeaderDrawer extends MenuDrawer {
   openMenuDrawer(summaryElement) {
     this.header = this.header || document.querySelector('.section-header');
     this.borderOffset =
-      this.borderOffset || this.closest('.header-wrapper').classList.contains('header-wrapper--border-bottom') ? 1 : 0;
+      this.borderOffset ||
+      this.closest('.header-wrapper').classList.contains('header-wrapper--border-bottom')
+        ? 1
+        : 0;
     document.documentElement.style.setProperty(
       '--header-bottom-position',
       `${parseInt(this.header.getBoundingClientRect().bottom - this.borderOffset)}px`
@@ -581,7 +630,9 @@ class HeaderDrawer extends MenuDrawer {
   }
 
   closeMenuDrawer(event, elementToFocus) {
-    if (!elementToFocus) return;
+    if (!elementToFocus) {
+      return;
+    }
     super.closeMenuDrawer(event, elementToFocus);
     this.header.classList.remove('menu-open');
     window.removeEventListener('resize', this.onResize);
@@ -602,23 +653,37 @@ customElements.define('header-drawer', HeaderDrawer);
 class ModalDialog extends HTMLElement {
   constructor() {
     super();
-    this.querySelector('[id^="ModalClose-"]').addEventListener('click', this.hide.bind(this, false));
+    this.querySelector('[id^="ModalClose-"]').addEventListener(
+      'click',
+      this.hide.bind(this, false)
+    );
     this.addEventListener('keyup', (event) => {
-      if (event.code.toUpperCase() === 'ESCAPE') this.hide();
+      if (event.code.toUpperCase() === 'ESCAPE') {
+        this.hide();
+      }
     });
     if (this.classList.contains('media-modal')) {
       this.addEventListener('pointerup', (event) => {
-        if (event.pointerType === 'mouse' && !event.target.closest('deferred-media, product-model')) this.hide();
+        if (
+          event.pointerType === 'mouse' &&
+          !event.target.closest('deferred-media, product-model')
+        ) {
+          this.hide();
+        }
       });
     } else {
       this.addEventListener('click', (event) => {
-        if (event.target === this) this.hide();
+        if (event.target === this) {
+          this.hide();
+        }
       });
     }
   }
 
   connectedCallback() {
-    if (this.moved) return;
+    if (this.moved) {
+      return;
+    }
     this.moved = true;
     this.dataset.section = this.closest('.shopify-section').id.replace('shopify-section-', '');
     document.body.appendChild(this);
@@ -629,7 +694,9 @@ class ModalDialog extends HTMLElement {
     const popup = this.querySelector('.template-popup');
     document.body.classList.add('overflow-hidden');
     this.setAttribute('open', '');
-    if (popup) popup.loadContent();
+    if (popup) {
+      popup.loadContent();
+    }
     trapFocus(this, this.querySelector('[role="dialog"]'));
     window.pauseAllMedia();
   }
@@ -651,7 +718,9 @@ class BulkModal extends HTMLElement {
 
   connectedCallback() {
     const handleIntersection = (entries, observer) => {
-      if (!entries[0].isIntersecting) return;
+      if (!entries[0].isIntersecting) {
+        return;
+      }
       observer.unobserve(this);
       if (this.innerHTML.trim() === '') {
         const productUrl = this.dataset.url.split('?')[0];
@@ -682,10 +751,14 @@ class ModalOpener extends HTMLElement {
 
     const button = this.querySelector('button');
 
-    if (!button) return;
+    if (!button) {
+      return;
+    }
     button.addEventListener('click', () => {
       const modal = document.querySelector(this.getAttribute('data-modal'));
-      if (modal) modal.show(button);
+      if (modal) {
+        modal.show(button);
+      }
     });
   }
 }
@@ -695,7 +768,9 @@ class DeferredMedia extends HTMLElement {
   constructor() {
     super();
     const poster = this.querySelector('[id^="Deferred-Poster-"]');
-    if (!poster) return;
+    if (!poster) {
+      return;
+    }
     poster.addEventListener('click', this.loadContent.bind(this));
   }
 
@@ -706,8 +781,12 @@ class DeferredMedia extends HTMLElement {
       content.appendChild(this.querySelector('template').content.firstElementChild.cloneNode(true));
 
       this.setAttribute('loaded', true);
-      const deferredElement = this.appendChild(content.querySelector('video, model-viewer, iframe'));
-      if (focus) deferredElement.focus();
+      const deferredElement = this.appendChild(
+        content.querySelector('video, model-viewer, iframe')
+      );
+      if (focus) {
+        deferredElement.focus();
+      }
       if (deferredElement.nodeName == 'VIDEO' && deferredElement.getAttribute('autoplay')) {
         // force autoplay for safari
         deferredElement.play();
@@ -736,7 +815,9 @@ class SliderComponent extends HTMLElement {
     this.prevButton = this.querySelector('button[name="previous"]');
     this.nextButton = this.querySelector('button[name="next"]');
 
-    if (!this.slider || !this.nextButton) return;
+    if (!this.slider || !this.nextButton) {
+      return;
+    }
 
     this.initPages();
     const resizeObserver = new ResizeObserver((entries) => this.initPages());
@@ -748,9 +829,14 @@ class SliderComponent extends HTMLElement {
   }
 
   initPages() {
-    this.sliderItemsToShow = Array.from(this.sliderItems).filter((element) => element.clientWidth > 0);
-    if (this.sliderItemsToShow.length < 2) return;
-    this.sliderItemOffset = this.sliderItemsToShow[1].offsetLeft - this.sliderItemsToShow[0].offsetLeft;
+    this.sliderItemsToShow = Array.from(this.sliderItems).filter(
+      (element) => element.clientWidth > 0
+    );
+    if (this.sliderItemsToShow.length < 2) {
+      return;
+    }
+    this.sliderItemOffset =
+      this.sliderItemsToShow[1].offsetLeft - this.sliderItemsToShow[0].offsetLeft;
     this.slidesPerPage = Math.floor(
       (this.slider.clientWidth - this.sliderItemsToShow[0].offsetLeft) / this.sliderItemOffset
     );
@@ -766,7 +852,9 @@ class SliderComponent extends HTMLElement {
   update() {
     // Temporarily prevents unneeded updates resulting from variant changes
     // This should be refactored as part of https://github.com/Shopify/dawn/issues/2057
-    if (!this.slider || !this.nextButton) return;
+    if (!this.slider || !this.nextButton) {
+      return;
+    }
 
     const previousPage = this.currentPage;
     this.currentPage = Math.round(this.slider.scrollLeft / this.sliderItemOffset) + 1;
@@ -787,7 +875,9 @@ class SliderComponent extends HTMLElement {
       );
     }
 
-    if (this.enableSliderLooping) return;
+    if (this.enableSliderLooping) {
+      return;
+    }
 
     if (this.isSlideVisible(this.sliderItemsToShow[0]) && this.slider.scrollLeft === 0) {
       this.prevButton.setAttribute('disabled', 'disabled');
@@ -804,7 +894,10 @@ class SliderComponent extends HTMLElement {
 
   isSlideVisible(element, offset = 0) {
     const lastVisibleSlide = this.slider.clientWidth + this.slider.scrollLeft - offset;
-    return element.offsetLeft + element.clientWidth <= lastVisibleSlide && element.offsetLeft >= this.slider.scrollLeft;
+    return (
+      element.offsetLeft + element.clientWidth <= lastVisibleSlide &&
+      element.offsetLeft >= this.slider.scrollLeft
+    );
   }
 
   onButtonClick(event) {
@@ -832,17 +925,25 @@ class SlideshowComponent extends SliderComponent {
     this.sliderControlWrapper = this.querySelector('.slider-buttons');
     this.enableSliderLooping = true;
 
-    if (!this.sliderControlWrapper) return;
+    if (!this.sliderControlWrapper) {
+      return;
+    }
 
     this.sliderFirstItemNode = this.slider.querySelector('.slideshow__slide');
-    if (this.sliderItemsToShow.length > 0) this.currentPage = 1;
+    if (this.sliderItemsToShow.length > 0) {
+      this.currentPage = 1;
+    }
 
     this.announcementBarSlider = this.querySelector('.announcement-bar-slider');
     // Value below should match --duration-announcement-bar CSS value
     this.announcerBarAnimationDelay = this.announcementBarSlider ? 250 : 0;
 
-    this.sliderControlLinksArray = Array.from(this.sliderControlWrapper.querySelectorAll('.slider-counter__link'));
-    this.sliderControlLinksArray.forEach((link) => link.addEventListener('click', this.linkToSlide.bind(this)));
+    this.sliderControlLinksArray = Array.from(
+      this.sliderControlWrapper.querySelectorAll('.slider-counter__link')
+    );
+    this.sliderControlLinksArray.forEach((link) =>
+      link.addEventListener('click', this.linkToSlide.bind(this))
+    );
     this.slider.addEventListener('scroll', this.setSlideVisibility.bind(this));
     this.setSlideVisibility();
 
@@ -851,7 +952,9 @@ class SlideshowComponent extends SliderComponent {
 
       this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
       this.reducedMotion.addEventListener('change', () => {
-        if (this.slider.getAttribute('data-autoplay') === 'true') this.setAutoPlay();
+        if (this.slider.getAttribute('data-autoplay') === 'true') {
+          this.setAutoPlay();
+        }
       });
 
       [this.prevButton, this.nextButton].forEach((button) => {
@@ -865,7 +968,9 @@ class SlideshowComponent extends SliderComponent {
       });
     }
 
-    if (this.slider.getAttribute('data-autoplay') === 'true') this.setAutoPlay();
+    if (this.slider.getAttribute('data-autoplay') === 'true') {
+      this.setAutoPlay();
+    }
   }
 
   setAutoPlay() {
@@ -881,7 +986,9 @@ class SlideshowComponent extends SliderComponent {
       this.autoplayButtonIsSetToPlay = true;
       this.play();
     } else {
-      this.reducedMotion.matches || this.announcementBarArrowButtonWasClicked ? this.pause() : this.play();
+      this.reducedMotion.matches || this.announcementBarArrowButtonWasClicked
+        ? this.pause()
+        : this.play();
     }
   }
 
@@ -899,7 +1006,8 @@ class SlideshowComponent extends SliderComponent {
 
     if (isFirstSlide && event.currentTarget.name === 'previous') {
       this.slideScrollPosition =
-        this.slider.scrollLeft + this.sliderFirstItemNode.clientWidth * this.sliderItemsToShow.length;
+        this.slider.scrollLeft +
+        this.sliderFirstItemNode.clientWidth * this.sliderItemsToShow.length;
     } else if (isLastSlide && event.currentTarget.name === 'next') {
       this.slideScrollPosition = 0;
     }
@@ -910,7 +1018,9 @@ class SlideshowComponent extends SliderComponent {
   }
 
   setSlidePosition(position) {
-    if (this.setPositionTimeout) clearTimeout(this.setPositionTimeout);
+    if (this.setPositionTimeout) {
+      clearTimeout(this.setPositionTimeout);
+    }
     this.setPositionTimeout = setTimeout(() => {
       this.slider.scrollTo({
         left: position,
@@ -923,7 +1033,9 @@ class SlideshowComponent extends SliderComponent {
     this.sliderControlButtons = this.querySelectorAll('.slider-counter__link');
     this.prevButton.removeAttribute('disabled');
 
-    if (!this.sliderControlButtons.length) return;
+    if (!this.sliderControlButtons.length) {
+      return;
+    }
 
     this.sliderControlButtons.forEach((link) => {
       link.classList.remove('slider-counter__link--active');
@@ -942,8 +1054,11 @@ class SlideshowComponent extends SliderComponent {
   focusOutHandling(event) {
     if (this.sliderAutoplayButton) {
       const focusedOnAutoplayButton =
-        event.target === this.sliderAutoplayButton || this.sliderAutoplayButton.contains(event.target);
-      if (!this.autoplayButtonIsSetToPlay || focusedOnAutoplayButton) return;
+        event.target === this.sliderAutoplayButton ||
+        this.sliderAutoplayButton.contains(event.target);
+      if (!this.autoplayButtonIsSetToPlay || focusedOnAutoplayButton) {
+        return;
+      }
       this.play();
     } else if (!this.reducedMotion.matches && !this.announcementBarArrowButtonWasClicked) {
       this.play();
@@ -953,7 +1068,8 @@ class SlideshowComponent extends SliderComponent {
   focusInHandling(event) {
     if (this.sliderAutoplayButton) {
       const focusedOnAutoplayButton =
-        event.target === this.sliderAutoplayButton || this.sliderAutoplayButton.contains(event.target);
+        event.target === this.sliderAutoplayButton ||
+        this.sliderAutoplayButton.contains(event.target);
       if (focusedOnAutoplayButton && this.autoplayButtonIsSetToPlay) {
         this.play();
       } else if (this.autoplayButtonIsSetToPlay) {
@@ -978,16 +1094,24 @@ class SlideshowComponent extends SliderComponent {
   togglePlayButtonState(pauseAutoplay) {
     if (pauseAutoplay) {
       this.sliderAutoplayButton.classList.add('slideshow__autoplay--paused');
-      this.sliderAutoplayButton.setAttribute('aria-label', window.accessibilityStrings.playSlideshow);
+      this.sliderAutoplayButton.setAttribute(
+        'aria-label',
+        window.accessibilityStrings.playSlideshow
+      );
     } else {
       this.sliderAutoplayButton.classList.remove('slideshow__autoplay--paused');
-      this.sliderAutoplayButton.setAttribute('aria-label', window.accessibilityStrings.pauseSlideshow);
+      this.sliderAutoplayButton.setAttribute(
+        'aria-label',
+        window.accessibilityStrings.pauseSlideshow
+      );
     }
   }
 
   autoRotateSlides() {
     const slideScrollPosition =
-      this.currentPage === this.sliderItems.length ? 0 : this.slider.scrollLeft + this.sliderItemOffset;
+      this.currentPage === this.sliderItems.length
+        ? 0
+        : this.slider.scrollLeft + this.sliderItemOffset;
 
     this.setSlidePosition(slideScrollPosition);
     this.applyAnimationToAnnouncementBar();
@@ -997,17 +1121,19 @@ class SlideshowComponent extends SliderComponent {
     this.sliderItemsToShow.forEach((item, index) => {
       const linkElements = item.querySelectorAll('a');
       if (index === this.currentPage - 1) {
-        if (linkElements.length)
+        if (linkElements.length) {
           linkElements.forEach((button) => {
             button.removeAttribute('tabindex');
           });
+        }
         item.setAttribute('aria-hidden', 'false');
         item.removeAttribute('tabindex');
       } else {
-        if (linkElements.length)
+        if (linkElements.length) {
           linkElements.forEach((button) => {
             button.setAttribute('tabindex', '-1');
           });
+        }
         item.setAttribute('aria-hidden', 'true');
         item.setAttribute('tabindex', '-1');
       }
@@ -1016,7 +1142,9 @@ class SlideshowComponent extends SliderComponent {
   }
 
   applyAnimationToAnnouncementBar(button = 'next') {
-    if (!this.announcementBarSlider) return;
+    if (!this.announcementBarSlider) {
+      return;
+    }
 
     const itemsCount = this.sliderItems.length;
     const increment = button === 'next' ? 1 : -1;
@@ -1034,7 +1162,8 @@ class SlideshowComponent extends SliderComponent {
     const isFirstSlide = currentIndex === 0;
     const isLastSlide = currentIndex === itemsCount - 1;
 
-    const shouldMoveNext = (button === 'next' && !isLastSlide) || (button === 'previous' && isFirstSlide);
+    const shouldMoveNext =
+      (button === 'next' && !isLastSlide) || (button === 'previous' && isFirstSlide);
     const direction = shouldMoveNext ? 'next' : 'previous';
 
     currentSlide.classList.add(`${animationClassOut}-${direction}`);
@@ -1093,7 +1222,9 @@ class VariantSelects extends HTMLElement {
       const selectedDropdownSwatchValue = target
         .closest('.product-form__input')
         .querySelector('[data-selected-value] > .swatch');
-      if (!selectedDropdownSwatchValue) return;
+      if (!selectedDropdownSwatchValue) {
+        return;
+      }
       if (swatchValue) {
         selectedDropdownSwatchValue.style.setProperty('--swatch--background', swatchValue);
         selectedDropdownSwatchValue.classList.remove('swatch--unavailable');
@@ -1107,8 +1238,12 @@ class VariantSelects extends HTMLElement {
         target.selectedOptions[0].dataset.optionSwatchFocalPoint || 'unset'
       );
     } else if (tagName === 'INPUT' && target.type === 'radio') {
-      const selectedSwatchValue = target.closest(`.product-form__input`).querySelector('[data-selected-value]');
-      if (selectedSwatchValue) selectedSwatchValue.innerHTML = value;
+      const selectedSwatchValue = target
+        .closest(`.product-form__input`)
+        .querySelector('[data-selected-value]');
+      if (selectedSwatchValue) {
+        selectedSwatchValue.innerHTML = value;
+      }
     }
   }
 
@@ -1140,7 +1275,9 @@ class ProductRecommendations extends HTMLElement {
     this.observer?.unobserve(this);
     this.observer = new IntersectionObserver(
       (entries, observer) => {
-        if (!entries[0].isIntersecting) return;
+        if (!entries[0].isIntersecting) {
+          return;
+        }
         observer.unobserve(this);
         this.loadRecommendations(productId);
       },
@@ -1161,7 +1298,10 @@ class ProductRecommendations extends HTMLElement {
           this.innerHTML = recommendations.innerHTML;
         }
 
-        if (!this.querySelector('slideshow-component') && this.classList.contains('complementary-products')) {
+        if (
+          !this.querySelector('slideshow-component') &&
+          this.classList.contains('complementary-products')
+        ) {
           this.remove();
         }
 
@@ -1185,7 +1325,10 @@ class AccountIcon extends HTMLElement {
   }
 
   connectedCallback() {
-    document.addEventListener('storefront:signincompleted', this.handleStorefrontSignInCompleted.bind(this));
+    document.addEventListener(
+      'storefront:signincompleted',
+      this.handleStorefrontSignInCompleted.bind(this)
+    );
   }
 
   handleStorefrontSignInCompleted(event) {
@@ -1259,11 +1402,23 @@ class BulkAdd extends HTMLElement {
     const index = event.target.dataset.index;
 
     if (inputValue < event.target.dataset.min) {
-      this.setValidity(event, index, window.quickOrderListStrings.min_error.replace('[min]', event.target.dataset.min));
+      this.setValidity(
+        event,
+        index,
+        window.quickOrderListStrings.min_error.replace('[min]', event.target.dataset.min)
+      );
     } else if (inputValue > parseInt(event.target.max)) {
-      this.setValidity(event, index, window.quickOrderListStrings.max_error.replace('[max]', event.target.max));
+      this.setValidity(
+        event,
+        index,
+        window.quickOrderListStrings.max_error.replace('[max]', event.target.max)
+      );
     } else if (inputValue % parseInt(event.target.step) != 0) {
-      this.setValidity(event, index, window.quickOrderListStrings.step_error.replace('[step]', event.target.step));
+      this.setValidity(
+        event,
+        index,
+        window.quickOrderListStrings.step_error.replace('[step]', event.target.step)
+      );
     } else {
       event.target.setCustomValidity('');
       event.target.reportValidity();
@@ -1282,51 +1437,39 @@ if (!customElements.get('bulk-add')) {
 }
 
 class CartPerformance {
-  static #metric_prefix = "cart-performance"
+  static #metric_prefix = 'cart-performance';
 
   static createStartingMarker(benchmarkName) {
-    const metricName = `${CartPerformance.#metric_prefix}:${benchmarkName}`
+    const metricName = `${CartPerformance.#metric_prefix}:${benchmarkName}`;
     return performance.mark(`${metricName}:start`);
   }
 
   static measureFromEvent(benchmarkName, event) {
-    const metricName = `${CartPerformance.#metric_prefix}:${benchmarkName}`
+    const metricName = `${CartPerformance.#metric_prefix}:${benchmarkName}`;
     const startMarker = performance.mark(`${metricName}:start`, {
-      startTime: event.timeStamp
+      startTime: event.timeStamp,
     });
 
     const endMarker = performance.mark(`${metricName}:end`);
 
-    performance.measure(
-      metricName,
-      `${metricName}:start`,
-      `${metricName}:end`
-    );
+    performance.measure(metricName, `${metricName}:start`, `${metricName}:end`);
   }
 
   static measureFromMarker(benchmarkName, startMarker) {
-    const metricName = `${CartPerformance.#metric_prefix}:${benchmarkName}`
+    const metricName = `${CartPerformance.#metric_prefix}:${benchmarkName}`;
     const endMarker = performance.mark(`${metricName}:end`);
 
-    performance.measure(
-      metricName,
-      startMarker.name,
-      `${metricName}:end`
-    );
+    performance.measure(metricName, startMarker.name, `${metricName}:end`);
   }
 
   static measure(benchmarkName, callback) {
-    const metricName = `${CartPerformance.#metric_prefix}:${benchmarkName}`
+    const metricName = `${CartPerformance.#metric_prefix}:${benchmarkName}`;
     const startMarker = performance.mark(`${metricName}:start`);
 
     callback();
 
     const endMarker = performance.mark(`${metricName}:end`);
 
-    performance.measure(
-      metricName,
-      `${metricName}:start`,
-      `${metricName}:end`
-    );
+    performance.measure(metricName, `${metricName}:start`, `${metricName}:end`);
   }
 }

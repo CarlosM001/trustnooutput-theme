@@ -19,7 +19,9 @@ if (!customElements.get('product-model')) {
       }
 
       setupModelViewerUI(errors) {
-        if (errors) return;
+        if (errors) {
+          return;
+        }
 
         this.modelViewerUI = new Shopify.ModelViewerUI(this.querySelector('model-viewer'));
       }
@@ -39,7 +41,9 @@ window.ProductModel = {
   },
 
   setupShopifyXR(errors) {
-    if (errors) return;
+    if (errors) {
+      return;
+    }
 
     if (!window.ShopifyXR) {
       document.addEventListener('shopify_xr_initialized', () => this.setupShopifyXR());
@@ -55,5 +59,7 @@ window.ProductModel = {
 };
 
 window.addEventListener('DOMContentLoaded', () => {
-  if (window.ProductModel) window.ProductModel.loadShopifyXR();
+  if (window.ProductModel) {
+    window.ProductModel.loadShopifyXR();
+  }
 });

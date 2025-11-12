@@ -10,12 +10,16 @@ class DetailsDisclosure extends HTMLElement {
 
   onFocusOut() {
     setTimeout(() => {
-      if (!this.contains(document.activeElement)) this.close();
+      if (!this.contains(document.activeElement)) {
+        this.close();
+      }
     });
   }
 
   onToggle() {
-    if (!this.animations) this.animations = this.content.getAnimations();
+    if (!this.animations) {
+      this.animations = this.content.getAnimations();
+    }
 
     if (this.mainDetailsToggle.hasAttribute('open')) {
       this.animations.forEach((animation) => animation.play());
@@ -39,10 +43,16 @@ class HeaderMenu extends DetailsDisclosure {
   }
 
   onToggle() {
-    if (!this.header) return;
+    if (!this.header) {
+      return;
+    }
     this.header.preventHide = this.mainDetailsToggle.open;
 
-    if (document.documentElement.style.getPropertyValue('--header-bottom-position-desktop') !== '') return;
+    if (
+      document.documentElement.style.getPropertyValue('--header-bottom-position-desktop') !== ''
+    ) {
+      return;
+    }
     document.documentElement.style.setProperty(
       '--header-bottom-position-desktop',
       `${Math.floor(this.header.getBoundingClientRect().bottom)}px`

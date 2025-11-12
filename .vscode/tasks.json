@@ -24,10 +24,7 @@
     {
       "label": "Getting Started",
       "dependsOrder": "sequence",
-      "dependsOn": [
-        "Open: Copilot Instructions",
-        "Dev: Shopify + BrowserSync"
-      ]
+      "dependsOn": ["Open: Copilot Instructions", "Dev: Shopify + BrowserSync"]
     },
     {
       "label": "QA: Theme Check",
@@ -46,21 +43,13 @@
     {
       "label": "QA: All",
       "dependsOrder": "sequence",
-      "dependsOn": [
-        "QA: Theme Check",
-        "QA: Hygiene"
-      ]
+      "dependsOn": ["QA: Theme Check", "QA: Hygiene"]
     },
     {
       "label": "Open: Live Theme",
       "type": "shell",
       "command": "shopify",
-      "args": [
-        "theme",
-        "open",
-        "--store=9csvgi-16.myshopify.com",
-        "--theme=186572767607"
-      ],
+      "args": ["theme", "open", "--store=9csvgi-16.myshopify.com", "--theme=186572767607"],
       "problemMatcher": []
     }
   ]

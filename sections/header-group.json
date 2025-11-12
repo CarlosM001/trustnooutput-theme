@@ -23,7 +23,5 @@
       }
     }
   },
-  "order": [
-    "header"
-  ]
+  "order": ["header"]
 }

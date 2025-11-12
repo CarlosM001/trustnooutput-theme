@@ -23,8 +23,10 @@
     (
         var(--rating) / var(--rating-max) + var(--rating-decimal) * var(--font-size) /
           (var(--rating-max) * (var(--letter-spacing) + var(--font-size)))
-      ) * 100%
+      ) *
+      100%
   );
+
   letter-spacing: calc(var(--letter-spacing) * 1rem);
   font-size: calc(var(--font-size) * 1rem);
   line-height: 1;
@@ -40,7 +42,7 @@
     var(--color-rating-star) var(--percent),
     rgba(var(--color-foreground), 0.15) var(--percent)
   );
-  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 

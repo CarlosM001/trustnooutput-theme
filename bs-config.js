@@ -7,21 +7,21 @@
 
 module.exports = {
   // ✅ Proxy Shopify CLI dev server (port shown in your CLI output)
-  proxy: "http://127.0.0.1:9292",
+  proxy: 'http://127.0.0.1:9292',
 
   // ✅ Local BrowserSync port (frontend preview)
   port: 3000,
 
   // 🔍 Watch these files for live reloads
   files: [
-    "assets/**/*.css",
-    "assets/**/*.js",
-    "layout/**/*.liquid",
-    "sections/**/*.liquid",
-    "snippets/**/*.liquid",
-    "templates/**/*.liquid",
-    "config/*.json",
-    "!node_modules/**" // prevent watch loops
+    'assets/**/*.css',
+    'assets/**/*.js',
+    'layout/**/*.liquid',
+    'sections/**/*.liquid',
+    'snippets/**/*.liquid',
+    'templates/**/*.liquid',
+    'config/*.json',
+    '!node_modules/**', // prevent watch loops
   ],
 
   // 🚫 Don’t open browser automatically
@@ -38,25 +38,25 @@ module.exports = {
 
   // 🎛️ Optional BrowserSync UI (accessible at localhost:3001)
   ui: {
-    port: 3001
+    port: 3001,
   },
 
   // 👻 Disable Ghost Mode (prevents weird scroll/input syncing)
   ghostMode: {
     clicks: false,
     forms: false,
-    scroll: false
+    scroll: false,
   },
 
   // 🧠 Watch settings
   watchOptions: {
     ignoreInitial: true,
-    ignored: /node_modules/
+    ignored: /node_modules/,
   },
 
   // 🧾 Logging settings
-  logLevel: "info",        // "silent", "info", or "debug"
-  logPrefix: "TNO-SYNC",   // shows prefix in console logs
+  logLevel: 'info', // "silent", "info", or "debug"
+  logPrefix: 'TNO-SYNC', // shows prefix in console logs
   logConnections: false,
-  logFileChanges: true
+  logFileChanges: true,
 };

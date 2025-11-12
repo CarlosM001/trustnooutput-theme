@@ -7,7 +7,9 @@ if (!customElements.get('quantity-popover')) {
         this.mql = window.matchMedia('(min-width: 990px)');
         this.mqlTablet = window.matchMedia('(min-width: 750px)');
         this.infoButtonDesktop = this.querySelector('.quantity-popover__info-button--icon-only');
-        this.infoButtonMobile = this.querySelector('.quantity-popover__info-button--icon-with-label');
+        this.infoButtonMobile = this.querySelector(
+          '.quantity-popover__info-button--icon-with-label'
+        );
         this.popoverInfo = this.querySelector('.quantity-popover__info');
         this.closeButton = this.querySelector('.button-close');
         this.eventMouseEnterHappened = false;
@@ -41,9 +43,14 @@ if (!customElements.get('quantity-popover')) {
           this.eventMouseEnterHappened = true;
         }
 
-        if (event.type === 'click' && this.eventMouseEnterHappened) return;
+        if (event.type === 'click' && this.eventMouseEnterHappened) {
+          return;
+        }
 
-        const button = this.infoButtonDesktop && this.mql.matches ? this.infoButtonDesktop : this.infoButtonMobile;
+        const button =
+          this.infoButtonDesktop && this.mql.matches
+            ? this.infoButtonDesktop
+            : this.infoButtonMobile;
         const isExpanded = button.getAttribute('aria-expanded') === 'true';
 
         if ((this.mql.matches && !isExpanded) || event.type === 'click') {
@@ -53,7 +60,9 @@ if (!customElements.get('quantity-popover')) {
 
           button.classList.toggle('quantity-popover__info-button--open');
 
-          this.infoButtonDesktop.classList.add('quantity-popover__info-button--icon-only--animation');
+          this.infoButtonDesktop.classList.add(
+            'quantity-popover__info-button--icon-only--animation'
+          );
         }
 
         const isOpen = button.getAttribute('aria-expanded') === 'true';
@@ -73,13 +82,18 @@ if (!customElements.get('quantity-popover')) {
         const isButtonChild = this.infoButtonDesktop.contains(event.relatedTarget);
         const isPopoverChild = this.popoverInfo.contains(event.relatedTarget);
 
-        const button = this.infoButtonDesktop && this.mql.matches ? this.infoButtonDesktop : this.infoButtonMobile;
+        const button =
+          this.infoButtonDesktop && this.mql.matches
+            ? this.infoButtonDesktop
+            : this.infoButtonMobile;
 
         if (!isButtonChild && !isPopoverChild) {
           button.setAttribute('aria-expanded', 'false');
           button.classList.remove('quantity-popover__info-button--open');
           this.popoverInfo.setAttribute('hidden', '');
-          this.infoButtonDesktop.classList.remove('quantity-popover__info-button--icon-only--animation');
+          this.infoButtonDesktop.classList.remove(
+            'quantity-popover__info-button--icon-only--animation'
+          );
         }
 
         this.eventMouseEnterHappened = false;
