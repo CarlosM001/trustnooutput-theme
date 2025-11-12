@@ -9,16 +9,6 @@
  */
 {
   "sections": {
-    "section_test_motion_wc3hka": {
-      "type": "motion-hero-tno",
-      "settings": {
-        "headline": "REALITY IS UNDER CONSTRUCTION.",
-        "subtext": "DESIGNED FOR SIMULATED MIND",
-        "hero_image": "shopify://shop_images/unisex-classic-tee-white-front-2-68fd8e6f55fae.png",
-        "button1_link": "shopify://collections/all",
-        "button1_label": "ENTER SIMULATION"
-      }
-    },
     "product_grid_trust_1": {
       "type": "product-grid-trust",
       "settings": {
@@ -33,23 +23,33 @@
     "system_update_trust_1": {
       "type": "system-update-trust",
       "settings": {
+        "blog": "",
+        "articles_to_show": 6,
+        "layout_style": "grid",
         "prompt": "system.log",
         "headline": "System Updates",
         "intro": ""
       }
     },
-    "newsletter_trust_1": {
-      "type": "newsletter-trust",
+    "hero_trust_AxWTFW": {
+      "type": "hero-trust",
+      "name": "Hero — TRUST.NO.OUTPUT",
       "settings": {
-        "prompt": "subscribe.sh",
-        "headline": "Join the System"
+        "headline": "TRUST.NO.OUTPUT",
+        "subline": "Reality is under construction",
+        "btn_primary_text": "Enter Simulation",
+        "btn_primary_url": "",
+        "btn_secondary_text": "Read the Manifesto",
+        "btn_secondary_url": "",
+        "btn_ghost_text": "Refuse",
+        "btn_ghost_url": "",
+        "enable_parallax": true
       }
     }
   },
   "order": [
-    "section_test_motion_wc3hka",
+    "hero_trust_AxWTFW",
     "product_grid_trust_1",
-    "system_update_trust_1",
-    "newsletter_trust_1"
+    "system_update_trust_1"
   ]
 }
