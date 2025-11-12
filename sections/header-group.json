@@ -17,6 +17,8 @@
         "sticky_header": true,
         "show_search": true,
         "show_account": true,
+        "transparent_header": false,
+        "main_menu": "",
         "menu": "main-menu"
       }
     }
