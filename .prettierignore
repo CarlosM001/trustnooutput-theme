@@ -1,0 +1,4 @@
+node_modules/
+backup-phase1/
+assets/**/*.min.css
+assets/**/*.min.js
