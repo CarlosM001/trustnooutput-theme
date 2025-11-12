@@ -9,44 +9,96 @@
  */
 {
   "sections": {
-    "section_test_motion_wc3hka": {
-      "type": "motion-hero-tno",
+    "hero_trust_cqCq3U": {
+      "type": "hero-trust",
+      "name": "Hero — TRUST.NO.OUTPUT",
       "settings": {
-        "headline": "REALITY IS UNDER CONSTRUCTION.",
-        "subtext": "DESIGNED FOR SIMULATED MIND",
-        "hero_image": "shopify://shop_images/unisex-classic-tee-white-front-2-68fd8e6f55fae.png",
-        "button1_link": "shopify://collections/all",
-        "button1_label": "ENTER SIMULATION"
+        "headline": "TRUST.NO.OUTPUT",
+        "subline": "Reality is under construction",
+        "btn_primary_text": "Enter Simulation",
+        "btn_primary_url": "",
+        "btn_secondary_text": "Read the Manifesto",
+        "btn_secondary_url": "",
+        "btn_ghost_text": "Refuse",
+        "btn_ghost_url": "",
+        "enable_parallax": true
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
+    "product_grid_trust_7VmfxR": {
+      "type": "product-grid-trust",
+      "name": "Product Grid (TNO)",
       "settings": {
-        "collection": "all",
-        "products_to_show": 24,
-        "title": "",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "columns_desktop": 4,
-        "enable_desktop_slider": false,
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "outline",
-        "color_scheme": "scheme-1",
-        "image_ratio": "square",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "swipe_on_mobile": false,
-        "padding_top": 0,
-        "padding_bottom": 36
+        "collection": "",
+        "products_to_show": 9,
+        "eyebrow": "Digital Artifacts",
+        "headline": "Products",
+        "intro": "",
+        "products_per_row": 3
+      }
+    },
+    "philosophy_trust_mpTVLK": {
+      "type": "philosophy-trust",
+      "blocks": {
+        "thinker_8Jpetb": {
+          "type": "thinker",
+          "settings": {
+            "name": "Byung-Chul Han",
+            "title": "Philosopher, Author of 'Psychopolitik'",
+            "quote": "We are in a crisis of freedom. Freedom is being exploited for purposes of control.",
+            "concept": "Digital Exhaustion"
+          }
+        },
+        "thinker_Q48zMV": {
+          "type": "thinker",
+          "settings": {
+            "name": "Franco Berardi",
+            "title": "Theorist of Semio-Capitalism",
+            "quote": "The soul is at work. Cognitive labor has become the primary form of exploitation.",
+            "concept": "Semio-Capital"
+          }
+        },
+        "thinker_MFArBE": {
+          "type": "thinker",
+          "settings": {
+            "name": "Shoshana Zuboff",
+            "title": "Author of 'The Age of Surveillance Capitalism'",
+            "quote": "We are the sources of surveillance capitalism's surplus. Data about us is harvested for prediction.",
+            "concept": "Surveillance Capital"
+          }
+        }
+      },
+      "block_order": [
+        "thinker_8Jpetb",
+        "thinker_Q48zMV",
+        "thinker_MFArBE"
+      ],
+      "name": "Philosophy (TNO)",
+      "settings": {
+        "eyebrow": "Theoretical Foundation",
+        "headline": "Philosophy",
+        "intro": "TRUST.NO.OUTPUT is grounded in critical theory — examining the invisible structures that shape digital consciousness.",
+        "cta_text": "Read Full Manifesto",
+        "cta_url": "",
+        "enable_scroll_reveal": true
+      }
+    },
+    "system_update_trust_cg3Aac": {
+      "type": "system-update-trust",
+      "name": "System Update (TNO)",
+      "settings": {
+        "blog": "",
+        "articles_to_show": 6,
+        "layout_style": "grid",
+        "prompt": "system.log",
+        "headline": "System Updates",
+        "intro": ""
       }
     }
   },
-  "order": ["section_test_motion_wc3hka", "featured_collection"]
+  "order": [
+    "hero_trust_cqCq3U",
+    "product_grid_trust_7VmfxR",
+    "philosophy_trust_mpTVLK",
+    "system_update_trust_cg3Aac"
+  ]
 }
