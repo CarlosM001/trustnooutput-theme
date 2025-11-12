@@ -489,7 +489,7 @@
   }
 </style>
 
-<header class="site-header tno-header" id="site-header">
+<header class="site-header tno-header header--tno {% if section.settings.transparent_header %}is-transparent{% endif %}" id="site-header">
   <div class="site-header__inner">
     {%- comment %} Logo (Left) {%- endcomment %}
     <div class="header-logo">
@@ -511,7 +511,7 @@
         <ul class="header-nav__list tno-nav__list">
           {% for link in menu_ref.links %}
             {%- assign has_mega = false -%}
-            {%- assign mega_block = nil -%}
+            {%- assign mega_block = null -%}
             {%- for block in section.blocks -%}
               {%- if block.type == 'mega_menu' -%}
                 {%- assign block_title = block.settings.title_match | strip | downcase -%}
@@ -530,48 +530,66 @@
                 {{ link.title }}
               </a>
               {%- if has_mega and mega_block -%}
-                <button class="tno-nav__toggle" aria-expanded="false" aria-controls="mega-{{ forloop.index }}-{{ section.id }}" aria-label="Toggle {{ link.title }} menu"></button>
+                <button
+                  class="tno-nav__toggle"
+                  aria-expanded="false"
+                  aria-controls="mega-{{ forloop.index }}-{{ section.id }}"
+                  aria-label="Toggle {{ link.title }} menu"
+                ></button>
                 <div class="tno-mega" id="mega-{{ forloop.index }}-{{ section.id }}" data-panel="mega" tabindex="-1">
                   <div class="tno-mega__col">
-                    <p class="tno-mega__title">{{ mega_block.settings.col1_title | default: "// Shop by Category" }}</p>
+                    <p class="tno-mega__title">{{ mega_block.settings.col1_title | default: '// Shop by Category' }}</p>
                     {%- assign col1_list = linklists[mega_block.settings.col1] -%}
                     {%- if col1_list and col1_list.links and col1_list.links.size > 0 -%}
                       <ul class="tno-mega__list">
                         {%- for l in col1_list.links -%}
-                          <li><a class="tno-mega__link" href="{{ l.url }}">{{ l.title }}</a></li>
+                          <li>
+                            <a class="tno-mega__link" href="{{ l.url }}">{{ l.title }}</a>
+                          </li>
                         {%- endfor -%}
                       </ul>
                     {%- endif -%}
                   </div>
                   <div class="tno-mega__col">
-                    <p class="tno-mega__title">{{ mega_block.settings.col2_title | default: "// Shop by Style" }}</p>
+                    <p class="tno-mega__title">{{ mega_block.settings.col2_title | default: '// Shop by Style' }}</p>
                     {%- assign col2_list = linklists[mega_block.settings.col2] -%}
                     {%- if col2_list and col2_list.links and col2_list.links.size > 0 -%}
                       <ul class="tno-mega__list">
                         {%- for l in col2_list.links -%}
-                          <li><a class="tno-mega__link" href="{{ l.url }}">{{ l.title }}</a></li>
+                          <li>
+                            <a class="tno-mega__link" href="{{ l.url }}">{{ l.title }}</a>
+                          </li>
                         {%- endfor -%}
                       </ul>
                     {%- endif -%}
                   </div>
                   <div class="tno-mega__col">
-                    <p class="tno-mega__title">{{ mega_block.settings.col3_title | default: "// Drops" }}</p>
+                    <p class="tno-mega__title">{{ mega_block.settings.col3_title | default: '// Drops' }}</p>
                     {%- assign col3_list = linklists[mega_block.settings.col3] -%}
                     {%- if col3_list and col3_list.links and col3_list.links.size > 0 -%}
                       <ul class="tno-mega__list">
                         {%- for l in col3_list.links -%}
-                          <li><a class="tno-mega__link" href="{{ l.url }}">{{ l.title }}</a></li>
+                          <li>
+                            <a class="tno-mega__link" href="{{ l.url }}">{{ l.title }}</a>
+                          </li>
                         {%- endfor -%}
                       </ul>
                     {%- endif -%}
                   </div>
                 </div>
               {%- elsif link.links and link.links.size > 0 -%}
-                <button class="tno-nav__toggle" aria-expanded="false" aria-controls="dropdown-{{ forloop.index }}-{{ section.id }}" aria-label="Toggle {{ link.title }} menu"></button>
+                <button
+                  class="tno-nav__toggle"
+                  aria-expanded="false"
+                  aria-controls="dropdown-{{ forloop.index }}-{{ section.id }}"
+                  aria-label="Toggle {{ link.title }} menu"
+                ></button>
                 <div class="tno-dropdown" id="dropdown-{{ forloop.index }}-{{ section.id }}" data-panel="dropdown">
                   <ul class="tno-dropdown__list">
                     {%- for child in link.links -%}
-                      <li class="tno-dropdown__item"><a class="tno-dropdown__link" href="{{ child.url }}">{{ child.title }}</a></li>
+                      <li class="tno-dropdown__item">
+                        <a class="tno-dropdown__link" href="{{ child.url }}">{{ child.title }}</a>
+                      </li>
                     {%- endfor -%}
                   </ul>
                 </div>
@@ -603,14 +621,12 @@
 
     {%- comment %} Icons (Right) {%- endcomment %}
   <div class="header-icons tno-nav__utility">
-      {%- comment %} Search Icon {%- endcomment %}
+      {%- comment %} Search Field {%- endcomment %}
       {% if section.settings.show_search %}
-        <button class="header-icon header-icon--search" aria-label="Search" id="search-toggle">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="11" cy="11" r="8"/>
-            <path d="m21 21-4.35-4.35"/>
-          </svg>
-        </button>
+        <form class="tno-search" action="{{ routes.search_url }}" method="get" role="search">
+          <input class="tno-search__input" type="search" name="q" placeholder="Search..." aria-label="Search" />
+          <button class="tno-search__btn" type="submit" aria-label="Submit search">⌕</button>
+        </form>
       {% endif %}
 
       {%- comment %} Account Icon {%- endcomment %}
@@ -688,18 +704,18 @@
   (function () {
     'use strict';
 
-  const header = document.getElementById('site-header');
+    const header = document.getElementById('site-header');
     const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     let lastScrollTop = 0;
 
     /**
-     * Scroll Detection: Add 'is-scrolled' class after 24px
+     * Scroll Detection: Add 'is-scrolled' class after 20px
      */
     function handleScroll() {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-      if (scrollTop > 24) {
+      if (scrollTop > 20) {
         header.classList.add('is-scrolled');
       } else {
         header.classList.remove('is-scrolled');
@@ -865,6 +881,12 @@
       "type": "checkbox",
       "id": "show_account",
       "label": "Show Account Icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "transparent_header",
+      "label": "Transparent header",
       "default": true
     },
     {
