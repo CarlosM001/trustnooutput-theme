@@ -11,10 +11,10 @@
   elsif forced_mode == 'continuous'
     assign tno_ab_variant = 'glitch_continuous'
   else
-      comment
-        Random coin flip for A/B variant (server-side)
-      endcomment
-      assign timestamp = 'now' | date: '%s'
+    comment
+      Random coin flip for A/B variant (server-side)
+    endcomment
+    assign timestamp = 'now' | date: '%s'
     assign coin = timestamp | modulo: 2
     if coin == 0
       assign tno_ab_variant = 'glitch_pulse'
@@ -143,8 +143,8 @@
         /* TNO Motion & Glitch Variables */
         --glitch-intensity: {{ settings.tno_glitch_intensity | default: 50 | divided_by: 100.0 }};
         --parallax-strength: {{ settings.tno_parallax_strength | default: 20 | divided_by: 100.0 }};
-  --glitch-duration: {{ settings.tno_glitch_duration | default: 2.5 }}s;
-  --rgb-shift: {{ settings.tno_rgb_shift_strength | default: 8 | divided_by: 100.0 }};
+        --glitch-duration: {{ settings.tno_glitch_duration | default: 2500 | divided_by: 1000.0 }}s;
+        --rgb-shift: {{ settings.tno_rgb_shift_strength | default: 8 | divided_by: 100.0 }};
 
         --media-padding: {{ settings.media_padding }}px;
         --media-border-opacity: {{ settings.media_border_opacity | divided_by: 100.0 }};
@@ -343,6 +343,7 @@
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
     {%- endif -%}
 
+    <script src="{{ 'header.js' | asset_url }}" defer></script>
     <script src="{{ 'custom.js' | asset_url }}" defer></script>
   </body>
 </html>
