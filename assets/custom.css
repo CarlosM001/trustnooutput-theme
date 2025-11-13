@@ -1498,6 +1498,24 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   }
 }
 
+/* ========================================================================== 
+   12b) CONTRAST FIXES ON LIGHT BACKGROUNDS
+   Ensures collection/product cards and search results remain readable.
+   These selectors target Spotlight card/link structures.
+   ========================================================================== */
+ 
+/* Besserer Kontrast für Collection-Titel */
+.card__heading .full-unstyled-link,
+.collection-list__item .card__caption {
+  color: #f5f5f5; /* fast weiß */
+}
+
+/* Besserer Kontrast für Produktnamen & Preise in der Suche */
+.grid__item .card__information .card__heading .full-unstyled-link,
+.grid__item .price__regular .price-item--regular {
+  color: #f5f5f5;
+}
+
 /* ==========================================================================
    12) SEARCH BAR (TNO)
    ========================================================================== */

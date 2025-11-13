@@ -19,6 +19,41 @@
       "command": "npm",
       "args": ["run", "dev"],
       "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      // The dev-check script prints "TNO DEV READY" when both servers are up.
+      "problemMatcher": [
+        {
+          "pattern": {
+            "regexp": "TNO DEV READY",
+            "file": 1,
+            "location": 1,
+            "message": 0
+          },
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": {
+              "regexp": ".*Starting Shopify CLI dev server.*"
+            },
+            "endsPattern": {
+              "regexp": "TNO DEV READY"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "Dev: Restart server",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "dev:restart"],
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
       "problemMatcher": []
     },
     {

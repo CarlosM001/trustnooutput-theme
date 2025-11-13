@@ -5,12 +5,18 @@
  * Works seamlessly with: `npm run dev`
  */
 
+// Dynamically resolve runtime ports so the orchestrator (scripts/dev-check.js)
+// can inject fallback ports when 3000 is busy. Keeps original defaults while
+// allowing override via environment variables BS_PORT / BS_UI_PORT.
+const previewPort = parseInt(process.env.BS_PORT || '3000', 10);
+const uiPort = parseInt(process.env.BS_UI_PORT || String(previewPort + 1), 10);
+
 module.exports = {
-  // ✅ Proxy Shopify CLI dev server (port shown in your CLI output)
+  // ✅ Proxy Shopify CLI dev server (fixed default CLI port unless overridden)
   proxy: 'http://127.0.0.1:9292',
 
-  // ✅ Local BrowserSync port (frontend preview)
-  port: 3000,
+  // ✅ Local BrowserSync port (frontend preview) – dynamic / fallback capable
+  port: previewPort,
 
   // 🔍 Watch these files for live reloads
   files: [
@@ -38,7 +44,7 @@ module.exports = {
 
   // 🎛️ Optional BrowserSync UI (accessible at localhost:3001)
   ui: {
-    port: 3001,
+    port: uiPort,
   },
 
   // 👻 Disable Ghost Mode (prevents weird scroll/input syncing)

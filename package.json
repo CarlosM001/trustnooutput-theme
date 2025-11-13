@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "TRUST.NO.OUTPUT Shopify Theme Development",
   "scripts": {
-    "dev": "npm-run-all --parallel dev:theme dev:sync",
+  "dev": "npm run dev:serve",
+  "dev:serve": "node scripts/dev-check.js",
+  "dev:restart": "node scripts/dev-check.js --restart",
     "dev:theme": "shopify theme dev --store=9csvgi-16.myshopify.com",
     "dev:sync": "browser-sync start --config bs-config.js",
     "dev:windows": "concurrently \"npm:dev:theme\" \"npm:dev:sync\"",
@@ -19,7 +21,8 @@
     "lint:js": "eslint \"assets/**/*.js\" --no-error-on-unmatched-pattern",
     "lint:js:fix": "eslint \"assets/**/*.js\" --fix --no-error-on-unmatched-pattern",
     "hygiene": "npm-run-all -s fmt lint:css:fix lint:js:fix",
-    "lh:report": "lighthouse http://localhost:3000 --quiet --chrome-flags='--headless' --output html --output-path ./reports/lh.html"
+    "lh:report": "lighthouse http://localhost:3000 --quiet --chrome-flags='--headless' --output html --output-path ./reports/lh.html",
+    "a11y:smoke": "node ./tests/a11y/smoke-a11y.js"
   },
   "devDependencies": {
     "browser-sync": "^2.29.3",
@@ -36,7 +39,9 @@
     "globals": "^15.8.0",
     "stylelint": "^16.3.1",
     "stylelint-config-standard": "^36.0.0",
-    "lighthouse": "^12.2.0"
+    "axe-core": "^4.10.0",
+    "lighthouse": "^12.2.0",
+    "playwright": "^1.49.0"
   },
   "browserslist": [
     "last 2 versions",
