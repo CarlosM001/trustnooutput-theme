@@ -1,6 +1,7 @@
 # GA4 Custom Dimensions Setup Guide
 
 ## Overview
+
 This theme tracks 3 custom events that should be registered as Custom Dimensions in GA4 for proper segmentation and analysis.
 
 ---
@@ -8,9 +9,11 @@ This theme tracks 3 custom events that should be registered as Custom Dimensions
 ## Events Tracked
 
 ### 1. `tno_variant` - A/B Test Assignment
+
 **Purpose:** Track which glitch mode variant a user sees (pulse vs. continuous)
 
 **Payload:**
+
 ```javascript
 {
   event: 'tno_variant',
@@ -19,6 +22,7 @@ This theme tracks 3 custom events that should be registered as Custom Dimensions
 ```
 
 **Use Cases:**
+
 - Segment conversion rates by variant
 - Compare bounce rates between pulse/continuous modes
 - Analyze time-on-site by variant
@@ -26,9 +30,11 @@ This theme tracks 3 custom events that should be registered as Custom Dimensions
 ---
 
 ### 2. `tno_reduced_motion` - Accessibility Preference
+
 **Purpose:** Track users who prefer reduced motion (accessibility)
 
 **Payload:**
+
 ```javascript
 {
   event: 'tno_reduced_motion',
@@ -37,6 +43,7 @@ This theme tracks 3 custom events that should be registered as Custom Dimensions
 ```
 
 **Use Cases:**
+
 - Measure accessibility adoption
 - Ensure UX quality for reduced-motion users
 - Identify correlation between accessibility needs and conversion
@@ -44,9 +51,11 @@ This theme tracks 3 custom events that should be registered as Custom Dimensions
 ---
 
 ### 3. `tno_atc` - Add-to-Cart with Variant
+
 **Purpose:** Track conversions (ATC) correlated with A/B variant
 
 **Payload:**
+
 ```javascript
 {
   event: 'tno_atc',
@@ -55,6 +64,7 @@ This theme tracks 3 custom events that should be registered as Custom Dimensions
 ```
 
 **Use Cases:**
+
 - Primary A/B test success metric
 - Compare ATC rates between variants
 - Funnel analysis: variant assignment → ATC → checkout
@@ -140,14 +150,12 @@ If you want separate event tracking:
 
 ```javascript
 // Check dataLayer (before GA4 processes)
-window.dataLayer.filter(e => e.event?.startsWith('tno_'))
-
-// Expected:
-[
-  {event: "tno_variant", variant: "glitch_pulse"},
-  {event: "tno_reduced_motion", value: false},
-  {event: "tno_atc", variant: "glitch_pulse"}
-]
+window.dataLayer.filter((e) => e.event?.startsWith('tno_'))[
+  // Expected:
+  ({ event: 'tno_variant', variant: 'glitch_pulse' },
+  { event: 'tno_reduced_motion', value: false },
+  { event: 'tno_atc', variant: 'glitch_pulse' })
+];
 ```
 
 ---
@@ -224,6 +232,7 @@ If you collect analytics data in EU/CA:
    - Verify `gtag('config', 'G-XXXXXXX')` is present in theme.liquid
 
 2. **Check dataLayer before GA4 loads**
+
    ```javascript
    console.log(window.dataLayer);
    // Should contain tno_* events before gtag.js processes them
@@ -244,5 +253,6 @@ If you collect analytics data in EU/CA:
 ## Contact
 
 For GA4 setup issues:
+
 - Check Shopify Community: [community.shopify.com](https://community.shopify.com)
 - GA4 Help Center: [support.google.com/analytics](https://support.google.com/analytics)

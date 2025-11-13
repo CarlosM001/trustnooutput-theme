@@ -13,7 +13,7 @@
   but a digital interface that reveals its constructed nature
   through subtle glitches and fragmentations.
 {% endcomment %}
-
+{%- comment -%} Header JS moved to assets/header.js for cacheability. {%- endcomment -%}
 <style>
   /* ========================================
      Header Base Styles
@@ -147,7 +147,6 @@
     display: flex;
     justify-content: center;
   }
-
   .header-nav__list {
     display: flex;
     gap: 2.5rem;
@@ -155,11 +154,9 @@
     margin: 0;
     padding: 0;
   }
-
   .header-nav__item {
     position: relative;
   }
-
   .header-nav__link {
     font-family: var(--font-mono, monospace);
     font-size: 0.875rem;
@@ -173,11 +170,9 @@
     display: inline-block;
   }
 
-  /* Color shift hover: Cyan → Magenta */
   .header-nav__link:hover {
     color: #00ffff;
   }
-
   .header-nav__link::after {
     content: '';
     position: absolute;
@@ -188,16 +183,12 @@
     background: linear-gradient(90deg, #00ffff, #ff00ff);
     transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-
   .header-nav__link:hover::after {
     width: 100%;
   }
-
-  /* Active state */
   .header-nav__link.is-active {
     color: #00ffff;
   }
-
   .header-nav__link.is-active::after {
     width: 100%;
   }
@@ -205,14 +196,12 @@
   /* ========================================
      Icon Area (Right)
      ======================================== */
-
   .header-icons {
     display: flex;
     align-items: center;
     gap: 1.5rem;
     flex-shrink: 0;
   }
-
   .header-icon {
     position: relative;
     width: 24px;
@@ -221,12 +210,10 @@
     transition: all 0.3s ease;
     color: #eaeaea;
   }
-
   .header-icon:hover {
     color: #00ffff;
     transform: translateY(-2px);
   }
-
   .header-icon svg {
     width: 100%;
     height: 100%;
@@ -234,12 +221,9 @@
     fill: none;
     stroke-width: 2;
   }
-
-  /* Cart badge */
   .header-icon--cart {
     position: relative;
   }
-
   .cart-badge {
     position: absolute;
     top: -8px;
@@ -259,7 +243,6 @@
     box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
     animation: pulse-badge 2s ease-in-out infinite;
   }
-
   @keyframes pulse-badge {
     0%,
     100% {
@@ -270,10 +253,7 @@
     }
   }
 
-  /* ========================================
-     Mobile Menu Toggle
-     ======================================== */
-
+  /* ======================================== Mobile Menu Toggle */
   .header-menu-toggle {
     display: none;
     flex-direction: column;
@@ -283,40 +263,29 @@
     background: none;
     border: none;
   }
-
   .header-menu-toggle span {
     width: 24px;
     height: 2px;
     background: #eaeaea;
     transition: all 0.3s ease;
   }
-
   .header-menu-toggle:hover span {
     background: #00ffff;
   }
-
   .header-menu-toggle.is-active span:nth-child(1) {
     transform: rotate(45deg) translateY(7px);
   }
-
   .header-menu-toggle.is-active span:nth-child(2) {
     opacity: 0;
   }
-
   .header-menu-toggle.is-active span:nth-child(3) {
     transform: rotate(-45deg) translateY(-7px);
   }
 
-  /* ========================================
-     Mobile Menu Overlay
-     ======================================== */
-
+  /* ======================================== Mobile Menu Overlay */
   .mobile-menu {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background: rgba(0, 0, 0, 0.98);
     backdrop-filter: blur(20px);
     z-index: 999;
@@ -328,31 +297,26 @@
     visibility: hidden;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
-
   .mobile-menu.is-active {
     opacity: 1;
     visibility: visible;
   }
-
   .mobile-menu__nav {
     list-style: none;
     margin: 0;
     padding: 0;
     text-align: center;
   }
-
   .mobile-menu__item {
     margin: 2rem 0;
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
-
   .mobile-menu.is-active .mobile-menu__item {
     opacity: 1;
     transform: translateY(0);
   }
-
   .mobile-menu.is-active .mobile-menu__item:nth-child(1) {
     transition-delay: 0.1s;
   }
@@ -365,7 +329,6 @@
   .mobile-menu.is-active .mobile-menu__item:nth-child(4) {
     transition-delay: 0.4s;
   }
-
   .mobile-menu__link {
     font-family: var(--font-mono, monospace);
     font-size: 2rem;
@@ -374,60 +337,44 @@
     text-transform: uppercase;
     color: #eaeaea;
     text-decoration: none;
-    position: relative;
-    display: inline-block;
     transition: color 0.3s ease;
   }
-
   .mobile-menu__link:hover {
     color: #00ffff;
   }
 
-  /* ========================================
-     Responsive Design
-     ======================================== */
-
+  /* ======================================== Responsive */
   @media (max-width: 1024px) {
     .header-nav__list {
       gap: 1.5rem;
     }
-
     .header-nav__link {
       font-size: 0.8rem;
     }
   }
-
   @media (max-width: 768px) {
     .site-header {
       padding: 1rem 1.5rem;
     }
-
     .site-header.is-scrolled {
       padding: 0.75rem 1.5rem;
     }
-
     .header-nav {
       display: none;
     }
-
     .header-menu-toggle {
       display: flex;
     }
-
     .header-icons {
       gap: 1rem;
     }
-
     .header-icon {
       width: 20px;
       height: 20px;
     }
   }
 
-  /* ========================================
-     Accessibility: Reduced Motion
-     ======================================== */
-
+  /* ======================================== Reduced Motion */
   @media (prefers-reduced-motion: reduce) {
     .site-header,
     .header-logo__link,
@@ -438,21 +385,16 @@
       transition: none;
       animation: none;
     }
-
     .header-logo__link::before,
     .header-logo__link::after {
       display: none;
     }
-
     .cart-badge {
       animation: none;
     }
   }
 
-  /* ========================================
-     Optional: Scanline Effect
-     ======================================== */
-
+  /* ======================================== Optional Scanline */
   .site-header::before {
     content: '';
     position: absolute;
@@ -464,7 +406,6 @@
     animation: scanline-sweep 3s linear infinite;
     opacity: 0.5;
   }
-
   @keyframes scanline-sweep {
     0% {
       transform: translateX(-100%);
@@ -474,14 +415,10 @@
     }
   }
 
-  /* ========================================
-     Body Padding for Fixed Header
-     ======================================== */
-
+  /* ======================================== Body Padding */
   body {
     padding-top: 80px;
   }
-
   @media (max-width: 768px) {
     body {
       padding-top: 60px;
@@ -698,7 +635,13 @@
       </a>
 
       {%- comment %} Mobile Menu Toggle {%- endcomment %}
-      <button class="header-menu-toggle" aria-label="Menu" id="mobile-menu-toggle">
+      <button
+        class="header-menu-toggle"
+        aria-label="Menu"
+        id="mobile-menu-toggle"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
         <span></span>
         <span></span>
         <span></span>
@@ -708,7 +651,15 @@
 </header>
 
 {%- comment %} Mobile Menu Overlay {%- endcomment %}
-<div class="mobile-menu" id="mobile-menu">
+<div
+  class="mobile-menu"
+  id="mobile-menu"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Main menu"
+  aria-hidden="true"
+  tabindex="-1"
+>
   <nav class="mobile-menu__nav">
     {%- assign menu_ref = linklists[section.settings.menu] -%}
     <ul>
@@ -738,172 +689,7 @@
   </nav>
 </div>
 
-<script>
-  /**
-   * TRUST.NO.OUTPUT — Header Interactions
-   *
-   * Features:
-   * - Sticky header with scroll detection
-   * - Mobile menu toggle with ESC key support
-   * - Cart count update function
-   * - Smooth transitions
-   */
-
-  (function () {
-    'use strict';
-
-    const header = document.getElementById('site-header');
-    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
-    let lastScrollTop = 0;
-
-    /**
-     * Scroll Detection: Add 'is-scrolled' class after 20px
-     */
-    function handleScroll() {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-      if (scrollTop > 20) {
-        header.classList.add('is-scrolled');
-      } else {
-        header.classList.remove('is-scrolled');
-      }
-
-      lastScrollTop = scrollTop;
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
-    /**
-     * Mega/Dropdown keyboard interactions (basic)
-     * - Toggle buttons manage aria-expanded
-     * - ESC closes open panels
-     * - Basic focus trap within the open mega panel
-     */
-    const nav = document.querySelector('.tno-nav');
-    const toggles = nav ? nav.querySelectorAll('.tno-nav__toggle') : [];
-    let openPanel = null;
-    let openToggle = null;
-
-    function closeOpenPanel() {
-      if (!openPanel || !openToggle) return;
-      openPanel.classList.remove('is-open');
-      openToggle.setAttribute('aria-expanded', 'false');
-      openPanel = null;
-      openToggle = null;
-    }
-
-    toggles.forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        const li = btn.closest('.tno-nav__item');
-        const panelId = btn.getAttribute('aria-controls');
-        const panel = document.getElementById(panelId);
-        if (!panel || !li) return;
-
-        const isOpen = btn.getAttribute('aria-expanded') === 'true';
-        if (isOpen) {
-          btn.setAttribute('aria-expanded', 'false');
-          panel.classList.remove('is-open');
-          if (openPanel === panel) {
-            openPanel = null;
-            openToggle = null;
-          }
-        } else {
-          // Close any other panel
-          closeOpenPanel();
-          btn.setAttribute('aria-expanded', 'true');
-          panel.classList.add('is-open');
-          openPanel = panel;
-          openToggle = btn;
-          // Move focus to first focusable inside panel
-          const focusables = panel.querySelectorAll('a, button, [tabindex]:not([tabindex="-1"])');
-          if (focusables.length) {
-            focusables[0].focus();
-          } else {
-            panel.focus();
-          }
-        }
-      });
-    });
-
-    // ESC to close
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeOpenPanel();
-      }
-      // Very basic focus trap
-      if (e.key === 'Tab' && openPanel) {
-        const focusables = openPanel.querySelectorAll('a, button, [tabindex]:not([tabindex="-1"])');
-        if (!focusables.length) return;
-        const first = focusables[0];
-        const last = focusables[focusables.length - 1];
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
-    });
-
-    /**
-     * Mobile Menu Toggle
-     */
-    if (mobileMenuToggle && mobileMenu) {
-      mobileMenuToggle.addEventListener('click', function () {
-        const isActive = mobileMenu.classList.contains('is-active');
-
-        if (isActive) {
-          mobileMenu.classList.remove('is-active');
-          mobileMenuToggle.classList.remove('is-active');
-          document.body.style.overflow = '';
-        } else {
-          mobileMenu.classList.add('is-active');
-          mobileMenuToggle.classList.add('is-active');
-          document.body.style.overflow = 'hidden';
-        }
-      });
-
-      // Close menu when clicking menu links
-      const mobileLinks = mobileMenu.querySelectorAll('.mobile-menu__link');
-      mobileLinks.forEach((link) => {
-        link.addEventListener('click', function () {
-          mobileMenu.classList.remove('is-active');
-          mobileMenuToggle.classList.remove('is-active');
-          document.body.style.overflow = '';
-        });
-      });
-
-      // Close menu on ESC key
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && mobileMenu.classList.contains('is-active')) {
-          mobileMenu.classList.remove('is-active');
-          mobileMenuToggle.classList.remove('is-active');
-          document.body.style.overflow = '';
-        }
-      });
-    }
-
-    /**
-     * Cart Count Update
-     * Call this function after adding items to cart
-     */
-    window.updateCartCount = function () {
-      fetch('/cart.js')
-        .then((response) => response.json())
-        .then((cart) => {
-          const cartCount = document.getElementById('cart-count');
-          if (cartCount) {
-            cartCount.textContent = cart.item_count;
-          }
-        })
-        .catch((error) => {
-          console.error('Error updating cart count:', error);
-        });
-    };
-  })();
-</script>
+{%- comment -%} Inline script removed; logic now resides in assets/header.js {%- endcomment -%}
 
 {% schema %}
 {

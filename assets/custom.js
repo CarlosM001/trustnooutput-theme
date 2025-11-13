@@ -338,6 +338,7 @@
         initDelayedCtas();
         initCtaKeyboardSupport();
         initAtcTracking();
+        initHeaderTransparency();
       });
     } else {
       // DOM already loaded
@@ -348,6 +349,7 @@
       initDelayedCtas();
       initCtaKeyboardSupport();
       initAtcTracking();
+      initHeaderTransparency();
     }
   };
 
@@ -362,6 +364,52 @@
     };
   }
 })();
+
+/* 9) Header Transparency Control (IntersectionObserver)
+   Purpose: Smoothly toggle header transparency only while hero/banner is visible.
+   Rationale: Avoid scroll event thrash; observer is cheaper and intent-driven.
+   Behavior:
+   - Adds 'is-transparent' class to header when hero sentinel is intersecting.
+   - Removes class once hero is scrolled out of view (early trigger via rootMargin).
+   - Respects existing manual transparency (does not force if section disabled).
+*/
+function initHeaderTransparency() {
+  const header = document.getElementById('site-header');
+  if (!header) {
+    return;
+  }
+  // If merchant disabled transparent header we abort.
+  if (!header.classList.contains('is-transparent')) {
+    return;
+  }
+
+  // Try explicit hero section id first, fallback to first .tno-hero element.
+  const hero =
+    document.getElementById('shopify-section-motion-hero-tno') ||
+    document.querySelector('.tno-hero, .motion-hero');
+  if (!hero) {
+    return; // No hero present; leave header as-is.
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          header.classList.add('is-transparent');
+        } else {
+          header.classList.remove('is-transparent');
+        }
+      });
+    },
+    {
+      // Trigger slightly before hero fully leaves to preempt abrupt change.
+      rootMargin: '-120px 0px 0px 0px',
+      threshold: 0,
+    }
+  );
+
+  observer.observe(hero);
+}
 
 /* 7) CTA Enhancements: delayed navigation + Space activation */
 function initDelayedCtas() {

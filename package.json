@@ -4,7 +4,7 @@
   "description": "TRUST.NO.OUTPUT Shopify Theme Development",
   "scripts": {
     "dev": "npm-run-all --parallel dev:theme dev:sync",
-    "dev:theme": "shopify theme dev --store=9csvgi-16.myshopify.com --theme=186572767607",
+    "dev:theme": "shopify theme dev --store=9csvgi-16.myshopify.com",
     "dev:sync": "browser-sync start --config bs-config.js",
     "dev:windows": "concurrently \"npm:dev:theme\" \"npm:dev:sync\"",
     "theme:push:dev": "shopify theme push --store=9csvgi-16.myshopify.com --theme=186572767607",
