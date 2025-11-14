@@ -12,10 +12,8 @@
     {%- liquid
       if section.index == 0
         assign loading_strategy = 'eager'
-        assign fetch_priority = 'high'
       else
         assign loading_strategy = 'lazy'
-        assign fetch_priority = 'auto'
       endif
     -%}
 
@@ -26,8 +24,7 @@
         | image_tag:
           loading: loading_strategy,
           alt: section.settings.headline,
-          class: 'tno-hero-img',
-          fetchpriority: fetch_priority
+          class: 'tno-hero-img'
       }}
     {%- else -%}
       <img
@@ -36,7 +33,6 @@
         width="1600"
         height="900"
         loading="{{ loading_strategy }}"
-        fetchpriority="{% if section.index == 0 %}high{% else %}auto{% endif %}"
         class="tno-hero-img"
       >
     {%- endif -%}
