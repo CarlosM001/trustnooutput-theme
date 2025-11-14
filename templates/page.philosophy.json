@@ -9,10 +9,6 @@
  */
 {
   "sections": {
-    "hero": {
-      "type": "motion-hero-tno",
-      "settings": {}
-    },
     "philosophy": {
       "type": "philosophy-trust",
       "blocks": {
@@ -52,7 +48,7 @@
       "settings": {
         "eyebrow": "Theoretical Foundation",
         "headline": "Philosophy",
-        "intro": "TRUST.NO.OUTPUT is grounded in critical theory — examining the invisible structures that shape digital consciousness, attention economics, and surveillance capitalism.",
+        "intro": "TRUST.NO.OUTPUT untersucht, wie digitale Systeme unsere Wahrnehmung formen – durch Algorithmen, Interfaces und unsichtbare Strukturen. Es ist eine Einladung, den Code hinter unserer Realität bewusster zu lesen.",
         "cta_text": "Read Full Manifesto",
         "cta_url": "/pages/manifesto",
         "enable_scroll_reveal": true
@@ -71,7 +67,6 @@
     }
   },
   "order": [
-    "hero",
     "philosophy",
     "rich_text"
   ]
