@@ -45,14 +45,144 @@
   /* Mobile: compact header */
   @media (max-width: 768px) {
     .site-header {
-      padding: 0.75rem 1rem;
+      padding: 0;
       background: var(--color-body-bg, #0a0a0a);
       border: none;
       box-shadow: none;
     }
     .site-header.is-scrolled {
-      padding: 0.75rem 1rem;
+      padding: 0;
       background: rgba(10, 10, 10, 0.95);
+      box-shadow: none;
+      border-bottom: none;
+    }
+
+    /* Mobile: Two-row layout container */
+    .site-header__inner {
+      flex-direction: column;
+      gap: 0;
+      padding: 0;
+    }
+
+    /* Mobile Row 1: Top bar (burger + logo + icons) */
+    .tno-header__topbar {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      height: 56px;
+      gap: 0.75rem;
+    }
+
+    /* Mobile: Burger button (left) */
+    .tno-header__burger {
+      order: -1;
+      position: static;
+      margin-right: 0;
+    }
+
+    /* Mobile: Logo (center) */
+    .tno-header__logo {
+      flex: 1;
+      text-align: center;
+      margin: 0;
+    }
+
+    /* Mobile: Icon group (right) */
+    .tno-header__icons {
+      display: flex !important;
+      gap: 0.5rem;
+      margin: 0;
+    }
+
+    .tno-header__icon {
+      width: 20px;
+      height: 20px;
+      min-width: 40px;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Mobile Row 2: Search bar */
+    .tno-header__search-mobile {
+      width: 100%;
+      padding: 0 1rem 0.75rem 1rem;
+      display: block;
+    }
+
+    .tno-header__search-form {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 24px;
+      padding: 0.5rem 1rem;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .tno-header__search-form:focus-within {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(0, 255, 255, 0.4);
+    }
+
+    .tno-header__search-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-family: var(--font-mono, monospace);
+      font-size: 0.9375rem;
+      padding: 0;
+    }
+
+    .tno-header__search-input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .tno-header__search-button {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.7);
+      width: 24px;
+      height: 24px;
+      padding: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .tno-header__search-button:hover,
+    .tno-header__search-button:focus {
+      color: #00ffff;
+    }
+
+    .tno-header__search-button svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    /* Hide desktop navigation and desktop search on mobile */
+    .header-nav,
+    .tno-nav,
+    .tno-header__desktop-utility {
+      display: none !important;
+    }
+
+    /* Hide the mobile search overlay toggle (we use inline search instead) */
+    #mobile-search-toggle {
+      display: none !important;
     }
   }
 
@@ -63,6 +193,25 @@
     align-items: center;
     justify-content: space-between;
     gap: 2rem;
+
+    /* Desktop: hide mobile-specific elements */
+    @media (min-width: 769px) {
+      .tno-header__topbar {
+        display: contents;
+      }
+
+      .tno-header__search-mobile {
+        display: none;
+      }
+
+      .tno-header__burger {
+        display: none;
+      }
+
+      .tno-header__icons {
+        display: none;
+      }
+    }
   }
 
   /* ========================================
@@ -428,96 +577,6 @@
     }
   }
 
-  /* ======================================== Mobile Search Overlay */
-  .mobile-search-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: rgba(10, 10, 10, 0.98);
-    backdrop-filter: blur(20px);
-    padding: 1rem;
-    z-index: 999;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-100%);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .mobile-search-overlay.is-active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-
-  .mobile-search-overlay__inner {
-    max-width: 600px;
-    margin: 0 auto;
-    padding-top: 60px;
-  }
-
-  .mobile-search-form {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
-  }
-
-  .mobile-search-input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: #fff;
-    font-family: var(--font-mono, monospace);
-    font-size: 1rem;
-  }
-
-  .mobile-search-input::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-  }
-
-  .mobile-search-submit,
-  .mobile-search-close {
-    background: transparent;
-    border: none;
-    color: #00ffff;
-    width: 32px;
-    height: 32px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: color 0.2s ease;
-  }
-
-  .mobile-search-submit:hover,
-  .mobile-search-close:hover {
-    color: #fff;
-  }
-
-  .mobile-search-submit svg,
-  .mobile-search-close svg {
-    width: 20px;
-    height: 20px;
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 2;
-  }
-
-  .header-icon--search {
-    display: none;
-  }
-
-  @media (max-width: 768px) {
-    .header-icon--search {
-      display: flex;
-    }
-  }
-
   /* ======================================== Optional Scanline (Disabled on mobile) */
   .site-header::before {
     display: none;
@@ -529,7 +588,7 @@
   }
   @media (max-width: 768px) {
     body {
-      padding-top: 60px;
+      padding-top: 104px;
     }
   }
 </style>
@@ -538,9 +597,24 @@
   class="site-header tno-header header--tno {% if section.settings.transparent_header %}is-transparent{% endif %}"
   id="site-header"
 >
-  <div class="site-header__inner">
+  <div class="site-header__inner tno-header__container">
+    {%- comment %} Mobile Top Bar (Row 1: Burger + Logo + Icons) {%- endcomment %}
+    <div class="tno-header__topbar">
+      {%- comment %} Mobile Menu Toggle (Left on Mobile) {%- endcomment %}
+      <button
+        class="header-menu-toggle tno-header__burger"
+        aria-label="Menu"
+        id="mobile-menu-toggle"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
     {%- comment %} Logo (Left) {%- endcomment %}
-    <div class="header-logo">
+      <div class="header-logo tno-header__logo">
       <a
         href="{{ routes.root_url }}"
         class="header-logo__link"
@@ -551,7 +625,55 @@
       </a>
     </div>
 
-    {%- comment %} Navigation (Center) {%- endcomment %}
+      {%- comment %} Icons (Right on Mobile, includes desktop nav utility icons) {%- endcomment %}
+      <div class="header-icons tno-nav__utility tno-header__icons">
+        {%- comment %} Search Icon (Mobile only - triggers overlay) {%- endcomment %}
+        {% if section.settings.show_search %}
+          <button
+            class="header-icon header-icon--search tno-header__icon"
+            aria-label="Search"
+            id="mobile-search-toggle"
+          >
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.35-4.35"/>
+            </svg>
+          </button>
+        {% endif %}
+
+        {%- comment %} Account Icon {%- endcomment %}
+        {% if section.settings.show_account %}
+          <a
+            href="{{ routes.account_url }}"
+            class="header-icon header-icon--account tno-header__icon"
+            aria-label="Account"
+          >
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </a>
+        {% endif %}
+
+        {%- comment %} Cart Icon with Badge {%- endcomment %}
+        <a
+          href="{{ routes.cart_url }}"
+          class="header-icon header-icon--cart tno-ico tno-header__icon"
+          aria-label="Cart"
+        >
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="9" cy="21" r="1"/>
+            <circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          <span class="cart-badge tno-badge" id="cart-count">
+            {{ cart.item_count }}
+          </span>
+        </a>
+      </div>
+    </div>
+
+    {%- comment %} Desktop Navigation (Center) - Hidden on Mobile {%- endcomment %}
     <nav class="header-nav tno-nav" role="navigation" aria-label="Main">
       {%- assign menu_handle = section.settings.main_menu | default: section.settings.menu -%}
       {%- assign menu_ref = linklists[menu_handle] -%}
@@ -694,8 +816,8 @@
       {%- endif -%}
     </nav>
 
-    {%- comment %} Icons (Right) {%- endcomment %}
-    <div class="header-icons tno-nav__utility">
+    {%- comment %} Desktop Search & Icons (Right) - Hidden on Mobile {%- endcomment %}
+    <div class="header-icons tno-nav__utility tno-header__desktop-utility">
       {%- comment %} Search Field (Desktop) {%- endcomment %}
       {% if section.settings.show_search %}
         <div class="tno-search">
@@ -710,18 +832,6 @@
             <button type="submit" class="tno-search__button" aria-label="Submit search">⌕</button>
           </form>
         </div>
-        
-        {%- comment %} Search Icon (Mobile only) {%- endcomment %}
-        <button 
-          class="header-icon header-icon--search" 
-          aria-label="Search"
-          id="mobile-search-toggle"
-        >
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="11" cy="11" r="8"/>
-            <path d="m21 21-4.35-4.35"/>
-          </svg>
-        </button>
       {% endif %}
 
       {%- comment %} Account Icon {%- endcomment %}
@@ -737,36 +847,28 @@
           </svg>
         </a>
       {% endif %}
-
-      {%- comment %} Cart Icon with Badge {%- endcomment %}
-      <a
-        href="{{ routes.cart_url }}"
-        class="header-icon header-icon--cart tno-ico"
-        aria-label="Cart"
-      >
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="9" cy="21" r="1"/>
-          <circle cx="20" cy="21" r="1"/>
-          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-        </svg>
-        <span class="cart-badge tno-badge" id="cart-count">
-          {{ cart.item_count }}
-        </span>
-      </a>
-
-      {%- comment %} Mobile Menu Toggle {%- endcomment %}
-      <button
-        class="header-menu-toggle"
-        aria-label="Menu"
-        id="mobile-menu-toggle"
-        aria-expanded="false"
-        aria-controls="mobile-menu"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
     </div>
+
+    {%- comment %} Mobile Search Bar (Row 2) - Full width below top bar {%- endcomment %}
+    {% if section.settings.show_search %}
+      <div class="tno-header__search-mobile">
+        <form action="{{ routes.search_url }}" method="get" role="search" class="tno-header__search-form">
+          <input
+            type="search"
+            name="q"
+            placeholder="Search…"
+            class="tno-header__search-input"
+            aria-label="Search products"
+          >
+          <button type="submit" class="tno-header__search-button" aria-label="Submit search">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.35-4.35"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+    {% endif %}
   </div>
 </header>
 
@@ -808,36 +910,6 @@
     </ul>
   </nav>
 </div>
-
-{%- comment %} Mobile Search Overlay {%- endcomment %}
-{% if section.settings.show_search %}
-<div class="mobile-search-overlay" id="mobile-search-overlay" aria-hidden="true">
-  <div class="mobile-search-overlay__inner">
-    <form action="{{ routes.search_url }}" method="get" role="search" class="mobile-search-form">
-      <input
-        type="search"
-        name="q"
-        placeholder="Search..."
-        class="mobile-search-input"
-        id="mobile-search-input"
-        aria-label="Search"
-      >
-      <button type="submit" class="mobile-search-submit" aria-label="Submit search">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="11" cy="11" r="8"/>
-          <path d="m21 21-4.35-4.35"/>
-        </svg>
-      </button>
-      <button type="button" class="mobile-search-close" id="mobile-search-close" aria-label="Close search">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <line x1="18" y1="6" x2="6" y2="18"/>
-          <line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
-      </button>
-    </form>
-  </div>
-</div>
-{% endif %}
 
 {%- comment -%} Inline script removed; logic now resides in assets/header.js {%- endcomment -%}
 
