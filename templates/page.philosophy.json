@@ -53,21 +53,9 @@
         "cta_url": "/pages/manifesto",
         "enable_scroll_reveal": true
       }
-    },
-    "rich_text": {
-      "type": "rich-text",
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "scheme-1",
-        "full_width": true,
-        "padding_top": 60,
-        "padding_bottom": 60
-      }
     }
   },
   "order": [
-    "philosophy",
-    "rich_text"
+    "philosophy"
   ]
 }
