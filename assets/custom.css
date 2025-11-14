@@ -1775,8 +1775,11 @@ html.tno-ab-continuous .tno-glitch-soft::after {
    ========================================================================== */
 
 @media (width <= 768px) {
-  /* Ensure hamburger is properly styled */
+  /* Ensure hamburger is properly styled and VISIBLE on mobile */
   .header-menu-toggle {
+    display: flex !important;
+    flex-direction: column;
+    gap: 5px;
     width: 24px;
     height: 20px;
     position: relative;
