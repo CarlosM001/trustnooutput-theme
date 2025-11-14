@@ -1347,15 +1347,19 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: calc(100% + 12px);
+  top: 100%;
   width: min(90vw, 820px);
-  background: rgb(255 255 255 / 75%);
+  background: rgb(255 255 255 / 95%);
   backdrop-filter: blur(8px);
   border: 1px solid rgb(0 0 0 / 10%);
   border-radius: var(--tno-r-md);
   box-shadow: var(--tno-shadow-3);
   padding: 1rem;
+  padding-top: 20px;
+  margin-top: 0;
   display: none;
+  z-index: 9999;
+  pointer-events: auto;
 }
 
 .tno-mega.is-open {
@@ -1388,26 +1392,36 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 .tno-mega__link {
   color: #111;
   text-decoration: none;
+  display: block;
+  padding: 0.35rem 0.5rem;
+  border-radius: var(--tno-r-sm);
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .tno-mega__link:hover {
   color: var(--tno-accent);
+  background: rgb(0 0 0 / 4%);
   text-decoration: underline;
 }
 
 /* Simple dropdown */
 .tno-dropdown {
   position: absolute;
-  top: calc(100% + 10px);
+  top: 100%;
   left: 50%;
   transform: translateX(-50%);
   min-width: 220px;
-  background: rgb(255 255 255 / 95%);
+  background: rgb(255 255 255 / 98%);
   border: 1px solid rgb(0 0 0 / 10%);
   border-radius: var(--tno-r-sm);
   box-shadow: var(--tno-shadow-3);
   padding: 0.5rem;
+  padding-top: 15px;
+  margin-top: 0;
   display: none;
+  z-index: 10000;
+  pointer-events: auto;
 }
 
 .tno-dropdown__list {
@@ -1426,24 +1440,31 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   color: #111;
   text-decoration: none;
   border-radius: var(--tno-r-sm);
+  cursor: pointer;
+  pointer-events: auto;
+  position: relative;
+  z-index: 1;
 }
 
 .tno-dropdown__link:hover,
 .tno-dropdown__link:focus {
   background: rgb(0 0 0 / 4%);
+  color: var(--tno-accent, #0ff);
 }
 
 /* Hover/focus reveal */
 .tno-has-mega:hover > .tno-mega,
-.tno-has-mega:focus-within > .tno-mega {
-  display: grid;
+.tno-has-mega:focus-within > .tno-mega,
+.tno-mega:hover {
+  display: grid !important;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
 }
 
 .tno-has-dropdown:hover > .tno-dropdown,
-.tno-has-dropdown:focus-within > .tno-dropdown {
-  display: block;
+.tno-has-dropdown:focus-within > .tno-dropdown,
+.tno-dropdown:hover {
+  display: block !important;
 }
 
 @media (prefers-color-scheme: dark) {

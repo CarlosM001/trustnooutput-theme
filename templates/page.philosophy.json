@@ -9,6 +9,10 @@
  */
 {
   "sections": {
+    "hero": {
+      "type": "motion-hero-tno",
+      "settings": {}
+    },
     "philosophy": {
       "type": "philosophy-trust",
       "blocks": {
@@ -48,7 +52,7 @@
       "settings": {
         "eyebrow": "Theoretical Foundation",
         "headline": "Philosophy",
-        "intro": "TRUST.NO.OUTPUT untersucht, wie digitale Systeme unsere Wahrnehmung formen – durch Algorithmen, Interfaces und unsichtbare Strukturen. Es ist eine Einladung, den Code hinter unserer Realität bewusster zu lesen.",
+        "intro": "Wahrnehmung ist formbar. Realität ist dynamisch. Die digitale Welt ist ein System aus Filtern und Algorithmen, das kuratiert, was wir sehen – und was verborgen bleibt.\n\nDie Kernfrage: Wie viel unserer Wahrnehmung gehört uns, und wie viel ist generierter Output?\n\nTRUST.NO.OUTPUT ist keine Ideologie, sondern eine Einladung zur bewussten Auseinandersetzung. Nicht misstrauisch, sondern aufmerksam. Wir operieren dort, wo Grenzen verschwimmen: zwischen Realität und Simulation, Information und Interpretation.\n\nMode ist unser Interface.\nJedes Design ist ein bewusst gesetzter System-Glitch – ein ästhetisches Statement, das den vordefinierten Output infrage stellt.\n\nFür Menschen, die kritisch denken und ästhetisch fühlen.\nEin Statement ohne Lautstärke. Eine Identität ohne starre Regeln.\n\nReality is under construction.\nWir haben die Freiheit, sie mitzugestalten.",
         "cta_text": "Read Full Manifesto",
         "cta_url": "/pages/manifesto",
         "enable_scroll_reveal": true
@@ -67,6 +71,7 @@
     }
   },
   "order": [
+    "hero",
     "philosophy",
     "rich_text"
   ]
