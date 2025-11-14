@@ -481,12 +481,14 @@
   /* ======================================== Mobile Menu Toggle */
   .header-menu-toggle {
     display: none;
-    flex-direction: column;
-    gap: 5px;
     cursor: pointer;
     padding: 0.5rem;
     background: none;
     border: none;
+    width: 32px;
+    height: 28px;
+    position: relative;
+    z-index: 1001;
   }
   .header-menu-toggle span {
     width: 24px;
@@ -582,7 +584,10 @@
       display: none;
     }
     .header-menu-toggle {
-      display: flex;
+      display: flex !important;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
     }
   }
 
