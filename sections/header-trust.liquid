@@ -70,9 +70,10 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.75rem 1rem;
-      height: 56px;
+      padding: 1rem 1rem;
+      min-height: 60px;
       gap: 0.75rem;
+      background: var(--color-body-bg, #0a0a0a);
     }
 
     /* Mobile: Burger button (left) */
@@ -80,6 +81,7 @@
       order: -1;
       position: static;
       margin-right: 0;
+      flex-shrink: 0;
     }
 
     /* Mobile: Logo (center) */
@@ -87,6 +89,17 @@
       flex: 1;
       text-align: center;
       margin: 0;
+      padding: 0 0.5rem;
+    }
+
+    .tno-header__logo .header-logo__link {
+      font-size: 0.9375rem;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: inline-block;
+      max-width: 100%;
     }
 
     /* Mobile: Icon group (right) */
@@ -94,40 +107,54 @@
       display: flex !important;
       gap: 0.5rem;
       margin: 0;
+      flex-shrink: 0;
     }
 
     .tno-header__icon {
       width: 20px;
       height: 20px;
-      min-width: 40px;
-      min-height: 40px;
+      min-width: 44px;
+      min-height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
+    }
+
+    .tno-header__icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
     }
 
     /* Mobile Row 2: Search bar */
     .tno-header__search-mobile {
       width: 100%;
-      padding: 0 1rem 0.75rem 1rem;
+      padding: 0 1rem 1rem 1rem;
       display: block;
+      background: var(--color-body-bg, #0a0a0a);
     }
 
     .tno-header__search-form {
       width: 100%;
+      max-width: 100%;
       display: flex;
       align-items: center;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 24px;
-      padding: 0.5rem 1rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 0.625rem 1rem;
       gap: 0.5rem;
       transition: all 0.2s ease;
+      height: 44px;
     }
 
     .tno-header__search-form:focus-within {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(0, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.09);
+      border-color: rgba(0, 255, 255, 0.5);
+      box-shadow: 0 0 0 2px rgba(0, 255, 255, 0.1);
     }
 
     .tno-header__search-input {
@@ -137,20 +164,22 @@
       outline: none;
       color: #fff;
       font-family: var(--font-mono, monospace);
-      font-size: 0.9375rem;
+      font-size: 0.875rem;
       padding: 0;
+      line-height: 1.4;
+      min-width: 0;
     }
 
     .tno-header__search-input::placeholder {
-      color: rgba(255, 255, 255, 0.5);
+      color: rgba(255, 255, 255, 0.4);
     }
 
     .tno-header__search-button {
       background: transparent;
       border: none;
-      color: rgba(255, 255, 255, 0.7);
-      width: 24px;
-      height: 24px;
+      color: rgba(255, 255, 255, 0.6);
+      width: 20px;
+      height: 20px;
       padding: 0;
       cursor: pointer;
       display: flex;
@@ -166,8 +195,8 @@
     }
 
     .tno-header__search-button svg {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       stroke: currentColor;
       fill: none;
       stroke-width: 2;
@@ -177,11 +206,6 @@
     .header-nav,
     .tno-nav,
     .tno-header__desktop-utility {
-      display: none !important;
-    }
-
-    /* Hide the mobile search overlay toggle (we use inline search instead) */
-    #mobile-search-toggle {
       display: none !important;
     }
   }
@@ -588,7 +612,7 @@
   }
   @media (max-width: 768px) {
     body {
-      padding-top: 104px;
+      padding-top: 120px;
     }
   }
 </style>

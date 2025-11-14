@@ -1768,3 +1768,80 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   backdrop-filter: blur(6px);
   border-bottom-color: rgb(255 255 255 / 8%);
 }
+
+/* ==========================================================================
+   MOBILE HEADER ENHANCEMENTS (Digitec-style)
+   Two-row layout: Top bar (burger + logo + icons) + Search bar below
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  /* Ensure hamburger is properly styled */
+  .header-menu-toggle {
+    width: 24px;
+    height: 20px;
+    position: relative;
+    z-index: 1001;
+  }
+
+  .header-menu-toggle span {
+    height: 2px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 1px;
+  }
+
+  /* Cart badge positioning on mobile */
+  .tno-header__icon .cart-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: var(--color-magenta, #f0f);
+    color: #000;
+    font-size: 0.625rem;
+    font-weight: 700;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    line-height: 1;
+  }
+
+  /* Ensure icons have good touch targets */
+  .tno-header__icons a,
+  .tno-header__icons button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.85);
+    transition: color 0.2s ease;
+    position: relative;
+  }
+
+  .tno-header__icons a:hover,
+  .tno-header__icons button:hover {
+    color: var(--color-cyan, #0ff);
+  }
+
+  /* Logo hover effect disabled on mobile for cleaner UX */
+  .tno-header__logo .header-logo__link::before,
+  .tno-header__logo .header-logo__link::after {
+    display: none;
+  }
+
+  /* Smooth transition for header when scrolling */
+  .site-header.is-scrolled .tno-header__topbar {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* Search input focus improvement */
+  .tno-header__search-input:focus {
+    outline: none;
+  }
+
+  /* Remove any default button styling on search button */
+  .tno-header__search-button {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
