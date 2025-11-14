@@ -1,9 +1,7 @@
 {% comment %}
-  TRUST.NO.OUTPUT — Manifesto Page Template (Option 1: Full Text)
-  Uses theme typography and Philosophy section spacing for consistency.
-  - No global scripts modified
-  - Desktop header remains unchanged
-  - Clean HTML, no inline styles
+  TRUST.NO.OUTPUT — Manifesto Section
+  Displays the full manifesto text with dark background and comfortable typography.
+  Reuses styling from Philosophy section with manifesto-specific customization.
 {% endcomment %}
 
 <section class="manifesto-trust" id="manifesto">
@@ -23,7 +21,7 @@
       <p>Wir leben in einer Zeit, in der Grenzen permanent verschwimmen: zwischen online und offline, zwischen Information und Interpretation, zwischen Realität und Simulation. TRUST.NO.OUTPUT operiert genau in diesem fluiden Zwischenraum. Einem Ort, an dem das Hinterfragen wertvoller ist als die einfache Antwort.</p>
 
       <h3>Mode als Interface</h3>
-      <p>Unsere Kleidung ist mehr als Textil. Sie ist ein sichtbares Interface – ein bewusster Ausdruck dessen, wie wir in der Welt erscheinen und wahrgenommen werden wollen. Jedes Design von TRUST.NO.OUTPUT ist ein kalkulierter System-Glitch: Ein ästhetisches Statement, das die glatte Oberfläche durchbricht. Ein visuelles Zeichen dafür, dass wir den „Default-Output“ nicht als selbstverständlich akzeptieren müssen.</p>
+      <p>Unsere Kleidung ist mehr als Textil. Sie ist ein sichtbares Interface – ein bewusster Ausdruck dessen, wie wir in der Welt erscheinen und wahrgenommen werden wollen. Jedes Design von TRUST.NO.OUTPUT ist ein kalkulierter System-Glitch: Ein ästhetisches Statement, das die glatte Oberfläche durchbricht. Ein visuelles Zeichen dafür, dass wir den „Default-Output" nicht als selbstverständlich akzeptieren müssen.</p>
 
       <h3>Ein stilles Statement</h3>
       <p>TRUST.NO.OUTPUT ist für Menschen, die bewusst im digitalen Zeitalter leben, kritisch über Systeme nachdenken, ästhetisch fühlen und handeln. Es ist ein Statement ohne Lautstärke. Eine Identität ohne starre Regeln. Eine Marke, die Fragen stellt, statt Antworten zu erzwingen.</p>
@@ -37,7 +35,7 @@
 </section>
 
 <script>
-  // Scroll reveal animation (reused from Philosophy section)
+  // Scroll reveal animation
   document.addEventListener('DOMContentLoaded', () => {
     const revealElements = document.querySelectorAll('[data-scroll-reveal]');
     const observerOptions = {
@@ -56,3 +54,17 @@
     revealElements.forEach(el => observer.observe(el));
   });
 </script>
+
+{% schema %}
+{
+  "name": "Manifesto",
+  "tag": "section",
+  "class": "section-manifesto",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Manifesto"
+    }
+  ]
+}
+{% endschema %}

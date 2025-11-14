@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "manifesto": {
+      "type": "manifesto-trust",
+      "settings": {}
+    }
+  },
+  "order": ["manifesto"]
+}
