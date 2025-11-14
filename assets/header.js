@@ -200,10 +200,51 @@
     });
   }
 
+  function initMobileSearch() {
+    const mobileSearchToggle = document.getElementById('mobile-search-toggle');
+    const mobileSearchOverlay = document.getElementById('mobile-search-overlay');
+    const mobileSearchClose = document.getElementById('mobile-search-close');
+    const mobileSearchInput = document.getElementById('mobile-search-input');
+
+    if (!mobileSearchToggle || !mobileSearchOverlay) {
+      return;
+    }
+
+    // Open mobile search overlay
+    mobileSearchToggle.addEventListener('click', () => {
+      mobileSearchOverlay.classList.add('is-active');
+      mobileSearchOverlay.setAttribute('aria-hidden', 'false');
+      setTimeout(() => {
+        if (mobileSearchInput) {
+          mobileSearchInput.focus();
+        }
+      }, 300);
+    });
+
+    // Close mobile search overlay
+    if (mobileSearchClose) {
+      mobileSearchClose.addEventListener('click', () => {
+        mobileSearchOverlay.classList.remove('is-active');
+        mobileSearchOverlay.setAttribute('aria-hidden', 'true');
+        mobileSearchToggle.focus();
+      });
+    }
+
+    // Close on ESC key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileSearchOverlay.classList.contains('is-active')) {
+        mobileSearchOverlay.classList.remove('is-active');
+        mobileSearchOverlay.setAttribute('aria-hidden', 'true');
+        mobileSearchToggle.focus();
+      }
+    });
+  }
+
   function init() {
     initScrollState();
     initDesktopNavPanels();
     initMobileMenu();
+    initMobileSearch();
   }
 
   if (document.readyState === 'loading') {

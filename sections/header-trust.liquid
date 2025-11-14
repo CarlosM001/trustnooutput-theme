@@ -28,6 +28,8 @@
     /* Background handled by global CSS (.header--tno / .tno-header) and transparency setting */
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     padding: 1.5rem 2rem;
+    border: none;
+    box-shadow: none;
   }
 
   /* Scrolled state: Dark backdrop blur */
@@ -35,8 +37,23 @@
     background: rgba(10, 10, 10, 0.85);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 1px 0 rgba(0, 255, 255, 0.1);
+    box-shadow: none;
+    border: none;
     padding: 1rem 2rem;
+  }
+
+  /* Mobile: compact header */
+  @media (max-width: 768px) {
+    .site-header {
+      padding: 0.75rem 1rem;
+      background: var(--color-body-bg, #0a0a0a);
+      border: none;
+      box-shadow: none;
+    }
+    .site-header.is-scrolled {
+      padding: 0.75rem 1rem;
+      background: rgba(10, 10, 10, 0.95);
+    }
   }
 
   .site-header__inner {
@@ -59,7 +76,7 @@
 
   .header-logo__link {
     font-family: var(--font-mono, 'Space Mono', 'IBM Plex Mono', monospace);
-    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-size: clamp(0.875rem, 2vw, 1.25rem);
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
@@ -68,6 +85,13 @@
     display: inline-block;
     position: relative;
     transition: color 0.3s ease;
+  }
+
+  @media (max-width: 768px) {
+    .header-logo__link {
+      font-size: 0.875rem;
+      letter-spacing: 0.03em;
+    }
   }
 
   /* Glitch effect on logo hover */
@@ -209,6 +233,29 @@
     cursor: pointer;
     transition: all 0.3s ease;
     color: #eaeaea;
+    min-width: 40px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 768px) {
+    .header-icons {
+      gap: 0.5rem;
+    }
+    .header-icon {
+      width: 20px;
+      height: 20px;
+    }
+    /* Hide full search bar on mobile */
+    .tno-search {
+      display: none;
+    }
+    /* Show search icon button instead */
+    .header-icon--search {
+      display: flex;
+    }
   }
   .header-icon:hover {
     color: #00ffff;
@@ -353,24 +400,11 @@
     }
   }
   @media (max-width: 768px) {
-    .site-header {
-      padding: 1rem 1.5rem;
-    }
-    .site-header.is-scrolled {
-      padding: 0.75rem 1.5rem;
-    }
     .header-nav {
       display: none;
     }
     .header-menu-toggle {
       display: flex;
-    }
-    .header-icons {
-      gap: 1rem;
-    }
-    .header-icon {
-      width: 20px;
-      height: 20px;
     }
   }
 
@@ -394,25 +428,99 @@
     }
   }
 
-  /* ======================================== Optional Scanline */
-  .site-header::before {
-    content: '';
-    position: absolute;
+  /* ======================================== Mobile Search Overlay */
+  .mobile-search-overlay {
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.3), transparent);
-    animation: scanline-sweep 3s linear infinite;
-    opacity: 0.5;
+    background: rgba(10, 10, 10, 0.98);
+    backdrop-filter: blur(20px);
+    padding: 1rem;
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-100%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  @keyframes scanline-sweep {
-    0% {
-      transform: translateX(-100%);
+
+  .mobile-search-overlay.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .mobile-search-overlay__inner {
+    max-width: 600px;
+    margin: 0 auto;
+    padding-top: 60px;
+  }
+
+  .mobile-search-form {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+  }
+
+  .mobile-search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-family: var(--font-mono, monospace);
+    font-size: 1rem;
+  }
+
+  .mobile-search-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .mobile-search-submit,
+  .mobile-search-close {
+    background: transparent;
+    border: none;
+    color: #00ffff;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+  }
+
+  .mobile-search-submit:hover,
+  .mobile-search-close:hover {
+    color: #fff;
+  }
+
+  .mobile-search-submit svg,
+  .mobile-search-close svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+  }
+
+  .header-icon--search {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .header-icon--search {
+      display: flex;
     }
-    100% {
-      transform: translateX(100%);
-    }
+  }
+
+  /* ======================================== Optional Scanline (Disabled on mobile) */
+  .site-header::before {
+    display: none;
   }
 
   /* ======================================== Body Padding */
@@ -588,7 +696,7 @@
 
     {%- comment %} Icons (Right) {%- endcomment %}
     <div class="header-icons tno-nav__utility">
-      {%- comment %} Search Field {%- endcomment %}
+      {%- comment %} Search Field (Desktop) {%- endcomment %}
       {% if section.settings.show_search %}
         <div class="tno-search">
           <form action="{{ routes.search_url }}" method="get" role="search">
@@ -602,6 +710,18 @@
             <button type="submit" class="tno-search__button" aria-label="Submit search">⌕</button>
           </form>
         </div>
+        
+        {%- comment %} Search Icon (Mobile only) {%- endcomment %}
+        <button 
+          class="header-icon header-icon--search" 
+          aria-label="Search"
+          id="mobile-search-toggle"
+        >
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.35-4.35"/>
+          </svg>
+        </button>
       {% endif %}
 
       {%- comment %} Account Icon {%- endcomment %}
@@ -688,6 +808,36 @@
     </ul>
   </nav>
 </div>
+
+{%- comment %} Mobile Search Overlay {%- endcomment %}
+{% if section.settings.show_search %}
+<div class="mobile-search-overlay" id="mobile-search-overlay" aria-hidden="true">
+  <div class="mobile-search-overlay__inner">
+    <form action="{{ routes.search_url }}" method="get" role="search" class="mobile-search-form">
+      <input
+        type="search"
+        name="q"
+        placeholder="Search..."
+        class="mobile-search-input"
+        id="mobile-search-input"
+        aria-label="Search"
+      >
+      <button type="submit" class="mobile-search-submit" aria-label="Submit search">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.35-4.35"/>
+        </svg>
+      </button>
+      <button type="button" class="mobile-search-close" id="mobile-search-close" aria-label="Close search">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </form>
+  </div>
+</div>
+{% endif %}
 
 {%- comment -%} Inline script removed; logic now resides in assets/header.js {%- endcomment -%}
 
