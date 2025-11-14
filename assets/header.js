@@ -178,6 +178,24 @@
     const links = mobileMenu.querySelectorAll('.mobile-menu__link');
     links.forEach((l) => l.addEventListener('click', closeMobileMenu));
 
+    // Mobile submenu toggles
+    const subToggles = mobileMenu.querySelectorAll('.mobile-menu__toggle');
+    subToggles.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        const panelId = btn.getAttribute('aria-controls');
+        const panel = document.getElementById(panelId);
+        if (!panel) return;
+        btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+        if (expanded) {
+          panel.setAttribute('hidden', '');
+        } else {
+          panel.removeAttribute('hidden');
+        }
+      });
+    });
+
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && mobileMenu.classList.contains('is-active')) {
         closeMobileMenu();
