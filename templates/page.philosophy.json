@@ -9,10 +9,6 @@
  */
 {
   "sections": {
-    "hero": {
-      "type": "motion-hero-tno",
-      "settings": {}
-    },
     "philosophy": {
       "type": "philosophy-trust",
       "blocks": {
@@ -71,7 +67,6 @@
     }
   },
   "order": [
-    "hero",
     "philosophy",
     "rich_text"
   ]
