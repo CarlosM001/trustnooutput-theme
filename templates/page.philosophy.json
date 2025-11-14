@@ -1,0 +1,78 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "motion-hero-tno",
+      "settings": {}
+    },
+    "philosophy": {
+      "type": "philosophy-trust",
+      "blocks": {
+        "thinker_1": {
+          "type": "thinker",
+          "settings": {
+            "name": "Byung-Chul Han",
+            "title": "Philosopher, Author of 'Psychopolitik'",
+            "quote": "We are in a crisis of freedom. Freedom is being exploited for purposes of control.",
+            "concept": "Digital Exhaustion"
+          }
+        },
+        "thinker_2": {
+          "type": "thinker",
+          "settings": {
+            "name": "Franco Berardi",
+            "title": "Theorist of Semio-Capitalism",
+            "quote": "The soul is at work. Cognitive labor has become the primary form of exploitation.",
+            "concept": "Semio-Capital"
+          }
+        },
+        "thinker_3": {
+          "type": "thinker",
+          "settings": {
+            "name": "Shoshana Zuboff",
+            "title": "Author of 'The Age of Surveillance Capitalism'",
+            "quote": "We are the sources of surveillance capitalism's surplus. Data about us is harvested for prediction.",
+            "concept": "Surveillance Capital"
+          }
+        }
+      },
+      "block_order": [
+        "thinker_1",
+        "thinker_2",
+        "thinker_3"
+      ],
+      "settings": {
+        "eyebrow": "Theoretical Foundation",
+        "headline": "Philosophy",
+        "intro": "TRUST.NO.OUTPUT is grounded in critical theory — examining the invisible structures that shape digital consciousness, attention economics, and surveillance capitalism.",
+        "cta_text": "Read Full Manifesto",
+        "cta_url": "/pages/manifesto",
+        "enable_scroll_reveal": true
+      }
+    },
+    "rich_text": {
+      "type": "rich-text",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-1",
+        "full_width": true,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "philosophy",
+    "rich_text"
+  ]
+}
