@@ -1845,3 +1845,156 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     -webkit-tap-highlight-color: transparent;
   }
 }
+
+/* ==========================================================================
+   MANIFESTO PAGE STYLING
+   Dark background, centered narrow text, comfortable mobile reading
+   ========================================================================== */
+
+.manifesto-trust {
+  position: relative;
+  padding: var(--space-xl, 3rem) var(--space-md, 1.5rem);
+  background: var(--color-deep-black, #0a0a0a);
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.manifesto__container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Subtle background grid pattern */
+.manifesto-trust::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgb(0 255 240 / 2%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(0 255 240 / 2%) 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Header */
+.manifesto__header {
+  text-align: center;
+  margin-bottom: var(--space-lg, 2.5rem);
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+
+.manifesto__header.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.manifesto__headline {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #fff;
+  margin: 0 0 var(--space-md, 1.5rem);
+  position: relative;
+}
+
+/* Subtle underline glitch */
+.manifesto__headline::after {
+  content: '';
+  display: block;
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-cyan, #0ff), var(--color-magenta, #f0f));
+  margin: var(--space-sm, 1rem) auto 0;
+  animation: manifesto-underline-glitch 4s ease-in-out infinite;
+}
+
+@keyframes manifesto-underline-glitch {
+  0%,
+  100% {
+    width: 100px;
+    opacity: 1;
+  }
+
+  50% {
+    width: 80px;
+    opacity: 0.7;
+  }
+}
+
+/* Content */
+.manifesto__content {
+  font-family: var(--font-clean, var(--font-body-family));
+  font-size: clamp(1rem, 2.5vw, 1.125rem);
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--color-gray-ghost, #a0a0b0);
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.8s ease 0.2s,
+    transform 0.8s ease 0.2s;
+}
+
+.manifesto__content.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.manifesto__content h3 {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: clamp(1.125rem, 3vw, 1.375rem);
+  font-weight: 600;
+  color: #fff;
+  margin: var(--space-lg, 2.5rem) 0 var(--space-sm, 1rem);
+  letter-spacing: 0.01em;
+}
+
+.manifesto__content p {
+  margin: 0 0 var(--space-md, 1.5rem);
+}
+
+.manifesto__content strong {
+  color: var(--color-cyan, #0ff);
+  font-weight: 600;
+}
+
+/* Mobile-specific adjustments */
+@media (width <= 768px) {
+  .manifesto-trust {
+    padding: var(--space-lg, 2.5rem) var(--space-md, 1.5rem);
+  }
+
+  .manifesto__content {
+    font-size: 1.0625rem;
+    line-height: 1.85;
+  }
+
+  .manifesto__content h3 {
+    font-size: 1.1875rem;
+    margin-top: var(--space-md, 1.5rem);
+  }
+
+  /* Ensure header is NOT transparent on manifesto page */
+  .template-page-manifesto .header--tno.is-transparent {
+    background: rgb(8 8 10 / 92%);
+    border-bottom-color: rgb(255 255 255 / 6%);
+  }
+}
+
+/* Desktop refinements */
+@media (width >= 769px) {
+  .manifesto__container {
+    max-width: 750px;
+  }
+
+  .manifesto__content {
+    font-size: 1.125rem;
+    line-height: 1.75;
+  }
+}

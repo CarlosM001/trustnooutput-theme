@@ -617,8 +617,19 @@
   }
 </style>
 
+{%- liquid
+  assign is_manifesto = false
+  if template.name == 'page' and template.suffix == 'manifesto'
+    assign is_manifesto = true
+  endif
+  assign show_transparent = section.settings.transparent_header
+  if is_manifesto
+    assign show_transparent = false
+  endif
+-%}
+
 <header
-  class="site-header tno-header header--tno {% if section.settings.transparent_header %}is-transparent{% endif %}"
+  class="site-header tno-header header--tno {% if show_transparent %}is-transparent{% endif %}"
   id="site-header"
 >
   <div class="site-header__inner tno-header__container">

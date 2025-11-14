@@ -6,13 +6,13 @@
   - Clean HTML, no inline styles
 {% endcomment %}
 
-<section class="philosophy-trust manifesto-trust" id="manifesto">
-  <div class="philosophy-trust__container">
-    <header class="philosophy-trust__header" data-scroll-reveal>
-      <h1 class="philosophy-trust__headline">Manifesto</h1>
+<section class="manifesto-trust" id="manifesto">
+  <div class="manifesto__container">
+    <header class="manifesto__header" data-scroll-reveal>
+      <h1 class="manifesto__headline">Manifesto</h1>
     </header>
 
-    <div class="philosophy-trust__intro manifesto__content" data-scroll-reveal>
+    <div class="manifesto__content" data-scroll-reveal>
       <p><strong>Wahrnehmung ist formbar. Realität ist dynamisch.</strong><br>
       TRUST.NO.OUTPUT versteht die digitale Welt als ein System aus Filtern, Algorithmen und Interfaces, die präzise kuratieren, wie wir sehen, denken und entscheiden. Unsere Realität entsteht nicht nur durch das, was wir erleben, sondern durch das, was uns als Output gerendert wird – und durch das, was bewusst verborgen bleibt.</p>
 
@@ -35,3 +35,24 @@
     </div>
   </div>
 </section>
+
+<script>
+  // Scroll reveal animation (reused from Philosophy section)
+  document.addEventListener('DOMContentLoaded', () => {
+    const revealElements = document.querySelectorAll('[data-scroll-reveal]');
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, observerOptions);
+
+    revealElements.forEach(el => observer.observe(el));
+  });
+</script>
