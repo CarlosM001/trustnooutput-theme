@@ -1824,6 +1824,12 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     color: var(--color-cyan, #0ff);
   }
 
+  /* Hide search icon from topbar on mobile (large search bar below is visible) */
+  .tno-header__icons .header-icon--search,
+  .tno-header__icons #mobile-search-toggle {
+    display: none !important;
+  }
+
   /* Logo hover effect disabled on mobile for cleaner UX */
   .tno-header__logo .header-logo__link::before,
   .tno-header__logo .header-logo__link::after {

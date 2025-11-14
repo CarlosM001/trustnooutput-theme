@@ -102,12 +102,17 @@
       max-width: 100%;
     }
 
-    /* Mobile: Icon group (right) */
+    /* Mobile: Icon group (right) - Account + Cart only */
     .tno-header__icons {
       display: flex !important;
       gap: 0.5rem;
       margin: 0;
       flex-shrink: 0;
+    }
+
+    /* Mobile: Hide search icon from topbar (search bar below is sufficient) */
+    .tno-header__icons .header-icon--search {
+      display: none !important;
     }
 
     .tno-header__icon {
@@ -660,21 +665,8 @@
       </a>
     </div>
 
-      {%- comment %} Icons (Right on Mobile, includes desktop nav utility icons) {%- endcomment %}
+      {%- comment %} Icons (Right: Account + Cart only on Mobile) {%- endcomment %}
       <div class="header-icons tno-nav__utility tno-header__icons">
-        {%- comment %} Search Icon (Mobile only - triggers overlay) {%- endcomment %}
-        {% if section.settings.show_search %}
-          <button
-            class="header-icon header-icon--search tno-header__icon"
-            aria-label="Search"
-            id="mobile-search-toggle"
-          >
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="11" cy="11" r="8"/>
-              <path d="m21 21-4.35-4.35"/>
-            </svg>
-          </button>
-        {% endif %}
 
         {%- comment %} Account Icon {%- endcomment %}
         {% if section.settings.show_account %}
