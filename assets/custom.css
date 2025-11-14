@@ -1774,7 +1774,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
    Two-row layout: Top bar (burger + logo + icons) + Search bar below
    ========================================================================== */
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   /* Ensure hamburger is properly styled */
   .header-menu-toggle {
     width: 24px;
@@ -1785,7 +1785,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 
   .header-menu-toggle span {
     height: 2px;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgb(255 255 255 / 90%);
     border-radius: 1px;
   }
 
@@ -1814,7 +1814,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(255, 255, 255, 0.85);
+    color: rgb(255 255 255 / 85%);
     transition: color 0.2s ease;
     position: relative;
   }
@@ -1832,7 +1832,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 
   /* Smooth transition for header when scrolling */
   .site-header.is-scrolled .tno-header__topbar {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgb(255 255 255 / 8%);
   }
 
   /* Search input focus improvement */
