@@ -920,7 +920,7 @@
   </div>
 </header>
 
-{%- comment %} Mobile Menu Overlay {%- endcomment %}
+{%- comment %} Mobile Menu Overlay – TNO header nav restructure {%- endcomment %}
 <div
   class="mobile-menu"
   id="mobile-menu"
@@ -931,28 +931,52 @@
   tabindex="-1"
 >
   <nav class="mobile-menu__nav">
-    {%- assign menu_ref = linklists[section.settings.menu] -%}
+    {%- comment %} Use same menu as desktop for consistency {%- endcomment %}
+    {%- assign mobile_menu_handle = section.settings.main_menu | default: section.settings.menu -%}
+    {%- assign mobile_menu_ref = linklists[mobile_menu_handle] -%}
     <ul>
-      {%- if menu_ref.links and menu_ref.links.size > 0 -%}
-        {% for link in menu_ref.links %}
+      {%- if mobile_menu_ref.links and mobile_menu_ref.links.size > 0 -%}
+        {% for link in mobile_menu_ref.links %}
           <li class="mobile-menu__item">
-            <a href="{{ link.url }}" class="mobile-menu__link">{{ link.title }}</a>
+            {%- comment %} TNO: Accordion structure for items with children {%- endcomment %}
+            {%- if link.links and link.links.size > 0 -%}
+              <div class="mobile-menu__row">
+                <a href="{{ link.url }}" class="mobile-menu__link">{{ link.title }}</a>
+                <button
+                  class="mobile-menu__toggle"
+                  aria-expanded="false"
+                  aria-controls="mobile-submenu-{{ forloop.index }}"
+                  aria-label="Toggle {{ link.title }} submenu"
+                  onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'); document.getElementById('mobile-submenu-{{ forloop.index }}').toggleAttribute('hidden');"
+                >
+                  <span class="mobile-menu__chevron">▾</span>
+                </button>
+              </div>
+              <ul class="mobile-submenu" id="mobile-submenu-{{ forloop.index }}" hidden>
+                {%- for child in link.links -%}
+                  <li>
+                    <a href="{{ child.url }}" class="mobile-submenu__link">{{ child.title }}</a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- else -%}
+              <a href="{{ link.url }}" class="mobile-menu__link">{{ link.title }}</a>
+            {%- endif -%}
           </li>
         {% endfor %}
       {%- else -%}
+        {%- comment %} Fallback: Basic product-type structure {%- endcomment %}
         <li class="mobile-menu__item">
-          <a href="{{ routes.collections_url }}/apparel" class="mobile-menu__link">Apparel</a>
+          <a href="{{ routes.all_products_collection_url }}" class="mobile-menu__link">SHOP ALL</a>
         </li>
         <li class="mobile-menu__item">
-          <a href="{{ routes.collections_url }}/accessories" class="mobile-menu__link"
-            >Accessories</a
-          >
+          <a href="{{ routes.collections_url }}/apparel" class="mobile-menu__link">APPAREL</a>
         </li>
         <li class="mobile-menu__item">
-          <a href="{{ routes.collections_url }}/prints" class="mobile-menu__link">Prints</a>
+          <a href="{{ routes.collections_url }}/accessories" class="mobile-menu__link">ACCESSORIES</a>
         </li>
         <li class="mobile-menu__item">
-          <a href="{{ routes.all_products_collection_url }}" class="mobile-menu__link">All</a>
+          <a href="{{ routes.collections_url }}" class="mobile-menu__link">COLLECTIONS</a>
         </li>
       {%- endif -%}
     </ul>

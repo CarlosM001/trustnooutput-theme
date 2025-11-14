@@ -1257,6 +1257,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   position: relative;
 }
 
+/* TNO header nav restructure – START: Enhanced typography */
 .tno-nav__link {
   font-family: var(
     --font-mono,
@@ -1269,31 +1270,36 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     'Courier New',
     monospace
   );
-  font-size: var(--tno-nav-size);
-  letter-spacing: var(--tno-nav-tracking);
+  font-size: 0.95rem; /* Increased from var(--tno-nav-size) for better visibility */
+  letter-spacing: 0.12em; /* Increased for tech/cyber aesthetic */
   text-transform: uppercase;
   font-weight: 600;
-  color: #e8e8ea;
+  color: #f0f0f2; /* Slightly brighter for better contrast */
   text-decoration: none;
   position: relative;
   transition: color var(--tno-fast) var(--tno-ease);
+  padding-bottom: 2px;
 }
 
+/* TNO header nav restructure – END */
+
+/* TNO header nav restructure – Enhanced hover state */
 .tno-nav__link:hover {
   color: #0f6;
   text-shadow:
     0 0 8px rgb(0 255 102 / 35%),
     -1px 0 #ff00ff80,
     1px 0 #00ffff80;
+  border-bottom: 1px solid #0f6;
 }
 
 /* Also target any nav anchors nested directly under .tno-nav for safety */
 .header--tno .tno-nav a {
-  font-size: var(--tno-nav-size);
-  letter-spacing: var(--tno-nav-tracking);
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
   font-weight: 600;
   text-transform: uppercase;
-  color: #e8e8ea;
+  color: #f0f0f2;
 }
 
 .header--tno .tno-nav a:hover {
@@ -1648,6 +1654,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   transition-delay: 0.5s;
 }
 
+/* TNO header nav restructure – Mobile menu enhancements */
 .mobile-menu__link {
   font-family: var(--font-mono, monospace);
   font-size: clamp(1.5rem, 5vw, 2rem);
@@ -1657,7 +1664,9 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   color: #eaeaea;
   text-decoration: none;
   transition: color 0.3s ease;
-  display: inline-block;
+  min-height: 44px; /* Ensure touch target */
+  display: flex;
+  align-items: center;
 }
 
 .mobile-menu__link:hover {
@@ -1709,20 +1718,28 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   border-radius: 999px;
 }
 
+/* TNO header nav restructure – Expanded search input */
 .tno-search__input {
   height: 100%;
-  width: 170px;
-  min-width: 120px;
+  width: 280px; /* Increased for 24-28 characters */
+  min-width: 240px;
   background: transparent;
   border: 0;
   outline: none;
   color: #fff;
   font-family: var(--tno-mono, ui-monospace, monospace);
   font-size: 0.95rem;
+  transition: all 0.2s ease;
 }
 
 .tno-search__input::placeholder {
   color: rgb(255 255 255 / 60%);
+}
+
+/* TNO header nav restructure – Search focus state */
+.tno-search:has(.tno-search__input:focus) {
+  border-color: #0f6;
+  box-shadow: 0 0 12px rgb(0 255 102 / 25%);
 }
 
 .tno-search__button {
