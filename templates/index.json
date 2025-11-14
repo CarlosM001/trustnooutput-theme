@@ -9,6 +9,21 @@
  */
 {
   "sections": {
+    "hero_trust_AxWTFW": {
+      "type": "hero-trust",
+      "name": "Hero — TRUST.NO.OUTPUT",
+      "settings": {
+        "headline": "TRUST.NO.OUTPUT",
+        "subline": "Reality is under construction",
+        "btn_primary_text": "Enter Simulation",
+        "btn_primary_url": "",
+        "btn_secondary_text": "Read the Manifesto",
+        "btn_secondary_url": "shopify://pages/manifesto",
+        "btn_ghost_text": "Refuse",
+        "btn_ghost_url": "",
+        "enable_parallax": true
+      }
+    },
     "product_grid_trust_1": {
       "type": "product-grid-trust",
       "settings": {
@@ -30,22 +45,11 @@
         "headline": "System Updates",
         "intro": ""
       }
-    },
-    "hero_trust_AxWTFW": {
-      "type": "hero-trust",
-      "name": "Hero — TRUST.NO.OUTPUT",
-      "settings": {
-        "headline": "TRUST.NO.OUTPUT",
-        "subline": "Reality is under construction",
-        "btn_primary_text": "Enter Simulation",
-        "btn_primary_url": "",
-        "btn_secondary_text": "Read the Manifesto",
-        "btn_secondary_url": "",
-        "btn_ghost_text": "Refuse",
-        "btn_ghost_url": "",
-        "enable_parallax": true
-      }
     }
   },
-  "order": ["hero_trust_AxWTFW", "product_grid_trust_1", "system_update_trust_1"]
+  "order": [
+    "hero_trust_AxWTFW",
+    "product_grid_trust_1",
+    "system_update_trust_1"
+  ]
 }
