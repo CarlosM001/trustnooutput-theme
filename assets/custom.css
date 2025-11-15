@@ -1597,6 +1597,8 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 .mobile-menu.is-active {
   opacity: 1;
   visibility: visible;
+  /* Ensure panels can scroll properly */
+  overflow: hidden; /* Container hides panels, panels selbst sind scrollbar */
 }
 
 /* Drilldown Panel Base Styles */
@@ -1642,43 +1644,46 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   transform: translateX(-30%); /* Partial slide for depth perception */
 }
 
-/* Panel Content Wrapper */
+/* Panel Content Wrapper
+   Reduziertes top-padding da Back-Header jetzt eigenes Spacing hat */
 .tno-mobile-panel__content {
-  padding: 2rem 1.25rem;
+  padding: 0.5rem 1.25rem 2rem; /* Top reduziert von 2rem auf 0.5rem */
   min-height: 100%;
 }
 
 /* Back Header (sticky at top of child panels)
-   Why sticky here works:
-   - The panel (.tno-mobile-panel) is the scroll container with overflow-y: auto
-   - This back header is a child of the panel
-   - position: sticky; top: 0; makes it stick to the TOP of the panel's scroll area
-   - When user scrolls panel content, back header stays visible at panel top
-   - The panel itself already starts below the site header (at --tno-mobile-header-height)
-   - Result: back header appears directly below site header and stays there when scrolling
+   FIX: Back-Button war unter dem Site-Header versteckt
    
-   CORRECTED Z-index strategy:
-   - z-index: 1050 is below site header (1100) so header stays visible
-   - But above menu background (999) so back button is clickable
-   - pointer-events: auto ensures all clicks work within back header area
-   - Since menu starts at top: 120px, there's no physical overlap with header
+   Lösung:
+   - Panel (.tno-mobile-panel) ist scroll container mit overflow-y: auto
+   - Back header ist child des panels mit position: sticky
+   - WICHTIG: top: 8px statt top: 0 schafft visuellen Abstand
+   - Dies verhindert, dass der Back-Button vom Site-Header verdeckt wird
+   - Panel startet bei top: 120px (unter Site-Header)
+   - Back header sticky innerhalb des Panels = sichtbar und klickbar
+   
+   Z-index Strategie:
+   - z-index: 1050 (unter Site-Header 1100, über Menu-BG 999)
+   - pointer-events: auto für volle Klickbarkeit
+   - Solides Background damit sticky funktioniert beim Scrollen
 */
 .tno-mobile-back-header {
   position: sticky;
-  top: 0; /* Stick to top of panel scroll container */
+  top: 8px; /* Kleiner Offset verhindert Überlappung mit Site-Header */
   left: 0;
   right: 0;
-  z-index: 1050; /* Below site header (1100), above menu background (999) */
+  z-index: 1050; /* Unter Site-Header (1100), über Menu-BG (999) */
   display: flex;
   align-items: center;
   gap: 0.75rem;
   padding: 1rem 1.25rem;
-  min-height: 60px; /* Consistent with site header row height */
-  background: rgb(0 0 0 / 98%); /* Solid background for sticky overlay */
+  min-height: 60px; /* Konsistent mit Site-Header Row-Höhe */
+  background: rgb(0 0 0 / 98%); /* Solides BG für sticky overlay */
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgb(255 255 255 / 8%);
-  margin-bottom: 0; /* No margin so it sticks flush to top */
-  pointer-events: auto; /* Ensure all interactions work */
+  margin-top: 0; /* Kein top margin */
+  margin-bottom: 1rem; /* Abstand zu Content darunter */
+  pointer-events: auto; /* Volle Interaktion sicherstellen */
 }
 
 .tno-mobile-back {
@@ -1865,14 +1870,16 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     overflow: visible; /* Ensure nothing gets clipped */
   }
 
-  /* Adjust panel content padding to account for back header */
+  /* Mobile panel content spacing angepasst
+     - Child panels haben Back-Header mit eigenem spacing
+     - Root panel braucht mehr top padding da kein Back-Header */
   .tno-mobile-panel__content {
-    padding: 1.5rem 1.25rem; /* Reduced top padding since back header provides spacing */
+    padding: 0.5rem 1.25rem 2rem; /* Konsistent mit globaler Definition */
   }
 
-  /* Root panel (no back header) needs more top padding for first item visibility */
+  /* Root panel (kein back header) braucht mehr top padding */
   .tno-mobile-panel.is-root .tno-mobile-panel__content {
-    padding-top: 2rem;
+    padding-top: 1.5rem; /* Etwas Abstand zum Panel-Top */
   }
 }
 
