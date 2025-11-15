@@ -21,7 +21,7 @@ if (!customElements.get('show-more-button')) {
       }
       expandShowMore(event) {
         const parentDisplay = event.target.closest('[id^="Show-More-"]').closest('.parent-display');
-        const parentWrap = parentDisplay.querySelector('.parent-wrap');
+        // parentWrap removed (unused) – original DOM traversal retained for clarity
         this.querySelectorAll('.label-text').forEach((element) =>
           element.classList.toggle('hidden')
         );

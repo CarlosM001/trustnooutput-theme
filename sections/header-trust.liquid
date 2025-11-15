@@ -449,9 +449,10 @@
   .header-icon:hover {
     color: #00ffff;
     transform: translateY(-2px);
-    text-shadow: 0 0 8px rgba(0, 255, 255, 0.6),
-                 -1px 0 rgba(255, 0, 255, 0.4),
-                 1px 0 rgba(0, 255, 255, 0.4);
+    text-shadow:
+      0 0 8px rgba(0, 255, 255, 0.6),
+      -1px 0 rgba(255, 0, 255, 0.4),
+      1px 0 rgba(0, 255, 255, 0.4);
     filter: drop-shadow(0 0 4px rgba(0, 255, 255, 0.5));
   }
   .header-icon svg {
@@ -911,7 +912,13 @@
                     aria-expanded="false"
                     aria-label="Open {{ link.title }} submenu"
                   >
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
                       <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                   </button>
@@ -931,7 +938,9 @@
             <a href="{{ routes.collections_url }}/apparel" class="tno-mobile-link">APPAREL</a>
           </li>
           <li class="tno-mobile-item">
-            <a href="{{ routes.collections_url }}/accessories" class="tno-mobile-link">ACCESSORIES</a>
+            <a href="{{ routes.collections_url }}/accessories" class="tno-mobile-link"
+              >ACCESSORIES</a
+            >
           </li>
           <li class="tno-mobile-item">
             <a href="{{ routes.collections_url }}" class="tno-mobile-link">COLLECTIONS</a>
@@ -945,7 +954,12 @@
   {%- if mobile_menu_ref.links and mobile_menu_ref.links.size > 0 -%}
     {% for link in mobile_menu_ref.links %}
       {%- if link.links and link.links.size > 0 -%}
-        <div class="tno-mobile-panel is-child" id="tno-panel-{{ forloop.index }}" data-panel="child" data-parent="root">
+        <div
+          class="tno-mobile-panel is-child"
+          id="tno-panel-{{ forloop.index }}"
+          data-panel="child"
+          data-parent="root"
+        >
           {%- comment %} Sticky back header {%- endcomment %}
           <div class="tno-mobile-back-header">
             <button
@@ -953,7 +967,13 @@
               data-back="tno-panel-root"
               aria-label="Back to main menu"
             >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
               <span>Back</span>

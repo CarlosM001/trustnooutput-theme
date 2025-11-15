@@ -137,9 +137,11 @@
       if (mobileMenu.scrollTop !== 0) {
         // Some browsers support 'instant'; fallback to direct assignment
         mobileMenu.scrollTo({ top: 0, behavior: 'instant' });
-        if (mobileMenu.scrollTop !== 0) mobileMenu.scrollTop = 0;
+        if (mobileMenu.scrollTop !== 0) {
+          mobileMenu.scrollTop = 0;
+        }
       }
-    } catch (e) {
+    } catch {
       mobileMenu.scrollTop = 0;
     }
 

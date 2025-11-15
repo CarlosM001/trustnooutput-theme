@@ -92,3 +92,8 @@ class CustomerAddresses {
     }
   };
 }
+
+// Instantiate only when addresses container exists.
+if (document.querySelector(selectors.customerAddresses)) {
+  new CustomerAddresses();
+}

@@ -301,7 +301,7 @@ class FacetFiltersForm extends HTMLElement {
   onSubmitHandler(event) {
     event.preventDefault();
     const sortFilterForms = document.querySelectorAll('facet-filters-form form');
-    if (event.srcElement.className == 'mobile-facets__checkbox') {
+    if (event.srcElement.className === 'mobile-facets__checkbox') {
       const searchParams = this.createSearchParams(event.target.closest('form'));
       this.onSubmitForm(searchParams, event);
     } else {
@@ -329,7 +329,7 @@ class FacetFiltersForm extends HTMLElement {
     event.preventDefault();
     FacetFiltersForm.toggleActiveFacets();
     const url =
-      event.currentTarget.href.indexOf('?') == -1
+      event.currentTarget.href.indexOf('?') === -1
         ? ''
         : event.currentTarget.href.slice(event.currentTarget.href.indexOf('?') + 1);
     FacetFiltersForm.renderPage(url);

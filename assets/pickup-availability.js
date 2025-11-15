@@ -33,7 +33,7 @@ if (!customElements.get('pickup-availability')) {
               .querySelector('.shopify-section');
             this.renderPreview(sectionInnerHTML);
           })
-          .catch((e) => {
+          .catch((_e) => {
             const button = this.querySelector('button');
             if (button) {
               button.removeEventListener('click', this.onClickRefreshList);
@@ -116,9 +116,9 @@ if (!customElements.get('pickup-availability-drawer')) {
       handleBodyClick(evt) {
         const target = evt.target;
         if (
-          target != this &&
+          target !== this &&
           !target.closest('pickup-availability-drawer') &&
-          target.id != 'ShowPickupAvailabilityDrawer'
+          target.id !== 'ShowPickupAvailabilityDrawer'
         ) {
           this.hide();
         }

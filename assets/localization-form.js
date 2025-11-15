@@ -103,7 +103,7 @@ if (!customElements.get('localization-form')) {
 
         switch (event.code.toUpperCase()) {
           case 'ESCAPE':
-            if (this.elements.button.getAttribute('aria-expanded') == 'false') {
+            if (this.elements.button.getAttribute('aria-expanded') === 'false') {
               return;
             }
             this.hidePanel();
@@ -111,7 +111,7 @@ if (!customElements.get('localization-form')) {
             this.elements.button.focus();
             break;
           case 'SPACE':
-            if (this.elements.button.getAttribute('aria-expanded') == 'true') {
+            if (this.elements.button.getAttribute('aria-expanded') === 'true') {
               return;
             }
             this.openSelector();

@@ -99,22 +99,20 @@
                     {{- block.settings.text -}}
                   </p>
                 {%- when 'title' -%}
-                  <!-- TNO: Product Title + Optional Subtitle (metafield or vendor) -->
+                  <!-- TNO: Product Title + Dynamic Subtitle -->
                   <div class="product__title tno-product-title" {{ block.shopify_attributes }}>
                     <h1 class="tno-product-title__text" data-text="{{ product.title | escape }}">
                       {{ product.title | escape }}
                     </h1>
-                    {%- comment -%}
-                      Subtitle source priority:
-                      1) Metafield: custom.subtitle (plain text)
-                      2) Vendor fallback
-                    {%- endcomment -%}
+                    <!-- TNO: dynamic subtitle logic -->
                     {%- if product.metafields.custom.subtitle != blank -%}
                       <p class="tno-product-subtitle">
                         {{ product.metafields.custom.subtitle | escape }}
                       </p>
-                    {%- elsif product.vendor != blank -%}
-                      <p class="tno-product-subtitle">{{ product.vendor | escape }}</p>
+                    {%- elsif product.tags.size > 0 -%}
+                      <p class="tno-product-subtitle">{{ product.tags.first | escape }}</p>
+                    {%- else -%}
+                      <p class="tno-product-subtitle">Premium Apparel – TRUST.NO.OUTPUT</p>
                     {%- endif -%}
                   </div>
                 {%- when 'price' -%}
@@ -835,6 +833,30 @@
               {{ 'products.product.view_full_details' | t }}
               {{- 'icon-arrow.svg' | inline_asset_content -}}
             </a>
+            <!-- TNO: Size Guide Drawer markup -->
+            <div
+              id="SizeGuideDrawer"
+              class="tno-size-guide-drawer"
+              aria-hidden="true"
+              tabindex="-1"
+              role="dialog"
+              aria-label="Size Guide"
+            >
+              <div class="tno-size-guide-drawer__inner">
+                <button
+                  type="button"
+                  class="tno-size-guide-drawer__close"
+                  aria-label="Close Size Guide"
+                >
+                  &times;
+                </button>
+                <h2 class="tno-size-guide-drawer__title">Size Guide</h2>
+                <p class="tno-size-guide-drawer__content">
+                  Sizing may vary slightly depending on style. Full guide coming soon.
+                </p>
+              </div>
+            </div>
+            <script src="{{ 'size-guide.js' | asset_url }}" defer></script>
           </section>
         </div>
       </div>

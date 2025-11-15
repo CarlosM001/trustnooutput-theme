@@ -63,7 +63,7 @@ if (!customElements.get('product-info')) {
             .querySelectorAll('.scroll-trigger')
             .forEach((element) => element.classList.add('scroll-trigger--cancel'))
         );
-        this.postProcessHtmlCallbacks.push((newNode) => {
+        this.postProcessHtmlCallbacks.push((_newNode) => {
           window?.Shopify?.PaymentButton?.init();
           window?.ProductModel?.loadShopifyXR();
         });
@@ -146,7 +146,11 @@ if (!customElements.get('product-info')) {
           })
           .catch((error) => {
             if (error.name === 'AbortError') {
-              console.log('Fetch aborted by user');
+              // Debug only: guarded behind flag to avoid noisy console in production
+              if (window.DEBUG_TNO) {
+                // eslint-disable-next-line no-console -- intentional debug behind flag
+                console.log('Fetch aborted by user');
+              }
             } else {
               console.error(error);
             }
@@ -199,7 +203,7 @@ if (!customElements.get('product-info')) {
 
           this.updateMedia(html, variant?.featured_media?.id);
 
-          const updateSourceFromDestination = (id, shouldHide = (source) => false) => {
+          const updateSourceFromDestination = (id, shouldHide = (_source) => false) => {
             const source = html.getElementById(`${id}-${this.sectionId}`);
             const destination = this.querySelector(`#${id}-${this.dataset.section}`);
             if (source && destination) {

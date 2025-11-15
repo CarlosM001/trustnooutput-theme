@@ -1,5 +1,6 @@
 let subscribers = {};
 
+// eslint-disable-next-line no-unused-vars -- Global pubsub API consumed by other bundles
 function subscribe(eventName, callback) {
   if (subscribers[eventName] === undefined) {
     subscribers[eventName] = [];
@@ -14,6 +15,7 @@ function subscribe(eventName, callback) {
   };
 }
 
+// eslint-disable-next-line no-unused-vars -- Global pubsub API consumed by other bundles
 function publish(eventName, data) {
   if (subscribers[eventName]) {
     const promises = subscribers[eventName].map((callback) => callback(data));

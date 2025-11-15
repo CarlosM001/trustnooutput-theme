@@ -6,6 +6,7 @@ function getFocusableElements(container) {
   );
 }
 
+// eslint-disable-next-line no-unused-vars -- Exposed globally; referenced by other scripts (e.g., product-info)
 class SectionId {
   static #separator = '__';
 
@@ -25,6 +26,7 @@ class SectionId {
   }
 }
 
+// eslint-disable-next-line no-unused-vars -- Utility used by product-info and other view transitions
 class HTMLUpdateUtility {
   /**
    * Used to swap an HTML node with a new node.
@@ -145,7 +147,7 @@ function trapFocus(container, elementToFocus = container) {
 // Here run the querySelector to figure out if the browser supports :focus-visible or not and run code based on it.
 try {
   document.querySelector(':focus-visible');
-} catch (e) {
+} catch {
   focusVisiblePolyfill();
 }
 
@@ -173,7 +175,7 @@ function focusVisiblePolyfill() {
     }
   });
 
-  window.addEventListener('mousedown', (event) => {
+  window.addEventListener('mousedown', () => {
     mouseClick = true;
   });
 
@@ -195,6 +197,7 @@ function focusVisiblePolyfill() {
   );
 }
 
+// eslint-disable-next-line no-unused-vars -- Called from multiple media components (e.g., media-gallery, deferred-media)
 function pauseAllMedia() {
   document.querySelectorAll('.js-youtube').forEach((video) => {
     video.contentWindow.postMessage(
@@ -266,7 +269,7 @@ class QuantityInput extends HTMLElement {
     }
   }
 
-  onInputChange(event) {
+  onInputChange(_event) {
     this.validateQtyRules();
   }
 
@@ -275,7 +278,11 @@ class QuantityInput extends HTMLElement {
     const previousValue = this.input.value;
 
     if (event.target.name === 'plus') {
-      if (parseInt(this.input.dataset.min) > parseInt(this.input.step) && this.input.value == 0) {
+      // Use strict equality; coerce input value to number for comparison
+      if (
+        parseInt(this.input.dataset.min) > parseInt(this.input.step) &&
+        parseInt(this.input.value) === 0
+      ) {
         this.input.value = this.input.dataset.min;
       } else {
         this.input.stepUp();
@@ -309,6 +316,7 @@ class QuantityInput extends HTMLElement {
 
 customElements.define('quantity-input', QuantityInput);
 
+// eslint-disable-next-line no-unused-vars -- Shared utility retained for potential cross-file usage
 function debounce(fn, wait) {
   let t;
   return (...args) => {
@@ -317,6 +325,7 @@ function debounce(fn, wait) {
   };
 }
 
+// eslint-disable-next-line no-unused-vars -- Shared utility retained for potential cross-file usage
 function throttle(fn, delay) {
   let lastCall = 0;
   return function (...args) {
@@ -329,6 +338,7 @@ function throttle(fn, delay) {
   };
 }
 
+// eslint-disable-next-line no-unused-vars -- Retained for future fetch POST helpers
 function fetchConfig(type = 'json') {
   return {
     method: 'POST',
@@ -340,7 +350,7 @@ function fetchConfig(type = 'json') {
  * Shopify Common JS
  *
  */
-if (typeof window.Shopify == 'undefined') {
+if (typeof window.Shopify === 'undefined') {
   window.Shopify = {};
 }
 
@@ -353,7 +363,7 @@ Shopify.bind = function (fn, scope) {
 Shopify.setSelectorByValue = function (selector, value) {
   for (var i = 0, count = selector.options.length; i < count; i++) {
     var option = selector.options[i];
-    if (value == option.value || value == option.innerHTML) {
+    if (value === option.value || value === option.innerHTML) {
       selector.selectedIndex = i;
       return i;
     }
@@ -412,20 +422,20 @@ Shopify.CountryProvinceSelector.prototype = {
     }
   },
 
-  countryHandler: function (e) {
-    var opt = this.countryEl.options[this.countryEl.selectedIndex];
-    var raw = opt.getAttribute('data-provinces');
+  countryHandler: function (_event) {
+    var selectedOption = this.countryEl.options[this.countryEl.selectedIndex];
+    var raw = selectedOption.getAttribute('data-provinces');
     var provinces = JSON.parse(raw);
 
     this.clearOptions(this.provinceEl);
-    if (provinces && provinces.length == 0) {
+    if (provinces && provinces.length === 0) {
       this.provinceContainer.style.display = 'none';
     } else {
       for (var i = 0; i < provinces.length; i++) {
-        var opt = document.createElement('option');
-        opt.value = provinces[i][0];
-        opt.innerHTML = provinces[i][1];
-        this.provinceEl.appendChild(opt);
+        var provinceOption = document.createElement('option');
+        provinceOption.value = provinces[i][0];
+        provinceOption.innerHTML = provinces[i][1];
+        this.provinceEl.appendChild(provinceOption);
       }
 
       this.provinceContainer.style.display = '';
@@ -439,7 +449,7 @@ Shopify.CountryProvinceSelector.prototype = {
   },
 
   setOptions: function (selector, values) {
-    for (var i = 0, count = values.length; i < values.length; i++) {
+    for (var i = 0; i < values.length; i++) {
       var opt = document.createElement('option');
       opt.value = values[i];
       opt.innerHTML = values[i];
@@ -787,7 +797,7 @@ class DeferredMedia extends HTMLElement {
       if (focus) {
         deferredElement.focus();
       }
-      if (deferredElement.nodeName == 'VIDEO' && deferredElement.getAttribute('autoplay')) {
+      if (deferredElement.nodeName === 'VIDEO' && deferredElement.getAttribute('autoplay')) {
         // force autoplay for safari
         deferredElement.play();
       }
@@ -820,7 +830,7 @@ class SliderComponent extends HTMLElement {
     }
 
     this.initPages();
-    const resizeObserver = new ResizeObserver((entries) => this.initPages());
+    const resizeObserver = new ResizeObserver((_entries) => this.initPages());
     resizeObserver.observe(this.slider);
 
     this.slider.addEventListener('scroll', this.update.bind(this));
@@ -864,7 +874,7 @@ class SliderComponent extends HTMLElement {
       this.pageTotalElement.textContent = this.totalPages;
     }
 
-    if (this.currentPage != previousPage) {
+    if (this.currentPage !== previousPage) {
       this.dispatchEvent(
         new CustomEvent('slideChanged', {
           detail: {
@@ -1117,7 +1127,7 @@ class SlideshowComponent extends SliderComponent {
     this.applyAnimationToAnnouncementBar();
   }
 
-  setSlideVisibility(event) {
+  setSlideVisibility(_event) {
     this.sliderItemsToShow.forEach((item, index) => {
       const linkElements = item.querySelectorAll('a');
       if (index === this.currentPage - 1) {
@@ -1413,7 +1423,7 @@ class BulkAdd extends HTMLElement {
         index,
         window.quickOrderListStrings.max_error.replace('[max]', event.target.max)
       );
-    } else if (inputValue % parseInt(event.target.step) != 0) {
+    } else if (inputValue % parseInt(event.target.step) !== 0) {
       this.setValidity(
         event,
         index,
@@ -1436,6 +1446,7 @@ if (!customElements.get('bulk-add')) {
   customElements.define('bulk-add', BulkAdd);
 }
 
+// eslint-disable-next-line no-unused-vars -- Performance metrics helper reserved for future instrumentation
 class CartPerformance {
   static #metric_prefix = 'cart-performance';
 
@@ -1446,30 +1457,22 @@ class CartPerformance {
 
   static measureFromEvent(benchmarkName, event) {
     const metricName = `${CartPerformance.#metric_prefix}:${benchmarkName}`;
-    const startMarker = performance.mark(`${metricName}:start`, {
-      startTime: event.timeStamp,
-    });
-
-    const endMarker = performance.mark(`${metricName}:end`);
-
+    performance.mark(`${metricName}:start`, { startTime: event.timeStamp });
+    performance.mark(`${metricName}:end`);
     performance.measure(metricName, `${metricName}:start`, `${metricName}:end`);
   }
 
   static measureFromMarker(benchmarkName, startMarker) {
     const metricName = `${CartPerformance.#metric_prefix}:${benchmarkName}`;
-    const endMarker = performance.mark(`${metricName}:end`);
-
+    performance.mark(`${metricName}:end`);
     performance.measure(metricName, startMarker.name, `${metricName}:end`);
   }
 
   static measure(benchmarkName, callback) {
     const metricName = `${CartPerformance.#metric_prefix}:${benchmarkName}`;
-    const startMarker = performance.mark(`${metricName}:start`);
-
+    performance.mark(`${metricName}:start`);
     callback();
-
-    const endMarker = performance.mark(`${metricName}:end`);
-
+    performance.mark(`${metricName}:end`);
     performance.measure(metricName, `${metricName}:start`, `${metricName}:end`);
   }
 }

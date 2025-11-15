@@ -2851,3 +2851,123 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 }
 
 /* END TNO PRODUCT PAGE */
+
+/* ==========================================================================
+   TNO SIZE GUIDE DRAWER (Product Page)
+   Scoped styles for the Size Guide drawer/modal.
+   ========================================================================== */
+.tno-size-guide-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(420px, 100%);
+  height: 100vh;
+  background: #0a0a0d;
+  border-left: 2px solid #0ff;
+  box-shadow:
+    -4px 0 24px -8px rgb(0 255 255 / 25%),
+    -6px 0 32px -12px rgb(255 0 255 / 25%);
+  transform: translateX(100%);
+  transition: transform 0.42s cubic-bezier(0.25, 0.1, 0.25, 1);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  outline: none;
+}
+
+.tno-size-guide-drawer.is-open {
+  transform: translateX(0);
+}
+
+.tno-size-guide-drawer__inner {
+  padding: 1.4rem 1.5rem 2.4rem;
+  overflow-y: auto;
+}
+
+.tno-size-guide-drawer__title {
+  margin: 0 0 1rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 1rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #0ff;
+}
+
+.tno-size-guide-drawer__content {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #f2f2f2;
+}
+
+.tno-size-guide-drawer__close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: none;
+  border: 0;
+  color: #f2f2f2;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.3rem;
+  transition:
+    color var(--tno-fast, 0.2s),
+    transform var(--tno-fast, 0.2s);
+}
+
+.tno-size-guide-drawer__close:hover {
+  color: #f0f;
+  transform: scale(1.08);
+}
+
+.tno-no-scroll {
+  overflow: hidden;
+}
+
+/* Mobile adaptation: slide from bottom */
+@media (width <= 580px) {
+  .tno-size-guide-drawer {
+    width: 100%;
+    height: 60vh;
+    inset: auto 0 0;
+    border-left: 0;
+    border-top: 2px solid #0ff;
+    transform: translateY(100%);
+  }
+
+  .tno-size-guide-drawer.is-open {
+    transform: translateY(0);
+  }
+}
+
+/* Link presentation (existing .tno-size-guide__link trigger) */
+.tno-size-guide__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  color: #111;
+  background: #f2f2f5;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--tno-r-sm, 12px);
+  border: 1px solid #e3e3e8;
+  text-decoration: none;
+  transition:
+    background var(--tno-fast, 0.2s),
+    color var(--tno-fast, 0.2s);
+}
+
+.tno-size-guide__link:hover {
+  background: #0ff;
+  color: #000;
+}
+
+.tno-size-guide__icon {
+  width: 14px;
+  height: 14px;
+  fill: currentcolor;
+  opacity: 0.7;
+}

@@ -545,7 +545,7 @@ function initMobileDrilldown() {
    * Return to parent panel (slide back from left)
    * @param {HTMLElement} backButton - The back button that triggered the action
    */
-  const closePanel = (backButton) => {
+  const closePanel = () => {
     if (panelStack.length <= 1) {
       return; // Already at root
     }
@@ -625,7 +625,7 @@ function initMobileDrilldown() {
     if (backButton) {
       e.preventDefault();
       e.stopPropagation();
-      closePanel(backButton);
+      closePanel();
     }
   });
 
@@ -640,7 +640,7 @@ function initMobileDrilldown() {
     const backButton = e.target.closest('.tno-mobile-back');
     if (backButton && (e.key === 'Enter' || e.key === ' ')) {
       e.preventDefault();
-      backButton.click();
+      backButton.click(); // remains functional; closePanel no longer needs parameter
     }
   });
 

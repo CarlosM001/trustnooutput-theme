@@ -117,7 +117,7 @@ if (!customElements.get('quick-order-list')) {
       onChange(event) {
         const inputValue = parseInt(event.target.value);
         this.cleanErrorMessageOnType(event);
-        if (inputValue == 0) {
+        if (inputValue === 0) {
           event.target.setAttribute('value', inputValue);
           this.startQueue(event.target.dataset.index, inputValue);
         } else {
@@ -142,13 +142,13 @@ if (!customElements.get('quick-order-list')) {
 
         if (target.max) {
           return (
-            targetValue == 0 ||
+            targetValue === 0 ||
             (targetValue >= targetMin &&
               targetValue <= parseInt(target.max) &&
-              targetValue % targetStep == 0)
+              targetValue % targetStep === 0)
           );
         } else {
-          return targetValue == 0 || (targetValue >= targetMin && targetValue % targetStep == 0);
+          return targetValue === 0 || (targetValue >= targetMin && targetValue % targetStep === 0);
         }
       }
 
@@ -357,7 +357,7 @@ if (!customElements.get('quick-order-list')) {
       }
 
       updateMultipleQty(items) {
-        if (this.queue.length == 0) {
+        if (this.queue.length === 0) {
           this.hasPendingQuantityUpdate = false;
         }
 
