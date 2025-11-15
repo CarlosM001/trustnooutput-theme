@@ -1542,13 +1542,16 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   transform: rotate(-45deg) translateY(-9px);
 }
 
-/* Mobile Menu Overlay - TNO mobile scroll fix v5 */
+/* Mobile Menu Overlay - TNO mobile scroll fix v6 */
 .mobile-menu {
   position: fixed;
-  inset: 0;
+  top: 120px; /* Start below mobile header (60px topbar + 60px search) */
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: rgb(0 0 0 / 98%);
   backdrop-filter: blur(20px);
-  z-index: 2147483647; /* Ensure overlay sits above any header/toolbars */
+  z-index: 999; /* Below header (1000) but above content */
   opacity: 0;
   visibility: hidden;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1557,12 +1560,12 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   overflow: hidden auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: contain;
-  max-height: 100vh; /* Explicit max-height for scroll container */
+  height: calc(100vh - 120px); /* Full viewport minus header */
   scrollbar-gutter: stable both-edges;
 }
 
 @supports (height: 100dvh) {
-  .mobile-menu { max-height: 100dvh; }
+  .mobile-menu { height: calc(100dvh - 120px); }
 }
 
 .mobile-menu.is-active {
@@ -1715,6 +1718,17 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 @media (width <= 768px) {
   .header-menu-toggle {
     display: flex;
+  }
+
+  /* Ensure header stays visible above mobile menu */
+  .site-header,
+  .tno-header,
+  .header--tno {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000 !important; /* Above mobile menu (999) */
   }
 }
 
