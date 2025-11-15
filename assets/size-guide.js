@@ -11,10 +11,18 @@
   }
 
   // Ensure basic dialog semantics exist even if markup is missing them.
-  if (!drawer.hasAttribute('role')) {drawer.setAttribute('role', 'dialog');}
-  if (!drawer.hasAttribute('aria-modal')) {drawer.setAttribute('aria-modal', 'true');}
-  if (!drawer.hasAttribute('aria-hidden')) {drawer.setAttribute('aria-hidden', 'true');}
-  if (!drawer.hasAttribute('tabindex')) {drawer.setAttribute('tabindex', '-1');}
+  if (!drawer.hasAttribute('role')) {
+    drawer.setAttribute('role', 'dialog');
+  }
+  if (!drawer.hasAttribute('aria-modal')) {
+    drawer.setAttribute('aria-modal', 'true');
+  }
+  if (!drawer.hasAttribute('aria-hidden')) {
+    drawer.setAttribute('aria-hidden', 'true');
+  }
+  if (!drawer.hasAttribute('tabindex')) {
+    drawer.setAttribute('tabindex', '-1');
+  }
 
   const openTriggers = document.querySelectorAll('.tno-size-guide__link');
   const closeBtn = drawer.querySelector('.tno-size-guide-drawer__close');
@@ -45,8 +53,12 @@
   // Installs a minimal focus trap inside the drawer while open.
   function installFocusTrap() {
     trapKeydown = function (e) {
-      if (!drawer.classList.contains('is-open')) {return;}
-      if (e.key !== 'Tab') {return;}
+      if (!drawer.classList.contains('is-open')) {
+        return;
+      }
+      if (e.key !== 'Tab') {
+        return;
+      }
 
       const focusables = getFocusable(drawer);
       if (focusables.length === 0) {
@@ -73,7 +85,9 @@
     };
 
     onFocusIn = function (e) {
-      if (!drawer.classList.contains('is-open')) {return;}
+      if (!drawer.classList.contains('is-open')) {
+        return;
+      }
       if (!drawer.contains(e.target)) {
         // If focus tries to leave, bounce it back to the first focusable.
         const focusables = getFocusable(drawer);
@@ -101,7 +115,9 @@
 
   function openDrawer(evt) {
     // Open via click; preserve keyboard accessibility.
-    if (evt) {evt.preventDefault();}
+    if (evt) {
+      evt.preventDefault();
+    }
     lastFocused = document.activeElement;
     drawer.classList.add('is-open');
     drawer.setAttribute('aria-hidden', 'false');
