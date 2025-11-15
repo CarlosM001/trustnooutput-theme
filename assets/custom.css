@@ -1542,7 +1542,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   transform: rotate(-45deg) translateY(-9px);
 }
 
-/* Mobile Menu Overlay */
+/* Mobile Menu Overlay - TNO mobile scroll fix */
 .mobile-menu {
   position: fixed;
   inset: 0;
@@ -1552,10 +1552,15 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* Changed from center to allow scrolling */
   opacity: 0;
   visibility: hidden;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Enable scrolling inside menu */
+  overflow: hidden auto; /* x: hidden, y: auto */
+  -webkit-overflow-scrolling: touch; /* Smooth iOS scrolling */
+  overscroll-behavior: contain; /* Prevent scroll chaining to body */
 }
 
 .mobile-menu.is-active {
@@ -1566,8 +1571,13 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 .mobile-menu__nav {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 4rem 1rem; /* Add vertical padding for scroll area */
   text-align: center;
+  width: 100%;
+  min-height: 100vh; /* Ensure content can be centered when short */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .mobile-menu__item {
