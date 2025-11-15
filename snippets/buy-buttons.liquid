@@ -10,7 +10,9 @@
   Usage:
   {% render 'buy-buttons', block: block, product: product, product_form_id: product_form_id, section_id: section.id, show_pickup_availability: true %}
 {% endcomment %}
-<div {{ block.shopify_attributes }}>
+
+<!-- TNO product layout: Product Actions Container -->
+<div class="tno-product-actions" {{ block.shopify_attributes }}>
   {%- if product != blank -%}
     {%- liquid
       assign gift_card_recipient_feature_active = false
@@ -101,6 +103,32 @@
         </div>
       {%- endform -%}
     </product-form>
+
+    <!-- TNO product layout: Trust Signals -->
+    <div class="tno-trust-signals">
+      <ul class="tno-trust-signals__list">
+        <li class="tno-trust-signals__item">
+          <svg class="tno-trust-signals__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <span>Secure Checkout</span>
+        </li>
+        <li class="tno-trust-signals__item">
+          <svg class="tno-trust-signals__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span>Worldwide Shipping</span>
+        </li>
+        <li class="tno-trust-signals__item">
+          <svg class="tno-trust-signals__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          <span>Unisex Fit</span>
+        </li>
+      </ul>
+    </div>
   {%- else -%}
     <div class="product-form">
       <div class="product-form__buttons form">
@@ -155,3 +183,4 @@
     <script src="{{ 'pickup-availability.js' | asset_url }}" defer="defer"></script>
   {%- endif -%}
 </div>
+<!-- /TNO product layout: Product Actions Container -->
