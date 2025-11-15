@@ -1542,7 +1542,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   transform: rotate(-45deg) translateY(-9px);
 }
 
-/* Mobile Menu Overlay - TNO mobile scroll fix v2 */
+/* Mobile Menu Overlay - TNO mobile scroll fix v3 - FINAL */
 .mobile-menu {
   position: fixed;
   inset: 0;
@@ -1553,13 +1553,11 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   visibility: hidden;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* Enable scrolling inside menu - CRITICAL for scroll to work */
-  overflow: hidden auto; /* x: hidden, y: auto */
-  -webkit-overflow-scrolling: touch; /* Smooth iOS scrolling */
-  overscroll-behavior: contain; /* Prevent scroll chaining to body */
-
-  /* Remove flex centering that blocks scroll access */
-  padding: 0; /* Let nav control padding */
+  /* CRITICAL: Enable scrolling with proper height calculation */
+  overflow: hidden auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  max-height: 100vh; /* Explicit max-height for scroll container */
 }
 
 .mobile-menu.is-active {
@@ -1570,11 +1568,11 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* TNO mobile nav layout cleanup – START */
 .mobile-menu__nav {
   width: 100%;
-  padding: 3rem 1rem; /* Top/bottom padding for scroll breathing room */
+  padding: 4rem 1.5rem; /* Increased top padding to ensure scroll space */
   text-align: center;
-  margin: 0 auto; /* Center horizontally within scrollable container */
+  min-height: calc(100vh + 1px); /* Force scrollable content */
 
-  /* Remove centering and min-height that caused scroll issues */
+  /* Ensure content starts at top when scrolling */
 }
 
 /* Clean list structure for top-level items */
