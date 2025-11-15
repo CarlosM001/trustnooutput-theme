@@ -215,6 +215,16 @@
     }
   }
 
+  /* TNO header cart fix: Ensure desktop utility icons are visible on desktop */
+  @media (min-width: 769px) {
+    .tno-header__desktop-utility {
+      display: flex !important;
+      align-items: center;
+      gap: 1.5rem;
+      flex-shrink: 0;
+    }
+  }
+
   .site-header__inner {
     max-width: 1600px;
     margin: 0 auto;
@@ -435,9 +445,14 @@
       display: flex;
     }
   }
+  /* TNO header cart fix: Enhanced hover state with glitch effect */
   .header-icon:hover {
     color: #00ffff;
     transform: translateY(-2px);
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.6),
+                 -1px 0 rgba(255, 0, 255, 0.4),
+                 1px 0 rgba(0, 255, 255, 0.4);
+    filter: drop-shadow(0 0 4px rgba(0, 255, 255, 0.5));
   }
   .header-icon svg {
     width: 100%;

@@ -2070,6 +2070,72 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 }
 
 /* ==========================================================================
+   TNO HEADER CART FIX — Desktop Icons
+   Ensure Cart, Account, and Search icons are always visible on desktop
+   ========================================================================== */
+@media (min-width: 769px) {
+  /* Desktop utility container: Search + Account + Cart */
+  .tno-header__desktop-utility,
+  .header-icons.tno-header__desktop-utility {
+    display: flex !important;
+    align-items: center;
+    gap: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  /* Ensure all icons are visible and properly styled */
+  .tno-header__desktop-utility .header-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f2f2f2;
+    transition: all 0.3s ease;
+    position: relative;
+    cursor: pointer;
+  }
+
+  /* Cart icon specifically */
+  .tno-header__desktop-utility .header-icon--cart {
+    display: flex !important;
+    position: relative;
+  }
+
+  /* Hover state for desktop icons with TNO glitch effect */
+  .tno-header__desktop-utility .header-icon:hover {
+    color: #00ffff;
+    transform: translateY(-2px);
+    filter: drop-shadow(0 0 6px rgba(0, 255, 255, 0.5));
+  }
+
+  /* Cart badge on desktop */
+  .tno-header__desktop-utility .cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    background: #ff00ff;
+    color: #000;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.625rem;
+    font-weight: 700;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+  }
+
+  /* Desktop search field styling */
+  .tno-header__desktop-utility .tno-search {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+/* ==========================================================================
    MANIFESTO PAGE STYLING
    Dark background, centered narrow text, comfortable mobile reading
    ========================================================================== */
