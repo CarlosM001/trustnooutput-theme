@@ -2071,6 +2071,16 @@ html.tno-ab-continuous .tno-glitch-soft::after {
    Ensure Cart, Account, and Search icons are always visible on desktop
    ========================================================================== */
 @media (width >= 769px) {
+  /* Ensure flex children can shrink appropriately */
+  .site-header__inner {
+    min-width: 0;
+  }
+
+  .header-nav {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
   /* Desktop utility container: Search + Account + Cart */
   .tno-header__desktop-utility,
   .header-icons.tno-header__desktop-utility {
@@ -2078,6 +2088,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     align-items: center;
     gap: 1.5rem;
     flex-shrink: 0;
+    flex: 0 0 auto; /* Prevent shrinking of the icon group */
   }
 
   /* Ensure all icons are visible and properly styled */
@@ -2129,6 +2140,17 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+
+    /* Ensure cart icon stays visible on desktop: limit search width and let it shrink */
+    flex: 1 1 auto;
+    max-width: clamp(220px, 24vw, 360px);
+    min-width: 160px;
+  }
+
+  /* Input fills the search container and can shrink */
+  .tno-header__desktop-utility .tno-search__input {
+    width: 100%;
+    min-width: 0;
   }
 }
 
@@ -2244,7 +2266,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.5rem;
 }
 
 .tno-trust-signals__item {
@@ -2253,7 +2275,6 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   gap: 0.75rem;
   font-family: var(--font-mono, ui-monospace, monospace);
   font-size: 0.875rem;
-  letter-spacing: 0.03em;
   color: rgb(255 255 255 / 80%);
 }
 

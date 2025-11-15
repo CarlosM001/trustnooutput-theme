@@ -804,7 +804,11 @@
       {%- endif -%}
     </nav>
 
-    {%- comment %} Desktop Search & Icons (Right) - Hidden on Mobile {%- endcomment %}
+    {%- comment %}
+      Desktop Search & Icons (Right) - Hidden on Mobile
+      TNO fix: Keep cart icon visible on desktop by constraining search width
+      and preventing the icon group from shrinking (see assets/custom.css).
+    {%- endcomment %}
     <div class="header-icons tno-nav__utility tno-header__desktop-utility">
       {%- comment %} Search Field (Desktop) {%- endcomment %}
       {% if section.settings.show_search %}
