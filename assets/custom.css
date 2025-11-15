@@ -1568,20 +1568,30 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   visibility: visible;
 }
 
+/* TNO mobile nav layout cleanup – START */
 .mobile-menu__nav {
-  list-style: none;
-  margin: 0;
-  padding: 4rem 1rem; /* Add vertical padding for scroll area */
-  text-align: center;
   width: 100%;
-  min-height: 100vh; /* Ensure content can be centered when short */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  padding: 2rem 1rem; /* Reduced padding, no min-height */
+  text-align: center;
+
+  /* Remove centering and min-height that caused scroll issues */
 }
 
+/* Clean list structure for top-level items */
+.mobile-menu__nav > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0; /* Controlled by .mobile-menu__item margin */
+}
+
+/* TNO mobile nav layout cleanup – END */
+
+/* TNO mobile nav layout cleanup – Clean vertical spacing */
 .mobile-menu__item {
-  margin: 2rem 0;
+  margin: 1.5rem 0; /* Reduced from 2rem for tighter, cleaner stack */
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
