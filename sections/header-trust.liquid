@@ -942,10 +942,10 @@
       {%- if mobile_menu_ref.links and mobile_menu_ref.links.size > 0 -%}
         {% for link in mobile_menu_ref.links %}
           <li class="mobile-menu__item">
-            {%- comment %} TNO: Accordion structure for items with children {%- endcomment %}
-            {%- if link.links and link.links.size > 0 -%}
-              <div class="mobile-menu__row">
-                <a href="{{ link.url }}" class="mobile-menu__link">{{ link.title }}</a>
+            {%- comment %} TNO: Normalized structure - ALL items use .mobile-menu__row {%- endcomment %}
+            <div class="mobile-menu__row">
+              <a href="{{ link.url }}" class="mobile-menu__link">{{ link.title }}</a>
+              {%- if link.links and link.links.size > 0 -%}
                 <button
                   class="mobile-menu__toggle"
                   aria-expanded="false"
@@ -955,7 +955,9 @@
                 >
                   <span class="mobile-menu__chevron">▾</span>
                 </button>
-              </div>
+              {%- endif -%}
+            </div>
+            {%- if link.links and link.links.size > 0 -%}
               <ul class="mobile-submenu" id="mobile-submenu-{{ forloop.index }}" hidden>
                 {%- for child in link.links -%}
                   <li>
@@ -963,8 +965,6 @@
                   </li>
                 {%- endfor -%}
               </ul>
-            {%- else -%}
-              <a href="{{ link.url }}" class="mobile-menu__link">{{ link.title }}</a>
             {%- endif -%}
           </li>
         {% endfor %}
