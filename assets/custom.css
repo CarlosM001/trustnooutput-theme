@@ -1546,7 +1546,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
    MOBILE DRILLDOWN NAVIGATION (Digitec-style)
    Slide-in panels from right, slide-out to left on deeper navigation.
    Adjust transition timing in --tno-slide-duration variable.
-   
+
    Layout structure:
    - Fixed site header at top (z-index: 1000)
    - Mobile menu starts below header at --tno-mobile-header-height
@@ -1564,7 +1564,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
    - Site header container: z-index 1100 (always on top, fully visible)
    - Mobile menu overlay: z-index 999 (below header, content starts at 120px)
    - Back header inside menu: z-index 1050 (below site header but above menu bg)
-   
+
    Why this works:
    - Header stays fully visible with search bar accessible (z: 1100)
    - Menu starts BELOW header visually (top: 120px) so no visual overlap
@@ -1573,16 +1573,15 @@ html.tno-ab-continuous .tno-glitch-soft::after {
    Result: Both header AND back button fully functional, no clipping */
 .mobile-menu {
   position: fixed;
-  top: var(--tno-mobile-header-height); /* Start below mobile header */
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: var(--tno-mobile-header-height) 0 0 0; /* Start below mobile header */
   background: rgb(0 0 0 / 98%);
   backdrop-filter: blur(20px);
   z-index: 999; /* Below header so search bar stays visible */
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
   overflow: hidden; /* Hide sliding panels outside bounds */
 }
 
@@ -1590,6 +1589,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   .mobile-menu {
     top: var(--tno-mobile-header-height);
     bottom: 0;
+
     /* Height automatically calculated by fixed positioning */
   }
 }
@@ -1597,6 +1597,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 .mobile-menu.is-active {
   opacity: 1;
   visibility: visible;
+
   /* Ensure panels can scroll properly */
   overflow: hidden; /* Container hides panels, panels selbst sind scrollbar */
 }
@@ -1607,14 +1608,10 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   --tno-slide-ease: cubic-bezier(0.4, 0, 0.2, 1);
 
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: contain;
   background: rgb(0 0 0 / 98%);
@@ -1653,7 +1650,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 
 /* Back Header (sticky at top of child panels)
    FIX: Back-Button war unter dem Site-Header versteckt
-   
+
    Lösung:
    - Panel (.tno-mobile-panel) ist scroll container mit overflow-y: auto
    - Back header ist child des panels mit position: sticky
@@ -1661,7 +1658,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
    - Dies verhindert, dass der Back-Button vom Site-Header verdeckt wird
    - Panel startet bei top: 120px (unter Site-Header)
    - Back header sticky innerhalb des Panels = sichtbar und klickbar
-   
+
    Z-index Strategie:
    - z-index: 1050 (unter Site-Header 1100, über Menu-BG 999)
    - pointer-events: auto für volle Klickbarkeit
@@ -1690,7 +1687,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   appearance: none;
   background: transparent;
   border: none;
-  color: #00ffff;
+  color: #0ff;
   font-family: var(--font-mono, monospace);
   font-size: 0.875rem;
   font-weight: 600;
@@ -1781,7 +1778,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 
 .tno-mobile-link:hover,
 .tno-mobile-link:focus {
-  color: #00ffff;
+  color: #0ff;
   text-shadow:
     0 0 8px rgb(0 255 255 / 35%),
     -1px 0 rgb(255 0 255 / 50%),
@@ -1811,7 +1808,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 .tno-nav-chevron:focus {
   background: rgb(0 255 255 / 10%);
   border-color: rgb(0 255 255 / 40%);
-  color: #00ffff;
+  color: #0ff;
 }
 
 .tno-nav-chevron svg {
@@ -1820,7 +1817,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   transition: transform 0.2s ease;
 }
 
-.tno-nav-chevron[aria-expanded="true"] svg {
+.tno-nav-chevron[aria-expanded='true'] svg {
   transform: translateX(2px);
 }
 
@@ -1849,14 +1846,14 @@ html.tno-ab-continuous .tno-glitch-soft::after {
      2. Mobile menu overlay: z-index 999 (starts at top: 120px)
      3. Back header in menu: z-index 1050 (sticky within menu)
      4. Site header: z-index 1100 (fixed at top: 0, always visible)
-     
+
      How this prevents issues:
      - Site header highest z-index = search bar never clipped/hidden
      - Menu overlay below header but visually positioned below via top offset
      - Back button z: 1050 works because it's in non-overlapping space (below 120px)
      - No physical overlap: header occupies 0-120px, menu occupies 120px-100%
      - Each interactive element only captures clicks in its own area
-     
+
      Result: Search bar fully visible and clickable, back button fully clickable,
              no z-index fighting, clean visual hierarchy */
   .site-header,
@@ -2073,7 +2070,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
    TNO HEADER CART FIX — Desktop Icons
    Ensure Cart, Account, and Search icons are always visible on desktop
    ========================================================================== */
-@media (min-width: 769px) {
+@media (width >= 769px) {
   /* Desktop utility container: Search + Account + Cart */
   .tno-header__desktop-utility,
   .header-icons.tno-header__desktop-utility {
@@ -2102,9 +2099,9 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 
   /* Hover state for desktop icons with TNO glitch effect */
   .tno-header__desktop-utility .header-icon:hover {
-    color: #00ffff;
+    color: #0ff;
     transform: translateY(-2px);
-    filter: drop-shadow(0 0 6px rgba(0, 255, 255, 0.5));
+    filter: drop-shadow(0 0 6px rgb(0 255 255 / 50%));
   }
 
   /* Cart badge on desktop */
@@ -2115,7 +2112,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     min-width: 18px;
     height: 18px;
     padding: 0 4px;
-    background: #ff00ff;
+    background: #f0f;
     color: #000;
     font-family: var(--font-mono, monospace);
     font-size: 0.625rem;
@@ -2124,7 +2121,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+    box-shadow: 0 0 10px rgb(255 0 255 / 50%);
   }
 
   /* Desktop search field styling */
@@ -2175,7 +2172,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   padding: 1.25rem 2rem;
   background: #000;
   color: #fff;
-  border: 2px solid #00ffff;
+  border: 2px solid #0ff;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -2195,8 +2192,8 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 
 .tno-product-actions .product-form__submit:hover:not(:disabled) {
   background: #000;
-  border-color: #ff00ff;
-  color: #00ffff;
+  border-color: #f0f;
+  color: #0ff;
   transform: translateY(-2px);
   box-shadow:
     0 0 20px rgb(0 255 255 / 30%),
@@ -2263,7 +2260,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 .tno-trust-signals__icon {
   width: 18px;
   height: 18px;
-  stroke: #00ffff;
+  stroke: #0ff;
   fill: none;
   stroke-width: 2;
   flex-shrink: 0;
@@ -2296,21 +2293,21 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0.05em;
-  color: #00ffff;
+  color: #0ff;
   text-decoration: none;
   transition: all 0.2s ease;
   padding: 0.5rem 0;
 }
 
 .tno-size-guide__link:hover {
-  color: #ff00ff;
+  color: #f0f;
   text-shadow: 0 0 8px rgb(255 0 255 / 40%);
 }
 
 .tno-size-guide__icon {
   width: 16px;
   height: 16px;
-  stroke: currentColor;
+  stroke: currentcolor;
   fill: none;
   stroke-width: 2;
 }
@@ -2333,12 +2330,12 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   font-family: var(--font-mono, ui-monospace, monospace);
   font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 700;
-  color: #00ffff;
+  color: #0ff;
   letter-spacing: 0.03em;
 }
 
 .price--large .price-item--sale {
-  color: #ff00ff;
+  color: #f0f;
 }
 
 .price--large .price-item--regular s {
@@ -2375,8 +2372,8 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 
 .product-form__input--pill input[type='radio']:checked + label {
   background: rgb(0 255 255 / 10%);
-  border-color: #00ffff;
-  color: #00ffff;
+  border-color: #0ff;
+  color: #0ff;
 }
 
 .product-form__input--pill input[type='radio'] + label:hover {
@@ -2398,8 +2395,8 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 
 .quantity__button:hover {
   background: rgb(0 255 255 / 10%);
-  border-color: #00ffff;
-  color: #00ffff;
+  border-color: #0ff;
+  color: #0ff;
 }
 
 .quantity__input {
@@ -2433,7 +2430,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 }
 
 .product__accordion summary:hover {
-  color: #00ffff;
+  color: #0ff;
 }
 
 .product__accordion .accordion__content {
@@ -2483,7 +2480,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   background: rgb(255 0 0 / 10%);
   border: 1px solid rgb(255 0 0 / 30%);
   border-radius: 8px;
-  color: #ff4444;
+  color: #f44;
   font-family: var(--font-mono, ui-monospace, monospace);
   font-size: 0.875rem;
 }
@@ -2672,3 +2669,185 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     line-height: 1.75;
   }
 }
+
+/* ==========================================================================
+   TNO PRODUCT PAGE — Scoped Enhancements
+   ========================================================================== */
+.tno-product-layout {
+  position: relative;
+  margin-inline: auto;
+  padding-inline: clamp(0.75rem, 2vw, 1.25rem);
+  max-width: 1480px;
+}
+
+.tno-product-title {
+  margin: 0 0 1.1rem;
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+}
+
+.tno-product-title__text {
+  font-size: clamp(1.9rem, 3.6vw, 3.4rem);
+  line-height: 1.04;
+  letter-spacing: 0.03em;
+  font-weight: 600;
+  margin: 0;
+  background: linear-gradient(90deg, #0ff 0%, #f0f 60%, #0ff 100%);
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 6px rgb(0 255 255 / 15%)) drop-shadow(0 0 6px rgb(255 0 255 / 15%));
+}
+
+.tno-product-subtitle {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  opacity: 0.7;
+  margin: 0.4rem 0 0;
+  font-family: var(--font-mono, ui-monospace, monospace);
+}
+
+.tno-product-actions {
+  margin: 1.6rem 0 1.2rem;
+  padding: 1.1rem 1.1rem 1.3rem;
+  border: 1px solid var(--tno-border, #e6e7ec);
+  border-radius: var(--tno-r-md, 16px);
+  background: linear-gradient(180deg, #fff 0%, #fafafa 100%);
+  box-shadow: 0 4px 14px -4px rgb(0 0 0 / 8%);
+}
+
+.tno-product-actions .product-form__buttons {
+  gap: 0.75rem;
+}
+
+.tno-add-to-cart-btn {
+  position: relative;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border: 2px solid #0ff;
+  background: #0a0a0a;
+  color: #f2f2f2;
+  padding: 0.95rem 1.3rem;
+  box-shadow:
+    0 0 0 0 rgb(0 255 255 / 50%),
+    inset 0 0 0 0 rgb(255 0 255 / 40%);
+  transition:
+    box-shadow var(--tno-fast, 0.2s),
+    transform var(--tno-fast, 0.2s),
+    border-color var(--tno-fast, 0.2s);
+}
+
+.tno-add-to-cart-btn:hover:not([disabled]) {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 14px -2px rgb(0 255 255 / 45%),
+    0 0 22px -4px rgb(255 0 255 / 45%),
+    inset 0 0 0 999px rgb(255 255 255 / 2%);
+  border-color: #f0f;
+}
+
+.tno-add-to-cart-btn:focus-visible {
+  outline: 2px solid #f0f;
+  outline-offset: 2px;
+}
+
+.tno-add-to-cart-btn[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.tno-trust-signals {
+  margin-top: 1rem;
+}
+
+.tno-trust-signals__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tno-trust-signals__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  color: #111;
+  background: #f2f2f5;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--tno-r-sm, 12px);
+  border: 1px solid #e3e3e8;
+}
+
+.tno-trust-signals__icon {
+  width: 14px;
+  height: 14px;
+  fill: currentcolor;
+  opacity: 0.7;
+}
+
+.tno-product-accordion {
+  margin: 2rem 0 1.75rem;
+}
+
+.tno-accordion__item {
+  border: 1px solid #e2e3e8;
+  border-radius: var(--tno-r-sm, 12px);
+  background: #fff;
+  margin: 0 0 0.75rem;
+  overflow: hidden;
+}
+
+.tno-accordion__summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 0.75rem 0.9rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tno-accordion__summary::-webkit-details-marker {
+  display: none;
+}
+
+.tno-accordion__item[open] .tno-accordion__summary {
+  background: #f7f7fa;
+}
+
+.tno-accordion__content {
+  padding: 0.2rem 0.9rem 0.95rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+@media (width <= 750px) {
+  .tno-product-title__text {
+    font-size: clamp(1.7rem, 7vw, 2.6rem);
+  }
+
+  .tno-product-actions {
+    padding: 0.9rem 0.9rem 1.1rem;
+  }
+
+  .tno-add-to-cart-btn {
+    padding: 0.85rem 1.1rem;
+    letter-spacing: 0.1em;
+  }
+
+  .tno-product-accordion {
+    margin-top: 1.5rem;
+  }
+}
+
+/* END TNO PRODUCT PAGE */

@@ -76,7 +76,7 @@
             id="ProductSubmitButton-{{ section_id }}"
             type="submit"
             name="add"
-            class="product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
+            class="product-form__submit tno-add-to-cart-btn button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
             {% if product.selected_or_first_available_variant.available == false
               or quantity_rule_soldout
               or product.selected_or_first_available_variant == null
@@ -108,20 +108,32 @@
     <div class="tno-trust-signals">
       <ul class="tno-trust-signals__list">
         <li class="tno-trust-signals__item">
-          <svg class="tno-trust-signals__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            class="tno-trust-signals__icon"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
           </svg>
           <span>Secure Checkout</span>
         </li>
         <li class="tno-trust-signals__item">
-          <svg class="tno-trust-signals__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            class="tno-trust-signals__icon"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <circle cx="12" cy="12" r="10"/>
             <polyline points="12 6 12 12 16 14"/>
           </svg>
           <span>Worldwide Shipping</span>
         </li>
         <li class="tno-trust-signals__item">
-          <svg class="tno-trust-signals__icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            class="tno-trust-signals__icon"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
             <circle cx="12" cy="7" r="4"/>
           </svg>
