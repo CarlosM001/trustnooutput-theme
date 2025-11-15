@@ -1542,13 +1542,13 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   transform: rotate(-45deg) translateY(-9px);
 }
 
-/* Mobile Menu Overlay - TNO mobile scroll fix v4 */
+/* Mobile Menu Overlay - TNO mobile scroll fix v5 */
 .mobile-menu {
   position: fixed;
   inset: 0;
   background: rgb(0 0 0 / 98%);
   backdrop-filter: blur(20px);
-  z-index: 9999; /* Ensure overlay sits above sticky header */
+  z-index: 2147483647; /* Ensure overlay sits above any header/toolbars */
   opacity: 0;
   visibility: hidden;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);

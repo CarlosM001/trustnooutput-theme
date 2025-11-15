@@ -132,6 +132,17 @@
     mobileMenu.setAttribute('aria-hidden', 'false');
     document.body.classList.add('tno-no-scroll');
 
+    // Ensure menu starts at top on open to avoid first item appearing under header
+    try {
+      if (mobileMenu.scrollTop !== 0) {
+        // Some browsers support 'instant'; fallback to direct assignment
+        mobileMenu.scrollTo({ top: 0, behavior: 'instant' });
+        if (mobileMenu.scrollTop !== 0) mobileMenu.scrollTop = 0;
+      }
+    } catch (e) {
+      mobileMenu.scrollTop = 0;
+    }
+
     const focusables = getFocusable(mobileMenu);
     if (focusables.length) {
       focusables[0].focus();
