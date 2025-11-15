@@ -1559,7 +1559,12 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   --tno-mobile-header-height: 120px;
 }
 
-/* Mobile Menu Overlay Container */
+/* Mobile Menu Overlay Container
+   Z-index strategy:
+   - Mobile menu: 1001 (above header base)
+   - Back header inside menu: 1050 (above header children like search bar)
+   - Site header container: 1000 (visible but doesn't block menu clicks)
+   Result: Header visible, back button clickable */
 .mobile-menu {
   position: fixed;
   top: var(--tno-mobile-header-height); /* Start below mobile header */
@@ -1568,7 +1573,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   bottom: 0;
   background: rgb(0 0 0 / 98%);
   backdrop-filter: blur(20px);
-  z-index: 999; /* Below header (1000) but above content */
+  z-index: 1001; /* Above header (1000) so menu content isn't blocked */
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -1645,13 +1650,18 @@ html.tno-ab-continuous .tno-glitch-soft::after {
    - When user scrolls panel content, back header stays visible at panel top
    - The panel itself already starts below the site header (at --tno-mobile-header-height)
    - Result: back header appears directly below site header and stays there when scrolling
+   
+   Z-index fix:
+   - z-index: 1050 ensures this sits ABOVE site header's children (search bar, etc.)
+   - pointer-events: auto ensures all clicks work on back button
+   - This prevents the fixed header from blocking interaction with back button
 */
 .tno-mobile-back-header {
   position: sticky;
   top: 0; /* Stick to top of panel scroll container */
   left: 0;
   right: 0;
-  z-index: 10; /* Above panel content */
+  z-index: 1050; /* CRITICAL: Above site header children to ensure clickability */
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -1661,6 +1671,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgb(255 255 255 / 8%);
   margin-bottom: 0; /* No margin so it sticks flush to top */
+  pointer-events: auto; /* Ensure all interactions work */
 }
 
 .tno-mobile-back {
@@ -1681,6 +1692,9 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   margin: -0.5rem;
   transition: color 0.2s ease;
   min-height: 44px; /* Touch target */
+  pointer-events: auto; /* Ensure button is always clickable */
+  position: relative; /* Create stacking context */
+  z-index: 1; /* Above any siblings */
 }
 
 .tno-mobile-back:hover,
@@ -1817,11 +1831,18 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     display: flex;
   }
 
-  /* Ensure header stays visible above mobile menu with proper z-index layering:
-     - Site header (logo, search, icons): z-index 1000
-     - Mobile menu overlay: z-index 999 (below header)
-     - Back header inside panel: position sticky, stays at top of panel scroll
-     Result: site header always visible, back button appears directly below it */
+  /* Z-index layering strategy for mobile (fixed in this update):
+     - Site header container: z-index 1000 (base layer, visible)
+     - Mobile menu overlay: z-index 1001 (above header base)
+     - Back header in menu: z-index 1050 (above header children like search)
+     
+     Why this works:
+     - Header remains visible at top (fixed position)
+     - Menu overlay sits above header base but below is visually positioned below via top offset
+     - Back button has highest z-index so it's clickable even though header is fixed
+     - Header only blocks clicks in its own footprint (top 120px), menu starts below
+     
+     Result: Header visible, back button fully clickable, no overlap issues */
   .site-header,
   .tno-header,
   .header--tno {
@@ -1829,7 +1850,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000 !important; /* Above mobile menu (999) */
+    z-index: 1000 !important; /* Base header layer */
   }
 
   /* Adjust panel content padding to account for back header */
