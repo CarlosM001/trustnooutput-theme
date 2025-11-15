@@ -45,7 +45,20 @@
         "headline": "System Updates",
         "intro": ""
       }
+    },
+    "tno_category_grid_1": {
+      "type": "tno-category-grid",
+      "disabled": true,
+      "settings": {
+        "heading": "Categories",
+        "aspect_ratio": "4_5"
+      }
     }
   },
-  "order": ["hero_trust_AxWTFW", "product_grid_trust_1", "system_update_trust_1"]
+  "order": [
+    "hero_trust_AxWTFW",
+    "product_grid_trust_1",
+    "system_update_trust_1",
+    "tno_category_grid_1"
+  ]
 }
