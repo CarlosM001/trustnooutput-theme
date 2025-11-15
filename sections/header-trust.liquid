@@ -658,21 +658,20 @@
         <span></span>
       </button>
 
-    {%- comment %} Logo (Left) {%- endcomment %}
+      {%- comment %} Logo (Left) {%- endcomment %}
       <div class="header-logo tno-header__logo">
-      <a
-        href="{{ routes.root_url }}"
-        class="header-logo__link"
-        data-text="TRUST.NO.OUTPUT"
-        data-tooltip="Reality is under construction"
-      >
-        TRUST.NO.OUTPUT
-      </a>
-    </div>
+        <a
+          href="{{ routes.root_url }}"
+          class="header-logo__link"
+          data-text="TRUST.NO.OUTPUT"
+          data-tooltip="Reality is under construction"
+        >
+          TRUST.NO.OUTPUT
+        </a>
+      </div>
 
       {%- comment %} Icons (Right: Account + Cart only on Mobile) {%- endcomment %}
       <div class="header-icons tno-nav__utility tno-header__icons">
-
         {%- comment %} Account Icon {%- endcomment %}
         {% if section.settings.show_account %}
           <a
@@ -900,7 +899,12 @@
     {%- comment %} Mobile Search Bar (Row 2) - Full width below top bar {%- endcomment %}
     {% if section.settings.show_search %}
       <div class="tno-header__search-mobile">
-        <form action="{{ routes.search_url }}" method="get" role="search" class="tno-header__search-form">
+        <form
+          action="{{ routes.search_url }}"
+          method="get"
+          role="search"
+          class="tno-header__search-form"
+        >
           <input
             type="search"
             name="q"
@@ -973,7 +977,9 @@
           <a href="{{ routes.collections_url }}/apparel" class="mobile-menu__link">APPAREL</a>
         </li>
         <li class="mobile-menu__item">
-          <a href="{{ routes.collections_url }}/accessories" class="mobile-menu__link">ACCESSORIES</a>
+          <a href="{{ routes.collections_url }}/accessories" class="mobile-menu__link"
+            >ACCESSORIES</a
+          >
         </li>
         <li class="mobile-menu__item">
           <a href="{{ routes.collections_url }}" class="mobile-menu__link">COLLECTIONS</a>
