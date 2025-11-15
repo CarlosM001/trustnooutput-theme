@@ -2992,3 +2992,177 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   fill: currentcolor;
   opacity: 0.7;
 }
+
+/* ------------------------------------------------------------
+   TNO Category Grid (sections/tno-category-grid.liquid)
+   Structural markup only in section; all visuals live here.
+   Tweak colors/hover here to adjust the TNO aesthetic.
+------------------------------------------------------------- */
+
+.tno-category-grid {
+  display: block;
+  padding: 2rem 1rem;
+}
+
+.tno-category-grid__header {
+  margin: 0 0 1.25rem;
+}
+
+/* Title: uppercase, monospace, white */
+.tno-category-grid__title {
+  margin: 0;
+  color: #f2f2f2;
+  font-family: var(
+    --font-mono,
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    'Liberation Mono',
+    'Courier New',
+    monospace
+  );
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: clamp(1rem, 2.2vw, 1.125rem);
+}
+
+/* Responsive grid: 1 col mobile, 2 cols desktop */
+.tno-category-grid__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (width >= 990px) {
+  .tno-category-grid__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+/* Tile base */
+.tno-category-tile {
+  position: relative;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #0a0a0a;
+  transition:
+    transform 220ms var(--tno-ease, ease),
+    box-shadow 220ms var(--tno-ease, ease),
+    border-color 220ms var(--tno-ease, ease);
+}
+
+.tno-category-tile__link {
+  display: grid;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Aspect ratio controlled by parent class: is-4-5 vs is-16-9 */
+.tno-category-tile__media {
+  position: relative;
+  width: 100%;
+  background: #0a0a0a;
+}
+
+.tno-category-grid.is-4-5 .tno-category-tile__media {
+  aspect-ratio: 4 / 5;
+}
+
+.tno-category-grid.is-16-9 .tno-category-tile__media {
+  aspect-ratio: 16 / 9;
+}
+
+.tno-category-tile__image,
+.tno-category-tile__placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.tno-category-tile__placeholder {
+  background: linear-gradient(135deg, #111 0%, #1b1b1b 100%);
+}
+
+/* Text overlay and typography */
+.tno-category-tile__overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1rem;
+  display: grid;
+  gap: 0.25rem;
+  background: linear-gradient(
+    180deg,
+    rgb(10 10 10 / 0%) 0%,
+    rgb(10 10 10 / 55%) 32%,
+    rgb(10 10 10 / 85%) 100%
+  );
+}
+
+.tno-category-tile__title {
+  margin: 0;
+  color: #fff;
+  font-family: var(
+    --font-mono,
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    'Liberation Mono',
+    'Courier New',
+    monospace
+  );
+  text-transform: uppercase;
+  font-size: clamp(1rem, 2.4vw, 1.25rem);
+  letter-spacing: 0.1em;
+}
+
+.tno-category-tile__subtitle {
+  margin: 0;
+  color: #f2f2f2;
+  opacity: 0.85;
+  font-size: 0.875rem;
+  line-height: 1.3;
+}
+
+/* CTA chip */
+.tno-category-tile__cta {
+  justify-self: start;
+  margin-top: 0.5rem;
+  display: inline-block;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgb(255 255 255 / 24%);
+  border-radius: 999px;
+  color: #f2f2f2;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: rgb(0 0 0 / 20%);
+  backdrop-filter: blur(2px);
+  transition:
+    border-color 200ms var(--tno-ease, ease),
+    color 200ms var(--tno-ease, ease),
+    background-color 200ms var(--tno-ease, ease);
+}
+
+/* Subtle glitch hover: cyan border + soft magenta inset glow */
+.tno-category-tile:hover {
+  transform: translateY(-2px) scale(1.01);
+  border-color: #0ff;
+  box-shadow:
+    0 6px 20px rgb(0 255 255 / 8%),
+    0 0 0 1px rgb(255 0 255 / 6%) inset;
+}
+
+.tno-category-tile:hover .tno-category-tile__cta {
+  border-color: #f0f;
+  color: #fff;
+  background: rgb(255 0 255 / 8%);
+}

@@ -1,0 +1,130 @@
+{%- comment -%}
+  TNO Category Grid – structural markup only.
+  All presentation is handled in assets/custom.css via .tno- prefixed classes.
+{%- endcomment -%}
+<section
+  class="tno-category-grid {% if section.settings.aspect_ratio == '16_9' %}is-16-9{% else %}is-4-5{% endif %}"
+  id="tno-category-grid-{{ section.id }}"
+>
+  {% if section.settings.heading != blank %}
+    <header class="tno-category-grid__header">
+      <h2 class="tno-category-grid__title">{{ section.settings.heading | escape }}</h2>
+    </header>
+  {% endif %}
+
+  <div class="tno-category-grid__grid">
+    {% for block in section.blocks %}
+      {% assign collection = block.settings.collection %}
+      {% if collection %}
+        {% assign display_title = block.settings.custom_label | default: collection.title %}
+        {% assign block_subtitle = block.settings.custom_subtitle
+          | default: collection.metafields.custom.subtitle
+          | default: 'ENTER SIMULATION'
+        %}
+        {% assign first_product = collection.products | first %}
+        {% assign fallback_image = '' %}
+        {% if first_product %}
+          {% if first_product.featured_media and first_product.featured_media.preview_image %}
+            {% assign fallback_image = first_product.featured_media.preview_image %}
+          {% elsif first_product.featured_image %}
+            {% assign fallback_image = first_product.featured_image %}
+          {% endif %}
+        {% endif %}
+        {% assign tile_image = collection.image | default: fallback_image %}
+
+        <article class="tno-category-tile" {{ block.shopify_attributes }}>
+          <a
+            class="tno-category-tile__link"
+            href="{{ collection.url }}"
+            aria-label="Shop {{ display_title }}"
+          >
+            <div class="tno-category-tile__media">
+              {% if tile_image %}
+                {{
+                  tile_image
+                  | image_url: width: 1600
+                  | image_tag:
+                    loading: 'lazy',
+                    sizes: '(min-width: 990px) 50vw, 100vw',
+                    class: 'tno-category-tile__image',
+                    alt: display_title
+                }}
+              {% else %}
+                <div
+                  class="tno-category-tile__placeholder"
+                  role="img"
+                  aria-label="{{ display_title }}"
+                ></div>
+              {% endif %}
+            </div>
+
+            <div class="tno-category-tile__overlay">
+              <h3 class="tno-category-tile__title">{{ display_title | upcase }}</h3>
+              {% if block_subtitle %}
+                <p class="tno-category-tile__subtitle">{{ block_subtitle }}</p>
+              {% endif %}
+              <span class="tno-category-tile__cta">Shop {{ display_title }}</span>
+            </div>
+          </a>
+        </article>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "TNO Category Grid",
+  "tag": "section",
+  "class": "tno-category-grid-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Categories"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Image aspect ratio",
+      "default": "4_5",
+      "options": [
+        { "value": "4_5", "label": "4:5 (tall)" },
+        { "value": "16_9", "label": "16:9 (wide)" }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Category tile",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "custom_label",
+          "label": "Custom label (optional)",
+          "info": "Overrides the collection title"
+        },
+        {
+          "type": "text",
+          "id": "custom_subtitle",
+          "label": "Custom subtitle (optional)",
+          "info": "If empty, uses metafield custom.subtitle or 'ENTER SIMULATION'"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TNO Category Grid",
+      "category": "Image"
+    }
+  ]
+}
+{% endschema %}
