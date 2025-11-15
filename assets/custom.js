@@ -473,3 +473,210 @@ function initAtcTracking() {
     );
   });
 }
+
+/* ==========================================================================
+   10) MOBILE DRILLDOWN NAVIGATION (Digitec-style)
+   Purpose: Slide-in panel navigation for mobile menu.
+   Behavior:
+   - Chevron buttons open child panels (slide in from right).
+   - Back buttons return to parent panels (slide back from left).
+   - Root panel slides left when child is active, creating depth perception.
+   - Focus management ensures accessibility.
+   - Supports multiple nesting levels.
+   ========================================================================== */
+function initMobileDrilldown() {
+  const mobileMenu = document.getElementById('mobile-menu');
+  if (!mobileMenu) {
+    return;
+  }
+
+  const rootPanel = mobileMenu.querySelector('.tno-mobile-panel.is-root');
+  if (!rootPanel) {
+    return;
+  }
+
+  // State tracking
+  let activePanel = rootPanel;
+  const panelStack = [rootPanel]; // Track navigation history
+
+  /**
+   * Activate a child panel (slide in from right)
+   * @param {HTMLElement} targetPanel - The panel to activate
+   * @param {HTMLElement} chevronButton - The button that triggered the action
+   */
+  const openPanel = (targetPanel, chevronButton) => {
+    if (!targetPanel || targetPanel === activePanel) {
+      return;
+    }
+
+    // Slide root panel to the left
+    if (activePanel === rootPanel) {
+      rootPanel.classList.add('is-hidden');
+    }
+
+    // Deactivate current panel
+    if (activePanel && activePanel !== rootPanel) {
+      activePanel.classList.remove('is-active');
+    }
+
+    // Activate target panel (slides in from right)
+    targetPanel.classList.add('is-active');
+    activePanel = targetPanel;
+    panelStack.push(targetPanel);
+
+    // Update chevron ARIA
+    if (chevronButton) {
+      chevronButton.setAttribute('aria-expanded', 'true');
+    }
+
+    // Focus management: move focus to back button or first link
+    setTimeout(() => {
+      const backButton = targetPanel.querySelector('.tno-mobile-back');
+      const firstLink = targetPanel.querySelector('.tno-mobile-link');
+      if (backButton) {
+        backButton.focus();
+      } else if (firstLink) {
+        firstLink.focus();
+      }
+    }, 50);
+  };
+
+  /**
+   * Return to parent panel (slide back from left)
+   * @param {HTMLElement} backButton - The back button that triggered the action
+   */
+  const closePanel = (backButton) => {
+    if (panelStack.length <= 1) {
+      return; // Already at root
+    }
+
+    // Get current and parent panel
+    const currentPanel = panelStack.pop();
+    const parentPanel = panelStack[panelStack.length - 1];
+
+    // Deactivate current panel (slides out to right)
+    currentPanel.classList.remove('is-active');
+
+    // Activate parent panel (slides in from left)
+    if (parentPanel === rootPanel) {
+      rootPanel.classList.remove('is-hidden');
+    } else {
+      parentPanel.classList.add('is-active');
+    }
+
+    activePanel = parentPanel;
+
+    // Update chevron ARIA (find the chevron that opened this panel)
+    const parentId = currentPanel.getAttribute('id');
+    const chevronButton = mobileMenu.querySelector(`[data-target="${parentId}"]`);
+    if (chevronButton) {
+      chevronButton.setAttribute('aria-expanded', 'false');
+    }
+
+    // Focus management: return focus to the chevron that opened this panel
+    setTimeout(() => {
+      if (chevronButton) {
+        chevronButton.focus();
+      }
+    }, 50);
+  };
+
+  /**
+   * Reset all panels to initial state (when menu closes)
+   */
+  const resetPanels = () => {
+    // Deactivate all child panels
+    const childPanels = mobileMenu.querySelectorAll('.tno-mobile-panel.is-child');
+    childPanels.forEach((panel) => {
+      panel.classList.remove('is-active');
+    });
+
+    // Reset root panel
+    rootPanel.classList.remove('is-hidden');
+    activePanel = rootPanel;
+    panelStack.length = 1; // Keep only root in stack
+
+    // Reset all chevron ARIA states
+    const chevrons = mobileMenu.querySelectorAll('.tno-nav-chevron');
+    chevrons.forEach((btn) => {
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  };
+
+  // Event delegation: chevron clicks (open child panel)
+  mobileMenu.addEventListener('click', (e) => {
+    const chevronButton = e.target.closest('.tno-nav-chevron');
+    if (chevronButton) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const targetId = chevronButton.getAttribute('data-target');
+      const targetPanel = document.getElementById(targetId);
+
+      if (targetPanel) {
+        openPanel(targetPanel, chevronButton);
+      }
+    }
+  });
+
+  // Event delegation: back button clicks (return to parent)
+  mobileMenu.addEventListener('click', (e) => {
+    const backButton = e.target.closest('.tno-mobile-back');
+    if (backButton) {
+      e.preventDefault();
+      e.stopPropagation();
+      closePanel(backButton);
+    }
+  });
+
+  // Keyboard support for chevron buttons (Enter/Space)
+  mobileMenu.addEventListener('keydown', (e) => {
+    const chevronButton = e.target.closest('.tno-nav-chevron');
+    if (chevronButton && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      chevronButton.click();
+    }
+
+    const backButton = e.target.closest('.tno-mobile-back');
+    if (backButton && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      backButton.click();
+    }
+  });
+
+  // Reset panels when menu closes
+  const menuToggle = document.getElementById('mobile-menu-toggle');
+  if (menuToggle) {
+    menuToggle.addEventListener('click', () => {
+      // Check if menu is closing (has is-active class)
+      if (mobileMenu.classList.contains('is-active')) {
+        // Menu is closing, reset panels after transition
+        setTimeout(resetPanels, 300);
+      }
+    });
+  }
+
+  // Also listen for direct menu state changes
+  const menuObserver = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.attributeName === 'class') {
+        const isActive = mobileMenu.classList.contains('is-active');
+        if (!isActive) {
+          resetPanels();
+        }
+      }
+    });
+  });
+
+  menuObserver.observe(mobileMenu, {
+    attributes: true,
+    attributeFilter: ['class'],
+  });
+}
+
+// Initialize drilldown when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initMobileDrilldown);
+} else {
+  initMobileDrilldown();
+}
