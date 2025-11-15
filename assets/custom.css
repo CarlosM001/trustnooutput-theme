@@ -1546,12 +1546,23 @@ html.tno-ab-continuous .tno-glitch-soft::after {
    MOBILE DRILLDOWN NAVIGATION (Digitec-style)
    Slide-in panels from right, slide-out to left on deeper navigation.
    Adjust transition timing in --tno-slide-duration variable.
+   
+   Layout structure:
+   - Fixed site header at top (z-index: 1000)
+   - Mobile menu starts below header at --tno-mobile-header-height
+   - Panels are absolutely positioned within menu overlay
+   - Back header is sticky within each panel at top: 0
    ========================================================================== */
+
+:root {
+  /* Mobile header height: topbar (60px) + search bar (60px) */
+  --tno-mobile-header-height: 120px;
+}
 
 /* Mobile Menu Overlay Container */
 .mobile-menu {
   position: fixed;
-  top: 120px; /* Start below mobile header (60px topbar + 60px search) */
+  top: var(--tno-mobile-header-height); /* Start below mobile header */
   left: 0;
   right: 0;
   bottom: 0;
@@ -1566,8 +1577,9 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 
 @supports (height: 100dvh) {
   .mobile-menu {
-    top: 120px;
+    top: var(--tno-mobile-header-height);
     bottom: 0;
+    /* Height automatically calculated by fixed positioning */
   }
 }
 
@@ -1625,21 +1637,30 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   min-height: 100%;
 }
 
-/* Back Header (sticky at top of child panels) */
+/* Back Header (sticky at top of child panels)
+   Why sticky here works:
+   - The panel (.tno-mobile-panel) is the scroll container with overflow-y: auto
+   - This back header is a child of the panel
+   - position: sticky; top: 0; makes it stick to the TOP of the panel's scroll area
+   - When user scrolls panel content, back header stays visible at panel top
+   - The panel itself already starts below the site header (at --tno-mobile-header-height)
+   - Result: back header appears directly below site header and stays there when scrolling
+*/
 .tno-mobile-back-header {
   position: sticky;
-  top: 0;
+  top: 0; /* Stick to top of panel scroll container */
   left: 0;
   right: 0;
-  z-index: 10;
+  z-index: 10; /* Above panel content */
   display: flex;
   align-items: center;
   gap: 0.75rem;
   padding: 1rem 1.25rem;
-  background: rgb(0 0 0 / 95%);
+  min-height: 60px; /* Consistent with site header row height */
+  background: rgb(0 0 0 / 98%); /* Solid background for sticky overlay */
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgb(255 255 255 / 8%);
-  margin-bottom: 1rem;
+  margin-bottom: 0; /* No margin so it sticks flush to top */
 }
 
 .tno-mobile-back {
@@ -1796,7 +1817,11 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     display: flex;
   }
 
-  /* Ensure header stays visible above mobile menu */
+  /* Ensure header stays visible above mobile menu with proper z-index layering:
+     - Site header (logo, search, icons): z-index 1000
+     - Mobile menu overlay: z-index 999 (below header)
+     - Back header inside panel: position sticky, stays at top of panel scroll
+     Result: site header always visible, back button appears directly below it */
   .site-header,
   .tno-header,
   .header--tno {
@@ -1805,6 +1830,16 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     left: 0;
     right: 0;
     z-index: 1000 !important; /* Above mobile menu (999) */
+  }
+
+  /* Adjust panel content padding to account for back header */
+  .tno-mobile-panel__content {
+    padding: 1.5rem 1.25rem; /* Reduced top padding since back header provides spacing */
+  }
+
+  /* Root panel (no back header) needs more top padding for first item visibility */
+  .tno-mobile-panel.is-root .tno-mobile-panel__content {
+    padding-top: 2rem;
   }
 }
 
