@@ -1560,11 +1560,17 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 }
 
 /* Mobile Menu Overlay Container
-   Z-index strategy:
-   - Mobile menu: 1001 (above header base)
-   - Back header inside menu: 1050 (above header children like search bar)
-   - Site header container: 1000 (visible but doesn't block menu clicks)
-   Result: Header visible, back button clickable */
+   CORRECTED Z-index strategy:
+   - Site header container: z-index 1100 (always on top, fully visible)
+   - Mobile menu overlay: z-index 999 (below header, content starts at 120px)
+   - Back header inside menu: z-index 1050 (below site header but above menu bg)
+   
+   Why this works:
+   - Header stays fully visible with search bar accessible (z: 1100)
+   - Menu starts BELOW header visually (top: 120px) so no visual overlap
+   - Back button has z: 1050, high enough to be clickable in its area
+   - Header's footprint only covers top 120px, menu occupies space below
+   Result: Both header AND back button fully functional, no clipping */
 .mobile-menu {
   position: fixed;
   top: var(--tno-mobile-header-height); /* Start below mobile header */
@@ -1573,7 +1579,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   bottom: 0;
   background: rgb(0 0 0 / 98%);
   backdrop-filter: blur(20px);
-  z-index: 1001; /* Above header (1000) so menu content isn't blocked */
+  z-index: 999; /* Below header so search bar stays visible */
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -1651,17 +1657,18 @@ html.tno-ab-continuous .tno-glitch-soft::after {
    - The panel itself already starts below the site header (at --tno-mobile-header-height)
    - Result: back header appears directly below site header and stays there when scrolling
    
-   Z-index fix:
-   - z-index: 1050 ensures this sits ABOVE site header's children (search bar, etc.)
-   - pointer-events: auto ensures all clicks work on back button
-   - This prevents the fixed header from blocking interaction with back button
+   CORRECTED Z-index strategy:
+   - z-index: 1050 is below site header (1100) so header stays visible
+   - But above menu background (999) so back button is clickable
+   - pointer-events: auto ensures all clicks work within back header area
+   - Since menu starts at top: 120px, there's no physical overlap with header
 */
 .tno-mobile-back-header {
   position: sticky;
   top: 0; /* Stick to top of panel scroll container */
   left: 0;
   right: 0;
-  z-index: 1050; /* CRITICAL: Above site header children to ensure clickability */
+  z-index: 1050; /* Below site header (1100), above menu background (999) */
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -1831,18 +1838,22 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     display: flex;
   }
 
-  /* Z-index layering strategy for mobile (fixed in this update):
-     - Site header container: z-index 1000 (base layer, visible)
-     - Mobile menu overlay: z-index 1001 (above header base)
-     - Back header in menu: z-index 1050 (above header children like search)
+  /* FINAL Z-index layering strategy for mobile:
+     Layer stack (bottom to top):
+     1. Page content: z-index auto
+     2. Mobile menu overlay: z-index 999 (starts at top: 120px)
+     3. Back header in menu: z-index 1050 (sticky within menu)
+     4. Site header: z-index 1100 (fixed at top: 0, always visible)
      
-     Why this works:
-     - Header remains visible at top (fixed position)
-     - Menu overlay sits above header base but below is visually positioned below via top offset
-     - Back button has highest z-index so it's clickable even though header is fixed
-     - Header only blocks clicks in its own footprint (top 120px), menu starts below
+     How this prevents issues:
+     - Site header highest z-index = search bar never clipped/hidden
+     - Menu overlay below header but visually positioned below via top offset
+     - Back button z: 1050 works because it's in non-overlapping space (below 120px)
+     - No physical overlap: header occupies 0-120px, menu occupies 120px-100%
+     - Each interactive element only captures clicks in its own area
      
-     Result: Header visible, back button fully clickable, no overlap issues */
+     Result: Search bar fully visible and clickable, back button fully clickable,
+             no z-index fighting, clean visual hierarchy */
   .site-header,
   .tno-header,
   .header--tno {
@@ -1850,7 +1861,8 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000 !important; /* Base header layer */
+    z-index: 1100 !important; /* Highest layer - always visible with search bar */
+    overflow: visible; /* Ensure nothing gets clipped */
   }
 
   /* Adjust panel content padding to account for back header */
