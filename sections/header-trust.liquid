@@ -865,7 +865,7 @@
   </div>
 </header>
 
-{%- comment %} Mobile Menu Overlay – TNO header nav restructure {%- endcomment %}
+{%- comment %} Mobile Menu Overlay – Digitec-style drilldown {%- endcomment %}
 <div
   class="mobile-menu"
   id="mobile-menu"
@@ -875,59 +875,91 @@
   aria-hidden="true"
   tabindex="-1"
 >
-  <nav class="mobile-menu__nav">
-    {%- comment %} Use same menu as desktop for consistency {%- endcomment %}
-    {%- assign mobile_menu_handle = section.settings.main_menu | default: section.settings.menu -%}
-    {%- assign mobile_menu_ref = linklists[mobile_menu_handle] -%}
-    <ul>
-      {%- if mobile_menu_ref.links and mobile_menu_ref.links.size > 0 -%}
-        {% for link in mobile_menu_ref.links %}
-          <li class="mobile-menu__item">
-            {%- comment %} TNO: Normalized structure - ALL items use .mobile-menu__row {%- endcomment %}
-            <div class="mobile-menu__row">
-              <a href="{{ link.url }}" class="mobile-menu__link">{{ link.title }}</a>
+  {%- assign mobile_menu_handle = section.settings.main_menu | default: section.settings.menu -%}
+  {%- assign mobile_menu_ref = linklists[mobile_menu_handle] -%}
+
+  {%- comment %} Root panel (top-level navigation) {%- endcomment %}
+  <div class="tno-mobile-panel is-root is-active" id="tno-panel-root" data-panel="root">
+    <nav class="tno-mobile-panel__content">
+      <ul class="tno-mobile-list">
+        {%- if mobile_menu_ref.links and mobile_menu_ref.links.size > 0 -%}
+          {% for link in mobile_menu_ref.links %}
+            <li class="tno-mobile-item">
               {%- if link.links and link.links.size > 0 -%}
-                <button
-                  class="mobile-menu__toggle"
-                  aria-expanded="false"
-                  aria-controls="mobile-submenu-{{ forloop.index }}"
-                  aria-label="Toggle {{ link.title }} submenu"
-                  onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'); document.getElementById('mobile-submenu-{{ forloop.index }}').toggleAttribute('hidden');"
-                >
-                  <span class="mobile-menu__chevron">▾</span>
-                </button>
+                {%- comment %} Item with children: link + chevron {%- endcomment %}
+                <div class="tno-mobile-row">
+                  <a href="{{ link.url }}" class="tno-mobile-link">{{ link.title }}</a>
+                  <button
+                    class="tno-nav-chevron"
+                    data-target="tno-panel-{{ forloop.index }}"
+                    data-parent-title="{{ link.title | escape }}"
+                    aria-expanded="false"
+                    aria-label="Open {{ link.title }} submenu"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+              {%- else -%}
+                {%- comment %} Item without children: link only {%- endcomment %}
+                <a href="{{ link.url }}" class="tno-mobile-link">{{ link.title }}</a>
               {%- endif -%}
-            </div>
-            {%- if link.links and link.links.size > 0 -%}
-              <ul class="mobile-submenu" id="mobile-submenu-{{ forloop.index }}" hidden>
-                {%- for child in link.links -%}
-                  <li>
-                    <a href="{{ child.url }}" class="mobile-submenu__link">{{ child.title }}</a>
-                  </li>
-                {%- endfor -%}
-              </ul>
-            {%- endif -%}
+            </li>
+          {% endfor %}
+        {%- else -%}
+          {%- comment %} Fallback: Basic structure {%- endcomment %}
+          <li class="tno-mobile-item">
+            <a href="{{ routes.all_products_collection_url }}" class="tno-mobile-link">SHOP ALL</a>
           </li>
-        {% endfor %}
-      {%- else -%}
-        {%- comment %} Fallback: Basic product-type structure {%- endcomment %}
-        <li class="mobile-menu__item">
-          <a href="{{ routes.all_products_collection_url }}" class="mobile-menu__link">SHOP ALL</a>
-        </li>
-        <li class="mobile-menu__item">
-          <a href="{{ routes.collections_url }}/apparel" class="mobile-menu__link">APPAREL</a>
-        </li>
-        <li class="mobile-menu__item">
-          <a href="{{ routes.collections_url }}/accessories" class="mobile-menu__link"
-            >ACCESSORIES</a
-          >
-        </li>
-        <li class="mobile-menu__item">
-          <a href="{{ routes.collections_url }}" class="mobile-menu__link">COLLECTIONS</a>
-        </li>
+          <li class="tno-mobile-item">
+            <a href="{{ routes.collections_url }}/apparel" class="tno-mobile-link">APPAREL</a>
+          </li>
+          <li class="tno-mobile-item">
+            <a href="{{ routes.collections_url }}/accessories" class="tno-mobile-link">ACCESSORIES</a>
+          </li>
+          <li class="tno-mobile-item">
+            <a href="{{ routes.collections_url }}" class="tno-mobile-link">COLLECTIONS</a>
+          </li>
+        {%- endif -%}
+      </ul>
+    </nav>
+  </div>
+
+  {%- comment %} Child panels (submenus) {%- endcomment %}
+  {%- if mobile_menu_ref.links and mobile_menu_ref.links.size > 0 -%}
+    {% for link in mobile_menu_ref.links %}
+      {%- if link.links and link.links.size > 0 -%}
+        <div class="tno-mobile-panel is-child" id="tno-panel-{{ forloop.index }}" data-panel="child" data-parent="root">
+          {%- comment %} Sticky back header {%- endcomment %}
+          <div class="tno-mobile-back-header">
+            <button
+              class="tno-mobile-back"
+              data-back="tno-panel-root"
+              aria-label="Back to main menu"
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Back</span>
+            </button>
+            <span class="tno-mobile-back-title">{{ link.title }}</span>
+          </div>
+
+          {%- comment %} Child panel content {%- endcomment %}
+          <nav class="tno-mobile-panel__content">
+            <ul class="tno-mobile-list">
+              {%- for child in link.links -%}
+                <li class="tno-mobile-item">
+                  <a href="{{ child.url }}" class="tno-mobile-link">{{ child.title }}</a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </nav>
+        </div>
       {%- endif -%}
-    </ul>
-  </nav>
+    {% endfor %}
+  {%- endif -%}
 </div>
 
 {%- comment -%} Inline script removed; logic now resides in assets/header.js {%- endcomment -%}
