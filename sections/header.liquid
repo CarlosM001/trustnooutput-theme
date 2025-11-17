@@ -355,6 +355,21 @@
   -%}
 {%- endif -%}
 
+{%- comment -%} Bottom sticky tab bar for mobile (< 960px) {%- endcomment -%}
+{% render 'tno-bottom-tabs' %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var menuBtn = document.getElementById('bottom-tab-menu');
+    var drawerSummary = document.querySelector('header-drawer summary.header__icon--menu');
+    if (menuBtn && drawerSummary) {
+      menuBtn.addEventListener('click', function () {
+        drawerSummary.click();
+      });
+    }
+  });
+</script>
+
 {% javascript %}
   class StickyHeader extends HTMLElement {
     constructor() {
@@ -639,6 +654,34 @@
       "id": "menu_color_scheme",
       "label": "t:sections.header.settings.menu_color_scheme.label",
       "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Promo (Mega Menu Highlight Column)"
+    },
+    {
+      "type": "collection",
+      "id": "promo_collection",
+      "label": "Featured promo collection",
+      "info": "Used for the 4th promo column in the mega menu."
+    },
+    {
+      "type": "text",
+      "id": "promo_tagline",
+      "label": "Promo tag",
+      "default": "SYSTEM UPDATE_01"
+    },
+    {
+      "type": "text",
+      "id": "promo_cta_label",
+      "label": "Promo CTA label",
+      "default": "ENTER SIMULATION"
+    },
+    {
+      "type": "url",
+      "id": "promo_cta_link",
+      "label": "Promo CTA link",
+      "default": "/collections/all"
     },
     {
       "type": "header",

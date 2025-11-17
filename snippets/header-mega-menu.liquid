@@ -30,43 +30,98 @@
                 class="mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup"
                 tabindex="-1"
               >
-                <ul
-                  class="mega-menu__list page-width{% if link.levels == 1 %} mega-menu__list--condensed{% endif %}"
-                  role="list"
-                >
-                  {%- for childlink in link.links -%}
-                    <li>
-                      <a
-                        id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
-                        href="{{ childlink.url }}"
-                        class="mega-menu__link mega-menu__link--level-2 link{% if childlink.current %} mega-menu__link--active{% endif %}"
-                        {% if childlink.current %}
-                          aria-current="page"
-                        {% endif %}
-                      >
-                        {{ childlink.title | escape }}
-                      </a>
-                      {%- if childlink.links != blank -%}
-                        <ul class="list-unstyled" role="list">
-                          {%- for grandchildlink in childlink.links -%}
-                            <li>
-                              <a
-                                id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
-                                href="{{ grandchildlink.url }}"
-                                class="mega-menu__link link{% if grandchildlink.current %} mega-menu__link--active{% endif %}"
-                                {% if grandchildlink.current %}
-                                  aria-current="page"
-                                {% endif %}
-                              >
-                                {{ grandchildlink.title | escape }}
-                              </a>
-                            </li>
-                          {%- endfor -%}
-                        </ul>
+                <div class="tno-mega-grid page-width">
+                  <ul
+                    class="mega-menu__list{% if link.levels == 1 %} mega-menu__list--condensed{% endif %}"
+                    role="list"
+                  >
+                    {%- for childlink in link.links -%}
+                      <li>
+                        <a
+                          id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
+                          href="{{ childlink.url }}"
+                          class="mega-menu__link mega-menu__link--level-2 link{% if childlink.current %} mega-menu__link--active{% endif %}"
+                          {% if childlink.current %}
+                            aria-current="page"
+                          {% endif %}
+                        >
+                          {{ childlink.title | escape }}
+                        </a>
+                        {%- if childlink.links != blank -%}
+                          <ul class="list-unstyled" role="list">
+                            {%- for grandchildlink in childlink.links -%}
+                              <li>
+                                <a
+                                  id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
+                                  href="{{ grandchildlink.url }}"
+                                  class="mega-menu__link link{% if grandchildlink.current %} mega-menu__link--active{% endif %}"
+                                  {% if grandchildlink.current %}
+                                    aria-current="page"
+                                  {% endif %}
+                                >
+                                  {{ grandchildlink.title | escape }}
+                                </a>
+                              </li>
+                            {%- endfor -%}
+                          </ul>
+                        {%- endif -%}
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+
+                  {%- comment -%}
+                    Featured Promo Column (Highlight Column)
+                    - Uses section settings if provided
+                    - Dynamic image fallback: collection.image -> first product image
+                    - Fallback placeholder: assets/tno-featured.png
+                  {%- endcomment -%}
+                  <div class="tno-mega__promo">
+                    {%- assign promo_img = null -%}
+                    {%- assign promo_url = section.settings.promo_cta_link
+                      | default: routes.all_products_collection_url
+                    -%}
+                    {%- assign promo_label = section.settings.promo_cta_label
+                      | default: 'ENTER SIMULATION'
+                    -%}
+                    {%- assign promo_tag = section.settings.promo_tagline
+                      | default: 'SYSTEM UPDATE_01'
+                    -%}
+                    {%- if section.settings.promo_collection != blank -%}
+                      {%- assign promo_col = collections[section.settings.promo_collection] -%}
+                      {%- if promo_col.image -%}
+                        {%- assign promo_img = promo_col.image -%}
+                        {%- assign promo_url = promo_col.url -%}
+                      {%- else -%}
+                        {%- for p in promo_col.products limit: 1 -%}
+                          {%- if p.featured_media and p.featured_media.preview_image -%}
+                            {%- assign promo_img = p.featured_media.preview_image -%}
+                            {%- break -%}
+                          {%- endif -%}
+                        {%- endfor -%}
+                        {%- assign promo_url = promo_col.url -%}
                       {%- endif -%}
-                    </li>
-                  {%- endfor -%}
-                </ul>
+                    {%- endif -%}
+
+                    <a href="{{ promo_url }}" class="tno-promo-card">
+                      <div class="tno-promo-card__media">
+                        {%- if promo_img -%}
+                          <img
+                            src="{{ promo_img | image_url: width: 600 }}"
+                            alt="{{ promo_tag | escape }}"
+                            loading="lazy"
+                            width="600"
+                            height="600"
+                          >
+                        {%- else -%}
+                          <div class="tno-promo-card__placeholder" aria-hidden="true"></div>
+                        {%- endif -%}
+                        <span class="tno-promo-card__tag">{{ promo_tag }}</span>
+                        <span aria-hidden="true" class="tno-promo-card__glitch"></span>
+                      </div>
+                      <span class="tno-promo-card__cta">{{ promo_label }}</span>
+                    </a>
+                  </div>
+                </div>
               </div>
             </details>
           </header-menu>

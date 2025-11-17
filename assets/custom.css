@@ -1924,6 +1924,190 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   }
 }
 
+/* =====================================================================
+   TRUST.NO.OUTPUT — Header/Mega Menu Enhancements
+   - Subtle glitch hover
+   - Dark premium mega panel
+   - Promo highlight column
+   - Header neon glow
+   - Z-index layering fixes
+   ===================================================================== */
+
+/* Part 1 — Subtle text-glitch hover (100–150ms) */
+.mega-menu__link:hover,
+.header__inline-menu a:hover {
+  animation: tno-text-glitch-quick 0.14s ease;
+  text-shadow:
+    1px 0 0 #0ff,
+    -1px 0 0 #f0f;
+}
+
+/* Apply same effect to TNO-specific mega links */
+.tno-mega__link:hover {
+  animation: tno-text-glitch-quick 0.14s ease;
+  text-shadow:
+    1px 0 0 #0ff,
+    -1px 0 0 #f0f;
+}
+
+@keyframes tno-text-glitch-quick {
+  0% {
+    transform: translate(0, 0) skew(0);
+    opacity: 0.95;
+  }
+
+  25% {
+    transform: translate(-1px, 0) skew(-0.3deg);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translate(1px, 0) skew(0.3deg);
+    opacity: 0.97;
+  }
+
+  100% {
+    transform: translate(0, 0) skew(0);
+    opacity: 1;
+  }
+}
+
+/* Part 2 — Premium dark mega panel */
+.mega-menu__content {
+  background: rgb(15 15 20 / 92%) !important;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgb(0 255 255 / 18%);
+  border-radius: 12px;
+  padding: 32px 40px;
+  margin-top: 12px; /* vertical offset below header */
+}
+
+/* Part 3 — Alignment & spacing inside mega menu */
+.mega-menu__list {
+  gap: 2rem 3rem;
+}
+
+.mega-menu__link--level-2 {
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  font-size: 0.9rem;
+}
+
+/* Layout wrapper to host links + promo column */
+.tno-mega-grid {
+  display: grid;
+  grid-template-columns: 3fr 1.4fr;
+  gap: 2rem 3rem;
+  align-items: start;
+}
+
+.tno-mega-grid .mega-menu__list {
+  grid-column: 1;
+}
+
+.tno-mega__promo {
+  grid-column: 2;
+}
+
+/* Part 4 — Promo column card */
+.tno-promo-card {
+  display: grid;
+  gap: 0.75rem;
+  color: #fff;
+  text-decoration: none;
+}
+
+.tno-promo-card__media {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  box-shadow: 0 0 0 1px rgb(0 255 255 / 18%);
+}
+
+.tno-promo-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.tno-promo-card__placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #111 0%, #1a1a22 100%);
+}
+
+/* Glitch overlay */
+.tno-promo-card__glitch {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgb(255 255 255 / 4%),
+    rgb(255 255 255 / 4%) 1px,
+    transparent 2px,
+    transparent 3px
+  );
+  mix-blend-mode: overlay;
+  opacity: 0.3;
+}
+
+.tno-promo-card__tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgb(0 0 0 / 70%);
+  border: 1px solid rgb(255 0 255 / 30%);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-family: var(--tno-mono, ui-monospace, monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+}
+
+.tno-promo-card__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgb(0 255 255 / 20%), rgb(255 0 255 / 20%));
+  color: #fff;
+  font-family: var(--tno-mono, ui-monospace, monospace);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  border: 1px solid rgb(0 255 255 / 25%);
+}
+
+.tno-promo-card:hover .tno-promo-card__cta {
+  border-color: rgb(255 0 255 / 35%);
+  box-shadow: 0 0 12px rgb(0 255 255 / 25%);
+}
+
+/* Part 5 — Neon glow under the header (subtle) */
+.section-header {
+  border-bottom: 1px solid rgb(0 255 255 / 35%);
+  box-shadow: 0 2px 8px rgb(0 255 255 / 25%);
+}
+
+/* Part 7 — Z-index layering and visibility fixes */
+.section-header {
+  position: sticky;
+  z-index: 1100;
+}
+
+.mega-menu__content {
+  z-index: 1050;
+}
+
+.menu-drawer {
+  z-index: 1000;
+}
+
 /* ==========================================================================
    MOBILE BOTTOM TAB BAR – App-like navigation
    Fixed to bottom of screen with 4 tabs: Home | Shop | Account | Menu
