@@ -661,147 +661,195 @@
       </div>
     </div>
 
-    {%- comment %} Desktop Navigation (Center) - Hidden on Mobile {%- endcomment %}
+    {%- comment %} Desktop Navigation (Center) - SHOP | SYSTEM | MANIFESTO {%- endcomment %}
     <nav class="header-nav tno-nav" role="navigation" aria-label="Main">
-      {%- assign menu_handle = section.settings.main_menu | default: section.settings.menu -%}
-      {%- assign menu_ref = linklists[menu_handle] -%}
-      {%- if menu_ref.links and menu_ref.links.size > 0 -%}
-        <ul class="header-nav__list tno-nav__list">
-          {% for link in menu_ref.links %}
-            {%- assign has_mega = false -%}
-            {%- assign mega_block = null -%}
-            {%- for block in section.blocks -%}
-              {%- if block.type == 'mega_menu' -%}
-                {%- assign block_title = block.settings.title_match | strip | downcase -%}
-                {%- assign link_title_down = link.title | strip | downcase -%}
-                {%- if block_title != blank and block_title == link_title_down -%}
-                  {%- assign has_mega = true -%}
-                  {%- assign mega_block = block -%}
-                {%- endif -%}
+      <ul class="header-nav__list tno-nav__list">
+        {%- comment %} SHOP with 4-column mega menu {%- endcomment %}
+        <li class="header-nav__item tno-nav__item tno-has-mega">
+          <a href="{{ routes.all_products_collection_url }}" class="header-nav__link tno-nav__link">
+            SHOP
+          </a>
+          <button
+            class="tno-nav__toggle"
+            aria-expanded="false"
+            aria-controls="mega-shop-{{ section.id }}"
+            aria-label="Toggle Shop menu"
+          ></button>
+          <div
+            class="tno-mega tno-mega--shop"
+            id="mega-shop-{{ section.id }}"
+            data-panel="mega"
+            tabindex="-1"
+          >
+            {%- comment %} Column 1: APPAREL {%- endcomment %}
+            <div class="tno-mega__col">
+              <p class="tno-mega__title">// APPAREL</p>
+              {%- assign apparel_menu = linklists[section.settings.apparel_menu] -%}
+              {%- if apparel_menu and apparel_menu.links and apparel_menu.links.size > 0 -%}
+                <ul class="tno-mega__list">
+                  {%- for link in apparel_menu.links -%}
+                    <li>
+                      <a class="tno-mega__link" href="{{ link.url }}">{{ link.title }}</a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- else -%}
+                {%- comment %} Fallback {%- endcomment %}
+                <ul class="tno-mega__list">
+                  <li>
+                    <a class="tno-mega__link" href="{{ routes.collections_url }}/t-shirts"
+                      >T-Shirts</a
+                    >
+                  </li>
+                  <li>
+                    <a class="tno-mega__link" href="{{ routes.collections_url }}/hoodies"
+                      >Hoodies</a
+                    >
+                  </li>
+                  <li>
+                    <a class="tno-mega__link" href="{{ routes.collections_url }}/jackets"
+                      >Jackets</a
+                    >
+                  </li>
+                </ul>
               {%- endif -%}
-            {%- endfor -%}
-            <li class="header-nav__item tno-nav__item {% if has_mega %}tno-has-mega{% elsif link.links.size > 0 %}tno-has-dropdown{% endif %}">
-              <a
-                href="{{ link.url }}"
-                class="header-nav__link tno-nav__link {% if link.active %}is-active{% endif %}"
-              >
-                {{ link.title }}
-              </a>
-              {%- if has_mega and mega_block -%}
-                <button
-                  class="tno-nav__toggle"
-                  aria-expanded="false"
-                  aria-controls="mega-{{ forloop.index }}-{{ section.id }}"
-                  aria-label="Toggle {{ link.title }} menu"
-                ></button>
-                <div
-                  class="tno-mega"
-                  id="mega-{{ forloop.index }}-{{ section.id }}"
-                  data-panel="mega"
-                  tabindex="-1"
-                >
-                  <div class="tno-mega__col">
-                    <p class="tno-mega__title">
-                      {{ mega_block.settings.col1_title | default: '// Shop by Category' }}
-                    </p>
-                    {%- assign col1_list = linklists[mega_block.settings.col1] -%}
-                    {%- if col1_list and col1_list.links and col1_list.links.size > 0 -%}
-                      <ul class="tno-mega__list">
-                        {%- for l in col1_list.links -%}
-                          <li>
-                            <a class="tno-mega__link" href="{{ l.url }}">{{ l.title }}</a>
-                          </li>
-                        {%- endfor -%}
-                      </ul>
-                    {%- endif -%}
-                  </div>
-                  <div class="tno-mega__col">
-                    <p class="tno-mega__title">
-                      {{ mega_block.settings.col2_title | default: '// Shop by Style' }}
-                    </p>
-                    {%- assign col2_list = linklists[mega_block.settings.col2] -%}
-                    {%- if col2_list and col2_list.links and col2_list.links.size > 0 -%}
-                      <ul class="tno-mega__list">
-                        {%- for l in col2_list.links -%}
-                          <li>
-                            <a class="tno-mega__link" href="{{ l.url }}">{{ l.title }}</a>
-                          </li>
-                        {%- endfor -%}
-                      </ul>
-                    {%- endif -%}
-                  </div>
-                  <div class="tno-mega__col">
-                    <p class="tno-mega__title">
-                      {{ mega_block.settings.col3_title | default: '// Drops' }}
-                    </p>
-                    {%- assign col3_list = linklists[mega_block.settings.col3] -%}
-                    {%- if col3_list and col3_list.links and col3_list.links.size > 0 -%}
-                      <ul class="tno-mega__list">
-                        {%- for l in col3_list.links -%}
-                          <li>
-                            <a class="tno-mega__link" href="{{ l.url }}">{{ l.title }}</a>
-                          </li>
-                        {%- endfor -%}
-                      </ul>
-                    {%- endif -%}
-                  </div>
-                </div>
-              {%- elsif link.links and link.links.size > 0 -%}
-                <button
-                  class="tno-nav__toggle"
-                  aria-expanded="false"
-                  aria-controls="dropdown-{{ forloop.index }}-{{ section.id }}"
-                  aria-label="Toggle {{ link.title }} menu"
-                ></button>
-                <div
-                  class="tno-dropdown"
-                  id="dropdown-{{ forloop.index }}-{{ section.id }}"
-                  data-panel="dropdown"
-                >
-                  <ul class="tno-dropdown__list">
-                    {%- for child in link.links -%}
-                      <li class="tno-dropdown__item">
-                        <a class="tno-dropdown__link" href="{{ child.url }}">{{ child.title }}</a>
-                      </li>
-                    {%- endfor -%}
+            </div>
+
+            {%- comment %} Column 2: ACCESSORIES {%- endcomment %}
+            <div class="tno-mega__col">
+              <p class="tno-mega__title">// ACCESSORIES</p>
+              {%- assign accessories_menu = linklists[section.settings.accessories_menu] -%}
+              {%- if accessories_menu
+                and accessories_menu.links
+                and accessories_menu.links.size > 0
+              -%}
+                <ul class="tno-mega__list">
+                  {%- for link in accessories_menu.links -%}
+                    <li>
+                      <a class="tno-mega__link" href="{{ link.url }}">{{ link.title }}</a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- else -%}
+                {%- comment %} Fallback {%- endcomment %}
+                <ul class="tno-mega__list">
+                  <li>
+                    <a class="tno-mega__link" href="{{ routes.collections_url }}/bags">Bags</a>
+                  </li>
+                  <li>
+                    <a class="tno-mega__link" href="{{ routes.collections_url }}/hats">Hats</a>
+                  </li>
+                  <li>
+                    <a class="tno-mega__link" href="{{ routes.collections_url }}/accessories"
+                      >All Accessories</a
+                    >
+                  </li>
+                </ul>
+              {%- endif -%}
+            </div>
+
+            {%- comment %} Column 3: PRINTS {%- endcomment %}
+            <div class="tno-mega__col">
+              <p class="tno-mega__title">// PRINTS</p>
+              {%- assign prints_menu = linklists[section.settings.prints_menu] -%}
+              {%- if prints_menu and prints_menu.links and prints_menu.links.size > 0 -%}
+                <ul class="tno-mega__list">
+                  {%- for link in prints_menu.links -%}
+                    <li>
+                      <a class="tno-mega__link" href="{{ link.url }}">{{ link.title }}</a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- else -%}
+                {%- comment %} Fallback {%- endcomment %}
+                <ul class="tno-mega__list">
+                  <li>
+                    <a class="tno-mega__link" href="{{ routes.collections_url }}/prints"
+                      >Art Prints</a
+                    >
+                  </li>
+                  <li>
+                    <a class="tno-mega__link" href="{{ routes.collections_url }}/posters"
+                      >Posters</a
+                    >
+                  </li>
+                </ul>
+              {%- endif -%}
+            </div>
+
+            {%- comment %} Column 4: FEATURED (merchandising tile or key links) {%- endcomment %}
+            <div class="tno-mega__col tno-mega__col--featured">
+              <p class="tno-mega__title">// FEATURED</p>
+              {%- if section.settings.featured_collection != blank -%}
+                {%- assign featured_col = collections[section.settings.featured_collection] -%}
+                {%- if featured_col.image -%}
+                  <a href="{{ featured_col.url }}" class="tno-mega__feature-tile">
+                    <img
+                      src="{{ featured_col.image | image_url: width: 300 }}"
+                      alt="{{ featured_col.title | escape }}"
+                      loading="lazy"
+                      width="300"
+                      height="300"
+                    >
+                    <span class="tno-mega__feature-label">{{ featured_col.title }}</span>
+                  </a>
+                {%- else -%}
+                  <ul class="tno-mega__list">
+                    <li>
+                      <a class="tno-mega__link" href="{{ featured_col.url }}">
+                        {{- featured_col.title -}}
+                      </a>
+                    </li>
                   </ul>
-                </div>
+                {%- endif -%}
+              {%- else -%}
+                {%- comment %} Fallback: Key merchandising links {%- endcomment %}
+                <ul class="tno-mega__list">
+                  <li>
+                    <a
+                      class="tno-mega__link tno-mega__link--highlight"
+                      href="{{ routes.collections_url }}/new-arrivals"
+                      >New Arrivals</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="tno-mega__link tno-mega__link--highlight"
+                      href="{{ routes.collections_url }}/bestsellers"
+                      >Bestsellers</a
+                    >
+                  </li>
+                  <li>
+                    <a class="tno-mega__link" href="{{ routes.all_products_collection_url }}"
+                      >Shop All</a
+                    >
+                  </li>
+                </ul>
               {%- endif -%}
-            </li>
-          {% endfor %}
-        </ul>
-      {%- else -%}
-        {%- comment %}
-          Fallback navigation: Product-Type Collections
-          APPAREL | ACCESSORIES | PRINTS | ALL
-        {%- endcomment %}
-        <ul class="header-nav__list tno-nav__list">
-          <li class="header-nav__item tno-nav__item">
-            <a href="{{ routes.collections_url }}/apparel" class="header-nav__link tno-nav__link"
-              >Apparel</a
-            >
-          </li>
-          <li class="header-nav__item tno-nav__item">
-            <a
-              href="{{ routes.collections_url }}/accessories"
-              class="header-nav__link tno-nav__link"
-              >Accessories</a
-            >
-          </li>
-          <li class="header-nav__item tno-nav__item">
-            <a href="{{ routes.collections_url }}/prints" class="header-nav__link tno-nav__link"
-              >Prints</a
-            >
-          </li>
-          <li class="header-nav__item tno-nav__item">
-            <a
-              href="{{ routes.all_products_collection_url }}"
-              class="header-nav__link tno-nav__link"
-              >All</a
-            >
-          </li>
-        </ul>
-      {%- endif -%}
+            </div>
+          </div>
+        </li>
+
+        {%- comment %} SYSTEM {%- endcomment %}
+        <li class="header-nav__item tno-nav__item">
+          <a
+            href="{{ pages.system.url | default: '/pages/system' }}"
+            class="header-nav__link tno-nav__link {% if request.page_handle == 'system' %}is-active{% endif %}"
+          >
+            SYSTEM
+          </a>
+        </li>
+
+        {%- comment %} MANIFESTO {%- endcomment %}
+        <li class="header-nav__item tno-nav__item">
+          <a
+            href="{{ pages.manifesto.url | default: '/pages/manifesto' }}"
+            class="header-nav__link tno-nav__link {% if template.name == 'page' and template.suffix == 'manifesto' %}is-active{% endif %}"
+          >
+            MANIFESTO
+          </a>
+        </li>
+      </ul>
     </nav>
 
     {%- comment %}
@@ -895,7 +943,7 @@
   aria-hidden="true"
   tabindex="-1"
 >
-  {%- assign mobile_menu_handle = section.settings.main_menu | default: section.settings.menu -%}
+  {%- assign mobile_menu_handle = section.settings.mobile_menu | default: 'main-menu' -%}
   {%- assign mobile_menu_ref = linklists[mobile_menu_handle] -%}
 
   {%- comment %} Root panel (top-level navigation) {%- endcomment %}
@@ -1003,6 +1051,66 @@
 
 {%- comment -%} Inline script removed; logic now resides in assets/header.js {%- endcomment -%}
 
+{%- comment %} Mobile Bottom Tab Bar – App-like navigation {%- endcomment %}
+<nav
+  class="tno-bottom-tabs"
+  id="bottom-tabs"
+  role="navigation"
+  aria-label="Mobile bottom navigation"
+>
+  <a
+    href="{{ routes.root_url }}"
+    class="tno-tab {% if template.name == 'index' %}is-active{% endif %}"
+    aria-label="Home"
+  >
+    <svg class="tno-tab__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M9 22V12h6v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="tno-tab__label">Home</span>
+  </a>
+
+  <a
+    href="{{ routes.all_products_collection_url }}"
+    class="tno-tab {% if template.name == 'collection' or template.name == 'product' %}is-active{% endif %}"
+    aria-label="Shop"
+  >
+    <svg class="tno-tab__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="9" cy="21" r="1" stroke="currentColor" stroke-width="2"/>
+      <circle cx="20" cy="21" r="1" stroke="currentColor" stroke-width="2"/>
+      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="tno-tab__label">Shop</span>
+  </a>
+
+  <a
+    href="{{ routes.account_url }}"
+    class="tno-tab {% if template.name == 'customers/account' or template.name == 'customers/login' %}is-active{% endif %}"
+    aria-label="Account"
+  >
+    <svg class="tno-tab__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+    </svg>
+    <span class="tno-tab__label">Account</span>
+  </a>
+
+  <button
+    class="tno-tab"
+    id="bottom-tab-menu"
+    aria-label="Menu"
+    aria-expanded="false"
+    aria-controls="mobile-menu"
+  >
+    <svg class="tno-tab__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="3" y1="12" x2="21" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="3" y1="18" x2="21" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <span class="tno-tab__label">Menu</span>
+  </button>
+</nav>
+
 {% schema %}
 {
   "name": "Header (TNO)",
@@ -1037,67 +1145,42 @@
     },
     {
       "type": "header",
-      "content": "Navigation"
+      "content": "SHOP Mega Menu (4 columns)"
     },
     {
       "type": "link_list",
-      "id": "main_menu",
-      "label": "Main menu",
-      "info": "Select the primary navigation menu"
+      "id": "apparel_menu",
+      "label": "APPAREL menu",
+      "info": "Links for the APPAREL column"
     },
     {
       "type": "link_list",
-      "id": "menu",
-      "label": "Menu",
+      "id": "accessories_menu",
+      "label": "ACCESSORIES menu",
+      "info": "Links for the ACCESSORIES column"
+    },
+    {
+      "type": "link_list",
+      "id": "prints_menu",
+      "label": "PRINTS menu",
+      "info": "Links for the PRINTS column"
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "FEATURED collection",
+      "info": "Featured collection with image tile. If no image, will show links instead."
+    },
+    {
+      "type": "header",
+      "content": "Mobile Navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "mobile_menu",
+      "label": "Mobile menu",
       "default": "main-menu",
-      "info": "Deprecated: use 'Main menu'. Left for backward compatibility."
-    }
-  ],
-  "blocks": [
-    {
-      "type": "mega_menu",
-      "name": "Mega Menu",
-      "settings": [
-        {
-          "type": "text",
-          "id": "title_match",
-          "label": "Title to match (top-level nav)",
-          "info": "Example: SHOP"
-        },
-        {
-          "type": "link_list",
-          "id": "col1",
-          "label": "Column 1 links"
-        },
-        {
-          "type": "text",
-          "id": "col1_title",
-          "label": "Column 1 title",
-          "default": "// Shop by Category"
-        },
-        {
-          "type": "link_list",
-          "id": "col2",
-          "label": "Column 2 links"
-        },
-        {
-          "type": "text",
-          "id": "col2_title",
-          "label": "Column 2 title",
-          "default": "// Shop by Style"
-        },
-        {
-          "type": "link_list",
-          "id": "col3",
-          "label": "Column 3 links"
-        },
-        {
-          "type": "text",
-          "id": "col3_title",
-          "label": "Column 3 title",
-          "default": "// Drops"
-        }
-      ]
+      "info": "Menu for mobile drilldown navigation"
     }
   ],
   "enabled_on": {

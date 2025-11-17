@@ -1283,7 +1283,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 
 /* TNO header nav restructure – END */
 
-/* TNO header nav restructure – Enhanced hover state */
+/* TNO header nav restructure – Enhanced hover state with subtle glitch */
 .tno-nav__link:hover {
   color: #0f6;
   text-shadow:
@@ -1291,6 +1291,27 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     -1px 0 #ff00ff80,
     1px 0 #00ffff80;
   border-bottom: 1px solid #0f6;
+  animation: tno-text-glitch 0.15s ease;
+}
+
+/* Subtle text glitch animation for desktop nav hover (100-150ms, small skew/translate) */
+@keyframes tno-text-glitch {
+  0%,
+  100% {
+    transform: translate(0, 0) skew(0deg);
+  }
+
+  25% {
+    transform: translate(-1px, 0) skew(-0.3deg);
+  }
+
+  50% {
+    transform: translate(1px, 0) skew(0.3deg);
+  }
+
+  75% {
+    transform: translate(0, -0.5px) skew(0.2deg);
+  }
 }
 
 /* Also target any nav anchors nested directly under .tno-nav for safety */
@@ -1374,6 +1395,12 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   gap: 1rem;
 }
 
+/* 4-column SHOP mega menu */
+.tno-mega--shop.is-open {
+  grid-template-columns: repeat(4, 1fr);
+  width: min(95vw, 1000px);
+}
+
 .tno-mega__col {
   min-width: 0;
 }
@@ -1409,6 +1436,68 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   color: var(--tno-accent);
   background: rgb(0 0 0 / 4%);
   text-decoration: underline;
+}
+
+/* Featured column with image tile */
+.tno-mega__col--featured {
+  display: flex;
+  flex-direction: column;
+}
+
+.tno-mega__feature-tile {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--tno-r-sm);
+  aspect-ratio: 1 / 1;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tno-mega__feature-tile:hover {
+  transform: scale(1.02);
+  box-shadow:
+    0 0 0 2px #0ff,
+    0 4px 12px rgb(0 255 255 / 20%);
+}
+
+.tno-mega__feature-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: all 0.3s ease;
+}
+
+.tno-mega__feature-tile:hover img {
+  filter: brightness(1.1);
+}
+
+.tno-mega__feature-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.75rem;
+  background: linear-gradient(to top, rgb(0 0 0 / 80%), transparent);
+  color: #fff;
+  font-family: var(--tno-mono, ui-monospace, monospace);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* Highlight links in featured column */
+.tno-mega__link--highlight {
+  font-weight: 600;
+  color: #0ff;
+}
+
+.tno-mega__link--highlight:hover {
+  color: #f0f;
+  background: rgb(0 255 255 / 8%);
 }
 
 /* Simple dropdown */
@@ -1832,6 +1921,130 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 @media (prefers-reduced-motion: reduce) {
   .tno-mobile-panel {
     transition: none !important;
+  }
+}
+
+/* ==========================================================================
+   MOBILE BOTTOM TAB BAR – App-like navigation
+   Fixed to bottom of screen with 4 tabs: Home | Shop | Account | Menu
+   ========================================================================== */
+.tno-bottom-tabs {
+  display: none; /* Hidden on desktop */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1050; /* Below header but above content */
+  background: rgb(10 10 10 / 95%);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgb(255 255 255 / 8%);
+  box-shadow: 0 -2px 12px rgb(0 0 0 / 20%);
+  padding: 0.5rem 0 calc(0.5rem + env(safe-area-inset-bottom));
+  justify-content: space-around;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (width <= 768px) {
+  .tno-bottom-tabs {
+    display: flex;
+  }
+
+  /* Add bottom padding to body to prevent content from being hidden behind tab bar */
+  body {
+    padding-bottom: calc(70px + env(safe-area-inset-bottom)) !important;
+  }
+}
+
+.tno-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  flex: 1;
+  max-width: 100px;
+  min-height: 48px;
+  padding: 0.375rem 0.5rem;
+  background: transparent;
+  border: none;
+  color: rgb(255 255 255 / 60%);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tno-tab:hover,
+.tno-tab:focus {
+  color: rgb(255 255 255 / 90%);
+  background: rgb(255 255 255 / 4%);
+  outline: none;
+}
+
+.tno-tab.is-active {
+  color: #0ff;
+}
+
+.tno-tab.is-active .tno-tab__icon {
+  transform: translateY(-2px);
+}
+
+.tno-tab__icon {
+  width: 24px;
+  height: 24px;
+  stroke: currentcolor;
+  fill: none;
+  stroke-width: 2;
+  transition: transform 0.2s ease;
+}
+
+.tno-tab__label {
+  font-family: var(--tno-mono, ui-monospace, monospace);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* Active state with subtle glow */
+.tno-tab.is-active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #0ff, transparent);
+  box-shadow: 0 0 8px rgb(0 255 255 / 50%);
+}
+
+/* Active state for Menu button when mobile menu is open */
+#bottom-tab-menu.is-active {
+  color: #f0f;
+}
+
+#bottom-tab-menu.is-active .tno-tab__icon {
+  transform: rotate(90deg) translateX(-2px);
+}
+
+/* Keep bottom tabs visible but change Menu button color when menu is open.
+   Alternative approach (commented): Hide bottom tabs completely when menu opens.
+   .mobile-menu.is-active ~ .tno-bottom-tabs { transform: translateY(100%); opacity: 0; }
+*/
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .tno-tab,
+  .tno-tab__icon,
+  .tno-bottom-tabs {
+    transition: none !important;
+  }
+
+  .tno-tab.is-active .tno-tab__icon {
+    transform: none;
   }
 }
 

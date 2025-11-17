@@ -23,6 +23,7 @@
   const nav = document.querySelector('.tno-nav');
   const mobileMenu = document.getElementById('mobile-menu');
   const mobileToggle = document.getElementById('mobile-menu-toggle');
+  const bottomTabMenu = document.getElementById('bottom-tab-menu');
 
   function initScrollState() {
     if (!header) {
@@ -132,6 +133,12 @@
     mobileMenu.setAttribute('aria-hidden', 'false');
     document.body.classList.add('tno-no-scroll');
 
+    // Update bottom tab bar menu button state
+    if (bottomTabMenu) {
+      bottomTabMenu.classList.add('is-active');
+      bottomTabMenu.setAttribute('aria-expanded', 'true');
+    }
+
     // Ensure menu starts at top on open to avoid first item appearing under header
     try {
       if (mobileMenu.scrollTop !== 0) {
@@ -173,6 +180,13 @@
     mobileToggle.setAttribute('aria-expanded', 'false');
     mobileMenu.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('tno-no-scroll');
+
+    // Update bottom tab bar menu button state
+    if (bottomTabMenu) {
+      bottomTabMenu.classList.remove('is-active');
+      bottomTabMenu.setAttribute('aria-expanded', 'false');
+    }
+
     if (STATE.mobileOutsideHandler) {
       document.removeEventListener('mousedown', STATE.mobileOutsideHandler);
       STATE.mobileOutsideHandler = null;
@@ -187,6 +201,13 @@
     mobileToggle.addEventListener('click', () => {
       mobileMenu.classList.contains('is-active') ? closeMobileMenu() : openMobileMenu();
     });
+
+    // Connect bottom tab bar Menu button to mobile menu
+    if (bottomTabMenu) {
+      bottomTabMenu.addEventListener('click', () => {
+        mobileMenu.classList.contains('is-active') ? closeMobileMenu() : openMobileMenu();
+      });
+    }
 
     const links = mobileMenu.querySelectorAll('.mobile-menu__link');
     links.forEach((l) => l.addEventListener('click', closeMobileMenu));
