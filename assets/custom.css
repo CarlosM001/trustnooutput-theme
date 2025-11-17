@@ -1285,12 +1285,12 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 
 /* TNO header nav restructure – Enhanced hover state with subtle glitch */
 .tno-nav__link:hover {
-  color: #0f6;
+  color: #0ff;
   text-shadow:
-    0 0 8px rgb(0 255 102 / 35%),
+    0 0 8px rgb(0 255 255 / 35%),
     -1px 0 #ff00ff80,
     1px 0 #00ffff80;
-  border-bottom: 1px solid #0f6;
+  border-bottom: 1px solid #0ff;
   animation: tno-text-glitch 0.15s ease;
 }
 
@@ -1324,9 +1324,9 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 }
 
 .header--tno .tno-nav a:hover {
-  color: #0f6;
+  color: #0ff;
   text-shadow:
-    0 0 8px rgb(0 255 102 / 35%),
+    0 0 8px rgb(0 255 255 / 35%),
     -1px 0 #ff00ff80,
     1px 0 #00ffff80;
 }
@@ -1376,42 +1376,42 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   transform: translateX(-50%);
   top: 100%;
   width: min(90vw, 820px);
-  background: rgb(255 255 255 / 95%);
+  background: rgb(20 20 20 / 75%);
   backdrop-filter: blur(8px);
-  border: 1px solid rgb(0 0 0 / 10%);
-  border-radius: var(--tno-r-md);
-  box-shadow: var(--tno-shadow-3);
-  padding: 1rem;
-  padding-top: 20px;
-  margin-top: 0;
+  border: 1px solid rgb(0 255 255 / 20%);
+  border-radius: 8px;
+  box-shadow: 0 4px 24px rgb(0 0 0 / 40%);
+  padding: 1.5rem;
+  margin-top: 12px;
   display: none;
   z-index: 9999;
   pointer-events: auto;
 }
 
 .tno-mega.is-open {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
 }
 
 /* 4-column SHOP mega menu */
 .tno-mega--shop.is-open {
-  grid-template-columns: repeat(4, 1fr);
   width: min(95vw, 1000px);
+  gap: 2.5rem;
 }
 
 .tno-mega__col {
+  flex: 1;
   min-width: 0;
 }
 
 .tno-mega__title {
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.75rem;
   font-family: var(--tno-mono, ui-monospace, monospace);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   letter-spacing: 0.12em;
-  color: #111;
-  opacity: 0.8;
+  color: rgb(0 255 255 / 80%);
+  text-transform: uppercase;
 }
 
 .tno-mega__list {
@@ -1423,19 +1423,23 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 }
 
 .tno-mega__link {
-  color: #111;
+  color: rgb(255 255 255 / 85%);
   text-decoration: none;
   display: block;
-  padding: 0.35rem 0.5rem;
-  border-radius: var(--tno-r-sm);
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
   cursor: pointer;
   pointer-events: auto;
+  transition: all 0.15s ease;
 }
 
 .tno-mega__link:hover {
-  color: var(--tno-accent);
-  background: rgb(0 0 0 / 4%);
-  text-decoration: underline;
+  color: #0ff;
+  background: rgb(0 255 255 / 8%);
+  text-shadow:
+    -2px 0 rgb(255 0 255 / 50%),
+    2px 0 rgb(0 255 255 / 50%);
+  animation: tno-glitch-link 0.14s ease;
 }
 
 /* Featured column with image tile */
@@ -1497,7 +1501,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 
 .tno-mega__link--highlight:hover {
   color: #f0f;
-  background: rgb(0 255 255 / 8%);
+  background: rgb(0 255 255 / 12%);
 }
 
 /* Simple dropdown */
@@ -1972,14 +1976,16 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   }
 }
 
-/* Part 2 — Premium dark mega panel */
-.mega-menu__content {
-  background: rgb(15 15 20 / 92%) !important;
-  backdrop-filter: blur(8px);
-  border: 1px solid rgb(0 255 255 / 18%);
-  border-radius: 12px;
-  padding: 32px 40px;
-  margin-top: 12px; /* vertical offset below header */
+/* Desktop-only mega menu refinements */
+@media (width >= 990px) {
+  .mega-menu__content {
+    background: rgb(20 20 20 / 75%) !important;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgb(0 255 255 / 20%);
+    border-radius: 8px;
+    padding: 2rem 2.5rem;
+    margin-top: 14px;
+  }
 }
 
 /* Part 3 — Alignment & spacing inside mega menu */
@@ -1995,18 +2001,26 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 
 /* Layout wrapper to host links + promo column */
 .tno-mega-grid {
-  display: grid;
-  grid-template-columns: 3fr 1.4fr;
-  gap: 2rem 3rem;
-  align-items: start;
+  display: flex;
+  align-items: flex-start;
+  gap: 2.5rem;
 }
 
 .tno-mega-grid .mega-menu__list {
-  grid-column: 1;
+  flex: 3;
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.tno-mega-grid .mega-menu__list > li {
+  flex: 1;
+  min-width: 0;
 }
 
 .tno-mega__promo {
-  grid-column: 2;
+  flex: 1.2;
+  min-width: 200px;
 }
 
 /* Part 4 — Promo column card */
@@ -2089,9 +2103,11 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 }
 
 /* Part 5 — Neon glow under the header (subtle) */
-.section-header {
-  border-bottom: 1px solid rgb(0 255 255 / 35%);
-  box-shadow: 0 2px 8px rgb(0 255 255 / 25%);
+@media (width >= 990px) {
+  .site-header,
+  .tno-header {
+    box-shadow: 0 2px 12px rgb(0 255 255 / 25%);
+  }
 }
 
 /* Part 7 — Z-index layering and visibility fixes */
@@ -2329,8 +2345,8 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 
 /* TNO header nav restructure – Search focus state */
 .tno-search:has(.tno-search__input:focus) {
-  border-color: #0f6;
-  box-shadow: 0 0 12px rgb(0 255 102 / 25%);
+  border-color: #0ff;
+  box-shadow: 0 0 12px rgb(0 255 255 / 35%);
 }
 
 .tno-search__button {
@@ -2339,13 +2355,14 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   padding: 0 10px;
   border: 0;
   border-radius: 999px;
-  background: #0f6;
-  color: #001b0d;
+  background: linear-gradient(135deg, #0ff, #0cc);
+  color: #000;
   font-weight: 800;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.2s ease;
 }
 
 .tno-search__button:hover {
