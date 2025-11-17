@@ -1072,7 +1072,7 @@
 
   <a
     href="{{ routes.all_products_collection_url }}"
-    class="tno-tab {% if template.name == 'collection' or template.name == 'product' %}is-active{% endif %}"
+    class="tno-tab tno-tab--shop {% if template.name == 'collection' or template.name == 'product' %}is-active{% endif %}"
     aria-label="Shop"
   >
     <svg class="tno-tab__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1081,6 +1081,9 @@
       <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
     <span class="tno-tab__label">Shop</span>
+    {% if cart != empty and cart.item_count > 0 %}
+      <span class="tno-tab__badge">{{ cart.item_count }}</span>
+    {% endif %}
   </a>
 
   <a

@@ -2173,6 +2173,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   cursor: pointer;
   transition: all 0.2s ease;
   -webkit-tap-highlight-color: transparent;
+  position: relative;
 }
 
 .tno-tab:hover,
@@ -2206,6 +2207,27 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   letter-spacing: 0.02em;
   text-transform: uppercase;
   line-height: 1;
+}
+
+/* Compact cart badge for Shop tab (mobile) */
+.tno-tab__badge {
+  position: absolute;
+  top: 4px;
+  right: 12px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 8px;
+  background: #f0f;
+  color: #000;
+  font-family: var(--tno-mono, ui-monospace, monospace);
+  font-size: 0.625rem;
+  font-weight: 700;
+  line-height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 8px rgb(255 0 255 / 50%);
 }
 
 /* Active state with subtle glow */
@@ -2245,6 +2267,42 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 
   .tno-tab.is-active .tno-tab__icon {
     transform: none;
+  }
+  
+  .tno-tab:hover,
+  .tno-tab:focus-visible {
+    animation: none !important;
+  }
+}
+
+/* Subtle glitch animation for mobile tab hover/focus */
+@keyframes tno-tab-glitch {
+  0% {
+    transform: translateX(0);
+    text-shadow: none;
+  }
+
+  40% {
+    transform: translateX(-1px);
+    text-shadow: -1px 0 rgb(255 0 255 / 53%), 1px 0 rgb(0 255 255 / 53%);
+  }
+
+  80% {
+    transform: translateX(1px);
+    text-shadow: 1px 0 rgb(255 0 255 / 33%), -1px 0 rgb(0 255 255 / 33%);
+  }
+
+  100% {
+    transform: translateX(0);
+    text-shadow: none;
+  }
+}
+
+@media (width <= 768px) {
+  .tno-tab:hover,
+  .tno-tab:focus-visible {
+    color: #0ff;
+    animation: tno-tab-glitch 140ms ease-out;
   }
 }
 
