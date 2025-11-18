@@ -32,9 +32,7 @@
         },
         "size_chart_WeLp9A": {
           "type": "size_chart",
-          "settings": {
-            "show_find_my_size": true
-          }
+          "settings": {}
         },
         "quantity_PM6FPf": {
           "type": "quantity",
@@ -43,9 +41,7 @@
         "buy_buttons_TfBUKX": {
           "type": "buy_buttons",
           "settings": {
-            "button_text": "ADD TO CART",
-            "show_dynamic_checkout": true,
-            "show_gift_card_recipient": false
+            "show_dynamic_checkout": true
           }
         },
         "trust_cluster_fDQ6eG": {
@@ -55,19 +51,17 @@
             "show_fit": true,
             "show_print": true,
             "show_fulfillment": true,
-            "show_care": false,
+            "show_care": true,
             "show_static_trust": true
           }
+        },
+        "delivery_4UbJwh": {
+          "type": "delivery",
+          "settings": {}
         },
         "description_dBjM93": {
           "type": "description",
           "settings": {}
-        },
-        "delivery_4UbJwh": {
-          "type": "delivery",
-          "settings": {
-            "payment_provider": "Klarna/Afterpay"
-          }
         },
         "sharing_fHVgkW": {
           "type": "sharing",
@@ -87,19 +81,16 @@
         "quantity_PM6FPf",
         "buy_buttons_TfBUKX",
         "trust_cluster_fDQ6eG",
-        "description_dBjM93",
         "delivery_4UbJwh",
+        "description_dBjM93",
         "sharing_fHVgkW",
         "related_products_jHF8W9"
       ],
       "name": "TNO Product Page",
       "settings": {
-        "enable_sticky_info": false,
+        "enable_sticky_info": true,
         "image_zoom": "lightbox",
         "color_scheme": "",
-        "show_story_section": true,
-        "show_specs_section": true,
-        "show_reviews_section": true,
         "padding_top": 36,
         "padding_bottom": 36
       }

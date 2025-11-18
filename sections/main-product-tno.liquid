@@ -467,14 +467,6 @@
               </div>
             {%- endif -%}
 
-            {%- comment -%} Weight (if available) {%- endcomment -%}
-            {%- if product.metafields.custom.weight.value != blank -%}
-              <div class="tno-spec__row">
-                <dt class="tno-spec__term">WEIGHT</dt>
-                <dd class="tno-spec__value">{{ product.metafields.custom.weight.value | escape }}</dd>
-              </div>
-            {%- endif -%}
-
             {%- comment -%} Fit {%- endcomment -%}
             {%- if product.metafields.custom.fit.value != blank -%}
               <div class="tno-spec__row">
