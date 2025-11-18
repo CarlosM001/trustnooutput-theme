@@ -1739,10 +1739,11 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   pointer-events: auto; /* Enable interaction when visible */
 }
 
-/* When child is active, push root panel to the left (Digitec depth effect) */
+/* When child is active, move root fully off-canvas to prevent artifacts */
 .tno-mobile-panel.is-root.is-hidden {
-  transform: translateX(-30%); /* Partial slide for depth perception */
-  opacity: 0.3; /* Dim for depth */
+  transform: translateX(-100%);
+  opacity: 1; /* Fully off-canvas, no dimming needed */
+  overflow: hidden; /* Hide root scrollbar while off-canvas */
   pointer-events: none; /* Disable clicks on background */
 }
 
