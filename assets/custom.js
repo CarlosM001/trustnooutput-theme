@@ -788,7 +788,7 @@ if (window.Shopify && window.Shopify.designMode) {
 
 /* ==========================================================================
    TNO HIGH-CONVERSION PDP - JavaScript Enhancements
-   
+
    Features:
    - Mobile sticky ATC bar (shows/hides based on scroll + primary CTA visibility)
    - Variant selection tracking for sticky bar
@@ -801,7 +801,7 @@ if (window.Shopify && window.Shopify.designMode) {
  * Handles sticky ATC bar, variant tracking, and modal triggers
  */
 function initHighConversionPDP() {
-  const pdpRoot = document.querySelector('.tno-pdp');
+  const pdpRoot = document.querySelector('.tno-product');
   if (!pdpRoot) {
     return; // Not on a PDP page
   }
@@ -820,6 +820,9 @@ function initHighConversionPDP() {
 
   // Modal triggers (placeholders for future integration)
   initModalTriggers();
+
+  // 3D model viewer (if present)
+  init3DViewer();
 }
 
 /**
@@ -829,7 +832,7 @@ function initHighConversionPDP() {
  */
 function initStickyATC() {
   const stickyBar = document.getElementById('tno-sticky-atc');
-  const primaryCTA = document.querySelector('.tno-pdp__add-to-cart');
+  const primaryCTA = document.querySelector('.tno-product__add-to-cart');
 
   if (!stickyBar || !primaryCTA) {
     return;
@@ -993,6 +996,45 @@ function initModalTriggers() {
 }
 
 /**
+ * 3D Model Viewer Toggle
+ * Shows/hides embedded 3D model iframe
+ */
+function init3DViewer() {
+  const trigger = document.querySelector('[data-3d-toggle]');
+  const closeBtn = document.querySelector('[data-3d-close]');
+  const container = document.querySelector('.tno-product__3d-container');
+  const iframe = document.querySelector('.tno-product__3d-iframe');
+
+  if (!trigger || !container || !iframe) {
+    return;
+  }
+
+  trigger.addEventListener('click', () => {
+    container.hidden = false;
+    iframe.focus();
+    // Prevent body scroll when 3D viewer is open
+    document.body.style.overflow = 'hidden';
+  });
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      container.hidden = true;
+      trigger.focus();
+      document.body.style.overflow = '';
+    });
+  }
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !container.hidden) {
+      container.hidden = true;
+      trigger.focus();
+      document.body.style.overflow = '';
+    }
+  });
+}
+
+/**
  * Respect prefers-reduced-motion
  * Disable smooth scroll if user prefers reduced motion
  */
@@ -1016,8 +1058,8 @@ if (window.Shopify && window.Shopify.designMode) {
         (e.detail &&
           e.detail.sectionId &&
           document.getElementById(`shopify-section-${e.detail.sectionId}`));
-      if (el && el.querySelector && el.querySelector('.tno-pdp')) {
-        const pdpRoot = el.querySelector('.tno-pdp');
+      if (el && el.querySelector && el.querySelector('.tno-product')) {
+        const pdpRoot = el.querySelector('.tno-product');
         if (pdpRoot) {
           pdpRoot.dataset.pdpInit = 'false'; // Allow re-init
         }

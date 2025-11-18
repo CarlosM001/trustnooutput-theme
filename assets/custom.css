@@ -3773,7 +3773,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 
 /* ==========================================================================
    TNO HIGH-CONVERSION PDP (Product Detail Page)
-   
+
    Architecture:
    - Desktop: 60/40 sticky-split layout (media left, info sticky right)
    - Mobile: Single-stream flow with sticky ATC bar
@@ -3800,7 +3800,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* --------------------------------------------------------------------------
    ABOVE THE FOLD: Sticky Split Layout
    -------------------------------------------------------------------------- */
-.tno-pdp__above-fold {
+.tno-product__above-fold {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--tno-pdp-gap);
@@ -3809,7 +3809,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 
 /* Desktop: 60/40 split with sticky right column */
 @media (width >= 990px) {
-  .tno-pdp__above-fold {
+  .tno-product__above-fold {
     grid-template-columns: 6fr 4fr;
     gap: 3rem;
     align-items: start;
@@ -3819,13 +3819,13 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* --------------------------------------------------------------------------
    Media Column (Left on Desktop)
    -------------------------------------------------------------------------- */
-.tno-pdp__media-column {
+.tno-product__media-column {
   position: relative;
 }
 
 /* Subtle glitch accent on media container (non-critical) */
 @media (width >= 990px) {
-  .tno-pdp__media-column::before {
+  .tno-product__media-column::before {
     content: '';
     position: absolute;
     inset: -2px;
@@ -3836,18 +3836,18 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     z-index: -1;
   }
 
-  .tno-pdp__media-column:hover::before {
+  .tno-product__media-column:hover::before {
     opacity: 1;
   }
 }
 
 /* Respect prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
-  .tno-pdp__media-column::before {
+  .tno-product__media-column::before {
     transition: none;
   }
 
-  .tno-pdp__media-column:hover::before {
+  .tno-product__media-column:hover::before {
     opacity: 0;
   }
 }
@@ -3855,13 +3855,13 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* --------------------------------------------------------------------------
    Info Column (Right on Desktop, Sticky)
    -------------------------------------------------------------------------- */
-.tno-pdp__info-column {
+.tno-product__info-column {
   position: relative;
 }
 
 /* Sticky behavior on desktop */
 @media (width >= 990px) {
-  .tno-pdp__info-column--sticky .tno-pdp__info-wrapper {
+  .tno-product__info-column--sticky .tno-product__info-wrapper {
     position: sticky;
     top: calc(var(--tno-mobile-header-height, 120px) + 2rem);
     max-height: calc(100vh - var(--tno-mobile-header-height, 120px) - 4rem);
@@ -3872,26 +3872,26 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     scrollbar-color: rgb(0 255 255 / 30%) rgb(10 10 10 / 50%);
   }
 
-  .tno-pdp__info-column--sticky .tno-pdp__info-wrapper::-webkit-scrollbar {
+  .tno-product__info-column--sticky .tno-product__info-wrapper::-webkit-scrollbar {
     width: 6px;
   }
 
-  .tno-pdp__info-column--sticky .tno-pdp__info-wrapper::-webkit-scrollbar-track {
+  .tno-product__info-column--sticky .tno-product__info-wrapper::-webkit-scrollbar-track {
     background: rgb(10 10 10 / 50%);
   }
 
-  .tno-pdp__info-column--sticky .tno-pdp__info-wrapper::-webkit-scrollbar-thumb {
+  .tno-product__info-column--sticky .tno-product__info-wrapper::-webkit-scrollbar-thumb {
     background: rgb(0 255 255 / 30%);
     border-radius: 3px;
   }
 }
 
-.tno-pdp__info-wrapper > * + * {
+.tno-product__info-wrapper > * + * {
   margin-top: 1.5rem;
 }
 
 @media (width <= 768px) {
-  .tno-pdp__info-wrapper > * + * {
+  .tno-product__info-wrapper > * + * {
     margin-top: 1.25rem;
   }
 }
@@ -3899,11 +3899,11 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* --------------------------------------------------------------------------
    1. Title + Subtitle Block
    -------------------------------------------------------------------------- */
-.tno-pdp__header {
+.tno-product__header {
   margin-bottom: 1rem;
 }
 
-.tno-pdp__title {
+.tno-product__title {
   font-family: var(--font-heading-family);
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 700;
@@ -3917,7 +3917,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   --glitch-intensity: 0;
 }
 
-.tno-pdp__title[data-glitch-text]::before {
+.tno-product__title[data-glitch-text]::before {
   content: attr(data-glitch-text);
   position: absolute;
   top: 0;
@@ -3934,11 +3934,11 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 }
 
 @media (hover: hover) {
-  .tno-pdp__title:hover {
+  .tno-product__title:hover {
     --glitch-intensity: 1;
   }
 
-  .tno-pdp__title:hover::before {
+  .tno-product__title:hover::before {
     animation-play-state: running;
   }
 }
@@ -3965,12 +3965,12 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 
 /* Disable glitch on reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .tno-pdp__title::before {
+  .tno-product__title::before {
     display: none;
   }
 }
 
-.tno-pdp__subtitle {
+.tno-product__subtitle {
   font-family: var(--font-mono, ui-monospace, monospace);
   font-size: 0.875rem;
   font-weight: 500;
@@ -3983,13 +3983,13 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* --------------------------------------------------------------------------
    2. Price Block
    -------------------------------------------------------------------------- */
-.tno-pdp__price {
+.tno-product__price {
   padding: 1rem 0;
   border-top: 1px solid rgb(255 255 255 / 10%);
   border-bottom: 1px solid rgb(255 255 255 / 10%);
 }
 
-.tno-pdp__price .price {
+.tno-product__price .price {
   font-size: 1.75rem;
   font-weight: 700;
 }
@@ -3997,37 +3997,37 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* --------------------------------------------------------------------------
    3. Review Snippet
    -------------------------------------------------------------------------- */
-.tno-pdp__reviews-snippet {
+.tno-product__reviews-snippet {
   padding: 0.75rem 0;
 }
 
-.tno-pdp__rating-wrapper {
+.tno-product__rating-wrapper {
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
 
-.tno-pdp__rating-stars {
+.tno-product__rating-stars {
   display: flex;
 }
 
-.tno-pdp__rating-link {
+.tno-product__rating-link {
   font-size: 0.875rem;
   color: var(--color-base-text);
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
-.tno-pdp__rating-link:hover {
+.tno-product__rating-link:hover {
   color: #0ff;
   text-decoration: underline;
 }
 
-.tno-pdp__rating-text {
+.tno-product__rating-text {
   font-family: var(--font-mono, ui-monospace, monospace);
 }
 
-.tno-pdp__write-review-link {
+.tno-product__write-review-link {
   font-family: var(--font-mono, ui-monospace, monospace);
   font-size: 0.875rem;
   color: rgb(0 255 255 / 80%);
@@ -4035,25 +4035,25 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   transition: color 0.2s ease;
 }
 
-.tno-pdp__write-review-link:hover {
+.tno-product__write-review-link:hover {
   color: #0ff;
 }
 
 /* --------------------------------------------------------------------------
    4. Variant Selectors
    -------------------------------------------------------------------------- */
-.tno-pdp__variants {
+.tno-product__variants {
   /* Inherits styles from component-product-variant-picker.css */
 }
 
 /* Ensure variant buttons meet accessibility requirements */
-.tno-pdp__variants fieldset {
+.tno-product__variants fieldset {
   border: none;
   padding: 0;
   margin: 0;
 }
 
-.tno-pdp__variants legend {
+.tno-product__variants legend {
   font-family: var(--font-mono, ui-monospace, monospace);
   font-size: 0.875rem;
   font-weight: 600;
@@ -4063,7 +4063,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 }
 
 /* Variant buttons must be ≥ 44x44px (WCAG) */
-.tno-pdp__variants input[type='radio'] + label {
+.tno-product__variants input[type='radio'] + label {
   min-width: 44px;
   min-height: 44px;
   display: inline-flex;
@@ -4076,18 +4076,18 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* --------------------------------------------------------------------------
    5. Sizing Section
    -------------------------------------------------------------------------- */
-.tno-pdp__sizing {
+.tno-product__sizing {
   padding: 1rem 0;
 }
 
-.tno-pdp__sizing-actions {
+.tno-product__sizing-actions {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
 }
 
-.tno-pdp__find-my-size-btn,
-.tno-pdp__size-chart-btn {
+.tno-product__find-my-size-btn,
+.tno-product__size-chart-btn {
   font-family: var(--font-mono, ui-monospace, monospace);
   font-size: 0.875rem;
   font-weight: 600;
@@ -4107,20 +4107,20 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   gap: 0.5rem;
 }
 
-.tno-pdp__find-my-size-btn:hover,
-.tno-pdp__size-chart-btn:hover {
+.tno-product__find-my-size-btn:hover,
+.tno-product__size-chart-btn:hover {
   background: rgb(0 255 255 / 10%);
   border-color: #0ff;
   transform: translateY(-2px);
 }
 
-.tno-pdp__find-my-size-btn:focus-visible,
-.tno-pdp__size-chart-btn:focus-visible {
+.tno-product__find-my-size-btn:focus-visible,
+.tno-product__size-chart-btn:focus-visible {
   outline: 2px solid #0ff;
   outline-offset: 2px;
 }
 
-.tno-pdp__sizing-icon {
+.tno-product__sizing-icon {
   width: 18px;
   height: 18px;
   fill: none;
@@ -4129,8 +4129,8 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tno-pdp__find-my-size-btn:hover,
-  .tno-pdp__size-chart-btn:hover {
+  .tno-product__find-my-size-btn:hover,
+  .tno-product__size-chart-btn:hover {
     transform: none;
   }
 }
@@ -4138,11 +4138,11 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* --------------------------------------------------------------------------
    6. Quantity Selector
    -------------------------------------------------------------------------- */
-.tno-pdp__quantity {
+.tno-product__quantity {
   /* Inherits from existing quantity component */
 }
 
-.tno-pdp__quantity-label {
+.tno-product__quantity-label {
   font-family: var(--font-mono, ui-monospace, monospace);
   font-size: 0.875rem;
   font-weight: 600;
@@ -4155,15 +4155,15 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* --------------------------------------------------------------------------
    7. Primary CTA (Add to Cart)
    -------------------------------------------------------------------------- */
-.tno-pdp__cta-block {
+.tno-product__cta-block {
   margin-top: 1.5rem;
 }
 
-.tno-pdp__primary-cta {
+.tno-product__primary-cta {
   margin-bottom: 1rem;
 }
 
-.tno-pdp__add-to-cart {
+.tno-product__add-to-cart {
   font-family: var(--font-mono, ui-monospace, monospace);
   font-size: 1rem;
   font-weight: 700;
@@ -4184,7 +4184,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   /* NO glitch effects on CTA per requirements */
 }
 
-.tno-pdp__add-to-cart::before {
+.tno-product__add-to-cart::before {
   content: '';
   position: absolute;
   top: 50%;
@@ -4200,53 +4200,53 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   pointer-events: none;
 }
 
-.tno-pdp__add-to-cart:hover:not(:disabled) {
+.tno-product__add-to-cart:hover:not(:disabled) {
   background: rgb(0 255 255 / 10%);
   border-color: #fff;
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgb(0 255 255 / 30%);
 }
 
-.tno-pdp__add-to-cart:hover:not(:disabled)::before {
+.tno-product__add-to-cart:hover:not(:disabled)::before {
   width: 300px;
   height: 300px;
 }
 
-.tno-pdp__add-to-cart:disabled {
+.tno-product__add-to-cart:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   border-color: rgb(255 255 255 / 30%);
 }
 
-.tno-pdp__add-to-cart:focus-visible {
+.tno-product__add-to-cart:focus-visible {
   outline: 2px solid #0ff;
   outline-offset: 4px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tno-pdp__add-to-cart,
-  .tno-pdp__add-to-cart::before {
+  .tno-product__add-to-cart,
+  .tno-product__add-to-cart::before {
     transition: none;
   }
 
-  .tno-pdp__add-to-cart:hover:not(:disabled) {
+  .tno-product__add-to-cart:hover:not(:disabled) {
     transform: none;
   }
 }
 
 /* Secondary CTA (Dynamic Checkout) */
-.tno-pdp__secondary-cta {
+.tno-product__secondary-cta {
   margin-top: 0.75rem;
 }
 
-.tno-pdp__secondary-cta .shopify-payment-button {
+.tno-product__secondary-cta .shopify-payment-button {
   /* Inherits Shopify styles */
 }
 
 /* --------------------------------------------------------------------------
    8. Trust Cluster (POD Transparency)
    -------------------------------------------------------------------------- */
-.tno-pdp__trust-cluster {
+.tno-product__trust-cluster {
   margin-top: 1.5rem;
   padding: 1.25rem;
   background: rgb(10 10 10 / 60%);
@@ -4255,7 +4255,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   backdrop-filter: blur(8px);
 }
 
-.tno-pdp__trust-list {
+.tno-product__trust-list {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -4264,7 +4264,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   gap: 0.75rem;
 }
 
-.tno-pdp__trust-item {
+.tno-product__trust-item {
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
@@ -4273,17 +4273,17 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   line-height: 1.5;
 }
 
-.tno-pdp__trust-icon {
+.tno-product__trust-icon {
   color: #0ff;
   flex-shrink: 0;
   margin-top: 0.125rem;
 }
 
-.tno-pdp__trust-text {
+.tno-product__trust-text {
   color: rgb(242 242 242 / 85%);
 }
 
-.tno-pdp__trust-text strong {
+.tno-product__trust-text strong {
   color: #fff;
   font-weight: 600;
 }
@@ -4291,13 +4291,13 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* --------------------------------------------------------------------------
    9. BNPL Line
    -------------------------------------------------------------------------- */
-.tno-pdp__bnpl {
+.tno-product__bnpl {
   margin-top: 1rem;
   padding: 0.75rem 0;
   border-top: 1px solid rgb(255 255 255 / 10%);
 }
 
-.tno-pdp__bnpl-text {
+.tno-product__bnpl-text {
   font-family: var(--font-mono, ui-monospace, monospace);
   font-size: 0.813rem;
   line-height: 1.5;
@@ -4305,7 +4305,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   margin: 0;
 }
 
-.tno-pdp__bnpl-text strong {
+.tno-product__bnpl-text strong {
   color: #fff;
   font-weight: 600;
 }
@@ -4313,18 +4313,18 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* --------------------------------------------------------------------------
    BELOW THE FOLD: Story + Spec + Reviews
    -------------------------------------------------------------------------- */
-.tno-pdp__below-fold {
+.tno-product__below-fold {
   max-width: 800px;
   margin: 0 auto;
   padding-top: var(--tno-pdp-section-spacing);
 }
 
-.tno-pdp__below-fold > * + * {
+.tno-product__below-fold > * + * {
   margin-top: var(--tno-pdp-section-spacing);
 }
 
 /* Section Title Pattern */
-.tno-pdp__section-title {
+.tno-product__section-title {
   font-family: var(--font-mono, ui-monospace, monospace);
   font-size: 1.25rem;
   font-weight: 700;
@@ -4339,7 +4339,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   position: relative;
 }
 
-.tno-pdp__section-title::after {
+.tno-product__section-title::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -4362,7 +4362,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tno-pdp__section-title::after {
+  .tno-product__section-title::after {
     animation: none;
     opacity: 0.5;
   }
@@ -4371,39 +4371,39 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* --------------------------------------------------------------------------
    Product Story Section
    -------------------------------------------------------------------------- */
-.tno-pdp__story {
+.tno-product__story {
   /* Container */
 }
 
-.tno-pdp__story-content {
+.tno-product__story-content {
   font-size: 1rem;
   line-height: 1.7;
   color: rgb(242 242 242 / 85%);
 }
 
-.tno-pdp__story-content p {
+.tno-product__story-content p {
   margin: 0 0 1rem;
 }
 
-.tno-pdp__story-content p:last-child {
+.tno-product__story-content p:last-child {
   margin-bottom: 0;
 }
 
 /* --------------------------------------------------------------------------
    Spec Sheet Section
    -------------------------------------------------------------------------- */
-.tno-pdp__specs {
+.tno-product__specs {
   /* Container */
 }
 
-.tno-pdp__specs-list {
+.tno-product__specs-list {
   display: grid;
   gap: 1rem;
   margin: 0;
   padding: 0;
 }
 
-.tno-pdp__spec-row {
+.tno-product__spec-row {
   display: grid;
   grid-template-columns: 140px 1fr;
   gap: 1.5rem;
@@ -4415,13 +4415,13 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 }
 
 @media (width <= 540px) {
-  .tno-pdp__spec-row {
+  .tno-product__spec-row {
     grid-template-columns: 1fr;
     gap: 0.5rem;
   }
 }
 
-.tno-pdp__spec-term {
+.tno-product__spec-term {
   font-family: var(--font-mono, ui-monospace, monospace);
   font-size: 0.813rem;
   font-weight: 700;
@@ -4431,7 +4431,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   margin: 0;
 }
 
-.tno-pdp__spec-value {
+.tno-product__spec-value {
   font-family: var(--font-body-family);
   font-size: 0.938rem;
   line-height: 1.6;
@@ -4442,11 +4442,11 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* --------------------------------------------------------------------------
    Reviews / UGC Section
    -------------------------------------------------------------------------- */
-.tno-pdp__reviews {
+.tno-product__reviews {
   /* Container */
 }
 
-.tno-pdp__reviews-placeholder {
+.tno-product__reviews-placeholder {
   padding: 2rem;
   background: rgb(10 10 10 / 30%);
   border: 1px dashed rgb(0 255 255 / 20%);
@@ -4454,7 +4454,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   text-align: center;
 }
 
-.tno-pdp__reviews-coming-soon {
+.tno-product__reviews-coming-soon {
   font-family: var(--font-mono, ui-monospace, monospace);
   font-size: 0.875rem;
   color: rgb(242 242 242 / 60%);
@@ -4464,7 +4464,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* --------------------------------------------------------------------------
    MOBILE STICKY ATC BAR
    -------------------------------------------------------------------------- */
-.tno-pdp__sticky-atc {
+.tno-product__sticky-atc {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -4478,31 +4478,31 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   padding: 1rem 0;
 }
 
-.tno-pdp__sticky-atc:not([hidden]) {
+.tno-product__sticky-atc:not([hidden]) {
   transform: translateY(0);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tno-pdp__sticky-atc {
+  .tno-product__sticky-atc {
     transition: none;
   }
 }
 
 /* Hide on desktop */
 @media (width >= 990px) {
-  .tno-pdp__sticky-atc {
+  .tno-product__sticky-atc {
     display: none !important;
   }
 }
 
-.tno-pdp__sticky-atc-inner {
+.tno-product__sticky-atc-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
 }
 
-.tno-pdp__sticky-atc-info {
+.tno-product__sticky-atc-info {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
@@ -4510,14 +4510,14 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   min-width: 0;
 }
 
-.tno-pdp__sticky-atc-price {
+.tno-product__sticky-atc-price {
   font-family: var(--font-mono, ui-monospace, monospace);
   font-size: 1.125rem;
   font-weight: 700;
   color: #fff;
 }
 
-.tno-pdp__sticky-atc-variant {
+.tno-product__sticky-atc-variant {
   font-family: var(--font-mono, ui-monospace, monospace);
   font-size: 0.813rem;
   color: rgb(242 242 242 / 70%);
@@ -4526,7 +4526,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   text-overflow: ellipsis;
 }
 
-.tno-pdp__sticky-atc-btn {
+.tno-product__sticky-atc-btn {
   font-family: var(--font-mono, ui-monospace, monospace);
   font-size: 0.938rem;
   font-weight: 700;
@@ -4573,11 +4573,117 @@ html {
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
-  .tno-pdp__add-to-cart {
+  .tno-product__add-to-cart {
     border-width: 3px;
   }
 
-  .tno-pdp__trust-cluster {
+  .tno-product__trust-cluster {
     border-width: 2px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3D Model Viewer
+   -------------------------------------------------------------------------- */
+.tno-product__3d-viewer {
+  margin-top: 1.5rem;
+}
+
+.tno-product__3d-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.75rem 1.25rem;
+  min-height: 44px;
+  min-width: 44px;
+  background: rgb(10 10 10 / 80%);
+  color: #0ff;
+  border: 1px solid rgb(0 255 255 / 30%);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tno-product__3d-trigger:hover {
+  background: rgb(0 255 255 / 10%);
+  border-color: #0ff;
+  color: #fff;
+}
+
+.tno-product__3d-trigger .icon {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tno-product__3d-container {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgb(0 0 0 / 95%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.tno-product__3d-container[hidden] {
+  display: none;
+}
+
+.tno-product__3d-iframe {
+  width: 100%;
+  height: 100%;
+  max-width: 1200px;
+  max-height: 80vh;
+  border: 1px solid rgb(0 255 255 / 30%);
+  border-radius: 4px;
+}
+
+.tno-product__3d-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 44px;
+  height: 44px;
+  padding: 0.5rem;
+  background: rgb(10 10 10 / 90%);
+  border: 1px solid rgb(255 255 255 / 20%);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tno-product__3d-close:hover {
+  background: rgb(255 0 255 / 20%);
+  border-color: #f0f;
+  transform: rotate(90deg);
+}
+
+.tno-product__3d-close .svg-wrapper {
+  display: flex;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #fff;
+}
+
+@media (width <= 768px) {
+  .tno-product__3d-container {
+    padding: 1rem;
+  }
+
+  .tno-product__3d-iframe {
+    max-height: 70vh;
   }
 }

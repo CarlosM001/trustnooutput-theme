@@ -1,0 +1,646 @@
+{% comment %}
+  TNO HIGH-CONVERSION PRODUCT DETAIL PAGE
+
+  Architecture:
+  - Desktop: 60/40 sticky split (media left, info sticky right)
+  - Mobile: Single stream with sticky ATC bar
+  - Below fold: Story + Spec + Reviews (single column)
+  - Glitch aesthetic: ONLY on non-critical elements
+  - Accessibility: WCAG 2.1 AA, keyboard nav, reduced motion support
+{% endcomment %}
+
+<product-info
+  id="MainProduct-{{ section.id }}"
+  class="tno-pdp section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}"
+  data-section="{{ section.id }}"
+  data-product-id="{{ product.id }}"
+  data-update-url="true"
+  data-url="{{ product.url }}"
+  {% if section.settings.image_zoom == 'hover' %}
+    data-zoom-on-hover
+  {% endif %}
+>
+  {{ 'section-main-product.css' | asset_url | stylesheet_tag }}
+  {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
+  {{ 'component-price.css' | asset_url | stylesheet_tag }}
+  {{ 'component-slider.css' | asset_url | stylesheet_tag }}
+  {{ 'component-rating.css' | asset_url | stylesheet_tag }}
+  {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
+
+  {% unless product.has_only_default_variant %}
+    {{ 'component-product-variant-picker.css' | asset_url | stylesheet_tag }}
+    {{ 'component-swatch-input.css' | asset_url | stylesheet_tag }}
+    {{ 'component-swatch.css' | asset_url | stylesheet_tag }}
+  {% endunless %}
+  {%- if product.quantity_price_breaks_configured? -%}
+    {{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
+  {%- endif -%}
+
+  {%- style -%}
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    }
+
+    @media screen and (min-width: 750px) {
+      .section-{{ section.id }}-padding {
+        padding-top: {{ section.settings.padding_top }}px;
+        padding-bottom: {{ section.settings.padding_bottom }}px;
+      }
+    }
+  {%- endstyle -%}
+
+  <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  {%- if product.quantity_price_breaks_configured? -%}
+    <script src="{{ 'show-more.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'price-per-item.js' | asset_url }}" defer="defer"></script>
+  {%- endif -%}
+
+  {% if section.settings.image_zoom == 'hover' %}
+    <script id="EnableZoomOnHover-main" src="{{ 'magnify.js' | asset_url }}" defer="defer"></script>
+  {% endif %}
+  {%- if request.design_mode -%}
+    <script src="{{ 'theme-editor.js' | asset_url }}" defer="defer"></script>
+  {%- endif -%}
+
+  {%- assign first_3d_model = product.media | where: 'media_type', 'model' | first -%}
+  {%- if first_3d_model -%}
+    {{ 'component-product-model.css' | asset_url | stylesheet_tag }}
+    <link
+      id="ModelViewerStyle"
+      rel="stylesheet"
+      href="https://cdn.shopify.com/shopifycloud/model-viewer-ui/assets/v1.0/model-viewer-ui.css"
+      media="print"
+      onload="this.media='all'"
+    >
+    <link
+      id="ModelViewerOverride"
+      rel="stylesheet"
+      href="{{ 'component-model-viewer-ui.css' | asset_url }}"
+      media="print"
+      onload="this.media='all'"
+    >
+  {%- endif -%}
+
+  {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
+
+  <div class="page-width">
+    {%- comment -%} ABOVE THE FOLD: Sticky Split Desktop / Single Stream Mobile {%- endcomment -%}
+    <div class="tno-pdp__above-fold">
+      {%- comment -%} LEFT: Media Gallery (60%) {%- endcomment -%}
+      <div class="tno-pdp__media-column">
+        {% render 'product-media-gallery', variant_images: variant_images %}
+      </div>
+
+      {%- comment -%} RIGHT: Info + CTA Block (40%, sticky on desktop) {%- endcomment -%}
+      <div class="tno-pdp__info-column{% if section.settings.enable_sticky_info %} tno-pdp__info-column--sticky{% endif %}">
+        <div class="tno-pdp__info-wrapper">
+          {%- assign product_form_id = 'product-form-' | append: section.id -%}
+
+          {%- comment -%} 1. TITLE + SUBTITLE {%- endcomment -%}
+          <div class="tno-pdp__header">
+            <h1 class="tno-pdp__title" data-glitch-text="{{ product.title | escape }}">
+              {{ product.title | escape }}
+            </h1>
+            {%- comment -%} Dynamic subtitle: metafield > first tag > fallback {%- endcomment -%}
+            {%- if product.metafields.custom.subtitle != blank -%}
+              <p class="tno-pdp__subtitle">{{ product.metafields.custom.subtitle | escape }}</p>
+            {%- elsif product.tags.size > 0 -%}
+              <p class="tno-pdp__subtitle">{{ product.tags.first | upcase }}</p>
+            {%- else -%}
+              <p class="tno-pdp__subtitle">PREMIUM APPAREL – TRUST.NO.OUTPUT</p>
+            {%- endif -%}
+          </div>
+
+          {%- comment -%} 2. PRICE BLOCK {%- endcomment -%}
+          <div class="tno-pdp__price" id="price-{{ section.id }}" role="status">
+            {%- render 'price',
+              product: product,
+              use_variant: true,
+              show_badges: true,
+              price_class: 'price--large'
+            -%}
+          </div>
+
+          {%- comment -%} 3. REVIEW SNIPPET PLACEHOLDER {%- endcomment -%}
+          <div class="tno-pdp__reviews-snippet">
+            {%- if product.metafields.reviews.rating.value != blank -%}
+              {% liquid
+                assign rating_decimal = 0
+                assign decimal = product.metafields.reviews.rating.value.rating | modulo: 1
+                if decimal >= 0.3 and decimal <= 0.7
+                  assign rating_decimal = 0.5
+                elsif decimal > 0.7
+                  assign rating_decimal = 1
+                endif
+              %}
+              <div class="tno-pdp__rating-wrapper">
+                <div
+                  class="tno-pdp__rating-stars"
+                  role="img"
+                  aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: product.metafields.reviews.rating.value, rating_max: product.metafields.reviews.rating.value.scale_max }}"
+                >
+                  <span
+                    aria-hidden="true"
+                    class="rating-star"
+                    style="--rating: {{ product.metafields.reviews.rating.value.rating | floor }}; --rating-max: {{ product.metafields.reviews.rating.value.scale_max }}; --rating-decimal: {{ rating_decimal }};"
+                  ></span>
+                </div>
+                <a href="#tno-pdp-reviews" class="tno-pdp__rating-link">
+                  <span class="tno-pdp__rating-text">
+                    {{ product.metafields.reviews.rating.value }} (
+                    {{- product.metafields.reviews.rating_count -}}
+                    )
+                  </span>
+                </a>
+              </div>
+            {%- else -%}
+              <a href="#tno-pdp-reviews" class="tno-pdp__write-review-link"> Write a review </a>
+            {%- endif -%}
+          </div>
+
+          {%- comment -%} 4. VARIANT SELECTORS {%- endcomment -%}
+          <div class="tno-pdp__variants">
+            {%
+              render 'product-variant-picker',
+              product: product,
+              block: section.blocks | where: 'type', 'variant_picker' | first,
+              product_form_id: product_form_id
+            %}
+          </div>
+
+          {%- comment -%} 5. SIZING SECTION {%- endcomment -%}
+          <div class="tno-pdp__sizing">
+            <div class="tno-pdp__sizing-actions">
+              {%- comment -%} TODO: Wire to AI sizing app {%- endcomment -%}
+              <button
+                type="button"
+                class="tno-pdp__find-my-size-btn"
+                data-modal-trigger="find-my-size"
+                aria-haspopup="dialog"
+              >
+                <svg
+                  class="tno-pdp__sizing-icon"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span>Find My Size</span>
+              </button>
+              <button
+                type="button"
+                class="tno-pdp__size-chart-btn"
+                data-modal-trigger="size-chart"
+                aria-haspopup="dialog"
+              >
+                Size Chart
+              </button>
+            </div>
+          </div>
+
+          {%- comment -%} 6. QUANTITY SELECTOR (from block if enabled) {%- endcomment -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'quantity_selector' -%}
+              <div class="tno-pdp__quantity">
+                {% comment %} Simplified quantity selector - full logic preserved from original {% endcomment %}
+                <label for="Quantity-{{ section.id }}" class="tno-pdp__quantity-label">
+                  {{ 'products.product.quantity.label' | t }}
+                </label>
+                <quantity-input
+                  class="quantity"
+                  data-url="{{ product.url }}"
+                  data-section="{{ section.id }}"
+                >
+                  <button class="quantity__button" name="minus" type="button">
+                    <span class="visually-hidden">Decrease quantity</span>
+                    <span class="svg-wrapper">{{- 'icon-minus.svg' | inline_asset_content -}}</span>
+                  </button>
+                  <input
+                    class="quantity__input"
+                    type="number"
+                    name="quantity"
+                    id="Quantity-{{ section.id }}"
+                    min="1"
+                    value="1"
+                    form="{{ product_form_id }}"
+                  >
+                  <button class="quantity__button" name="plus" type="button">
+                    <span class="visually-hidden">Increase quantity</span>
+                    <span class="svg-wrapper">{{- 'icon-plus.svg' | inline_asset_content -}}</span>
+                  </button>
+                </quantity-input>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- comment -%} 7. PRIMARY CTA + SECONDARY CTA {%- endcomment -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'buy_buttons' -%}
+              <div class="tno-pdp__cta-block">
+                {%- liquid
+                  assign gift_card_recipient_feature_active = false
+                  if block.settings.show_gift_card_recipient and product.gift_card?
+                    assign gift_card_recipient_feature_active = true
+                  endif
+
+                  assign show_dynamic_checkout = false
+                  if block.settings.show_dynamic_checkout and gift_card_recipient_feature_active == false
+                    assign show_dynamic_checkout = true
+                  endif
+                -%}
+
+                <product-form
+                  class="product-form"
+                  data-hide-errors="{{ gift_card_recipient_feature_active }}"
+                  data-section-id="{{ section.id }}"
+                >
+                  <div class="product-form__error-message-wrapper" role="alert" hidden>
+                    <span class="svg-wrapper">{{- 'icon-error.svg' | inline_asset_content -}}</span>
+                    <span class="product-form__error-message"></span>
+                  </div>
+
+                  {%- form 'product',
+                    product,
+                    id: product_form_id,
+                    class: 'form',
+                    novalidate: 'novalidate',
+                    data-type: 'add-to-cart-form'
+                  -%}
+                    <input
+                      type="hidden"
+                      name="id"
+                      value="{{ product.selected_or_first_available_variant.id }}"
+                      class="product-variant-id"
+                    >
+
+                    <div class="tno-pdp__primary-cta">
+                      <button
+                        id="ProductSubmitButton-{{ section.id }}"
+                        type="submit"
+                        name="add"
+                        class="tno-pdp__add-to-cart button button--full-width button--primary"
+                        {% if product.selected_or_first_available_variant.available == false %}
+                          disabled
+                        {% endif %}
+                      >
+                        <span>
+                          {%- if product.selected_or_first_available_variant.available == false -%}
+                            {{ 'products.product.sold_out' | t | upcase }}
+                          {%- else -%}
+                            ADD TO CART
+                          {%- endif -%}
+                        </span>
+                        {%- render 'loading-spinner' -%}
+                      </button>
+                    </div>
+
+                    {%- if show_dynamic_checkout -%}
+                      <div class="tno-pdp__secondary-cta">
+                        {{ form | payment_button }}
+                      </div>
+                    {%- endif -%}
+                  {%- endform -%}
+                </product-form>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- comment -%} 8. TRUST CLUSTER (POD transparency) {%- endcomment -%}
+          <div class="tno-pdp__trust-cluster">
+            <ul class="tno-pdp__trust-list">
+              <li class="tno-pdp__trust-item">
+                <span class="tno-pdp__trust-icon">●</span>
+                <span class="tno-pdp__trust-text">
+                  <strong>MADE-TO-ORDER</strong> • Printed on demand for reduced waste
+                </span>
+              </li>
+              <li class="tno-pdp__trust-item">
+                <span class="tno-pdp__trust-icon">●</span>
+                <span class="tno-pdp__trust-text">
+                  <strong>EST. DELIVERY:</strong> 7–14 days (production + shipping)
+                </span>
+              </li>
+              <li class="tno-pdp__trust-item">
+                <span class="tno-pdp__trust-icon">●</span>
+                <span class="tno-pdp__trust-text">
+                  <strong>30-DAY RETURNS</strong> on unworn items
+                </span>
+              </li>
+              <li class="tno-pdp__trust-item">
+                <span class="tno-pdp__trust-icon">●</span>
+                <span class="tno-pdp__trust-text">
+                  <strong>SECURE CHECKOUT</strong> • Encrypted payment
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          {%- comment -%} 9. BNPL LINE {%- endcomment -%}
+          <div class="tno-pdp__bnpl">
+            {%- assign bnpl_price = product.selected_or_first_available_variant.price
+              | divided_by: 4
+            -%}
+            <p class="tno-pdp__bnpl-text">
+              Or 4 interest-free payments of <strong>{{ bnpl_price | money }}</strong> with
+              Klarna/Afterpay
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} BELOW THE FOLD: Single Column Story + Spec + Reviews {%- endcomment -%}
+    <div class="tno-pdp__below-fold">
+      {%- comment -%} 1. PRODUCT STORY {%- endcomment -%}
+      {%- if product.description != blank -%}
+        <section class="tno-pdp__story" aria-labelledby="tno-pdp-story-heading">
+          <h2 id="tno-pdp-story-heading" class="tno-pdp__section-title">PRODUCT.STORY</h2>
+          <div class="tno-pdp__story-content rte">
+            {{ product.description }}
+          </div>
+        </section>
+      {%- endif -%}
+
+      {%- comment -%} 2. SPEC SHEET {%- endcomment -%}
+      <section class="tno-pdp__specs" aria-labelledby="tno-pdp-specs-heading">
+        <h2 id="tno-pdp-specs-heading" class="tno-pdp__section-title">SPECIFICATIONS</h2>
+        <dl class="tno-pdp__specs-list">
+          {%- comment -%} Pull from metafields where possible {%- endcomment -%}
+          {%- if product.metafields.custom.material != blank -%}
+            <div class="tno-pdp__spec-row">
+              <dt class="tno-pdp__spec-term">MATERIAL</dt>
+              <dd class="tno-pdp__spec-value">{{ product.metafields.custom.material }}</dd>
+            </div>
+          {%- else -%}
+            <div class="tno-pdp__spec-row">
+              <dt class="tno-pdp__spec-term">MATERIAL</dt>
+              <dd class="tno-pdp__spec-value">100% Cotton</dd>
+            </div>
+          {%- endif -%}
+
+          {%- if product.metafields.custom.weight != blank -%}
+            <div class="tno-pdp__spec-row">
+              <dt class="tno-pdp__spec-term">WEIGHT</dt>
+              <dd class="tno-pdp__spec-value">{{ product.metafields.custom.weight }}</dd>
+            </div>
+          {%- else -%}
+            <div class="tno-pdp__spec-row">
+              <dt class="tno-pdp__spec-term">WEIGHT</dt>
+              <dd class="tno-pdp__spec-value">280GSM Heavyweight</dd>
+            </div>
+          {%- endif -%}
+
+          {%- if product.metafields.custom.fit != blank -%}
+            <div class="tno-pdp__spec-row">
+              <dt class="tno-pdp__spec-term">FIT</dt>
+              <dd class="tno-pdp__spec-value">{{ product.metafields.custom.fit }}</dd>
+            </div>
+          {%- else -%}
+            <div class="tno-pdp__spec-row">
+              <dt class="tno-pdp__spec-term">FIT</dt>
+              <dd class="tno-pdp__spec-value">Oversized / Unisex</dd>
+            </div>
+          {%- endif -%}
+
+          {%- if product.metafields.custom.print_method != blank -%}
+            <div class="tno-pdp__spec-row">
+              <dt class="tno-pdp__spec-term">PRINT</dt>
+              <dd class="tno-pdp__spec-value">{{ product.metafields.custom.print_method }}</dd>
+            </div>
+          {%- else -%}
+            <div class="tno-pdp__spec-row">
+              <dt class="tno-pdp__spec-term">PRINT</dt>
+              <dd class="tno-pdp__spec-value">Direct-to-Garment (DTG)</dd>
+            </div>
+          {%- endif -%}
+
+          <div class="tno-pdp__spec-row">
+            <dt class="tno-pdp__spec-term">CARE</dt>
+            <dd class="tno-pdp__spec-value">
+              Machine wash cold • Tumble dry low • Do not iron print
+            </dd>
+          </div>
+        </dl>
+      </section>
+
+      {%- comment -%} 3. UGC / REVIEWS SECTION {%- endcomment -%}
+      <section
+        class="tno-pdp__reviews"
+        id="tno-pdp-reviews"
+        aria-labelledby="tno-pdp-reviews-heading"
+      >
+        <h2 id="tno-pdp-reviews-heading" class="tno-pdp__section-title">REVIEWS.UGC</h2>
+        <div class="tno-pdp__reviews-placeholder">
+          {%- comment -%} Placeholder for reviews app integration {%- endcomment -%}
+          <p class="tno-pdp__reviews-coming-soon">
+            Review integration placeholder • Connect your reviews app here
+          </p>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  {%- comment -%} MOBILE STICKY ATC BAR {%- endcomment -%}
+  <div class="tno-pdp__sticky-atc" id="tno-sticky-atc" hidden>
+    <div class="tno-pdp__sticky-atc-inner page-width">
+      <div class="tno-pdp__sticky-atc-info">
+        <span class="tno-pdp__sticky-atc-price">
+          {{ product.selected_or_first_available_variant.price | money }}
+        </span>
+        <span class="tno-pdp__sticky-atc-variant" id="tno-sticky-atc-variant">
+          {%- if product.has_only_default_variant -%}
+            {{ product.title | truncate: 30 }}
+          {%- else -%}
+            Select size
+          {%- endif -%}
+        </span>
+      </div>
+      <button
+        type="button"
+        class="tno-pdp__sticky-atc-btn button button--primary"
+        data-sticky-atc-trigger
+      >
+        ADD TO CART
+      </button>
+    </div>
+  </div>
+</product-info>
+
+{% schema %}
+{
+  "name": "TNO Product Page",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_info",
+      "default": true,
+      "label": "Enable sticky info column (desktop)"
+    },
+    {
+      "type": "select",
+      "id": "image_zoom",
+      "options": [
+        {
+          "value": "lightbox",
+          "label": "Lightbox"
+        },
+        {
+          "value": "hover",
+          "label": "Hover zoom"
+        },
+        {
+          "value": "none",
+          "label": "None"
+        }
+      ],
+      "default": "lightbox",
+      "label": "Image zoom"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1
+    },
+    {
+      "type": "reviews",
+      "name": "Review stars",
+      "limit": 1
+    },
+    {
+      "type": "variant_picker",
+      "name": "Variant picker",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "picker_type",
+          "options": [
+            {
+              "value": "dropdown",
+              "label": "Dropdown"
+            },
+            {
+              "value": "button",
+              "label": "Buttons"
+            }
+          ],
+          "default": "button",
+          "label": "Type"
+        }
+      ]
+    },
+    {
+      "type": "quantity",
+      "name": "Quantity selector",
+      "limit": 1
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Buy buttons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_dynamic_checkout",
+          "default": true,
+          "label": "Show dynamic checkout buttons"
+        }
+      ]
+    },
+    {
+      "type": "size_chart",
+      "name": "Size chart",
+      "limit": 1
+    },
+    {
+      "type": "trust_badges",
+      "name": "Trust badges",
+      "limit": 1
+    },
+    {
+      "type": "delivery",
+      "name": "Delivery estimate",
+      "limit": 1
+    },
+    {
+      "type": "description",
+      "name": "Product description",
+      "limit": 1
+    },
+    {
+      "type": "sharing",
+      "name": "Sharing",
+      "limit": 1
+    },
+    {
+      "type": "related_products",
+      "name": "Related products",
+      "limit": 1
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "TNO Product Page",
+      "blocks": [
+        {
+          "type": "variant_picker"
+        },
+        {
+          "type": "quantity"
+        },
+        {
+          "type": "buy_buttons"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
