@@ -545,31 +545,44 @@ function initMobileDrilldown() {
       return;
     }
 
-    // Step 1: Hide root panel first (let it slide fully off)
+    // Step 1: Make child accessible FIRST (but keep off-screen)
+    targetPanel.setAttribute('aria-hidden', 'false');
+    targetPanel.removeAttribute('inert');
+
+    // Step 2: Start hiding root (CSS slide + aria)
     if (activePanel === rootPanel) {
       const rootContent = rootPanel.querySelector('.tno-mobile-panel__content');
       if (rootContent) {
         rootScrollTop = rootContent.scrollTop;
       }
+      // Remove aria-hidden immediately to avoid focus trap
+      rootPanel.setAttribute('aria-hidden', 'true');
+      // Start CSS slide
       rootPanel.classList.add('is-hidden');
-      setHidden(rootPanel, true, 280); // Delay inert until animation completes
+      // Add inert after animation completes
+      setTimeout(() => {
+        try {
+          rootPanel.setAttribute('inert', '');
+        } catch {}
+      }, 300);
     }
 
-    // Step 2: After root starts sliding, activate child panel (delayed to ensure root clears)
+    // Step 3: Activate child slide AFTER root starts moving
     setTimeout(() => {
       if (!targetPanel) return;
       targetPanel.classList.add('is-active');
-      setHidden(targetPanel, false);
-
-      // Focus management after child is visible
-      const backButton = targetPanel.querySelector('.tno-mobile-back');
-      const firstLink = targetPanel.querySelector('.tno-mobile-link');
-      if (backButton) {
-        backButton.focus();
-      } else if (firstLink) {
-        firstLink.focus();
-      }
-    }, 50); // Small delay to let root start sliding before child appears
+      
+      // Step 4: Focus after child is fully visible
+      setTimeout(() => {
+        const backButton = targetPanel.querySelector('.tno-mobile-back');
+        const firstLink = targetPanel.querySelector('.tno-mobile-link');
+        if (backButton) {
+          backButton.focus();
+        } else if (firstLink) {
+          firstLink.focus();
+        }
+      }, 50);
+    }, 100); // Wait for root to start clearing
 
     // Deactivate previous child panel if any
     if (activePanel && activePanel !== rootPanel && activePanel !== targetPanel) {
@@ -599,32 +612,41 @@ function initMobileDrilldown() {
     const currentPanel = panelStack.pop();
     const parentPanel = panelStack[panelStack.length - 1];
 
-    // Determine the trigger in the parent before changing visibility
+    // Determine the trigger in the parent
     const parentId = currentPanel.getAttribute('id');
     const trigger = mobileMenu.querySelector(`[data-mobile-panel-target="${parentId}"]`);
 
-    // Ensure parent is visible and focusable before hiding current (prevents a11y warning)
+    // Make parent accessible immediately
     if (parentPanel === rootPanel) {
+      rootPanel.setAttribute('aria-hidden', 'false');
+      rootPanel.removeAttribute('inert');
       rootPanel.classList.remove('is-hidden');
-      setHidden(rootPanel, false);
       const rootContent = rootPanel.querySelector('.tno-mobile-panel__content');
       if (rootContent) {
         rootContent.scrollTop = rootScrollTop;
       }
     } else {
+      parentPanel.setAttribute('aria-hidden', 'false');
+      parentPanel.removeAttribute('inert');
       parentPanel.classList.add('is-active');
-      setHidden(parentPanel, false);
     }
 
-    // Move focus back to the original trigger immediately
-    if (trigger) {
-      trigger.setAttribute('aria-expanded', 'false');
-      trigger.focus();
-    }
+    // Focus trigger after parent starts appearing
+    setTimeout(() => {
+      if (trigger) {
+        trigger.setAttribute('aria-expanded', 'false');
+        trigger.focus();
+      }
+    }, 50);
 
-    // Now hide the current panel
+    // Hide current panel
     currentPanel.classList.remove('is-active');
-    setHidden(currentPanel, true, 250); // Delay inert until animation completes
+    currentPanel.setAttribute('aria-hidden', 'true');
+    setTimeout(() => {
+      try {
+        currentPanel.setAttribute('inert', '');
+      } catch {}
+    }, 300);
 
     activePanel = parentPanel;
   };
