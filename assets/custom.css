@@ -4777,8 +4777,12 @@ label[for*='Quantity'] {
   font-size: 0.875rem !important;
   font-weight: 400 !important;
   line-height: 1.5 !important;
-  color: rgb(255 255 255 / 85%) !important;
+  color: #fff !important; /* Force pure white - maximum visibility */
   margin: 0 !important;
+  background: transparent !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
 }
 
 /* More Payment Options Button - Consistent text style */
@@ -4946,11 +4950,15 @@ body .tno-spec__term,
 }
 
 body .tno-spec__value,
-#MainContent .tno-spec__value {
+#MainContent .tno-spec__value,
+dd.tno-spec__value {
   font-family: var(--font-body-family) !important;
   font-size: 0.875rem !important;
   font-weight: 400 !important;
-  color: rgb(255 255 255 / 85%) !important;
+  color: #fff !important; /* Force pure white */
+  background: transparent !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 /* Payment Options - Maximum override */
