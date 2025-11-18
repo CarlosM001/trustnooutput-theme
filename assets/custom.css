@@ -1716,7 +1716,8 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 
 /* Root panel starts visible */
 .tno-mobile-panel.is-root {
-  position: relative; /* Base layer for stacking context */
+  /* Must use absolute positioning for transform to work properly */
+  position: absolute;
   transform: translateX(0);
   opacity: 1;
   z-index: 1;
