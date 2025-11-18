@@ -963,23 +963,24 @@
           <a href="{{ routes.all_products_collection_url }}" class="tno-mobile-link">SHOP ALL</a>
         </li>
 
-        {%- comment %} APPAREL - drilldown only, no direct navigation {%- endcomment %}
+        {%- comment %} APPAREL - drilldown only, full-row trigger button {%- endcomment %}
         {%- if apparel_menu and apparel_menu.links.size > 0 -%}
           <li class="tno-mobile-item">
-            <div class="tno-mobile-row">
+            <button
+              type="button"
+              class="tno-mobile-row tno-mobile-drill-trigger"
+              data-mobile-panel-target="tno-panel-apparel"
+              aria-controls="tno-panel-apparel"
+              aria-expanded="false"
+              aria-label="Open APPAREL submenu"
+            >
               <span class="tno-mobile-link tno-mobile-link--drill">APPAREL</span>
-              <button
-                class="tno-nav-chevron"
-                data-target="tno-panel-apparel"
-                data-parent-title="APPAREL"
-                aria-expanded="false"
-                aria-label="Open APPAREL submenu"
-              >
+              <span class="tno-nav-chevron" aria-hidden="true">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-              </button>
-            </div>
+              </span>
+            </button>
           </li>
         {%- else -%}
           <li class="tno-mobile-item">
@@ -987,23 +988,24 @@
           </li>
         {%- endif -%}
 
-        {%- comment %} ACCESSORIES - drilldown only, no direct navigation {%- endcomment %}
+        {%- comment %} ACCESSORIES - drilldown only, full-row trigger button {%- endcomment %}
         {%- if accessories_menu and accessories_menu.links.size > 0 -%}
           <li class="tno-mobile-item">
-            <div class="tno-mobile-row">
+            <button
+              type="button"
+              class="tno-mobile-row tno-mobile-drill-trigger"
+              data-mobile-panel-target="tno-panel-accessories"
+              aria-controls="tno-panel-accessories"
+              aria-expanded="false"
+              aria-label="Open ACCESSORIES submenu"
+            >
               <span class="tno-mobile-link tno-mobile-link--drill">ACCESSORIES</span>
-              <button
-                class="tno-nav-chevron"
-                data-target="tno-panel-accessories"
-                data-parent-title="ACCESSORIES"
-                aria-expanded="false"
-                aria-label="Open ACCESSORIES submenu"
-              >
+              <span class="tno-nav-chevron" aria-hidden="true">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-              </button>
-            </div>
+              </span>
+            </button>
           </li>
         {%- else -%}
           <li class="tno-mobile-item">
@@ -1011,23 +1013,24 @@
           </li>
         {%- endif -%}
 
-        {%- comment %} PRINTS - drilldown only, no direct navigation {%- endcomment %}
+        {%- comment %} PRINTS - drilldown only, full-row trigger button {%- endcomment %}
         {%- if prints_menu and prints_menu.links.size > 0 -%}
           <li class="tno-mobile-item">
-            <div class="tno-mobile-row">
+            <button
+              type="button"
+              class="tno-mobile-row tno-mobile-drill-trigger"
+              data-mobile-panel-target="tno-panel-prints"
+              aria-controls="tno-panel-prints"
+              aria-expanded="false"
+              aria-label="Open PRINTS submenu"
+            >
               <span class="tno-mobile-link tno-mobile-link--drill">PRINTS</span>
-              <button
-                class="tno-nav-chevron"
-                data-target="tno-panel-prints"
-                data-parent-title="PRINTS"
-                aria-expanded="false"
-                aria-label="Open PRINTS submenu"
-              >
+              <span class="tno-nav-chevron" aria-hidden="true">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-              </button>
-            </div>
+              </span>
+            </button>
           </li>
         {%- else -%}
           <li class="tno-mobile-item">

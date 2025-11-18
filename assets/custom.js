@@ -498,19 +498,30 @@ function initMobileDrilldown() {
   // State tracking
   let activePanel = rootPanel;
   const panelStack = [rootPanel]; // Track navigation history
+  let rootScrollTop = 0; // Preserve scroll position when entering child panels
+
+  // Ensure ARIA visibility states
+  rootPanel.setAttribute('aria-hidden', 'false');
+  const childPanelsInit = mobileMenu.querySelectorAll('.tno-mobile-panel.is-child');
+  childPanelsInit.forEach((p) => p.setAttribute('aria-hidden', 'true'));
 
   /**
    * Activate a child panel (slide in from right)
    * @param {HTMLElement} targetPanel - The panel to activate
    * @param {HTMLElement} chevronButton - The button that triggered the action
    */
-  const openPanel = (targetPanel, chevronButton) => {
+  const openPanel = (targetPanel, triggerEl) => {
     if (!targetPanel || targetPanel === activePanel) {
       return;
     }
 
     // Slide root panel to the left
     if (activePanel === rootPanel) {
+      // Store current scroll before hiding
+      const rootContent = rootPanel.querySelector('.tno-mobile-panel__content');
+      if (rootContent) {
+        rootScrollTop = rootContent.scrollTop;
+      }
       rootPanel.classList.add('is-hidden');
     }
 
@@ -521,12 +532,14 @@ function initMobileDrilldown() {
 
     // Activate target panel (slides in from right)
     targetPanel.classList.add('is-active');
+    targetPanel.setAttribute('aria-hidden', 'false');
+    activePanel.setAttribute('aria-hidden', 'true');
     activePanel = targetPanel;
     panelStack.push(targetPanel);
 
-    // Update chevron ARIA
-    if (chevronButton) {
-      chevronButton.setAttribute('aria-expanded', 'true');
+    // Update trigger ARIA
+    if (triggerEl) {
+      triggerEl.setAttribute('aria-expanded', 'true');
     }
 
     // Focus management: move focus to back button or first link
@@ -556,27 +569,36 @@ function initMobileDrilldown() {
 
     // Deactivate current panel (slides out to right)
     currentPanel.classList.remove('is-active');
+    currentPanel.setAttribute('aria-hidden', 'true');
 
     // Activate parent panel (slides in from left)
     if (parentPanel === rootPanel) {
       rootPanel.classList.remove('is-hidden');
+      rootPanel.setAttribute('aria-hidden', 'false');
+      // Restore root scroll position
+      const rootContent = rootPanel.querySelector('.tno-mobile-panel__content');
+      if (rootContent) {
+        rootContent.scrollTop = rootScrollTop;
+      }
     } else {
       parentPanel.classList.add('is-active');
+      parentPanel.setAttribute('aria-hidden', 'false');
     }
 
     activePanel = parentPanel;
 
     // Update chevron ARIA (find the chevron that opened this panel)
     const parentId = currentPanel.getAttribute('id');
-    const chevronButton = mobileMenu.querySelector(`[data-target="${parentId}"]`);
-    if (chevronButton) {
-      chevronButton.setAttribute('aria-expanded', 'false');
+    // Find any trigger referencing this panel
+    const trigger = mobileMenu.querySelector(`[data-mobile-panel-target="${parentId}"]`);
+    if (trigger) {
+      trigger.setAttribute('aria-expanded', 'false');
     }
 
     // Focus management: return focus to the chevron that opened this panel
     setTimeout(() => {
-      if (chevronButton) {
-        chevronButton.focus();
+      if (trigger) {
+        trigger.focus();
       }
     }, 50);
   };
@@ -589,32 +611,31 @@ function initMobileDrilldown() {
     const childPanels = mobileMenu.querySelectorAll('.tno-mobile-panel.is-child');
     childPanels.forEach((panel) => {
       panel.classList.remove('is-active');
+      panel.setAttribute('aria-hidden', 'true');
     });
 
     // Reset root panel
     rootPanel.classList.remove('is-hidden');
+    rootPanel.setAttribute('aria-hidden', 'false');
     activePanel = rootPanel;
     panelStack.length = 1; // Keep only root in stack
 
     // Reset all chevron ARIA states
-    const chevrons = mobileMenu.querySelectorAll('.tno-nav-chevron');
-    chevrons.forEach((btn) => {
+    const triggers = mobileMenu.querySelectorAll('.tno-mobile-drill-trigger');
+    triggers.forEach((btn) => {
       btn.setAttribute('aria-expanded', 'false');
     });
   };
 
-  // Event delegation: chevron clicks (open child panel)
+  // Event delegation: full-row triggers (open child panel)
   mobileMenu.addEventListener('click', (e) => {
-    const chevronButton = e.target.closest('.tno-nav-chevron');
-    if (chevronButton) {
+    const trigger = e.target.closest('.tno-mobile-drill-trigger');
+    if (trigger) {
       e.preventDefault();
-      e.stopPropagation();
-
-      const targetId = chevronButton.getAttribute('data-target');
+      const targetId = trigger.getAttribute('data-mobile-panel-target');
       const targetPanel = document.getElementById(targetId);
-
       if (targetPanel) {
-        openPanel(targetPanel, chevronButton);
+        openPanel(targetPanel, trigger);
       }
     }
   });
@@ -631,16 +652,15 @@ function initMobileDrilldown() {
 
   // Keyboard support for chevron buttons (Enter/Space)
   mobileMenu.addEventListener('keydown', (e) => {
-    const chevronButton = e.target.closest('.tno-nav-chevron');
-    if (chevronButton && (e.key === 'Enter' || e.key === ' ')) {
+    const trigger = e.target.closest('.tno-mobile-drill-trigger');
+    if (trigger && (e.key === 'Enter' || e.key === ' ')) {
       e.preventDefault();
-      chevronButton.click();
+      trigger.click();
     }
-
     const backButton = e.target.closest('.tno-mobile-back');
     if (backButton && (e.key === 'Enter' || e.key === ' ')) {
       e.preventDefault();
-      backButton.click(); // remains functional; closePanel no longer needs parameter
+      backButton.click();
     }
   });
 
