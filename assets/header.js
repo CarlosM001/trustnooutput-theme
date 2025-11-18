@@ -17,6 +17,7 @@
     openPanel: null,
     openToggle: null,
     mobileOutsideHandler: null,
+    hoverCloseTimer: null,
   };
 
   const header = document.getElementById('site-header');
@@ -55,6 +56,28 @@
     STATE.openToggle.setAttribute('aria-expanded', 'false');
     STATE.openPanel = null;
     STATE.openToggle = null;
+    // Clear any pending hover close timer
+    if (STATE.hoverCloseTimer) {
+      clearTimeout(STATE.hoverCloseTimer);
+      STATE.hoverCloseTimer = null;
+    }
+  }
+
+  function scheduleCloseNavPanel(delay = 300) {
+    if (STATE.hoverCloseTimer) {
+      clearTimeout(STATE.hoverCloseTimer);
+    }
+    STATE.hoverCloseTimer = setTimeout(() => {
+      closeNavPanel();
+      STATE.hoverCloseTimer = null;
+    }, delay);
+  }
+
+  function cancelCloseNavPanel() {
+    if (STATE.hoverCloseTimer) {
+      clearTimeout(STATE.hoverCloseTimer);
+      STATE.hoverCloseTimer = null;
+    }
   }
 
   function initDesktopNavPanels() {
@@ -67,20 +90,17 @@
     }
 
     toggles.forEach((btn) => {
+      const panelId = btn.getAttribute('aria-controls');
+      const panel = document.getElementById(panelId);
+      if (!panel) {
+        return;
+      }
+
+      // Click handler (toggle open/close)
       btn.addEventListener('click', () => {
-        const panelId = btn.getAttribute('aria-controls');
-        const panel = document.getElementById(panelId);
-        if (!panel) {
-          return;
-        }
         const isOpen = btn.getAttribute('aria-expanded') === 'true';
         if (isOpen) {
-          btn.setAttribute('aria-expanded', 'false');
-          panel.classList.remove('is-open');
-          if (STATE.openPanel === panel) {
-            STATE.openPanel = null;
-            STATE.openToggle = null;
-          }
+          closeNavPanel();
         } else {
           closeNavPanel();
           btn.setAttribute('aria-expanded', 'true');
@@ -95,6 +115,37 @@
             panel.focus();
           }
         }
+      });
+
+      // Hover handlers with delay buffer
+      btn.addEventListener('mouseenter', () => {
+        cancelCloseNavPanel();
+        // Open on hover (desktop only, non-touch)
+        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+          const isOpen = btn.getAttribute('aria-expanded') === 'true';
+          if (!isOpen) {
+            closeNavPanel();
+            btn.setAttribute('aria-expanded', 'true');
+            panel.classList.add('is-open');
+            STATE.openPanel = panel;
+            STATE.openToggle = btn;
+          }
+        }
+      });
+
+      btn.addEventListener('mouseleave', () => {
+        // Schedule close with 300ms buffer
+        scheduleCloseNavPanel(300);
+      });
+
+      panel.addEventListener('mouseenter', () => {
+        // Cancel close when mouse enters panel
+        cancelCloseNavPanel();
+      });
+
+      panel.addEventListener('mouseleave', () => {
+        // Schedule close when mouse leaves panel
+        scheduleCloseNavPanel(300);
       });
     });
 

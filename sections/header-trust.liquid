@@ -949,7 +949,7 @@
   aria-hidden="true"
   tabindex="-1"
 >
-  {%- comment %} Load mega menu data sources (same as desktop SHOP) {%- endcomment -%}
+  {%- comment %} Load mega menu data sources (same as desktop SHOP) {%- endcomment %}
   {%- assign apparel_menu = linklists[section.settings.apparel_menu] -%}
   {%- assign accessories_menu = linklists[section.settings.accessories_menu] -%}
   {%- assign prints_menu = linklists[section.settings.prints_menu] -%}
@@ -976,7 +976,13 @@
             >
               <span class="tno-mobile-link tno-mobile-link--drill">APPAREL</span>
               <span class="tno-nav-chevron" aria-hidden="true">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </span>
@@ -1001,7 +1007,13 @@
             >
               <span class="tno-mobile-link tno-mobile-link--drill">ACCESSORIES</span>
               <span class="tno-nav-chevron" aria-hidden="true">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </span>
@@ -1009,7 +1021,9 @@
           </li>
         {%- else -%}
           <li class="tno-mobile-item">
-            <a href="{{ routes.collections_url }}/accessories" class="tno-mobile-link">ACCESSORIES</a>
+            <a href="{{ routes.collections_url }}/accessories" class="tno-mobile-link"
+              >ACCESSORIES</a
+            >
           </li>
         {%- endif -%}
 
@@ -1026,7 +1040,13 @@
             >
               <span class="tno-mobile-link tno-mobile-link--drill">PRINTS</span>
               <span class="tno-nav-chevron" aria-hidden="true">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </span>
@@ -1043,9 +1063,21 @@
           <div class="tno-mobile-featured">
             <span class="tno-mobile-link tno-mobile-link--section">FEATURED</span>
             <ul class="tno-mobile-sublist">
-              <li><a href="{{ routes.collections_url }}/new-arrivals" class="tno-mobile-sublink">NEW ARRIVALS</a></li>
-              <li><a href="{{ routes.collections_url }}/bestsellers" class="tno-mobile-sublink">BESTSELLERS</a></li>
-              <li><a href="{{ routes.all_products_collection_url }}" class="tno-mobile-sublink">SHOP ALL</a></li>
+              <li>
+                <a href="{{ routes.collections_url }}/new-arrivals" class="tno-mobile-sublink"
+                  >NEW ARRIVALS</a
+                >
+              </li>
+              <li>
+                <a href="{{ routes.collections_url }}/bestsellers" class="tno-mobile-sublink"
+                  >BESTSELLERS</a
+                >
+              </li>
+              <li>
+                <a href="{{ routes.all_products_collection_url }}" class="tno-mobile-sublink"
+                  >SHOP ALL</a
+                >
+              </li>
             </ul>
           </div>
         </li>
@@ -1055,12 +1087,20 @@
 
         {%- comment %} SYSTEM {%- endcomment %}
         <li class="tno-mobile-item">
-          <a href="{{ pages['system'].url | default: '/pages/system' }}" class="tno-mobile-link tno-mobile-link--secondary">SYSTEM</a>
+          <a
+            href="{{ pages['system'].url | default: '/pages/system' }}"
+            class="tno-mobile-link tno-mobile-link--secondary"
+            >SYSTEM</a
+          >
         </li>
 
         {%- comment %} MANIFESTO {%- endcomment %}
         <li class="tno-mobile-item">
-          <a href="{{ pages['manifesto'].url | default: '/pages/manifesto' }}" class="tno-mobile-link tno-mobile-link--secondary">MANIFESTO</a>
+          <a
+            href="{{ pages['manifesto'].url | default: '/pages/manifesto' }}"
+            class="tno-mobile-link tno-mobile-link--secondary"
+            >MANIFESTO</a
+          >
         </li>
       </ul>
     </nav>
@@ -1068,10 +1108,21 @@
 
   {%- comment %} Child panels: APPAREL submenu {%- endcomment %}
   {%- if apparel_menu and apparel_menu.links.size > 0 -%}
-    <div class="tno-mobile-panel is-child" id="tno-panel-apparel" data-panel="child" data-parent="root">
+    <div
+      class="tno-mobile-panel is-child"
+      id="tno-panel-apparel"
+      data-panel="child"
+      data-parent="root"
+    >
       <div class="tno-mobile-back-header">
         <button class="tno-mobile-back" data-back="tno-panel-root" aria-label="Back to main menu">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           <span>Back</span>
@@ -1092,10 +1143,21 @@
 
   {%- comment %} Child panels: ACCESSORIES submenu {%- endcomment %}
   {%- if accessories_menu and accessories_menu.links.size > 0 -%}
-    <div class="tno-mobile-panel is-child" id="tno-panel-accessories" data-panel="child" data-parent="root">
+    <div
+      class="tno-mobile-panel is-child"
+      id="tno-panel-accessories"
+      data-panel="child"
+      data-parent="root"
+    >
       <div class="tno-mobile-back-header">
         <button class="tno-mobile-back" data-back="tno-panel-root" aria-label="Back to main menu">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           <span>Back</span>
@@ -1116,10 +1178,21 @@
 
   {%- comment %} Child panels: PRINTS submenu {%- endcomment %}
   {%- if prints_menu and prints_menu.links.size > 0 -%}
-    <div class="tno-mobile-panel is-child" id="tno-panel-prints" data-panel="child" data-parent="root">
+    <div
+      class="tno-mobile-panel is-child"
+      id="tno-panel-prints"
+      data-panel="child"
+      data-parent="root"
+    >
       <div class="tno-mobile-back-header">
         <button class="tno-mobile-back" data-back="tno-panel-root" aria-label="Back to main menu">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           <span>Back</span>

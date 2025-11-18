@@ -47,9 +47,5 @@
       }
     }
   },
-  "order": [
-    "hero_trust_AxWTFW",
-    "product_grid_trust_1",
-    "system_update_trust_1"
-  ]
+  "order": ["hero_trust_AxWTFW", "product_grid_trust_1", "system_update_trust_1"]
 }

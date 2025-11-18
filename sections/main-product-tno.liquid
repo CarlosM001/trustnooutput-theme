@@ -146,12 +146,19 @@
                   </h1>
                   {%- comment -%} Subtitle from metafield (custom.subtitle) {%- endcomment -%}
                   {%- if product.metafields.custom.subtitle.value != blank -%}
-                    <p class="tno-product__subtitle">{{ product.metafields.custom.subtitle.value | escape }}</p>
+                    <p class="tno-product__subtitle">
+                      {{ product.metafields.custom.subtitle.value | escape }}
+                    </p>
                   {%- endif -%}
                 </div>
 
               {%- when 'price' -%}
-                <div class="tno-product__price" id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
+                <div
+                  class="tno-product__price"
+                  id="price-{{ section.id }}"
+                  role="status"
+                  {{ block.shopify_attributes }}
+                >
                   {%- render 'price',
                     product: product,
                     use_variant: true,
@@ -193,14 +200,15 @@
                       </a>
                     </div>
                   {%- else -%}
-                    <a href="#tno-product-reviews" class="tno-product__write-review-link"> Write a review </a>
+                    <a href="#tno-product-reviews" class="tno-product__write-review-link">
+                      Write a review
+                    </a>
                   {%- endif -%}
                 </div>
 
               {%- when 'variant_picker' -%}
                 <div class="tno-product__variants" {{ block.shopify_attributes }}>
-                  {%
-                    render 'product-variant-picker',
+                  {% render 'product-variant-picker',
                     product: product,
                     block: block,
                     product_form_id: product_form_id
@@ -251,7 +259,9 @@
                   >
                     <button class="quantity__button" name="minus" type="button">
                       <span class="visually-hidden">Decrease quantity</span>
-                      <span class="svg-wrapper">{{- 'icon-minus.svg' | inline_asset_content -}}</span>
+                      <span class="svg-wrapper">
+                        {{- 'icon-minus.svg' | inline_asset_content -}}
+                      </span>
                     </button>
                     <input
                       class="quantity__input"
@@ -264,7 +274,9 @@
                     >
                     <button class="quantity__button" name="plus" type="button">
                       <span class="visually-hidden">Increase quantity</span>
-                      <span class="svg-wrapper">{{- 'icon-plus.svg' | inline_asset_content -}}</span>
+                      <span class="svg-wrapper">
+                        {{- 'icon-plus.svg' | inline_asset_content -}}
+                      </span>
                     </button>
                   </quantity-input>
                 </div>
@@ -289,7 +301,9 @@
                     data-section-id="{{ section.id }}"
                   >
                     <div class="product-form__error-message-wrapper" role="alert" hidden>
-                      <span class="svg-wrapper">{{- 'icon-error.svg' | inline_asset_content -}}</span>
+                      <span class="svg-wrapper">
+                        {{- 'icon-error.svg' | inline_asset_content -}}
+                      </span>
                       <span class="product-form__error-message"></span>
                     </div>
 
@@ -318,7 +332,8 @@
                           {% endif %}
                         >
                           <span>
-                            {%- if product.selected_or_first_available_variant.available == false -%}
+                            {%- if product.selected_or_first_available_variant.available == false
+                            -%}
                               {{ 'products.product.sold_out' | t | upcase }}
                             {%- else -%}
                               {{ block.settings.button_text | default: 'ADD TO CART' }}
@@ -341,17 +356,22 @@
                 <div class="tno-product__trust-cluster" {{ block.shopify_attributes }}>
                   <ul class="tno-product__trust-list">
                     {%- comment -%} Material (from custom.material metafield) {%- endcomment -%}
-                    {%- if block.settings.show_material and product.metafields.custom.material.value != blank -%}
+                    {%- if block.settings.show_material
+                      and product.metafields.custom.material.value != blank
+                    -%}
                       <li class="tno-product__trust-item">
                         <span class="tno-product__trust-icon">●</span>
                         <span class="tno-product__trust-text">
-                          <strong>MATERIAL:</strong> {{ product.metafields.custom.material.value | escape }}
+                          <strong>MATERIAL:</strong>
+                          {{ product.metafields.custom.material.value | escape }}
                         </span>
                       </li>
                     {%- endif -%}
 
                     {%- comment -%} Fit (from custom.fit metafield) {%- endcomment -%}
-                    {%- if block.settings.show_fit and product.metafields.custom.fit.value != blank -%}
+                    {%- if block.settings.show_fit
+                      and product.metafields.custom.fit.value != blank
+                    -%}
                       <li class="tno-product__trust-item">
                         <span class="tno-product__trust-icon">●</span>
                         <span class="tno-product__trust-text">
@@ -361,31 +381,48 @@
                     {%- endif -%}
 
                     {%- comment -%} Print Method (from custom.print metafield) {%- endcomment -%}
-                    {%- if block.settings.show_print and product.metafields.custom.print.value != blank -%}
+                    {%- if block.settings.show_print
+                      and product.metafields.custom.print.value != blank
+                    -%}
                       <li class="tno-product__trust-item">
                         <span class="tno-product__trust-icon">●</span>
                         <span class="tno-product__trust-text">
-                          <strong>PRINT:</strong> {{ product.metafields.custom.print.value | escape }}
+                          <strong>PRINT:</strong>
+                          {{ product.metafields.custom.print.value | escape }}
                         </span>
                       </li>
                     {%- endif -%}
 
                     {%- comment -%} Fulfillment Info (from custom.fulfillment_info metafield) {%- endcomment -%}
-                    {%- if block.settings.show_fulfillment and product.metafields.custom.fulfillment_info.value != blank -%}
+                    {%- if block.settings.show_fulfillment
+                      and product.metafields.custom.fulfillment_info.value != blank
+                    -%}
                       <li class="tno-product__trust-item">
                         <span class="tno-product__trust-icon">●</span>
                         <span class="tno-product__trust-text">
-                          <strong>DELIVERY:</strong> {{ product.metafields.custom.fulfillment_info.value | escape | newline_to_br }}
+                          <strong>DELIVERY:</strong>
+                          {{
+                            product.metafields.custom.fulfillment_info.value
+                            | escape
+                            | newline_to_br
+                          }}
                         </span>
                       </li>
                     {%- endif -%}
 
                     {%- comment -%} Care Instructions (from custom.care_instructions metafield) {%- endcomment -%}
-                    {%- if block.settings.show_care and product.metafields.custom.care_instructions.value != blank -%}
+                    {%- if block.settings.show_care
+                      and product.metafields.custom.care_instructions.value != blank
+                    -%}
                       <li class="tno-product__trust-item">
                         <span class="tno-product__trust-icon">●</span>
                         <span class="tno-product__trust-text">
-                          <strong>CARE:</strong> {{ product.metafields.custom.care_instructions.value | escape | newline_to_br }}
+                          <strong>CARE:</strong>
+                          {{
+                            product.metafields.custom.care_instructions.value
+                            | escape
+                            | newline_to_br
+                          }}
                         </span>
                       </li>
                     {%- endif -%}
@@ -435,7 +472,6 @@
                 <div class="tno-product__app-block" {{ block.shopify_attributes }}>
                   {% render block %}
                 </div>
-
             {%- endcase -%}
           {%- endfor -%}
         </div>
@@ -463,7 +499,9 @@
             {%- if product.metafields.custom.material.value != blank -%}
               <div class="tno-spec__row">
                 <dt class="tno-spec__term">MATERIAL</dt>
-                <dd class="tno-spec__value">{{ product.metafields.custom.material.value | escape }}</dd>
+                <dd class="tno-spec__value">
+                  {{ product.metafields.custom.material.value | escape }}
+                </dd>
               </div>
             {%- endif -%}
 
@@ -479,7 +517,9 @@
             {%- if product.metafields.custom.print.value != blank -%}
               <div class="tno-spec__row">
                 <dt class="tno-spec__term">PRINT</dt>
-                <dd class="tno-spec__value">{{ product.metafields.custom.print.value | escape }}</dd>
+                <dd class="tno-spec__value">
+                  {{ product.metafields.custom.print.value | escape }}
+                </dd>
               </div>
             {%- endif -%}
 
@@ -487,7 +527,9 @@
             {%- if product.metafields.custom.care_instructions.value != blank -%}
               <div class="tno-spec__row">
                 <dt class="tno-spec__term">CARE</dt>
-                <dd class="tno-spec__value">{{ product.metafields.custom.care_instructions.value | escape | newline_to_br }}</dd>
+                <dd class="tno-spec__value">
+                  {{ product.metafields.custom.care_instructions.value | escape | newline_to_br }}
+                </dd>
               </div>
             {%- endif -%}
           </dl>
