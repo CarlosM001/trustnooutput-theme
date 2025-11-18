@@ -61,7 +61,6 @@
         },
         "delivery_4UbJwh": {
           "type": "delivery",
-          "disabled": true,
           "settings": {
             "payment_provider": "Klarna/Afterpay"
           }
