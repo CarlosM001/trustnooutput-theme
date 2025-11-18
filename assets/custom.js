@@ -489,6 +489,11 @@ function initMobileDrilldown() {
   if (!mobileMenu) {
     return;
   }
+  // Avoid double-initialization (particularly in Theme Editor)
+  if (mobileMenu.dataset.drilldownInit === 'true') {
+    return;
+  }
+  mobileMenu.dataset.drilldownInit = 'true';
 
   const rootPanel = mobileMenu.querySelector('.tno-mobile-panel.is-root');
   if (!rootPanel) {
@@ -699,4 +704,23 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initMobileDrilldown);
 } else {
   initMobileDrilldown();
+}
+
+// Re-init in Shopify Theme Editor when the header section reloads
+if (window.Shopify && window.Shopify.designMode) {
+  document.addEventListener('shopify:section:load', (e) => {
+    try {
+      const el = e.target || (e.detail && e.detail.sectionId && document.getElementById(`shopify-section-${e.detail.sectionId}`));
+      if (el && el.querySelector && el.querySelector('#mobile-menu')) {
+        // Allow re-init by clearing the guard on the new node
+        const mm = el.querySelector('#mobile-menu');
+        if (mm) {
+          mm.dataset.drilldownInit = 'false';
+        }
+        initMobileDrilldown();
+      }
+    } catch {
+      // Silent guard for editor-only code
+    }
+  });
 }
