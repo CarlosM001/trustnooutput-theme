@@ -545,34 +545,29 @@ function initMobileDrilldown() {
       return;
     }
 
-    // Step 1: Make child accessible FIRST (but keep off-screen)
-    targetPanel.setAttribute('aria-hidden', 'false');
+    // Step 1: Make child accessible (remove inert, keep aria-hidden for now)
     targetPanel.removeAttribute('inert');
 
-    // Step 2: Start hiding root (CSS slide + aria)
+    // Step 2: Start hiding root with inert instead of aria-hidden
     if (activePanel === rootPanel) {
       const rootContent = rootPanel.querySelector('.tno-mobile-panel__content');
       if (rootContent) {
         rootScrollTop = rootContent.scrollTop;
       }
-      // Remove aria-hidden immediately to avoid focus trap
-      rootPanel.setAttribute('aria-hidden', 'true');
-      // Start CSS slide
+      // Use inert to hide (prevents focus without ARIA warnings)
+      try {
+        rootPanel.setAttribute('inert', '');
+      } catch {}
       rootPanel.classList.add('is-hidden');
-      // Add inert after animation completes
-      setTimeout(() => {
-        try {
-          rootPanel.setAttribute('inert', '');
-        } catch {}
-      }, 300);
     }
 
-    // Step 3: Activate child slide AFTER root starts moving
+    // Step 3: Activate child slide after root starts moving
     setTimeout(() => {
       if (!targetPanel) return;
       targetPanel.classList.add('is-active');
+      targetPanel.setAttribute('aria-hidden', 'false');
       
-      // Step 4: Focus after child is fully visible
+      // Step 4: Focus only after panel is fully visible and accessible
       setTimeout(() => {
         const backButton = targetPanel.querySelector('.tno-mobile-back');
         const firstLink = targetPanel.querySelector('.tno-mobile-link');
@@ -581,8 +576,8 @@ function initMobileDrilldown() {
         } else if (firstLink) {
           firstLink.focus();
         }
-      }, 50);
-    }, 100); // Wait for root to start clearing
+      }, 150); // Longer delay to ensure DOM is settled
+    }, 100);
 
     // Deactivate previous child panel if any
     if (activePanel && activePanel !== rootPanel && activePanel !== targetPanel) {
@@ -616,30 +611,35 @@ function initMobileDrilldown() {
     const parentId = currentPanel.getAttribute('id');
     const trigger = mobileMenu.querySelector(`[data-mobile-panel-target="${parentId}"]`);
 
-    // Make parent accessible immediately
+    // Make parent accessible
     if (parentPanel === rootPanel) {
-      rootPanel.setAttribute('aria-hidden', 'false');
       rootPanel.removeAttribute('inert');
       rootPanel.classList.remove('is-hidden');
       const rootContent = rootPanel.querySelector('.tno-mobile-panel__content');
       if (rootContent) {
         rootContent.scrollTop = rootScrollTop;
       }
+      // Remove aria-hidden after panel starts appearing
+      setTimeout(() => {
+        rootPanel.setAttribute('aria-hidden', 'false');
+      }, 50);
     } else {
-      parentPanel.setAttribute('aria-hidden', 'false');
       parentPanel.removeAttribute('inert');
       parentPanel.classList.add('is-active');
+      setTimeout(() => {
+        parentPanel.setAttribute('aria-hidden', 'false');
+      }, 50);
     }
 
-    // Focus trigger after parent starts appearing
+    // Focus trigger after parent is fully accessible
     setTimeout(() => {
       if (trigger) {
         trigger.setAttribute('aria-expanded', 'false');
         trigger.focus();
       }
-    }, 50);
+    }, 150);
 
-    // Hide current panel
+    // Hide current panel with inert
     currentPanel.classList.remove('is-active');
     currentPanel.setAttribute('aria-hidden', 'true');
     setTimeout(() => {
