@@ -17,7 +17,7 @@
         "sticky_header": true,
         "show_search": true,
         "show_account": true,
-        "transparent_header": true,
+        "transparent_header": false,
         "apparel_menu": "apparel-submenu",
         "accessories_menu": "accessories-submenu",
         "prints_menu": "prints-submenu",
