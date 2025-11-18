@@ -1697,7 +1697,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 
 /* Drilldown Panel Base Styles */
 .tno-mobile-panel {
-  --tno-slide-duration: 0.22s; /* Digitec-style speed */
+  --tno-slide-duration: 0.28s; /* Smooth slide timing */
   --tno-slide-ease: cubic-bezier(0.4, 0, 0.2, 1);
 
   position: absolute;
@@ -1734,7 +1734,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 .tno-mobile-panel.is-child {
   transform: translateX(100%);
   opacity: 0;
-  z-index: 2;
+  z-index: 5; /* Always above root during transitions */
   pointer-events: none; /* Prevent interaction when hidden */
 }
 
@@ -1743,7 +1743,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   transform: translateX(0);
   opacity: 1;
   pointer-events: auto; /* Enable interaction when visible */
-  z-index: 3; /* Ensure active child sits above root */
+  z-index: 10; /* Ensure active child sits above root */
 }
 
 /* When child is active, move root fully off-canvas to prevent artifacts */

@@ -508,7 +508,7 @@ function initMobileDrilldown() {
   // Helpers: visibility + focus management
   const setHidden = (panel, hidden, delay = 0) => {
     if (!panel) return;
-    
+
     if (!hidden) {
       // Immediately make visible/focusable (no delay)
       panel.setAttribute('aria-hidden', 'false');
@@ -545,28 +545,31 @@ function initMobileDrilldown() {
       return;
     }
 
-    // Activate target panel (slides in from right) BEFORE hiding previous to avoid a11y warning
-    targetPanel.classList.add('is-active');
-    setHidden(targetPanel, false);
-
-    // Focus management immediately (no timeout) to prevent focus being inside aria-hidden root
-    const backButton = targetPanel.querySelector('.tno-mobile-back');
-    const firstLink = targetPanel.querySelector('.tno-mobile-link');
-    if (backButton) {
-      backButton.focus();
-    } else if (firstLink) {
-      firstLink.focus();
-    }
-
-    // Slide root panel to the left after focus is moved
+    // Step 1: Hide root panel first (let it slide fully off)
     if (activePanel === rootPanel) {
       const rootContent = rootPanel.querySelector('.tno-mobile-panel__content');
       if (rootContent) {
         rootScrollTop = rootContent.scrollTop;
       }
       rootPanel.classList.add('is-hidden');
-      setHidden(rootPanel, true, 250); // Delay inert until animation completes (220ms + buffer)
+      setHidden(rootPanel, true, 280); // Delay inert until animation completes
     }
+
+    // Step 2: After root starts sliding, activate child panel (delayed to ensure root clears)
+    setTimeout(() => {
+      if (!targetPanel) return;
+      targetPanel.classList.add('is-active');
+      setHidden(targetPanel, false);
+
+      // Focus management after child is visible
+      const backButton = targetPanel.querySelector('.tno-mobile-back');
+      const firstLink = targetPanel.querySelector('.tno-mobile-link');
+      if (backButton) {
+        backButton.focus();
+      } else if (firstLink) {
+        firstLink.focus();
+      }
+    }, 50); // Small delay to let root start sliding before child appears
 
     // Deactivate previous child panel if any
     if (activePanel && activePanel !== rootPanel && activePanel !== targetPanel) {
