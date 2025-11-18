@@ -74,6 +74,40 @@
         "padding_bottom": 0
       }
     },
+    "main_product_tno_4ktiFN": {
+      "type": "main-product-tno",
+      "blocks": {
+        "variant_picker_cwPWxn": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button"
+          }
+        },
+        "quantity_selector_HbxUPx": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons_TfBUKX": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true
+          }
+        }
+      },
+      "block_order": [
+        "variant_picker_cwPWxn",
+        "quantity_selector_HbxUPx",
+        "buy_buttons_TfBUKX"
+      ],
+      "name": "TNO Product Page",
+      "settings": {
+        "enable_sticky_info": true,
+        "image_zoom": "lightbox",
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "related-products": {
       "type": "related-products",
       "settings": {
@@ -93,5 +127,9 @@
       }
     }
   },
-  "order": ["main", "related-products"]
+  "order": [
+    "main",
+    "main_product_tno_4ktiFN",
+    "related-products"
+  ]
 }
