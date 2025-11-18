@@ -487,13 +487,16 @@ function initAtcTracking() {
 function initMobileDrilldown() {
   const mobileMenu = document.getElementById('mobile-menu');
   if (!mobileMenu) {
+    console.log('[TNO Drilldown] #mobile-menu not found');
     return;
   }
   // Avoid double-initialization (particularly in Theme Editor)
   if (mobileMenu.dataset.drilldownInit === 'true') {
+    console.log('[TNO Drilldown] Already initialized');
     return;
   }
   mobileMenu.dataset.drilldownInit = 'true';
+  console.log('[TNO Drilldown] Initialized successfully');
 
   const rootPanel = mobileMenu.querySelector('.tno-mobile-panel.is-root');
   if (!rootPanel) {
@@ -640,17 +643,25 @@ function initMobileDrilldown() {
   };
 
   // Event delegation: full-row triggers (open child panel)
-  mobileMenu.addEventListener('click', (e) => {
-    const trigger = e.target.closest('.tno-mobile-drill-trigger');
-    if (trigger) {
-      e.preventDefault();
-      const targetId = trigger.getAttribute('data-mobile-panel-target');
-      const targetPanel = document.getElementById(targetId);
-      if (targetPanel) {
-        openPanel(targetPanel, trigger);
+  mobileMenu.addEventListener(
+    'click',
+    (e) => {
+      const trigger = e.target.closest('.tno-mobile-drill-trigger');
+      if (trigger) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('[TNO Drilldown] Trigger clicked:', trigger);
+        const targetId = trigger.getAttribute('data-mobile-panel-target');
+        const targetPanel = document.getElementById(targetId);
+        if (targetPanel) {
+          openPanel(targetPanel, trigger);
+        } else {
+          console.error('[TNO Drilldown] Target panel not found:', targetId);
+        }
       }
-    }
-  });
+    },
+    { capture: true }
+  );
 
   // Event delegation: back button clicks (return to parent)
   mobileMenu.addEventListener('click', (e) => {
