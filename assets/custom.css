@@ -1712,6 +1712,9 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     transform var(--tno-slide-duration) var(--tno-slide-ease),
     opacity var(--tno-slide-duration) var(--tno-slide-ease);
   will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  contain: paint;
 }
 
 /* Root panel starts visible */
@@ -1741,7 +1744,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 
 /* When child is active, move root fully off-canvas to prevent artifacts */
 .tno-mobile-panel.is-root.is-hidden {
-  transform: translateX(-100%);
+  transform: translateX(-102%);
   opacity: 1; /* Fully off-canvas, no dimming needed */
   overflow: hidden; /* Hide root scrollbar while off-canvas */
   pointer-events: none; /* Disable clicks on background */
