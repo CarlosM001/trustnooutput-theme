@@ -65,16 +65,16 @@
             "payment_provider": "Klarna/Afterpay"
           }
         },
-        "description_dBjM93": {
-          "type": "description",
-          "settings": {}
-        },
         "sharing_fHVgkW": {
           "type": "sharing",
           "settings": {}
         },
         "related_products_jHF8W9": {
           "type": "related_products",
+          "settings": {}
+        },
+        "description_dBjM93": {
+          "type": "description",
           "settings": {}
         }
       },
@@ -88,9 +88,9 @@
         "buy_buttons_TfBUKX",
         "trust_cluster_fDQ6eG",
         "delivery_4UbJwh",
-        "description_dBjM93",
         "sharing_fHVgkW",
-        "related_products_jHF8W9"
+        "related_products_jHF8W9",
+        "description_dBjM93"
       ],
       "name": "TNO Product Page",
       "settings": {
