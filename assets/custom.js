@@ -506,16 +506,28 @@ function initMobileDrilldown() {
   let rootScrollTop = 0; // Preserve scroll position when entering child panels
 
   // Helpers: visibility + focus management
-  const setHidden = (panel, hidden) => {
+  const setHidden = (panel, hidden, delay = 0) => {
     if (!panel) return;
-    panel.setAttribute('aria-hidden', hidden ? 'true' : 'false');
-    try {
-      if (hidden) {
-        panel.setAttribute('inert', '');
+    
+    if (!hidden) {
+      // Immediately make visible/focusable (no delay)
+      panel.setAttribute('aria-hidden', 'false');
+      panel.removeAttribute('inert');
+    } else {
+      // Set aria-hidden immediately, but delay inert to allow animation to complete
+      panel.setAttribute('aria-hidden', 'true');
+      if (delay > 0) {
+        setTimeout(() => {
+          try {
+            panel.setAttribute('inert', '');
+          } catch {}
+        }, delay);
       } else {
-        panel.removeAttribute('inert');
+        try {
+          panel.setAttribute('inert', '');
+        } catch {}
       }
-    } catch {}
+    }
   };
 
   // Ensure ARIA visibility states
@@ -553,13 +565,13 @@ function initMobileDrilldown() {
         rootScrollTop = rootContent.scrollTop;
       }
       rootPanel.classList.add('is-hidden');
-      setHidden(rootPanel, true);
+      setHidden(rootPanel, true, 250); // Delay inert until animation completes (220ms + buffer)
     }
 
     // Deactivate previous child panel if any
     if (activePanel && activePanel !== rootPanel && activePanel !== targetPanel) {
       activePanel.classList.remove('is-active');
-      setHidden(activePanel, true);
+      setHidden(activePanel, true, 250); // Delay inert until animation completes
     }
 
     activePanel = targetPanel;
@@ -609,7 +621,7 @@ function initMobileDrilldown() {
 
     // Now hide the current panel
     currentPanel.classList.remove('is-active');
-    setHidden(currentPanel, true);
+    setHidden(currentPanel, true, 250); // Delay inert until animation completes
 
     activePanel = parentPanel;
   };
