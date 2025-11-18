@@ -548,11 +548,9 @@
     .header-nav {
       display: none;
     }
+    /* Hide hamburger button on mobile - bottom tab MENU is the only trigger */
     .header-menu-toggle {
-      display: flex !important;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
+      display: none !important;
     }
   }
 
@@ -955,8 +953,6 @@
   {%- assign apparel_menu = linklists[section.settings.apparel_menu] -%}
   {%- assign accessories_menu = linklists[section.settings.accessories_menu] -%}
   {%- assign prints_menu = linklists[section.settings.prints_menu] -%}
-  {%- assign mobile_menu_handle = section.settings.mobile_menu | default: 'main-menu' -%}
-  {%- assign mobile_menu_ref = linklists[mobile_menu_handle] -%}
 
   {%- comment %} Root panel: SHOP categories matching desktop mega menu {%- endcomment %}
   <div class="tno-mobile-panel is-root is-active" id="tno-panel-root" data-panel="root">
@@ -967,11 +963,11 @@
           <a href="{{ routes.all_products_collection_url }}" class="tno-mobile-link">SHOP ALL</a>
         </li>
 
-        {%- comment %} APPAREL - with drilldown if links exist {%- endcomment %}
+        {%- comment %} APPAREL - drilldown only, no direct navigation {%- endcomment %}
         {%- if apparel_menu and apparel_menu.links.size > 0 -%}
           <li class="tno-mobile-item">
             <div class="tno-mobile-row">
-              <a href="{{ apparel_menu.links.first.url }}" class="tno-mobile-link">APPAREL</a>
+              <span class="tno-mobile-link tno-mobile-link--drill">APPAREL</span>
               <button
                 class="tno-nav-chevron"
                 data-target="tno-panel-apparel"
@@ -991,11 +987,11 @@
           </li>
         {%- endif -%}
 
-        {%- comment %} ACCESSORIES - with drilldown if links exist {%- endcomment %}
+        {%- comment %} ACCESSORIES - drilldown only, no direct navigation {%- endcomment %}
         {%- if accessories_menu and accessories_menu.links.size > 0 -%}
           <li class="tno-mobile-item">
             <div class="tno-mobile-row">
-              <a href="{{ accessories_menu.links.first.url }}" class="tno-mobile-link">ACCESSORIES</a>
+              <span class="tno-mobile-link tno-mobile-link--drill">ACCESSORIES</span>
               <button
                 class="tno-nav-chevron"
                 data-target="tno-panel-accessories"
@@ -1015,11 +1011,11 @@
           </li>
         {%- endif -%}
 
-        {%- comment %} PRINTS - with drilldown if links exist {%- endcomment %}
+        {%- comment %} PRINTS - drilldown only, no direct navigation {%- endcomment %}
         {%- if prints_menu and prints_menu.links.size > 0 -%}
           <li class="tno-mobile-item">
             <div class="tno-mobile-row">
-              <a href="{{ prints_menu.links.first.url }}" class="tno-mobile-link">PRINTS</a>
+              <span class="tno-mobile-link tno-mobile-link--drill">PRINTS</span>
               <button
                 class="tno-nav-chevron"
                 data-target="tno-panel-prints"
@@ -1039,17 +1035,29 @@
           </li>
         {%- endif -%}
 
+        {%- comment %} FEATURED - Simple links without drilldown {%- endcomment %}
+        <li class="tno-mobile-item">
+          <div class="tno-mobile-featured">
+            <span class="tno-mobile-link tno-mobile-link--section">FEATURED</span>
+            <ul class="tno-mobile-sublist">
+              <li><a href="{{ routes.collections_url }}/new-arrivals" class="tno-mobile-sublink">NEW ARRIVALS</a></li>
+              <li><a href="{{ routes.collections_url }}/bestsellers" class="tno-mobile-sublink">BESTSELLERS</a></li>
+              <li><a href="{{ routes.all_products_collection_url }}" class="tno-mobile-sublink">SHOP ALL</a></li>
+            </ul>
+          </div>
+        </li>
+
         {%- comment %} Secondary Navigation Section {%- endcomment %}
         <li class="tno-mobile-item tno-mobile-divider" aria-hidden="true"></li>
 
-        {%- comment %} DROPS {%- endcomment %}
+        {%- comment %} SYSTEM {%- endcomment %}
         <li class="tno-mobile-item">
-          <a href="{{ pages['drops'].url | default: '/pages/drops' }}" class="tno-mobile-link">DROPS</a>
+          <a href="{{ pages['system'].url | default: '/pages/system' }}" class="tno-mobile-link tno-mobile-link--secondary">SYSTEM</a>
         </li>
 
-        {%- comment %} PHILOSOPHY {%- endcomment %}
+        {%- comment %} MANIFESTO {%- endcomment %}
         <li class="tno-mobile-item">
-          <a href="{{ pages['philosophy'].url | default: '/pages/philosophy' }}" class="tno-mobile-link">PHILOSOPHY</a>
+          <a href="{{ pages['manifesto'].url | default: '/pages/manifesto' }}" class="tno-mobile-link tno-mobile-link--secondary">MANIFESTO</a>
         </li>
       </ul>
     </nav>
