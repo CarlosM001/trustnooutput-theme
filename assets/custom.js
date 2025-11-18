@@ -487,16 +487,13 @@ function initAtcTracking() {
 function initMobileDrilldown() {
   const mobileMenu = document.getElementById('mobile-menu');
   if (!mobileMenu) {
-    console.log('[TNO Drilldown] #mobile-menu not found');
     return;
   }
   // Avoid double-initialization (particularly in Theme Editor)
   if (mobileMenu.dataset.drilldownInit === 'true') {
-    console.log('[TNO Drilldown] Already initialized');
     return;
   }
   mobileMenu.dataset.drilldownInit = 'true';
-  console.log('[TNO Drilldown] Initialized successfully');
 
   const rootPanel = mobileMenu.querySelector('.tno-mobile-panel.is-root');
   if (!rootPanel) {
@@ -508,10 +505,23 @@ function initMobileDrilldown() {
   const panelStack = [rootPanel]; // Track navigation history
   let rootScrollTop = 0; // Preserve scroll position when entering child panels
 
+  // Helpers: visibility + focus management
+  const setHidden = (panel, hidden) => {
+    if (!panel) return;
+    panel.setAttribute('aria-hidden', hidden ? 'true' : 'false');
+    try {
+      if (hidden) {
+        panel.setAttribute('inert', '');
+      } else {
+        panel.removeAttribute('inert');
+      }
+    } catch {}
+  };
+
   // Ensure ARIA visibility states
-  rootPanel.setAttribute('aria-hidden', 'false');
+  setHidden(rootPanel, false);
   const childPanelsInit = mobileMenu.querySelectorAll('.tno-mobile-panel.is-child');
-  childPanelsInit.forEach((p) => p.setAttribute('aria-hidden', 'true'));
+  childPanelsInit.forEach((p) => setHidden(p, true));
 
   /**
    * Activate a child panel (slide in from right)
@@ -523,48 +533,42 @@ function initMobileDrilldown() {
       return;
     }
 
-    console.log('[TNO Drilldown] Opening panel:', targetPanel.id);
+    // Activate target panel (slides in from right) BEFORE hiding previous to avoid a11y warning
+    targetPanel.classList.add('is-active');
+    setHidden(targetPanel, false);
 
-    // Slide root panel to the left
+    // Focus management immediately (no timeout) to prevent focus being inside aria-hidden root
+    const backButton = targetPanel.querySelector('.tno-mobile-back');
+    const firstLink = targetPanel.querySelector('.tno-mobile-link');
+    if (backButton) {
+      backButton.focus();
+    } else if (firstLink) {
+      firstLink.focus();
+    }
+
+    // Slide root panel to the left after focus is moved
     if (activePanel === rootPanel) {
-      // Store current scroll before hiding
       const rootContent = rootPanel.querySelector('.tno-mobile-panel__content');
       if (rootContent) {
         rootScrollTop = rootContent.scrollTop;
       }
       rootPanel.classList.add('is-hidden');
-      rootPanel.setAttribute('aria-hidden', 'true');
+      setHidden(rootPanel, true);
     }
 
-    // Deactivate current panel
-    if (activePanel && activePanel !== rootPanel) {
+    // Deactivate previous child panel if any
+    if (activePanel && activePanel !== rootPanel && activePanel !== targetPanel) {
       activePanel.classList.remove('is-active');
-      activePanel.setAttribute('aria-hidden', 'true');
+      setHidden(activePanel, true);
     }
 
-    // Activate target panel (slides in from right)
-    targetPanel.classList.add('is-active');
-    targetPanel.setAttribute('aria-hidden', 'false');
     activePanel = targetPanel;
     panelStack.push(targetPanel);
-
-    console.log('[TNO Drilldown] Panel stack:', panelStack.map((p) => p.id));
 
     // Update trigger ARIA
     if (triggerEl) {
       triggerEl.setAttribute('aria-expanded', 'true');
     }
-
-    // Focus management: move focus to back button or first link
-    setTimeout(() => {
-      const backButton = targetPanel.querySelector('.tno-mobile-back');
-      const firstLink = targetPanel.querySelector('.tno-mobile-link');
-      if (backButton) {
-        backButton.focus();
-      } else if (firstLink) {
-        firstLink.focus();
-      }
-    }, 50);
   };
 
   /**
@@ -580,42 +584,34 @@ function initMobileDrilldown() {
     const currentPanel = panelStack.pop();
     const parentPanel = panelStack[panelStack.length - 1];
 
-    console.log('[TNO Drilldown] Closing panel:', currentPanel.id, '→ returning to:', parentPanel.id);
+    // Determine the trigger in the parent before changing visibility
+    const parentId = currentPanel.getAttribute('id');
+    const trigger = mobileMenu.querySelector(`[data-mobile-panel-target="${parentId}"]`);
 
-    // Deactivate current panel (slides out to right)
-    currentPanel.classList.remove('is-active');
-    currentPanel.setAttribute('aria-hidden', 'true');
-
-    // Activate parent panel (slides in from left)
+    // Ensure parent is visible and focusable before hiding current (prevents a11y warning)
     if (parentPanel === rootPanel) {
       rootPanel.classList.remove('is-hidden');
-      rootPanel.setAttribute('aria-hidden', 'false');
-      // Restore root scroll position
+      setHidden(rootPanel, false);
       const rootContent = rootPanel.querySelector('.tno-mobile-panel__content');
       if (rootContent) {
         rootContent.scrollTop = rootScrollTop;
       }
     } else {
       parentPanel.classList.add('is-active');
-      parentPanel.setAttribute('aria-hidden', 'false');
+      setHidden(parentPanel, false);
     }
 
-    activePanel = parentPanel;
-
-    // Update chevron ARIA (find the chevron that opened this panel)
-    const parentId = currentPanel.getAttribute('id');
-    // Find any trigger referencing this panel
-    const trigger = mobileMenu.querySelector(`[data-mobile-panel-target="${parentId}"]`);
+    // Move focus back to the original trigger immediately
     if (trigger) {
       trigger.setAttribute('aria-expanded', 'false');
+      trigger.focus();
     }
 
-    // Focus management: return focus to the chevron that opened this panel
-    setTimeout(() => {
-      if (trigger) {
-        trigger.focus();
-      }
-    }, 50);
+    // Now hide the current panel
+    currentPanel.classList.remove('is-active');
+    setHidden(currentPanel, true);
+
+    activePanel = parentPanel;
   };
 
   /**
@@ -650,13 +646,12 @@ function initMobileDrilldown() {
       if (trigger) {
         e.preventDefault();
         e.stopPropagation();
-        console.log('[TNO Drilldown] Trigger clicked:', trigger);
         const targetId = trigger.getAttribute('data-mobile-panel-target');
         const targetPanel = document.getElementById(targetId);
         if (targetPanel) {
           openPanel(targetPanel, trigger);
         } else {
-          console.error('[TNO Drilldown] Target panel not found:', targetId);
+          // Silent fail if panel missing
         }
       }
     },
