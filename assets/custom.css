@@ -1707,7 +1707,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   overflow: hidden auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: contain;
-  background: rgb(0 0 0 / 98%);
+  background: #000; /* Opaque to ensure no bleed-through */
   transition:
     transform var(--tno-slide-duration) var(--tno-slide-ease),
     opacity var(--tno-slide-duration) var(--tno-slide-ease);
@@ -1715,6 +1715,9 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   backface-visibility: hidden;
   transform: translateZ(0);
   contain: paint;
+  outline: 0;
+  border: 0;
+  box-shadow: none;
 }
 
 /* Root panel starts visible */
@@ -1740,6 +1743,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   transform: translateX(0);
   opacity: 1;
   pointer-events: auto; /* Enable interaction when visible */
+  z-index: 3; /* Ensure active child sits above root */
 }
 
 /* When child is active, move root fully off-canvas to prevent artifacts */
@@ -1748,6 +1752,14 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   opacity: 1; /* Fully off-canvas, no dimming needed */
   overflow: hidden; /* Hide root scrollbar while off-canvas */
   pointer-events: none; /* Disable clicks on background */
+}
+
+/* Fallback: If any child is active, force-hide the root even if JS class failed */
+@supports(selector(:has(*))) {
+  .mobile-menu:has(.tno-mobile-panel.is-child.is-active) .tno-mobile-panel.is-root {
+    transform: translateX(-102%);
+    pointer-events: none;
+  }
 }
 
 /* Panel Content Wrapper
