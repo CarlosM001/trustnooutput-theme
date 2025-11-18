@@ -55,7 +55,7 @@
             "show_fit": true,
             "show_print": true,
             "show_fulfillment": true,
-            "show_care": true,
+            "show_care": false,
             "show_static_trust": true
           }
         },
@@ -98,7 +98,7 @@
         "image_zoom": "lightbox",
         "color_scheme": "",
         "show_story_section": true,
-        "show_specs_section": false,
+        "show_specs_section": true,
         "show_reviews_section": true,
         "padding_top": 36,
         "padding_bottom": 36
