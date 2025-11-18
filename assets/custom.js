@@ -530,10 +530,16 @@ function initMobileDrilldown() {
     }
   };
 
-  // Ensure ARIA visibility states
-  setHidden(rootPanel, false);
+  // Initial state: root accessible, children inert (no aria-hidden to avoid warnings)
+  rootPanel.removeAttribute('inert');
+  rootPanel.removeAttribute('aria-hidden');
   const childPanelsInit = mobileMenu.querySelectorAll('.tno-mobile-panel.is-child');
-  childPanelsInit.forEach((p) => setHidden(p, true));
+  childPanelsInit.forEach((p) => {
+    try {
+      p.setAttribute('inert', '');
+    } catch {}
+    p.removeAttribute('aria-hidden'); // Remove aria-hidden completely
+  });
 
   /**
    * Activate a child panel (slide in from right)
@@ -545,29 +551,31 @@ function initMobileDrilldown() {
       return;
     }
 
-    // Step 1: Make child accessible (remove inert, keep aria-hidden for now)
+    // Step 1: Make child accessible by removing inert only
     targetPanel.removeAttribute('inert');
 
-    // Step 2: Start hiding root with inert instead of aria-hidden
+    // Step 2: Hide root with inert (no aria-hidden)
     if (activePanel === rootPanel) {
       const rootContent = rootPanel.querySelector('.tno-mobile-panel__content');
       if (rootContent) {
         rootScrollTop = rootContent.scrollTop;
       }
-      // Use inert to hide (prevents focus without ARIA warnings)
       try {
         rootPanel.setAttribute('inert', '');
-      } catch {}
+      } catch (e) {
+        // Silently handle inert support issues
+      }
       rootPanel.classList.add('is-hidden');
     }
 
-    // Step 3: Activate child slide after root starts moving
+    // Step 3: Activate child slide
     setTimeout(() => {
-      if (!targetPanel) return;
+      if (!targetPanel) {
+        return;
+      }
       targetPanel.classList.add('is-active');
-      targetPanel.setAttribute('aria-hidden', 'false');
       
-      // Step 4: Focus only after panel is fully visible and accessible
+      // Step 4: Focus after panel is visible
       setTimeout(() => {
         const backButton = targetPanel.querySelector('.tno-mobile-back');
         const firstLink = targetPanel.querySelector('.tno-mobile-link');
@@ -576,7 +584,7 @@ function initMobileDrilldown() {
         } else if (firstLink) {
           firstLink.focus();
         }
-      }, 150); // Longer delay to ensure DOM is settled
+      }, 150);
     }, 100);
 
     // Deactivate previous child panel if any
@@ -600,18 +608,15 @@ function initMobileDrilldown() {
    */
   const closePanel = () => {
     if (panelStack.length <= 1) {
-      return; // Already at root
+      return;
     }
 
-    // Get current and parent panel
     const currentPanel = panelStack.pop();
     const parentPanel = panelStack[panelStack.length - 1];
-
-    // Determine the trigger in the parent
     const parentId = currentPanel.getAttribute('id');
     const trigger = mobileMenu.querySelector(`[data-mobile-panel-target="${parentId}"]`);
 
-    // Make parent accessible
+    // Make parent accessible (remove inert only)
     if (parentPanel === rootPanel) {
       rootPanel.removeAttribute('inert');
       rootPanel.classList.remove('is-hidden');
@@ -619,19 +624,12 @@ function initMobileDrilldown() {
       if (rootContent) {
         rootContent.scrollTop = rootScrollTop;
       }
-      // Remove aria-hidden after panel starts appearing
-      setTimeout(() => {
-        rootPanel.setAttribute('aria-hidden', 'false');
-      }, 50);
     } else {
       parentPanel.removeAttribute('inert');
       parentPanel.classList.add('is-active');
-      setTimeout(() => {
-        parentPanel.setAttribute('aria-hidden', 'false');
-      }, 50);
     }
 
-    // Focus trigger after parent is fully accessible
+    // Focus trigger after parent is accessible
     setTimeout(() => {
       if (trigger) {
         trigger.setAttribute('aria-expanded', 'false');
@@ -639,13 +637,14 @@ function initMobileDrilldown() {
       }
     }, 150);
 
-    // Hide current panel with inert
+    // Hide current panel with inert only
     currentPanel.classList.remove('is-active');
-    currentPanel.setAttribute('aria-hidden', 'true');
     setTimeout(() => {
       try {
         currentPanel.setAttribute('inert', '');
-      } catch {}
+      } catch (e) {
+        // Silently handle inert support
+      }
     }, 300);
 
     activePanel = parentPanel;
