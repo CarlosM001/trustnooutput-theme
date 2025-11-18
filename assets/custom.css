@@ -4687,3 +4687,161 @@ html {
     max-height: 70vh;
   }
 }
+
+/* ==========================================================================
+   TNO CONSISTENCY FIX: Theme Editor + Live
+   Ensures identical rendering across preview and production
+   ========================================================================== */
+
+/* Product Title - Force consistent font rendering */
+.tno-product__title {
+  font-family: var(--font-heading-family) !important;
+  font-size: clamp(1.75rem, 4vw, 2.5rem) !important;
+  font-weight: 700 !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.02em !important;
+  color: var(--color-base-text) !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  text-rendering: optimizelegibility !important;
+}
+
+/* Quantity Label - Force uppercase and spacing */
+.tno-product__quantity-label,
+label[for*='Quantity'] {
+  font-family: var(--font-mono, ui-monospace, 'SF Mono', monospace) !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: rgb(255 255 255 / 70%) !important;
+  margin-bottom: 0.5rem !important;
+  display: block !important;
+}
+
+/* Quantity Buttons - Consistent sizing */
+.quantity__button {
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  padding: 0 !important;
+  font-size: 1.25rem !important;
+  line-height: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Quantity Input - Consistent text style */
+.quantity__input {
+  font-family: var(--font-body-family) !important;
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  text-align: center !important;
+  appearance: textfield !important;
+  appearance: textfield !important;
+}
+
+/* Specifications Section - Force consistent styles */
+.tno-spec__list {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 1.5rem 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1rem !important;
+}
+
+.tno-spec__row {
+  display: grid !important;
+  grid-template-columns: 140px 1fr !important;
+  gap: 1rem !important;
+  padding: 0.75rem 0 !important;
+  border-bottom: 1px solid rgb(255 255 255 / 10%) !important;
+}
+
+.tno-spec__term {
+  font-family: var(--font-mono, ui-monospace, monospace) !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: rgb(0 255 255 / 80%) !important;
+  margin: 0 !important;
+}
+
+.tno-spec__value {
+  font-family: var(--font-body-family) !important;
+  font-size: 0.875rem !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  color: rgb(255 255 255 / 85%) !important;
+  margin: 0 !important;
+}
+
+/* More Payment Options Button - Consistent text style */
+.shopify-payment-button__more-options,
+button[name='more_payment_options'],
+.additional-checkout-buttons__button--more-options {
+  font-family: var(--font-body-family) !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.02em !important;
+  text-decoration: underline !important;
+  color: var(--color-base-text) !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0.75rem 0 !important;
+  margin-top: 0.5rem !important;
+  cursor: pointer !important;
+  text-align: center !important;
+  display: block !important;
+  width: 100% !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+.shopify-payment-button__more-options:hover,
+button[name='more_payment_options']:hover,
+.additional-checkout-buttons__button--more-options:hover {
+  color: rgb(0 255 255 / 90%) !important;
+  text-decoration-color: rgb(0 255 255 / 50%) !important;
+}
+
+/* Force consistent font rendering across all text elements */
+.tno-product__subtitle,
+.tno-product__price,
+.tno-product__reviews-snippet,
+.tno-product__trust-item,
+.tno-product__quantity,
+.product-form__submit,
+.shopify-payment-button {
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  text-rendering: optimizelegibility !important;
+}
+
+/* Fix for dynamic checkout button text consistency */
+.shopify-payment-button__button,
+.shopify-payment-button__button--unbranded {
+  font-family: var(--font-body-family) !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+/* Mobile adjustments */
+@media (width <= 768px) {
+  .tno-spec__row {
+    grid-template-columns: 100px 1fr !important;
+    gap: 0.75rem !important;
+  }
+
+  .tno-spec__term {
+    font-size: 0.7rem !important;
+  }
+
+  .tno-spec__value {
+    font-size: 0.8rem !important;
+  }
+}
