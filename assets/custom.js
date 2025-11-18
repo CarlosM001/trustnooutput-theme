@@ -507,7 +507,9 @@ function initMobileDrilldown() {
 
   // Helpers: visibility + focus management
   const setHidden = (panel, hidden, delay = 0) => {
-    if (!panel) return;
+    if (!panel) {
+      return;
+    }
 
     if (!hidden) {
       // Immediately make visible/focusable (no delay)
@@ -520,12 +522,16 @@ function initMobileDrilldown() {
         setTimeout(() => {
           try {
             panel.setAttribute('inert', '');
-          } catch {}
+          } catch {
+            // Inert attribute not supported
+          }
         }, delay);
       } else {
         try {
           panel.setAttribute('inert', '');
-        } catch {}
+        } catch {
+          // Inert attribute not supported
+        }
       }
     }
   };
@@ -537,7 +543,9 @@ function initMobileDrilldown() {
   childPanelsInit.forEach((p) => {
     try {
       p.setAttribute('inert', '');
-    } catch {}
+    } catch {
+      // Inert attribute not supported
+    }
     p.removeAttribute('aria-hidden'); // Remove aria-hidden completely
   });
 
@@ -562,7 +570,7 @@ function initMobileDrilldown() {
       }
       try {
         rootPanel.setAttribute('inert', '');
-      } catch (e) {
+      } catch {
         // Silently handle inert support issues
       }
       rootPanel.classList.add('is-hidden');
@@ -574,7 +582,7 @@ function initMobileDrilldown() {
         return;
       }
       targetPanel.classList.add('is-active');
-      
+
       // Step 4: Focus after panel is visible
       setTimeout(() => {
         const backButton = targetPanel.querySelector('.tno-mobile-back');
@@ -642,7 +650,7 @@ function initMobileDrilldown() {
     setTimeout(() => {
       try {
         currentPanel.setAttribute('inert', '');
-      } catch (e) {
+      } catch {
         // Silently handle inert support
       }
     }, 300);
@@ -759,7 +767,11 @@ if (document.readyState === 'loading') {
 if (window.Shopify && window.Shopify.designMode) {
   document.addEventListener('shopify:section:load', (e) => {
     try {
-      const el = e.target || (e.detail && e.detail.sectionId && document.getElementById(`shopify-section-${e.detail.sectionId}`));
+      const el =
+        e.target ||
+        (e.detail &&
+          e.detail.sectionId &&
+          document.getElementById(`shopify-section-${e.detail.sectionId}`));
       if (el && el.querySelector && el.querySelector('#mobile-menu')) {
         // Allow re-init by clearing the guard on the new node
         const mm = el.querySelector('#mobile-menu');
@@ -767,6 +779,249 @@ if (window.Shopify && window.Shopify.designMode) {
           mm.dataset.drilldownInit = 'false';
         }
         initMobileDrilldown();
+      }
+    } catch {
+      // Silent guard for editor-only code
+    }
+  });
+}
+
+/* ==========================================================================
+   TNO HIGH-CONVERSION PDP - JavaScript Enhancements
+   
+   Features:
+   - Mobile sticky ATC bar (shows/hides based on scroll + primary CTA visibility)
+   - Variant selection tracking for sticky bar
+   - Modal triggers for Find My Size + Size Chart
+   - Accessibility: keyboard nav, focus management, reduced motion
+   ========================================================================== */
+
+/**
+ * Initialize High-Conversion PDP features
+ * Handles sticky ATC bar, variant tracking, and modal triggers
+ */
+function initHighConversionPDP() {
+  const pdpRoot = document.querySelector('.tno-pdp');
+  if (!pdpRoot) {
+    return; // Not on a PDP page
+  }
+
+  // Guard against re-initialization
+  if (pdpRoot.dataset.pdpInit === 'true') {
+    return;
+  }
+  pdpRoot.dataset.pdpInit = 'true';
+
+  // Mobile Sticky ATC Bar
+  initStickyATC();
+
+  // Variant selection tracking
+  initVariantTracking();
+
+  // Modal triggers (placeholders for future integration)
+  initModalTriggers();
+}
+
+/**
+ * Mobile Sticky ATC Bar
+ * Shows when primary CTA scrolls out of view
+ * Hides when primary CTA is visible
+ */
+function initStickyATC() {
+  const stickyBar = document.getElementById('tno-sticky-atc');
+  const primaryCTA = document.querySelector('.tno-pdp__add-to-cart');
+
+  if (!stickyBar || !primaryCTA) {
+    return;
+  }
+
+  // Check if we're on mobile (viewport <= 990px)
+  const isMobileViewport = () => window.matchMedia('(max-width: 990px)').matches;
+
+  // Intersection Observer to detect primary CTA visibility
+  let observer;
+
+  const observerCallback = (entries) => {
+    if (!isMobileViewport()) {
+      // Ensure hidden on desktop
+      stickyBar.hidden = true;
+      return;
+    }
+
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        // Primary CTA is visible → hide sticky bar
+        stickyBar.hidden = true;
+      } else {
+        // Primary CTA is not visible → show sticky bar
+        stickyBar.hidden = false;
+      }
+    });
+  };
+
+  const observerOptions = {
+    root: null, // viewport
+    rootMargin: '0px 0px -100px 0px', // Trigger slightly before CTA leaves viewport
+    threshold: 0,
+  };
+
+  observer = new IntersectionObserver(observerCallback, observerOptions);
+  observer.observe(primaryCTA);
+
+  // Wire sticky bar button to primary CTA
+  const stickyATCBtn = stickyBar.querySelector('[data-sticky-atc-trigger]');
+  if (stickyATCBtn) {
+    stickyATCBtn.addEventListener('click', () => {
+      // Scroll to primary CTA and trigger it
+      primaryCTA.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      // Wait for scroll, then focus + click
+      setTimeout(() => {
+        primaryCTA.focus();
+        primaryCTA.click();
+      }, 400);
+    });
+
+    // Keyboard support
+    stickyATCBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        stickyATCBtn.click();
+      }
+    });
+  }
+
+  // Handle viewport resize (show/hide sticky bar)
+  window.addEventListener('resize', () => {
+    if (!isMobileViewport()) {
+      stickyBar.hidden = true;
+    }
+  });
+}
+
+/**
+ * Variant Selection Tracking
+ * Updates sticky ATC bar with selected variant info
+ */
+function initVariantTracking() {
+  const stickyVariantText = document.getElementById('tno-sticky-atc-variant');
+  if (!stickyVariantText) {
+    return;
+  }
+
+  // Listen for variant change events from Shopify's product-info.js
+  document.addEventListener('variant-change', (event) => {
+    const variant = event.detail?.variant;
+    if (!variant) {
+      stickyVariantText.textContent = 'Select size';
+      return;
+    }
+
+    // Update sticky bar with variant title (e.g., "Size: M")
+    // If variant has options, show first option (usually size)
+    if (variant.options && variant.options.length > 0) {
+      stickyVariantText.textContent = variant.options[0];
+    } else {
+      stickyVariantText.textContent = variant.title || 'Selected';
+    }
+  });
+
+  // Also listen for PubSub variant change (from existing theme)
+  if (window.PubSub) {
+    window.PubSub.subscribe('variantChange', (_eventName, data) => {
+      const variant = data?.variant;
+      if (!variant) {
+        stickyVariantText.textContent = 'Select size';
+        return;
+      }
+
+      if (variant.options && variant.options.length > 0) {
+        stickyVariantText.textContent = variant.options[0];
+      } else {
+        stickyVariantText.textContent = variant.title || 'Selected';
+      }
+    });
+  }
+}
+
+/**
+ * Modal Triggers for Find My Size and Size Chart
+ * Placeholders for future app integration
+ */
+function initModalTriggers() {
+  // Find My Size button
+  const findMySizeBtn = document.querySelector('[data-modal-trigger="find-my-size"]');
+  if (findMySizeBtn) {
+    findMySizeBtn.addEventListener('click', () => {
+      // TODO: Wire to AI sizing app when integrated
+      // For now, show a simple alert placeholder
+      alert('Find My Size feature coming soon! This will integrate with an AI sizing app.');
+    });
+
+    // Keyboard support
+    findMySizeBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        findMySizeBtn.click();
+      }
+    });
+  }
+
+  // Size Chart button
+  const sizeChartBtn = document.querySelector('[data-modal-trigger="size-chart"]');
+  if (sizeChartBtn) {
+    sizeChartBtn.addEventListener('click', () => {
+      // TODO: Wire to existing size guide modal/drawer if present
+      // For now, check if there's a size guide link/modal in the theme
+      const sizeGuideModal = document.querySelector('[data-modal="#SizeGuide"]');
+      if (sizeGuideModal) {
+        sizeGuideModal.click();
+      } else {
+        // Fallback: show placeholder
+        alert('Size Chart modal will be connected to your existing size guide system.');
+      }
+    });
+
+    // Keyboard support
+    sizeChartBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        sizeChartBtn.click();
+      }
+    });
+  }
+}
+
+/**
+ * Respect prefers-reduced-motion
+ * Disable smooth scroll if user prefers reduced motion
+ */
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.documentElement.style.scrollBehavior = 'auto';
+}
+
+// Initialize PDP features when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initHighConversionPDP);
+} else {
+  initHighConversionPDP();
+}
+
+// Re-init in Shopify Theme Editor
+if (window.Shopify && window.Shopify.designMode) {
+  document.addEventListener('shopify:section:load', (e) => {
+    try {
+      const el =
+        e.target ||
+        (e.detail &&
+          e.detail.sectionId &&
+          document.getElementById(`shopify-section-${e.detail.sectionId}`));
+      if (el && el.querySelector && el.querySelector('.tno-pdp')) {
+        const pdpRoot = el.querySelector('.tno-pdp');
+        if (pdpRoot) {
+          pdpRoot.dataset.pdpInit = 'false'; // Allow re-init
+        }
+        initHighConversionPDP();
       }
     } catch {
       // Silent guard for editor-only code
