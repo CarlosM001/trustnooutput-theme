@@ -98,7 +98,7 @@
         "image_zoom": "lightbox",
         "color_scheme": "",
         "show_story_section": true,
-        "show_specs_section": true,
+        "show_specs_section": false,
         "show_reviews_section": true,
         "padding_top": 36,
         "padding_bottom": 36
