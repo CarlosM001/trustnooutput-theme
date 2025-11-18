@@ -2209,7 +2209,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   line-height: 1;
 }
 
-/* Compact cart badge for Shop tab (mobile) */
+/* Compact cart badge for Shop tab (mobile) - supports 1-2 digits and 99+ */
 .tno-tab__badge {
   position: absolute;
   top: 4px;
@@ -2228,9 +2228,11 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   align-items: center;
   justify-content: center;
   box-shadow: 0 0 8px rgb(255 0 255 / 50%);
+  white-space: nowrap;
+  letter-spacing: -0.02em;
 }
 
-/* Active state with subtle glow */
+/* Active state with subtle cyan glow (top line) */
 .tno-tab.is-active::before {
   content: '';
   position: absolute;
@@ -2243,13 +2245,34 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   box-shadow: 0 0 8px rgb(0 255 255 / 50%);
 }
 
+/* Enhanced active state for Shop tab: additional glow on icon (mobile only) */
+@media (width <= 768px) {
+  .tno-tab--shop.is-active .tno-tab__icon {
+    filter: drop-shadow(0 0 4px rgb(0 255 255 / 60%));
+  }
+}
+
 /* Active state for Menu button when mobile menu is open */
 #bottom-tab-menu.is-active {
   color: #f0f;
+  background: rgb(255 0 255 / 4%);
 }
 
 #bottom-tab-menu.is-active .tno-tab__icon {
   transform: rotate(90deg) translateX(-2px);
+  filter: drop-shadow(0 0 4px rgb(255 0 255 / 50%));
+}
+
+/* Subtle cyan outline on Menu button when active (mobile only) */
+@media (width <= 768px) {
+  #bottom-tab-menu.is-active::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border-radius: 4px;
+    border: 1px solid rgb(0 255 255 / 30%);
+    pointer-events: none;
+  }
 }
 
 /* Keep bottom tabs visible but change Menu button color when menu is open.
