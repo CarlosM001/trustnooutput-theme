@@ -18,9 +18,9 @@
         "show_search": true,
         "show_account": true,
         "transparent_header": false,
-        "apparel_menu": "",
-        "accessories_menu": "",
-        "prints_menu": "",
+        "apparel_menu": "apparel-submenu",
+        "accessories_menu": "accessories-submenu",
+        "prints_menu": "prints-submenu",
         "featured_collection": "",
         "mobile_menu": ""
       }
