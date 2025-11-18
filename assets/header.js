@@ -54,9 +54,12 @@
     }
     STATE.openPanel.classList.remove('is-open');
     STATE.openToggle.setAttribute('aria-expanded', 'false');
-    // Clear hover state
+    // Clear hover state from panel and parent nav item
     delete STATE.openPanel.dataset.hovering;
-    delete STATE.openToggle.dataset.hovering;
+    const navItem = STATE.openToggle.closest('.tno-nav__item');
+    if (navItem) {
+      delete navItem.dataset.hovering;
+    }
     STATE.openPanel = null;
     STATE.openToggle = null;
     // Clear any pending hover close timer
@@ -73,19 +76,19 @@
       STATE.hoverCloseTimer = null;
     }
 
-    // Only schedule close if BOTH trigger and panel are not hovered
+    // Only schedule close if BOTH parent nav item and panel are not hovered
     STATE.hoverCloseTimer = setTimeout(() => {
-      const triggerHovered = STATE.openToggle && STATE.openToggle.dataset.hovering === 'true';
+      const navItem = STATE.openToggle ? STATE.openToggle.closest('.tno-nav__item') : null;
+      const navItemHovered = navItem && navItem.dataset.hovering === 'true';
       const panelHovered = STATE.openPanel && STATE.openPanel.dataset.hovering === 'true';
 
       // Only close if neither is hovered
-      if (!triggerHovered && !panelHovered) {
+      if (!navItemHovered && !panelHovered) {
         closeNavPanel();
       }
       STATE.hoverCloseTimer = null;
     }, delay);
   }
-
   function cancelCloseNavPanel() {
     if (STATE.hoverCloseTimer) {
       clearTimeout(STATE.hoverCloseTimer);
@@ -109,7 +112,13 @@
         return;
       }
 
-      // Click handler (toggle open/close)
+      // Find parent nav item (<li>) - this is the unified hover target
+      const navItem = btn.closest('.tno-nav__item');
+      if (!navItem) {
+        return;
+      }
+
+      // Click handler on button (toggle open/close, keyboard accessibility)
       btn.addEventListener('click', () => {
         const isOpen = btn.getAttribute('aria-expanded') === 'true';
         if (isOpen) {
@@ -130,10 +139,10 @@
         }
       });
 
-      // Hover handlers with hover-intent pattern (desktop only)
-      btn.addEventListener('mouseenter', () => {
-        // Mark trigger as hovered
-        btn.dataset.hovering = 'true';
+      // Hover handlers on PARENT nav item (unified text + arrow hover zone)
+      navItem.addEventListener('mouseenter', () => {
+        // Mark parent item as hovered
+        navItem.dataset.hovering = 'true';
         cancelCloseNavPanel();
 
         // Open on hover (desktop only, non-touch)
@@ -149,9 +158,9 @@
         }
       });
 
-      btn.addEventListener('mouseleave', () => {
-        // Mark trigger as not hovered
-        btn.dataset.hovering = 'false';
+      navItem.addEventListener('mouseleave', () => {
+        // Mark parent item as not hovered
+        navItem.dataset.hovering = 'false';
         // Schedule close with 600ms buffer
         // Will only close if panel is also not hovered
         scheduleCloseNavPanel(600);
@@ -168,7 +177,7 @@
         // Mark panel as not hovered
         panel.dataset.hovering = 'false';
         // Schedule close with 600ms buffer
-        // Will only close if trigger is also not hovered
+        // Will only close if parent nav item is also not hovered
         scheduleCloseNavPanel(600);
       });
     });
