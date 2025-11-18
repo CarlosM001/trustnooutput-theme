@@ -59,6 +59,10 @@
             "show_static_trust": true
           }
         },
+        "description_dBjM93": {
+          "type": "description",
+          "settings": {}
+        },
         "delivery_4UbJwh": {
           "type": "delivery",
           "settings": {
@@ -72,10 +76,6 @@
         "related_products_jHF8W9": {
           "type": "related_products",
           "settings": {}
-        },
-        "description_dBjM93": {
-          "type": "description",
-          "settings": {}
         }
       },
       "block_order": [
@@ -87,14 +87,14 @@
         "quantity_PM6FPf",
         "buy_buttons_TfBUKX",
         "trust_cluster_fDQ6eG",
+        "description_dBjM93",
         "delivery_4UbJwh",
         "sharing_fHVgkW",
-        "related_products_jHF8W9",
-        "description_dBjM93"
+        "related_products_jHF8W9"
       ],
       "name": "TNO Product Page",
       "settings": {
-        "enable_sticky_info": true,
+        "enable_sticky_info": false,
         "image_zoom": "lightbox",
         "color_scheme": "",
         "show_story_section": true,
