@@ -1697,7 +1697,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 
 /* Drilldown Panel Base Styles */
 .tno-mobile-panel {
-  --tno-slide-duration: 0.25s; /* Adjust transition speed here */
+  --tno-slide-duration: 0.22s; /* Digitec-style speed */
   --tno-slide-ease: cubic-bezier(0.4, 0, 0.2, 1);
 
   position: absolute;
@@ -1708,30 +1708,41 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: contain;
   background: rgb(0 0 0 / 98%);
-  transition: transform var(--tno-slide-duration) var(--tno-slide-ease);
-  will-change: transform;
+  transition:
+    transform var(--tno-slide-duration) var(--tno-slide-ease),
+    opacity var(--tno-slide-duration) var(--tno-slide-ease);
+  will-change: transform, opacity;
 }
 
 /* Root panel starts visible */
 .tno-mobile-panel.is-root {
+  position: relative; /* Base layer for stacking context */
   transform: translateX(0);
+  opacity: 1;
   z-index: 1;
+  pointer-events: auto;
 }
 
 /* Child panels start off-screen to the right */
 .tno-mobile-panel.is-child {
   transform: translateX(100%);
+  opacity: 0;
   z-index: 2;
+  pointer-events: none; /* Prevent interaction when hidden */
 }
 
 /* Active child panel slides in */
 .tno-mobile-panel.is-child.is-active {
   transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto; /* Enable interaction when visible */
 }
 
-/* When child is active, push root panel to the left */
+/* When child is active, push root panel to the left (Digitec depth effect) */
 .tno-mobile-panel.is-root.is-hidden {
   transform: translateX(-30%); /* Partial slide for depth perception */
+  opacity: 0.3; /* Dim for depth */
+  pointer-events: none; /* Disable clicks on background */
 }
 
 /* Panel Content Wrapper

@@ -520,6 +520,8 @@ function initMobileDrilldown() {
       return;
     }
 
+    console.log('[TNO Drilldown] Opening panel:', targetPanel.id);
+
     // Slide root panel to the left
     if (activePanel === rootPanel) {
       // Store current scroll before hiding
@@ -528,19 +530,22 @@ function initMobileDrilldown() {
         rootScrollTop = rootContent.scrollTop;
       }
       rootPanel.classList.add('is-hidden');
+      rootPanel.setAttribute('aria-hidden', 'true');
     }
 
     // Deactivate current panel
     if (activePanel && activePanel !== rootPanel) {
       activePanel.classList.remove('is-active');
+      activePanel.setAttribute('aria-hidden', 'true');
     }
 
     // Activate target panel (slides in from right)
     targetPanel.classList.add('is-active');
     targetPanel.setAttribute('aria-hidden', 'false');
-    activePanel.setAttribute('aria-hidden', 'true');
     activePanel = targetPanel;
     panelStack.push(targetPanel);
+
+    console.log('[TNO Drilldown] Panel stack:', panelStack.map((p) => p.id));
 
     // Update trigger ARIA
     if (triggerEl) {
@@ -571,6 +576,8 @@ function initMobileDrilldown() {
     // Get current and parent panel
     const currentPanel = panelStack.pop();
     const parentPanel = panelStack[panelStack.length - 1];
+
+    console.log('[TNO Drilldown] Closing panel:', currentPanel.id, '→ returning to:', parentPanel.id);
 
     // Deactivate current panel (slides out to right)
     currentPanel.classList.remove('is-active');
