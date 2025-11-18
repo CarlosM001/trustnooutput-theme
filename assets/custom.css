@@ -1843,6 +1843,20 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   border-bottom: none;
 }
 
+/* Visual divider for secondary navigation section */
+.tno-mobile-divider {
+  height: 1px;
+  min-height: 1px;
+  margin: 1rem 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(0 255 255 / 20%),
+    transparent
+  );
+  border-bottom: none;
+}
+
 /* Row layout (link + chevron) */
 .tno-mobile-row {
   display: flex;
@@ -2291,7 +2305,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   .tno-tab.is-active .tno-tab__icon {
     transform: none;
   }
-  
+
   .tno-tab:hover,
   .tno-tab:focus-visible {
     animation: none !important;
@@ -2332,6 +2346,11 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 @media (width <= 768px) {
   .header-menu-toggle {
     display: flex;
+  }
+
+  /* Hide mobile header account/cart icons (duplicated in bottom tab bar) */
+  .tno-header__icons {
+    display: none !important;
   }
 
   /* FINAL Z-index layering strategy for mobile:

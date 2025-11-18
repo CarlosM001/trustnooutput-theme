@@ -943,109 +943,180 @@
   aria-hidden="true"
   tabindex="-1"
 >
+  {%- comment %} Load mega menu data sources (same as desktop SHOP) {%- endcomment -%}
+  {%- assign apparel_menu = linklists[section.settings.apparel_menu] -%}
+  {%- assign accessories_menu = linklists[section.settings.accessories_menu] -%}
+  {%- assign prints_menu = linklists[section.settings.prints_menu] -%}
   {%- assign mobile_menu_handle = section.settings.mobile_menu | default: 'main-menu' -%}
   {%- assign mobile_menu_ref = linklists[mobile_menu_handle] -%}
 
-  {%- comment %} Root panel (top-level navigation) {%- endcomment %}
+  {%- comment %} Root panel: SHOP categories matching desktop mega menu {%- endcomment %}
   <div class="tno-mobile-panel is-root is-active" id="tno-panel-root" data-panel="root">
     <nav class="tno-mobile-panel__content">
       <ul class="tno-mobile-list">
-        {%- if mobile_menu_ref.links and mobile_menu_ref.links.size > 0 -%}
-          {% for link in mobile_menu_ref.links %}
-            <li class="tno-mobile-item">
-              {%- if link.links and link.links.size > 0 -%}
-                {%- comment %} Item with children: link + chevron {%- endcomment %}
-                <div class="tno-mobile-row">
-                  <a href="{{ link.url }}" class="tno-mobile-link">{{ link.title }}</a>
-                  <button
-                    class="tno-nav-chevron"
-                    data-target="tno-panel-{{ forloop.index }}"
-                    data-parent-title="{{ link.title | escape }}"
-                    aria-expanded="false"
-                    aria-label="Open {{ link.title }} submenu"
-                  >
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </button>
-                </div>
-              {%- else -%}
-                {%- comment %} Item without children: link only {%- endcomment %}
-                <a href="{{ link.url }}" class="tno-mobile-link">{{ link.title }}</a>
-              {%- endif -%}
-            </li>
-          {% endfor %}
-        {%- else -%}
-          {%- comment %} Fallback: Basic structure {%- endcomment %}
+        {%- comment %} SHOP ALL - Top-level link {%- endcomment %}
+        <li class="tno-mobile-item">
+          <a href="{{ routes.all_products_collection_url }}" class="tno-mobile-link">SHOP ALL</a>
+        </li>
+
+        {%- comment %} APPAREL - with drilldown if links exist {%- endcomment %}
+        {%- if apparel_menu and apparel_menu.links.size > 0 -%}
           <li class="tno-mobile-item">
-            <a href="{{ routes.all_products_collection_url }}" class="tno-mobile-link">SHOP ALL</a>
+            <div class="tno-mobile-row">
+              <a href="{{ apparel_menu.links.first.url }}" class="tno-mobile-link">APPAREL</a>
+              <button
+                class="tno-nav-chevron"
+                data-target="tno-panel-apparel"
+                data-parent-title="APPAREL"
+                aria-expanded="false"
+                aria-label="Open APPAREL submenu"
+              >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
           </li>
+        {%- else -%}
           <li class="tno-mobile-item">
             <a href="{{ routes.collections_url }}/apparel" class="tno-mobile-link">APPAREL</a>
           </li>
+        {%- endif -%}
+
+        {%- comment %} ACCESSORIES - with drilldown if links exist {%- endcomment %}
+        {%- if accessories_menu and accessories_menu.links.size > 0 -%}
           <li class="tno-mobile-item">
-            <a href="{{ routes.collections_url }}/accessories" class="tno-mobile-link"
-              >ACCESSORIES</a
-            >
+            <div class="tno-mobile-row">
+              <a href="{{ accessories_menu.links.first.url }}" class="tno-mobile-link">ACCESSORIES</a>
+              <button
+                class="tno-nav-chevron"
+                data-target="tno-panel-accessories"
+                data-parent-title="ACCESSORIES"
+                aria-expanded="false"
+                aria-label="Open ACCESSORIES submenu"
+              >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
           </li>
+        {%- else -%}
           <li class="tno-mobile-item">
-            <a href="{{ routes.collections_url }}" class="tno-mobile-link">COLLECTIONS</a>
+            <a href="{{ routes.collections_url }}/accessories" class="tno-mobile-link">ACCESSORIES</a>
           </li>
         {%- endif -%}
+
+        {%- comment %} PRINTS - with drilldown if links exist {%- endcomment %}
+        {%- if prints_menu and prints_menu.links.size > 0 -%}
+          <li class="tno-mobile-item">
+            <div class="tno-mobile-row">
+              <a href="{{ prints_menu.links.first.url }}" class="tno-mobile-link">PRINTS</a>
+              <button
+                class="tno-nav-chevron"
+                data-target="tno-panel-prints"
+                data-parent-title="PRINTS"
+                aria-expanded="false"
+                aria-label="Open PRINTS submenu"
+              >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </li>
+        {%- else -%}
+          <li class="tno-mobile-item">
+            <a href="{{ routes.collections_url }}/prints" class="tno-mobile-link">PRINTS</a>
+          </li>
+        {%- endif -%}
+
+        {%- comment %} Secondary Navigation Section {%- endcomment %}
+        <li class="tno-mobile-item tno-mobile-divider" aria-hidden="true"></li>
+        
+        {%- comment %} DROPS {%- endcomment %}
+        <li class="tno-mobile-item">
+          <a href="{{ pages['drops'].url | default: '/pages/drops' }}" class="tno-mobile-link">DROPS</a>
+        </li>
+
+        {%- comment %} PHILOSOPHY {%- endcomment %}
+        <li class="tno-mobile-item">
+          <a href="{{ pages['philosophy'].url | default: '/pages/philosophy' }}" class="tno-mobile-link">PHILOSOPHY</a>
+        </li>
       </ul>
     </nav>
   </div>
 
-  {%- comment %} Child panels (submenus) {%- endcomment %}
-  {%- if mobile_menu_ref.links and mobile_menu_ref.links.size > 0 -%}
-    {% for link in mobile_menu_ref.links %}
-      {%- if link.links and link.links.size > 0 -%}
-        <div
-          class="tno-mobile-panel is-child"
-          id="tno-panel-{{ forloop.index }}"
-          data-panel="child"
-          data-parent="root"
-        >
-          {%- comment %} Sticky back header {%- endcomment %}
-          <div class="tno-mobile-back-header">
-            <button
-              class="tno-mobile-back"
-              data-back="tno-panel-root"
-              aria-label="Back to main menu"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <span>Back</span>
-            </button>
-            <span class="tno-mobile-back-title">{{ link.title }}</span>
-          </div>
+  {%- comment %} Child panels: APPAREL submenu {%- endcomment %}
+  {%- if apparel_menu and apparel_menu.links.size > 0 -%}
+    <div class="tno-mobile-panel is-child" id="tno-panel-apparel" data-panel="child" data-parent="root">
+      <div class="tno-mobile-back-header">
+        <button class="tno-mobile-back" data-back="tno-panel-root" aria-label="Back to main menu">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Back</span>
+        </button>
+        <span class="tno-mobile-back-title">APPAREL</span>
+      </div>
+      <nav class="tno-mobile-panel__content">
+        <ul class="tno-mobile-list">
+          {%- for link in apparel_menu.links -%}
+            <li class="tno-mobile-item">
+              <a href="{{ link.url }}" class="tno-mobile-link">{{ link.title }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    </div>
+  {%- endif -%}
 
-          {%- comment %} Child panel content {%- endcomment %}
-          <nav class="tno-mobile-panel__content">
-            <ul class="tno-mobile-list">
-              {%- for child in link.links -%}
-                <li class="tno-mobile-item">
-                  <a href="{{ child.url }}" class="tno-mobile-link">{{ child.title }}</a>
-                </li>
-              {%- endfor -%}
-            </ul>
-          </nav>
-        </div>
-      {%- endif -%}
-    {% endfor %}
+  {%- comment %} Child panels: ACCESSORIES submenu {%- endcomment %}
+  {%- if accessories_menu and accessories_menu.links.size > 0 -%}
+    <div class="tno-mobile-panel is-child" id="tno-panel-accessories" data-panel="child" data-parent="root">
+      <div class="tno-mobile-back-header">
+        <button class="tno-mobile-back" data-back="tno-panel-root" aria-label="Back to main menu">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Back</span>
+        </button>
+        <span class="tno-mobile-back-title">ACCESSORIES</span>
+      </div>
+      <nav class="tno-mobile-panel__content">
+        <ul class="tno-mobile-list">
+          {%- for link in accessories_menu.links -%}
+            <li class="tno-mobile-item">
+              <a href="{{ link.url }}" class="tno-mobile-link">{{ link.title }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    </div>
+  {%- endif -%}
+
+  {%- comment %} Child panels: PRINTS submenu {%- endcomment %}
+  {%- if prints_menu and prints_menu.links.size > 0 -%}
+    <div class="tno-mobile-panel is-child" id="tno-panel-prints" data-panel="child" data-parent="root">
+      <div class="tno-mobile-back-header">
+        <button class="tno-mobile-back" data-back="tno-panel-root" aria-label="Back to main menu">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Back</span>
+        </button>
+        <span class="tno-mobile-back-title">PRINTS</span>
+      </div>
+      <nav class="tno-mobile-panel__content">
+        <ul class="tno-mobile-list">
+          {%- for link in prints_menu.links -%}
+            <li class="tno-mobile-item">
+              <a href="{{ link.url }}" class="tno-mobile-link">{{ link.title }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    </div>
   {%- endif -%}
 </div>
 
