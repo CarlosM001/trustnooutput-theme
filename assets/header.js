@@ -54,6 +54,9 @@
     }
     STATE.openPanel.classList.remove('is-open');
     STATE.openToggle.setAttribute('aria-expanded', 'false');
+    // Clear hover state
+    delete STATE.openPanel.dataset.hovering;
+    delete STATE.openToggle.dataset.hovering;
     STATE.openPanel = null;
     STATE.openToggle = null;
     // Clear any pending hover close timer
@@ -64,11 +67,21 @@
   }
 
   function scheduleCloseNavPanel(delay = 600) {
+    // Clear existing timer
     if (STATE.hoverCloseTimer) {
       clearTimeout(STATE.hoverCloseTimer);
+      STATE.hoverCloseTimer = null;
     }
+
+    // Only schedule close if BOTH trigger and panel are not hovered
     STATE.hoverCloseTimer = setTimeout(() => {
-      closeNavPanel();
+      const triggerHovered = STATE.openToggle && STATE.openToggle.dataset.hovering === 'true';
+      const panelHovered = STATE.openPanel && STATE.openPanel.dataset.hovering === 'true';
+
+      // Only close if neither is hovered
+      if (!triggerHovered && !panelHovered) {
+        closeNavPanel();
+      }
       STATE.hoverCloseTimer = null;
     }, delay);
   }
@@ -117,9 +130,12 @@
         }
       });
 
-      // Hover handlers with delay buffer
+      // Hover handlers with hover-intent pattern (desktop only)
       btn.addEventListener('mouseenter', () => {
+        // Mark trigger as hovered
+        btn.dataset.hovering = 'true';
         cancelCloseNavPanel();
+
         // Open on hover (desktop only, non-touch)
         if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
           const isOpen = btn.getAttribute('aria-expanded') === 'true';
@@ -134,17 +150,25 @@
       });
 
       btn.addEventListener('mouseleave', () => {
+        // Mark trigger as not hovered
+        btn.dataset.hovering = 'false';
         // Schedule close with 600ms buffer
+        // Will only close if panel is also not hovered
         scheduleCloseNavPanel(600);
       });
 
       panel.addEventListener('mouseenter', () => {
-        // Cancel close when mouse enters panel
+        // Mark panel as hovered
+        panel.dataset.hovering = 'true';
+        // Cancel any pending close
         cancelCloseNavPanel();
       });
 
       panel.addEventListener('mouseleave', () => {
-        // Schedule close when mouse leaves panel
+        // Mark panel as not hovered
+        panel.dataset.hovering = 'false';
+        // Schedule close with 600ms buffer
+        // Will only close if trigger is also not hovered
         scheduleCloseNavPanel(600);
       });
     });
