@@ -247,8 +247,16 @@
         display: none;
       }
 
+      /* Hide mobile topbar icons (account/cart) on desktop - they appear in desktop utility bar */
       .tno-header__icons {
-        display: none;
+        display: none !important;
+      }
+    }
+
+    /* Mobile: hide mobile topbar icons (they appear in bottom tab bar) */
+    @media (max-width: 768px) {
+      .tno-header__icons {
+        display: none !important;
       }
     }
   }
@@ -1033,7 +1041,7 @@
 
         {%- comment %} Secondary Navigation Section {%- endcomment %}
         <li class="tno-mobile-item tno-mobile-divider" aria-hidden="true"></li>
-        
+
         {%- comment %} DROPS {%- endcomment %}
         <li class="tno-mobile-item">
           <a href="{{ pages['drops'].url | default: '/pages/drops' }}" class="tno-mobile-link">DROPS</a>

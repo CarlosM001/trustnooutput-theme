@@ -2348,11 +2348,6 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     display: flex;
   }
 
-  /* Hide mobile header account/cart icons (duplicated in bottom tab bar) */
-  .tno-header__icons {
-    display: none !important;
-  }
-
   /* FINAL Z-index layering strategy for mobile:
      Layer stack (bottom to top):
      1. Page content: z-index auto
