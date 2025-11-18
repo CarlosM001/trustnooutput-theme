@@ -106,7 +106,6 @@
     },
     "related-products": {
       "type": "related-products",
-      "disabled": true,
       "settings": {
         "heading": "Related products",
         "heading_size": "h2",
