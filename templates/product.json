@@ -32,7 +32,9 @@
         },
         "size_chart_WeLp9A": {
           "type": "size_chart",
-          "settings": {}
+          "settings": {
+            "show_find_my_size": true
+          }
         },
         "quantity_PM6FPf": {
           "type": "quantity",
@@ -41,7 +43,9 @@
         "buy_buttons_TfBUKX": {
           "type": "buy_buttons",
           "settings": {
-            "show_dynamic_checkout": true
+            "button_text": "ADD TO CART",
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": false
           }
         },
         "trust_cluster_fDQ6eG": {
@@ -57,7 +61,9 @@
         },
         "delivery_4UbJwh": {
           "type": "delivery",
-          "settings": {}
+          "settings": {
+            "payment_provider": "Klarna/Afterpay"
+          }
         },
         "description_dBjM93": {
           "type": "description",
@@ -91,8 +97,29 @@
         "enable_sticky_info": true,
         "image_zoom": "lightbox",
         "color_scheme": "",
+        "show_story_section": true,
+        "show_specs_section": true,
+        "show_reviews_section": true,
         "padding_top": 36,
         "padding_bottom": 36
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "Related products",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "padding_top": 8,
+        "padding_bottom": 28
       }
     },
     "main": {
@@ -167,29 +194,11 @@
         "padding_top": 16,
         "padding_bottom": 0
       }
-    },
-    "related-products": {
-      "type": "related-products",
-      "settings": {
-        "heading": "Related products",
-        "heading_size": "h2",
-        "products_to_show": 4,
-        "columns_desktop": 4,
-        "columns_mobile": "2",
-        "color_scheme": "scheme-1",
-        "image_ratio": "square",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "padding_top": 8,
-        "padding_bottom": 28
-      }
     }
   },
   "order": [
     "main_product_tno_4ktiFN",
-    "main",
-    "related-products"
+    "related-products",
+    "main"
   ]
 }
