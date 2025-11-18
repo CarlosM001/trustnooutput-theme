@@ -44,9 +44,16 @@
             "show_dynamic_checkout": true
           }
         },
-        "trust_badges_fDQ6eG": {
-          "type": "trust_badges",
-          "settings": {}
+        "trust_cluster_fDQ6eG": {
+          "type": "trust_cluster",
+          "settings": {
+            "show_material": true,
+            "show_fit": true,
+            "show_print": true,
+            "show_fulfillment": true,
+            "show_care": true,
+            "show_static_trust": true
+          }
         },
         "delivery_4UbJwh": {
           "type": "delivery",
@@ -73,7 +80,7 @@
         "size_chart_WeLp9A",
         "quantity_PM6FPf",
         "buy_buttons_TfBUKX",
-        "trust_badges_fDQ6eG",
+        "trust_cluster_fDQ6eG",
         "delivery_4UbJwh",
         "description_dBjM93",
         "sharing_fHVgkW",
