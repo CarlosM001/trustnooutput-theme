@@ -1667,7 +1667,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 .mobile-menu {
   position: fixed;
   inset: var(--tno-mobile-header-height) 0 0 0; /* Start below mobile header */
-  background: rgb(0 0 0 / 98%);
+  background: #000; /* Opaque to eliminate any mid-screen seam */
   backdrop-filter: blur(20px);
   z-index: 999; /* Below header so search bar stays visible */
   opacity: 0;
