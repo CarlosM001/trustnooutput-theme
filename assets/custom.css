@@ -4845,3 +4845,142 @@ button[name='more_payment_options']:hover,
     font-size: 0.8rem !important;
   }
 }
+
+/* ==========================================================================
+   ULTRA-SPECIFIC OVERRIDES: Maximum Specificity for Preview/Live Parity
+   ========================================================================== */
+
+/* Product Title - Nuclear option with body context */
+body .tno-product__above-fold .tno-product__info-column .tno-product__header .tno-product__title,
+#MainContent .tno-product__title,
+.product .tno-product__title,
+section .tno-product__title {
+  font-family: var(--font-heading-family) !important;
+  font-size: clamp(1.75rem, 4vw, 2.5rem) !important;
+  font-weight: 700 !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.02em !important;
+  color: var(--color-base-text) !important;
+}
+
+/* Subtitle - Maximum specificity */
+body .tno-product__subtitle,
+#MainContent .tno-product__subtitle,
+.product .tno-product__subtitle {
+  font-family: var(--font-mono, ui-monospace, 'SF Mono', Menlo, Monaco, 'Courier New', monospace) !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: rgb(0 255 255 / 80%) !important;
+}
+
+/* Quantity - Ultra-specific */
+body .tno-product__quantity .tno-product__quantity-label,
+#MainContent label[for*='Quantity'],
+.product-form label[for*='Quantity'] {
+  font-family: var(--font-mono, ui-monospace, monospace) !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: rgb(255 255 255 / 70%) !important;
+}
+
+/* Quantity Buttons - Body-level override */
+body .quantity__button,
+#MainContent .quantity__button,
+.product-form .quantity__button {
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  font-size: 1.25rem !important;
+}
+
+/* Specifications - Maximum context */
+body .tno-spec__list,
+#MainContent .tno-spec__list,
+.product .tno-spec__list {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 1.5rem 0 !important;
+}
+
+body .tno-spec__row,
+#MainContent .tno-spec__row {
+  display: grid !important;
+  grid-template-columns: 140px 1fr !important;
+  gap: 1rem !important;
+  padding: 0.75rem 0 !important;
+  border-bottom: 1px solid rgb(255 255 255 / 10%) !important;
+}
+
+body .tno-spec__term,
+#MainContent .tno-spec__term {
+  font-family: var(--font-mono, ui-monospace, monospace) !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: rgb(0 255 255 / 80%) !important;
+}
+
+body .tno-spec__value,
+#MainContent .tno-spec__value {
+  font-family: var(--font-body-family) !important;
+  font-size: 0.875rem !important;
+  font-weight: 400 !important;
+  color: rgb(255 255 255 / 85%) !important;
+}
+
+/* Payment Options - Maximum override */
+body .shopify-payment-button__more-options,
+body button[name='more_payment_options'],
+#MainContent .shopify-payment-button__more-options {
+  font-family: var(--font-body-family) !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  text-decoration: underline !important;
+  color: var(--color-base-text) !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0.75rem 0 !important;
+  text-align: center !important;
+}
+
+/* Shopify Dynamic Buttons - Force font consistency */
+body .shopify-payment-button__button,
+body .shopify-payment-button__button--unbranded,
+#MainContent .shopify-payment-button__button {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+/* Buy Button Text */
+body .product-form__submit,
+#MainContent .product-form__submit,
+.product-form button[type='submit'] {
+  font-family: var(--font-body-family) !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+}
+
+/* Trust Cluster Items */
+body .tno-product__trust-item,
+#MainContent .tno-product__trust-item {
+  font-family: var(--font-body-family) !important;
+  font-size: 0.875rem !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+}
+
+body .tno-product__trust-item strong,
+#MainContent .tno-product__trust-item strong {
+  font-weight: 600 !important;
+  letter-spacing: 0.05em !important;
+}
