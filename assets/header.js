@@ -63,7 +63,7 @@
     }
   }
 
-  function scheduleCloseNavPanel(delay = 300) {
+  function scheduleCloseNavPanel(delay = 600) {
     if (STATE.hoverCloseTimer) {
       clearTimeout(STATE.hoverCloseTimer);
     }
@@ -134,8 +134,8 @@
       });
 
       btn.addEventListener('mouseleave', () => {
-        // Schedule close with 300ms buffer
-        scheduleCloseNavPanel(300);
+        // Schedule close with 600ms buffer
+        scheduleCloseNavPanel(600);
       });
 
       panel.addEventListener('mouseenter', () => {
@@ -145,7 +145,7 @@
 
       panel.addEventListener('mouseleave', () => {
         // Schedule close when mouse leaves panel
-        scheduleCloseNavPanel(300);
+        scheduleCloseNavPanel(600);
       });
     });
 
