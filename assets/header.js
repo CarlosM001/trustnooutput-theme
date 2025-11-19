@@ -161,9 +161,9 @@
       navItem.addEventListener('mouseleave', () => {
         // Mark parent item as not hovered
         navItem.dataset.hovering = 'false';
-        // Schedule close with 600ms buffer
+        // Schedule close with ~750ms buffer (improves diagonal travel)
         // Will only close if panel is also not hovered
-        scheduleCloseNavPanel(600);
+        scheduleCloseNavPanel(750);
       });
 
       panel.addEventListener('mouseenter', () => {
@@ -176,9 +176,9 @@
       panel.addEventListener('mouseleave', () => {
         // Mark panel as not hovered
         panel.dataset.hovering = 'false';
-        // Schedule close with 600ms buffer
+        // Schedule close with ~750ms buffer (improves diagonal travel)
         // Will only close if parent nav item is also not hovered
-        scheduleCloseNavPanel(600);
+        scheduleCloseNavPanel(750);
       });
     });
 

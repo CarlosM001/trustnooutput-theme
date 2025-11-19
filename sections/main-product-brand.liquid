@@ -53,6 +53,8 @@
       <div class="brand-product__media-column">
         {%- comment -%} Main Featured Media {%- endcomment -%}
         <div class="brand-product__media-main" id="BrandMediaMain-{{ section.id }}">
+          {%- comment -%} Label System corner hook (no content; styling via CSS) {%- endcomment -%}
+          <div class="label-system label-tech label-corner" aria-hidden="true"></div>
           {%- if product.featured_media -%}
             <img
               src="{{ product.featured_media | image_url: width: 1200 }}"
@@ -282,7 +284,7 @@
         -%}
         {%- if story_content != blank -%}
           <section class="brand-details__section" aria-labelledby="brand-product-story-heading">
-            <h2 id="brand-product-story-heading" class="brand-details__heading">PRODUCT.STORY</h2>
+            <h2 id="brand-product-story-heading" class="brand-details__heading brand-section-heading label-system label-tech">PRODUCT.STORY</h2>
             <div class="brand-details__content">
               {{ story_content }}
             </div>
@@ -319,7 +321,7 @@
         
         {%- if has_any_specs -%}
           <section class="brand-details__section" aria-labelledby="brand-product-specs-heading">
-            <h2 id="brand-product-specs-heading" class="brand-details__heading">SPECIFICATIONS</h2>
+            <h2 id="brand-product-specs-heading" class="brand-details__heading brand-section-heading label-system label-tech">SPECIFICATIONS</h2>
             <dl class="brand-specs">
               {%- if has_material -%}
                 <div class="brand-specs__item">

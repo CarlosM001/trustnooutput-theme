@@ -6228,3 +6228,212 @@ body .tno-product__trust-item strong,
 /* ==========================================================================
    END BRAND-NEUTRAL DESIGN SYSTEM
    ========================================================================== */
+
+/* ==========================================================================
+   BRAND NEUTRAL – CYBER-TECH MICRO-INTERACTIONS & LABEL SYSTEM (V3+)
+   Scope: Product, Collection, Global Interactive Elements
+   ========================================================================== */
+
+/* Part 1 — Micro-interactions: shared transition baseline */
+.brand-button,
+.brand-badge,
+.brand-section-heading,
+.brand-specs__item,
+.brand-accordion,
+.brand-accordion__summary,
+.brand-trust-badge,
+.brand-trust-item,
+.brand-product__thumb-button {
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+}
+
+/* Buttons – hover/active interactions (safety baseline across all variants) */
+.brand-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+.brand-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Badges / chips */
+.brand-badge:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.15);
+  border-color: rgba(0, 240, 255, 0.3);
+}
+
+/* Trust rows: support both .brand-trust-badge and .brand-trust-item */
+.brand-trust-badge:hover,
+.brand-trust-item:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.12);
+  border-color: rgba(0, 240, 255, 0.25);
+}
+
+/* Accordion summary lift for better affordance */
+.brand-accordion__summary:hover {
+  transform: translateY(-2px);
+}
+
+/* Specs items: add left accent + gentle bg on hover */
+.brand-specs__item {
+  position: relative;
+}
+.brand-specs__item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: transparent;
+  transition: background 0.16s ease;
+}
+.brand-specs__item:hover::before {
+  background: rgba(0, 240, 255, 0.35);
+}
+.brand-specs__item:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Part 2 — Label System (neutral, reusable) */
+.label-system {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--brand-text-muted);
+  position: relative;
+}
+.label-system:empty {
+  display: none; /* Avoid layout gaps when used as a hook */
+}
+.label-system--small {
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+}
+.label-inline {
+  display: inline-flex;
+}
+.label-tech {
+  color: var(--brand-accent);
+}
+.label-tech::after {
+  content: '';
+  height: 1px;
+  width: 28px;
+  background: rgba(0, 240, 255, 0.35);
+  box-shadow: 0 0 6px rgba(0, 240, 255, 0.2);
+  margin-left: 0.5rem;
+}
+.label-tech::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(0, 240, 255, 0.2);
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+}
+.label--prefix::before {
+  content: "//";
+  color: var(--brand-text-soft);
+  margin-right: 0.25rem;
+  box-shadow: none;
+  width: auto;
+  height: auto;
+  background: none;
+}
+
+/* Corner placement helper for hero overlays */
+.label-corner {
+  position: absolute;
+  top: var(--brand-space-md);
+  left: var(--brand-space-md);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Part 2b — Section heading shared class (alias) */
+.brand-section-heading {
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: var(--brand-tracking-wider);
+  color: var(--brand-accent);
+  padding-bottom: var(--brand-space-sm);
+  margin: 0 0 var(--brand-space-lg);
+}
+.brand-section-heading::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(to right, rgba(0, 240, 255, 1) 0%, rgba(0, 240, 255, 0.7) 100%);
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.6), 0 1px 16px rgba(0, 240, 255, 0.3);
+  filter: blur(0.5px);
+  transition: all var(--brand-transition-base);
+}
+.brand-section-heading:hover {
+  color: color-mix(in srgb, var(--brand-accent) 90%, white);
+}
+.brand-section-heading:hover::after {
+  width: 120px;
+  background: linear-gradient(to right, rgba(0, 240, 255, 1) 0%, rgba(0, 240, 255, 0.8) 100%);
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.8), 0 1px 20px rgba(0, 240, 255, 0.4);
+}
+
+/* Part 3 — Collection Page Upgrades */
+/* Unified dark card behind banner */
+.brand-collection__banner .collection-hero__inner {
+  background: var(--brand-surface);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--brand-radius-md);
+  padding: var(--brand-space-xl);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Collection title underline via shared heading class */
+.collection-hero__title.brand-section-heading {
+  color: var(--brand-text-main);
+  letter-spacing: var(--brand-tracking-wide);
+}
+
+/* Product grid enhancements */
+.product-grid-container {
+  position: relative;
+}
+.product-grid-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: linear-gradient(to bottom, rgba(12, 15, 20, 0.8), rgba(12, 15, 20, 0));
+  pointer-events: none;
+  z-index: 1;
+}
+.product-grid .card {
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+  will-change: transform;
+}
+.product-grid .card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35), 0 0 18px rgba(0, 240, 255, 0.18);
+}
+
+/* Part 5 — Reduced motion: extend list */
+@media (prefers-reduced-motion: reduce) {
+  .brand-section-heading,
+  .label-system,
+  .product-grid .card {
+    transition: none !important;
+    transform: none !important;
+    animation: none !important;
+    box-shadow: none !important;
+  }
+}
