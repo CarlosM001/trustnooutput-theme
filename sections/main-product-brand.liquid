@@ -1,0 +1,368 @@
+{% comment %}
+  BRAND-NEUTRAL CYBER-TECH PRODUCT SECTION
+  
+  Architecture:
+  - Desktop: 2-column grid (media left ~55%, info right ~45%)
+  - Mobile: Single column with sticky CTA
+  - Cyber-tech streetwear aesthetic (dark UI, neon accents, minimal glitch)
+  - Brand-neutral class naming: .brand-product__*
+  - Metafield-driven content
+  - Accessible, semantic HTML
+{% endcomment %}
+
+<section
+  id="MainProduct-{{ section.id }}"
+  class="brand-product section-{{ section.id }}-padding"
+  data-section="{{ section.id }}"
+  data-product-id="{{ product.id }}"
+>
+  {%- comment -%} Core Stylesheets {%- endcomment -%}
+  {{ 'component-price.css' | asset_url | stylesheet_tag }}
+  {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
+  {{ 'component-product-variant-picker.css' | asset_url | stylesheet_tag }}
+  {{ 'component-swatch-input.css' | asset_url | stylesheet_tag }}
+  {{ 'component-swatch.css' | asset_url | stylesheet_tag }}
+
+  {%- comment -%} Section Padding {%- endcomment -%}
+  {%- style -%}
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    }
+
+    @media screen and (min-width: 750px) {
+      .section-{{ section.id }}-padding {
+        padding-top: {{ section.settings.padding_top }}px;
+        padding-bottom: {{ section.settings.padding_bottom }}px;
+      }
+    }
+  {%- endstyle -%}
+
+  {%- comment -%} Core Scripts {%- endcomment -%}
+  <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+  {%- assign product_form_id = 'product-form-' | append: section.id -%}
+
+  <div class="page-width">
+    <div class="brand-product__grid">
+      
+      {%- comment -%} ========== LEFT COLUMN: MEDIA ========== {%- endcomment -%}
+      <div class="brand-product__media-column">
+        {%- comment -%} Main Featured Media {%- endcomment -%}
+        <div class="brand-product__media-main" id="BrandMediaMain-{{ section.id }}">
+          {%- if product.featured_media -%}
+            <img
+              src="{{ product.featured_media | image_url: width: 1200 }}"
+              alt="{{ product.featured_media.alt | escape }}"
+              class="brand-product__main-image"
+              width="{{ product.featured_media.width }}"
+              height="{{ product.featured_media.height }}"
+              loading="eager"
+            >
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} Thumbnail Gallery {%- endcomment -%}
+        {%- if product.media.size > 1 -%}
+          <div class="brand-product__thumbs">
+            {%- for media in product.media limit: 6 -%}
+              <button
+                type="button"
+                class="brand-product__thumb-button{% if forloop.first %} is-active{% endif %}"
+                data-media-id="{{ media.id }}"
+                data-media-position="{{ forloop.index }}"
+                aria-label="View image {{ forloop.index }}"
+              >
+                {%- if media.media_type == 'image' -%}
+                  <img
+                    src="{{ media | image_url: width: 200 }}"
+                    alt="{{ media.alt | escape }}"
+                    width="100"
+                    height="100"
+                    loading="lazy"
+                  >
+                {%- elsif media.media_type == 'video' -%}
+                  <img
+                    src="{{ media.preview_image | image_url: width: 200 }}"
+                    alt="{{ media.alt | escape }}"
+                    width="100"
+                    height="100"
+                    loading="lazy"
+                  >
+                  <span class="brand-product__thumb-play-icon">▶</span>
+                {%- endif -%}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} ========== RIGHT COLUMN: INFO ========== {%- endcomment -%}
+      <div class="brand-product__info-column">
+        
+        {%- comment -%} Eyebrow: Badges {%- endcomment -%}
+        <div class="brand-product__eyebrow">
+          <span class="brand-badge brand-badge--primary">{{ product.vendor | escape }}</span>
+          {%- if product.tags contains 'limited-drop' -%}
+            <span class="brand-badge brand-badge--accent">LIMITED DROP</span>
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} Product Title (H1) {%- endcomment -%}
+        <h1 class="brand-product__title">{{ product.title | escape }}</h1>
+
+        {%- comment -%} Price Block {%- endcomment -%}
+        <div class="brand-product__price-block">
+          {% render 'price', product: product, use_variant: true, show_badges: true %}
+        </div>
+
+        {%- comment -%} Shipping Meta Row {%- endcomment -%}
+        <div class="brand-product__shipping-meta">
+          <span>Worldwide shipping</span>
+          <span class="brand-dot">•</span>
+          <span>14-day returns</span>
+        </div>
+
+        {%- comment -%} Product Form {%- endcomment -%}
+        <product-form class="brand-product__form">
+          {%- form 'product', product, id: product_form_id, novalidate: 'novalidate' -%}
+            <input
+              type="hidden"
+              name="id"
+              value="{{ product.selected_or_first_available_variant.id }}"
+              class="product-variant-id"
+              {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+            >
+
+            {%- comment -%} Variant Picker: Chip/Pill Style {%- endcomment -%}
+            {%- unless product.has_only_default_variant -%}
+              <div class="brand-product__variants">
+                {% render 'product-variant-picker',
+                  product: product,
+                  block: section.blocks[0],
+                  product_form_id: product_form_id
+                %}
+              </div>
+            {%- endunless -%}
+
+            {%- comment -%} Primary CTA: Add to Cart {%- endcomment -%}
+            <div class="brand-product__cta-row">
+              <button
+                type="submit"
+                name="add"
+                class="brand-button brand-button--primary brand-button--full"
+                {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+              >
+                <span>
+                  {%- if product.selected_or_first_available_variant.available == false -%}
+                    SOLD OUT
+                  {%- else -%}
+                    ADD TO CART
+                  {%- endif -%}
+                </span>
+              </button>
+            </div>
+
+            {%- comment -%} Express Checkout Buttons {%- endcomment -%}
+            {%- if section.settings.show_dynamic_checkout -%}
+              <div class="brand-product__express-checkout">
+                {{ form | payment_button }}
+              </div>
+            {%- endif -%}
+          {%- endform -%}
+        </product-form>
+
+        {%- comment -%} Trust Row {%- endcomment -%}
+        <div class="brand-product__trust-row">
+          <div class="brand-trust-badge">
+            <svg class="brand-trust-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <span>Secure checkout</span>
+          </div>
+          <div class="brand-trust-badge">
+            <svg class="brand-trust-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            <span>Encrypted payment</span>
+          </div>
+        </div>
+
+        {%- comment -%} Key Points (from metafield) {%- endcomment -%}
+        {%- if product.metafields.custom.key_points.value != blank -%}
+          {%- assign key_points = product.metafields.custom.key_points.value | split: '|' -%}
+          <ul class="brand-product__key-points">
+            {%- for point in key_points -%}
+              <li>{{ point | strip | escape }}</li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- comment -%} Collapsible Accordions {%- endcomment -%}
+        <div class="brand-product__accordions">
+          
+          {%- comment -%} Details / Description {%- endcomment -%}
+          {%- if product.description != blank -%}
+            <details class="brand-accordion" open>
+              <summary class="brand-accordion__summary">
+                <span>DETAILS</span>
+                <svg class="brand-accordion__icon" width="12" height="12" viewBox="0 0 12 12">
+                  <path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </summary>
+              <div class="brand-accordion__content">
+                {{ product.description }}
+              </div>
+            </details>
+          {%- endif -%}
+
+          {%- comment -%} Material & Care {%- endcomment -%}
+          <details class="brand-accordion">
+            <summary class="brand-accordion__summary">
+              <span>MATERIAL & CARE</span>
+              <svg class="brand-accordion__icon" width="12" height="12" viewBox="0 0 12 12">
+                <path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </summary>
+            <div class="brand-accordion__content">
+              {%- if product.metafields.custom.material.value != blank -%}
+                <p><strong>Material:</strong> {{ product.metafields.custom.material.value | escape }}</p>
+              {%- endif -%}
+              {%- if product.metafields.custom.care_instructions.value != blank -%}
+                <p><strong>Care:</strong> {{ product.metafields.custom.care_instructions.value | escape }}</p>
+              {%- else -%}
+                <p>Machine wash cold. Tumble dry low. Do not iron on print.</p>
+              {%- endif -%}
+            </div>
+          </details>
+
+          {%- comment -%} Shipping & Returns {%- endcomment -%}
+          <details class="brand-accordion">
+            <summary class="brand-accordion__summary">
+              <span>SHIPPING & RETURNS</span>
+              <svg class="brand-accordion__icon" width="12" height="12" viewBox="0 0 12 12">
+                <path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </summary>
+            <div class="brand-accordion__content">
+              {%- if product.metafields.custom.shipping_info.value != blank -%}
+                {{ product.metafields.custom.shipping_info.value }}
+              {%- else -%}
+                <p>Free worldwide shipping on orders over $100.</p>
+                <p>Standard delivery: 5-7 business days.</p>
+                <p>Express delivery: 2-3 business days.</p>
+                <p>14-day return policy. Items must be unworn and in original condition.</p>
+              {%- endif -%}
+            </div>
+          </details>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Minimal JS for Thumbnail Switching {%- endcomment -%}
+  <script>
+    (function() {
+      const mainImage = document.getElementById('BrandMediaMain-{{ section.id }}');
+      const thumbButtons = document.querySelectorAll('.brand-product__thumb-button');
+      
+      if (!mainImage || !thumbButtons.length) return;
+
+      thumbButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          // Remove active class from all
+          thumbButtons.forEach(btn => btn.classList.remove('is-active'));
+          // Add active to clicked
+          this.classList.add('is-active');
+          
+          // Get media data
+          const mediaId = this.dataset.mediaId;
+          const mediaPosition = this.dataset.mediaPosition;
+          
+          // Find the media in product.media
+          {%- assign media_json = '' -%}
+          {%- for media in product.media -%}
+            {%- if forloop.first -%}
+              {%- assign media_json = media_json | append: '[' -%}
+            {%- endif -%}
+            {%- assign media_json = media_json | append: '{"id":' | append: media.id | append: ',"src":"' | append: media | image_url: width: 1200 | append: '","alt":"' | append: media.alt | escape | append: '","width":' | append: media.width | append: ',"height":' | append: media.height | append: '}' -%}
+            {%- unless forloop.last -%}
+              {%- assign media_json = media_json | append: ',' -%}
+            {%- endunless -%}
+            {%- if forloop.last -%}
+              {%- assign media_json = media_json | append: ']' -%}
+            {%- endif -%}
+          {%- endfor -%}
+          
+          const productMedia = {{ media_json | default: '[]' }};
+          const selectedMedia = productMedia.find(m => m.id == mediaId);
+          
+          if (selectedMedia) {
+            const img = mainImage.querySelector('img');
+            if (img) {
+              img.src = selectedMedia.src;
+              img.alt = selectedMedia.alt;
+              img.width = selectedMedia.width;
+              img.height = selectedMedia.height;
+            }
+          }
+        });
+      });
+    })();
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "Product (Brand Neutral)",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_dynamic_checkout",
+      "label": "Show express checkout buttons",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product (Brand Neutral)"
+    }
+  ]
+}
+{% endschema %}

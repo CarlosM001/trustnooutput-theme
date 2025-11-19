@@ -5011,3 +5011,554 @@ body .tno-product__trust-item strong,
   font-weight: 600 !important;
   letter-spacing: 0.05em !important;
 }
+
+/* ==========================================================================
+   BRAND-NEUTRAL CYBER-TECH DESIGN SYSTEM
+   For use with main-product-brand.liquid section
+   ========================================================================== */
+
+/* 01) CSS Variables – Neutral "Brand Core" Tokens */
+:root {
+  /* Dark UI Foundation */
+  --brand-bg: #050608;
+  --brand-surface: #0C0F14;
+  --brand-surface-raised: #12161D;
+  --brand-border: #20232B;
+  --brand-border-hover: #2C3038;
+
+  /* Neon Accents */
+  --brand-accent: #00F0FF;       /* Cyan */
+  --brand-accent-alt: #FF00E6;   /* Magenta */
+  --brand-accent-dim: rgba(0, 240, 255, 0.15);
+
+  /* Typography */
+  --brand-text-main: #F5F5F5;
+  --brand-text-muted: #A3A7B5;
+  --brand-text-soft: #7A7F8C;
+  --brand-text-dark: #0A0A0F;
+
+  /* Status Colors */
+  --brand-success: #4ADE80;
+  --brand-warning: #FBBF24;
+  --brand-error: #EF4444;
+
+  /* Spacing Scale */
+  --brand-space-xs: 0.5rem;
+  --brand-space-sm: 0.75rem;
+  --brand-space-md: 1rem;
+  --brand-space-lg: 1.5rem;
+  --brand-space-xl: 2rem;
+  --brand-space-2xl: 3rem;
+
+  /* Border Radius */
+  --brand-radius-sm: 0.5rem;
+  --brand-radius-md: 0.75rem;
+  --brand-radius-lg: 1.25rem;
+  --brand-radius-pill: 999px;
+
+  /* Shadows */
+  --brand-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --brand-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --brand-shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --brand-shadow-glow: 0 0 20px rgba(0, 240, 255, 0.3);
+
+  /* Transitions */
+  --brand-transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --brand-transition-base: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --brand-transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 02) Product Section Root */
+.brand-product {
+  background: var(--brand-bg);
+  color: var(--brand-text-main);
+  font-family: var(--font-body-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 03) Product Grid Layout */
+.brand-product__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--brand-space-xl);
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .brand-product__grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: var(--brand-space-2xl);
+  }
+}
+
+/* 04) MEDIA COLUMN – Left Side */
+.brand-product__media-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--brand-space-lg);
+}
+
+/* Main Featured Media */
+.brand-product__media-main {
+  position: relative;
+  background: radial-gradient(
+    ellipse at 50% 40%,
+    rgba(0, 240, 255, 0.04) 0%,
+    var(--brand-surface) 70%
+  );
+  border: 1px solid rgba(0, 240, 255, 0.07);
+  border-radius: var(--brand-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--brand-shadow-md);
+  transition: border-color var(--brand-transition-base);
+}
+
+.brand-product__media-main:hover {
+  border-color: rgba(0, 240, 255, 0.15);
+}
+
+.brand-product__main-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Thumbnail Gallery */
+.brand-product__thumbs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: var(--brand-space-sm);
+}
+
+@media (min-width: 640px) {
+  .brand-product__thumbs {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+}
+
+.brand-product__thumb-button {
+  position: relative;
+  aspect-ratio: 1;
+  border: 1px solid var(--brand-border);
+  border-radius: var(--brand-radius-sm);
+  background: var(--brand-surface);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all var(--brand-transition-base);
+}
+
+.brand-product__thumb-button:hover {
+  border-color: var(--brand-accent);
+  transform: translateY(-2px);
+}
+
+.brand-product__thumb-button.is-active {
+  border-color: var(--brand-accent);
+  box-shadow: 0 0 0 1px var(--brand-accent), var(--brand-shadow-glow);
+}
+
+.brand-product__thumb-button img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.brand-product__thumb-play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  color: var(--brand-text-main);
+  opacity: 0.9;
+}
+
+/* 05) INFO COLUMN – Right Side */
+.brand-product__info-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--brand-space-lg);
+}
+
+@media (min-width: 768px) {
+  .brand-product__info-column {
+    position: sticky;
+    top: var(--brand-space-xl);
+  }
+}
+
+/* Eyebrow: Badges */
+.brand-product__eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--brand-space-xs);
+}
+
+.brand-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 0.875rem;
+  border: 1px solid var(--brand-border);
+  border-radius: var(--brand-radius-pill);
+  background: var(--brand-surface);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--brand-text-muted);
+  transition: all var(--brand-transition-fast);
+}
+
+.brand-badge--primary {
+  color: var(--brand-text-main);
+}
+
+.brand-badge--accent {
+  border-color: var(--brand-accent);
+  color: var(--brand-accent);
+  background: var(--brand-accent-dim);
+}
+
+/* Product Title */
+.brand-product__title {
+  font-family: var(--font-heading-family, inherit);
+  font-size: clamp(1.75rem, 5vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--brand-text-main);
+  margin: 0;
+}
+
+/* Price Block */
+.brand-product__price-block {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--brand-text-main);
+}
+
+/* Shipping Meta Row */
+.brand-product__shipping-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--brand-space-sm);
+  font-size: 0.875rem;
+  color: var(--brand-text-soft);
+}
+
+.brand-dot {
+  opacity: 0.5;
+}
+
+/* 06) FORM & VARIANTS */
+.brand-product__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--brand-space-lg);
+}
+
+.brand-product__variants {
+  display: flex;
+  flex-direction: column;
+  gap: var(--brand-space-md);
+}
+
+/* Variant Chips (if using custom chip markup) */
+.brand-chip {
+  display: inline-flex;
+  position: relative;
+}
+
+.brand-chip__input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.brand-chip__label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.625rem 1.25rem;
+  border: 1px solid var(--brand-border);
+  border-radius: var(--brand-radius-pill);
+  background: var(--brand-surface);
+  color: var(--brand-text-main);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--brand-transition-fast);
+  user-select: none;
+}
+
+.brand-chip__label:hover {
+  border-color: var(--brand-accent);
+  background: var(--brand-surface-raised);
+}
+
+.brand-chip__input:checked + .brand-chip__label {
+  border-color: var(--brand-accent);
+  background: var(--brand-accent);
+  color: var(--brand-text-dark);
+  box-shadow: var(--brand-shadow-glow);
+}
+
+.brand-chip__input:disabled + .brand-chip__label {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* 07) BUTTONS */
+.brand-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--brand-space-sm);
+  padding: 0.875rem 1.75rem;
+  border: 2px solid transparent;
+  border-radius: var(--brand-radius-pill);
+  font-family: inherit;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--brand-transition-base);
+  user-select: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.brand-button:focus-visible {
+  outline: 2px solid var(--brand-accent);
+  outline-offset: 2px;
+}
+
+.brand-button--primary {
+  background: var(--brand-accent);
+  color: var(--brand-text-dark);
+  box-shadow: var(--brand-shadow-md);
+}
+
+.brand-button--primary:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--brand-accent) 90%, white);
+  transform: translateY(-2px);
+  box-shadow: var(--brand-shadow-lg), var(--brand-shadow-glow);
+}
+
+.brand-button--primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.brand-button--primary:disabled {
+  background: var(--brand-surface-raised);
+  color: var(--brand-text-soft);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.brand-button--full {
+  width: 100%;
+}
+
+/* CTA Row */
+.brand-product__cta-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--brand-space-md);
+}
+
+/* Express Checkout */
+.brand-product__express-checkout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--brand-space-sm);
+}
+
+.brand-product__express-checkout .shopify-payment-button__button {
+  border-radius: var(--brand-radius-pill) !important;
+  transition: all var(--brand-transition-base);
+}
+
+.brand-product__express-checkout .shopify-payment-button__button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+/* 08) TRUST ROW */
+.brand-product__trust-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--brand-space-sm);
+  padding-top: var(--brand-space-md);
+  border-top: 1px dashed var(--brand-border);
+}
+
+.brand-trust-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px dashed var(--brand-border);
+  border-radius: var(--brand-radius-pill);
+  font-size: 0.8125rem;
+  color: var(--brand-text-muted);
+}
+
+.brand-trust-icon {
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+/* 09) KEY POINTS */
+.brand-product__key-points {
+  display: flex;
+  flex-direction: column;
+  gap: var(--brand-space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.brand-product__key-points li {
+  position: relative;
+  padding-left: 1.5rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--brand-text-muted);
+}
+
+.brand-product__key-points li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--brand-accent);
+  font-weight: 600;
+}
+
+/* 10) ACCORDIONS */
+.brand-product__accordions {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--brand-border);
+  margin-top: var(--brand-space-lg);
+}
+
+.brand-accordion {
+  border-bottom: 1px solid var(--brand-border);
+}
+
+.brand-accordion__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--brand-space-lg) 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--brand-text-main);
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+}
+
+.brand-accordion__summary::-webkit-details-marker {
+  display: none;
+}
+
+.brand-accordion__summary:hover {
+  color: var(--brand-accent);
+}
+
+.brand-accordion__icon {
+  flex-shrink: 0;
+  transition: transform var(--brand-transition-base);
+}
+
+.brand-accordion[open] .brand-accordion__icon {
+  transform: rotate(45deg);
+}
+
+.brand-accordion__content {
+  padding-bottom: var(--brand-space-lg);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--brand-text-muted);
+}
+
+.brand-accordion__content p {
+  margin: 0 0 var(--brand-space-md);
+}
+
+.brand-accordion__content p:last-child {
+  margin-bottom: 0;
+}
+
+.brand-accordion__content strong {
+  color: var(--brand-text-main);
+  font-weight: 600;
+}
+
+/* 11) MOBILE ADJUSTMENTS */
+@media (max-width: 767px) {
+  .brand-product {
+    padding-bottom: 5rem; /* Space for sticky CTA */
+  }
+
+  .brand-product__media-main {
+    border-radius: var(--brand-radius-md);
+  }
+
+  .brand-product__title {
+    font-size: 1.75rem;
+  }
+
+  /* Sticky CTA on Mobile */
+  .brand-product__cta-row {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: var(--brand-space-md);
+    background: linear-gradient(
+      to top,
+      var(--brand-bg) 0%,
+      var(--brand-bg) 70%,
+      transparent 100%
+    );
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* 12) ACCESSIBILITY & FOCUS STATES */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.brand-button:focus-visible,
+.brand-chip__label:focus-visible,
+.brand-accordion__summary:focus-visible {
+  outline: 2px solid var(--brand-accent);
+  outline-offset: 2px;
+}
+
+/* 13) PLACEHOLDER / LOADING STATES */
+.brand-product__media-main .placeholder-svg {
+  width: 100%;
+  height: auto;
+  min-height: 400px;
+  background: var(--brand-surface);
+}
+
+/* ==========================================================================
+   END BRAND-NEUTRAL DESIGN SYSTEM
+   ========================================================================== */
