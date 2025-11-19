@@ -5022,6 +5022,9 @@ body .tno-product__trust-item strong,
 
 /* 01) CSS Variables – Neutral "Brand Core" Tokens */
 :root {
+  /* Smooth scroll for anchor navigation within brand sections */
+  scroll-behavior: smooth;
+  
   /* Dark UI Foundation */
   --brand-bg: #050608;
   --brand-surface: #0C0F14;
@@ -5243,7 +5246,14 @@ body .tno-product__trust-item strong,
   letter-spacing: var(--brand-tracking-wide);
   text-transform: uppercase;
   color: var(--brand-text-muted);
-  transition: all var(--brand-transition-fast);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+  cursor: default;
+}
+
+.brand-badge:hover {
+  transform: scale(1.02);
+  border-color: rgba(0, 240, 255, 0.3);
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.15);
 }
 
 .brand-badge--primary {
@@ -5254,6 +5264,11 @@ body .tno-product__trust-item strong,
   border-color: var(--brand-accent);
   color: var(--brand-accent);
   background: var(--brand-accent-dim);
+}
+
+.brand-badge--accent:hover {
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.25);
+  border-color: var(--brand-accent);
 }
 
 /* TYPOGRAPHY HIERARCHY V2 */
@@ -5334,20 +5349,23 @@ body .tno-product__trust-item strong,
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all var(--brand-transition-fast);
+  transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
   user-select: none;
 }
 
 .brand-chip__label:hover {
   border-color: var(--brand-accent);
   background: var(--brand-surface-raised);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 0 12px rgba(0, 240, 255, 0.15);
 }
 
 .brand-chip__input:checked + .brand-chip__label {
   border-color: var(--brand-accent);
   background: var(--brand-accent);
   color: var(--brand-text-dark);
-  box-shadow: var(--brand-shadow-glow);
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.3), var(--brand-shadow-glow);
+  transform: translateY(-1px);
 }
 
 .brand-chip__input:disabled + .brand-chip__label {
@@ -5355,7 +5373,7 @@ body .tno-product__trust-item strong,
   cursor: not-allowed;
 }
 
-/* 07) BUTTONS – Enhanced Micro-Interactions */
+/* 07) BUTTONS – Premium Micro-Interactions */
 .brand-button {
   display: inline-flex;
   align-items: center;
@@ -5370,12 +5388,13 @@ body .tno-product__trust-item strong,
   letter-spacing: var(--brand-tracking-wide);
   text-transform: uppercase;
   cursor: pointer;
-  transition: all var(--brand-transition-base);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease, border-color 0.16s ease;
   user-select: none;
   -webkit-appearance: none;
   appearance: none;
   position: relative;
   overflow: hidden;
+  will-change: transform;
 }
 
 .brand-button:focus-visible {
@@ -5420,6 +5439,38 @@ body .tno-product__trust-item strong,
   transform: none;
 }
 
+/* Secondary button – Outlined style with hover glow */
+.brand-button--secondary {
+  background: transparent;
+  color: var(--brand-accent);
+  border-color: var(--brand-accent);
+  box-shadow: none;
+}
+
+.brand-button--secondary:hover:not(:disabled) {
+  background: rgba(0, 240, 255, 0.05);
+  color: color-mix(in srgb, var(--brand-accent) 90%, white);
+  border-color: color-mix(in srgb, var(--brand-accent) 80%, white);
+  transform: translateY(-1px);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.2),
+    0 0 20px rgba(0, 240, 255, 0.3);
+}
+
+.brand-button--secondary:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.2);
+}
+
+.brand-button--secondary:disabled {
+  background: transparent;
+  color: var(--brand-text-soft);
+  border-color: var(--brand-border);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
 .brand-button--full {
   width: 100%;
 }
@@ -5437,7 +5488,7 @@ body .tno-product__trust-item strong,
   gap: var(--brand-space-sm);
 }
 
-/* Express Checkout */
+/* Express Checkout with subtle hover enhancement */
 .brand-product__express-checkout {
   display: flex;
   flex-direction: column;
@@ -5446,10 +5497,15 @@ body .tno-product__trust-item strong,
 
 .brand-product__express-checkout .shopify-payment-button__button {
   border-radius: var(--brand-radius-pill) !important;
-  transition: all var(--brand-transition-base);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, opacity 0.16s ease !important;
 }
 
 .brand-product__express-checkout .shopify-payment-button__button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.brand-product__express-checkout .shopify-payment-button__button:active {
   transform: translateY(-1px);
   filter: brightness(1.05);
 }
@@ -5472,11 +5528,25 @@ body .tno-product__trust-item strong,
   border-radius: var(--brand-radius-pill);
   font-size: 0.8125rem;
   color: var(--brand-text-muted);
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease, color 0.16s ease;
+  cursor: default;
+}
+
+.brand-trust-badge:hover {
+  transform: scale(1.02);
+  border-color: rgba(0, 240, 255, 0.25);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
+  color: color-mix(in srgb, var(--brand-text-muted) 85%, white);
 }
 
 .brand-trust-icon {
   flex-shrink: 0;
   opacity: 0.7;
+  transition: opacity 0.16s ease;
+}
+
+.brand-trust-badge:hover .brand-trust-icon {
+  opacity: 1;
 }
 
 /* 09) KEY POINTS */
@@ -5823,11 +5893,18 @@ body .tno-product__trust-item strong,
   gap: var(--brand-space-md);
   align-items: baseline;
   padding-bottom: var(--brand-space-md);
+  padding-top: var(--brand-space-md);
+  padding-left: var(--brand-space-sm);
+  padding-right: var(--brand-space-sm);
+  margin-left: calc(var(--brand-space-sm) * -1);
+  margin-right: calc(var(--brand-space-sm) * -1);
   border-bottom: 1px solid var(--brand-border);
-  transition: all var(--brand-transition-fast);
+  border-radius: var(--brand-radius-sm);
+  transition: background 0.16s ease, border-bottom-color 0.16s ease, box-shadow 0.16s ease;
 }
 
 .brand-specs__item:hover {
+  background: rgba(255, 255, 255, 0.02);
   border-bottom-color: var(--brand-accent);
   box-shadow: 0 1px 0 0 rgba(0, 240, 255, 0.4);
 }
@@ -5873,11 +5950,13 @@ body .tno-product__trust-item strong,
   background: var(--brand-surface-raised);
   border: 1px solid var(--brand-border);
   border-radius: var(--brand-radius-sm);
-  transition: border-color var(--brand-transition-fast);
+  transition: border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
 }
 
 .brand-spec__row:hover {
-  border-color: var(--brand-border-hover);
+  border-color: rgba(0, 240, 255, 0.3);
+  background: rgba(255, 255, 255, 0.02);
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.1);
 }
 
 .brand-spec__term {
@@ -6070,13 +6149,48 @@ body .tno-product__trust-item strong,
   color: color-mix(in srgb, var(--brand-accent) 80%, white);
 }
 
-/* 21) ACCESSIBILITY & FOCUS IMPROVEMENTS */
+/* 21) ACCESSIBILITY & REDUCED MOTION SUPPORT */
 @media (prefers-reduced-motion: reduce) {
-  .brand-product *,
-  .brand-product__details * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  /* Disable smooth scrolling */
+  :root,
+  .brand-product,
+  .brand-product__details {
+    scroll-behavior: auto !important;
+  }
+  
+  /* Remove all transforms and animations for users who prefer reduced motion */
+  .brand-button,
+  .brand-badge,
+  .brand-trust-badge,
+  .brand-chip__label,
+  .brand-specs__item,
+  .brand-spec__row,
+  .brand-accordion__summary,
+  .brand-accordion__icon,
+  .brand-product__thumb-button,
+  .brand-details__heading,
+  .brand-details__heading::after {
+    transition: none !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  
+  /* Keep essential color transitions but remove motion */
+  .brand-button,
+  .brand-badge,
+  .brand-trust-badge,
+  .brand-chip__label {
+    transition: background 0.1s ease, border-color 0.1s ease, color 0.1s ease !important;
+  }
+  
+  /* Disable hover box-shadows that create visual movement */
+  .brand-button:hover,
+  .brand-badge:hover,
+  .brand-trust-badge:hover,
+  .brand-chip__label:hover,
+  .brand-specs__item:hover,
+  .brand-spec__row:hover {
+    box-shadow: none !important;
   }
 }
 
