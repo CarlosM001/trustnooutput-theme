@@ -947,6 +947,139 @@ function initVariantTracking() {
   }
 }
 
+/* ==========================================================================
+   MEGA MENU HOVER AUGMENTATION (Update-safe)
+   Purpose: Add mouseleave delay and diagonal-movement buffer without
+   modifying theme HTML or core header logic. Uses neutral selectors.
+   Behavior: Keeps panel "hovering" state true briefly and via a buffer zone
+   so the existing header logic won't close menus prematurely.
+   ========================================================================== */
+function enhanceMegaMenuHover() {
+  try {
+    const nav = document.querySelector(
+      '.mega-menu-container, .header__inline-menu, nav[aria-label="Main menu"], .tno-nav'
+    );
+    if (!nav || nav.dataset.megaHoverEnhanced === 'true') {
+      return;
+    }
+
+    const triggers = nav.querySelectorAll('.mega-menu-trigger, [aria-controls]');
+    if (!triggers.length) {
+      return;
+    }
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const DELAY = prefersReducedMotion ? 650 : 750; // within 650–800ms spec
+
+    let enhancedAny = false;
+
+    triggers.forEach((trigger) => {
+      const panelId = trigger.getAttribute('aria-controls');
+      if (!panelId) {
+        return;
+      }
+      const panel = document.getElementById(panelId);
+      if (!panel || panel.dataset.megaHoverEnhanced === 'true') {
+        return;
+      }
+
+      // Ensure panel is a positioning context
+      if (getComputedStyle(panel).position === 'static') {
+        panel.style.position = 'relative';
+      }
+
+      // Create an invisible buffer zone above and around the panel
+      const buffer = document.createElement('div');
+      buffer.className = 'brand-mega-buffer';
+      Object.assign(buffer.style, {
+        position: 'absolute',
+        top: '-24px',
+        left: '-16px',
+        right: '-16px',
+        height: '48px',
+        pointerEvents: 'auto',
+        background: 'transparent',
+        zIndex: '2',
+      });
+      panel.prepend(buffer);
+
+      let leaveTimeout = null;
+
+      const setHovering = (val) => {
+        try {
+          panel.dataset.hovering = val ? 'true' : 'false';
+          // Propagate to nearest nav item if present (brand-neutral search)
+          const navItem = trigger.closest('li, [role="none"], [data-nav-item], .tno-nav__item');
+          if (navItem) {
+            navItem.dataset.hovering = val ? 'true' : 'false';
+          }
+        } catch {
+          /* noop */
+        }
+      };
+
+      const clearLeave = () => {
+        if (leaveTimeout) {
+          clearTimeout(leaveTimeout);
+          leaveTimeout = null;
+        }
+      };
+
+      const scheduleLeave = () => {
+        clearLeave();
+        leaveTimeout = setTimeout(() => {
+          // Only drop hovering if cursor is not on trigger, panel, or buffer
+          const overTrigger = trigger.matches(':hover');
+          const overPanel = panel.matches(':hover');
+          const overBuffer = buffer.matches(':hover');
+          if (!overTrigger && !overPanel && !overBuffer) {
+            setHovering(false);
+          }
+          leaveTimeout = null;
+        }, DELAY);
+      };
+
+      // Unify handlers across trigger, panel and buffer
+      trigger.addEventListener('mouseenter', () => {
+        clearLeave();
+        setHovering(true);
+      }, { passive: true });
+
+      trigger.addEventListener('mouseleave', scheduleLeave, { passive: true });
+
+      panel.addEventListener('mouseenter', () => {
+        clearLeave();
+        setHovering(true);
+      }, { passive: true });
+
+      panel.addEventListener('mouseleave', scheduleLeave, { passive: true });
+
+      buffer.addEventListener('mouseenter', () => {
+        clearLeave();
+        setHovering(true);
+      }, { passive: true });
+
+      buffer.addEventListener('mouseleave', scheduleLeave, { passive: true });
+
+      panel.dataset.megaHoverEnhanced = 'true';
+      enhancedAny = true;
+    });
+
+    if (enhancedAny) {
+      nav.dataset.megaHoverEnhanced = 'true';
+    }
+  } catch {
+    // Non-fatal: header may not be present on certain templates
+  }
+}
+
+// Initialize mega menu enhancement on DOM ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', enhanceMegaMenuHover);
+} else {
+  enhanceMegaMenuHover();
+}
+
 /**
  * Modal Triggers for Find My Size and Size Chart
  * Placeholders for future app integration
