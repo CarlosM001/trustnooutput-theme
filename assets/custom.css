@@ -5174,16 +5174,23 @@ body .tno-product__trust-item strong,
   overflow: hidden;
   cursor: pointer;
   transition: all var(--brand-transition-base);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .brand-product__thumb-button:hover {
   border-color: var(--brand-accent);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.15),
+    0 0 12px rgba(0, 240, 255, 0.3);
 }
 
 .brand-product__thumb-button.is-active {
   border-color: var(--brand-accent);
-  box-shadow: 0 0 0 1px var(--brand-accent), var(--brand-shadow-glow);
+  box-shadow: 
+    0 0 0 1px var(--brand-accent),
+    0 0 16px rgba(0, 240, 255, 0.5),
+    0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .brand-product__thumb-button img {
@@ -5377,24 +5384,31 @@ body .tno-product__trust-item strong,
   box-shadow: 0 0 0 4px rgba(0, 240, 255, 0.2);
 }
 
-/* Primary CTA – Cyber-tech neon glow on hover */
+/* Primary CTA – V3 Enhanced lift with accent shadow */
 .brand-button--primary {
   background: var(--brand-accent);
   color: var(--brand-text-dark);
-  box-shadow: var(--brand-shadow-md);
+  box-shadow: 
+    var(--brand-shadow-md),
+    0 2px 8px rgba(0, 240, 255, 0.2);
   border-color: var(--brand-accent);
 }
 
 .brand-button--primary:hover:not(:disabled) {
   background: color-mix(in srgb, var(--brand-accent) 90%, white);
   transform: translateY(-2px);
-  box-shadow: var(--brand-shadow-lg), var(--brand-shadow-glow-strong);
+  box-shadow: 
+    0 6px 20px rgba(0, 0, 0, 0.3),
+    0 4px 24px rgba(0, 240, 255, 0.5),
+    0 0 40px rgba(0, 240, 255, 0.3);
   border-color: color-mix(in srgb, var(--brand-accent) 80%, white);
 }
 
 .brand-button--primary:active:not(:disabled) {
-  transform: translateY(0);
-  box-shadow: var(--brand-shadow-sm);
+  transform: translateY(-1px);
+  box-shadow: 
+    var(--brand-shadow-sm),
+    0 2px 12px rgba(0, 240, 255, 0.3);
 }
 
 .brand-button--primary:disabled {
@@ -5688,16 +5702,20 @@ body .tno-product__trust-item strong,
   }
 }
 
-/* Individual sections within details */
+/* Individual sections within details – V3 Enhanced spacing */
 .brand-details__section {
-  margin-bottom: var(--brand-space-2xl);
+  margin-bottom: var(--brand-space-3xl);
 }
 
 .brand-details__section:last-child {
   margin-bottom: 0;
 }
 
-/* H2: Section Headings – Cyber-tech style with neon glow */
+.brand-details__section:first-child {
+  margin-top: 0;
+}
+
+/* H2: Section Headings – V3 Enhanced neon underline with gradient glow */
 .brand-details__heading {
   font-family: var(--font-heading-family, inherit);
   font-size: var(--brand-font-sm);
@@ -5709,9 +5727,10 @@ body .tno-product__trust-item strong,
   padding-bottom: var(--brand-space-md);
   border-bottom: 1px solid var(--brand-border);
   position: relative;
+  transition: color var(--brand-transition-fast);
 }
 
-/* Subtle neon underline glow effect */
+/* Enhanced neon underline with horizontal gradient glow */
 .brand-details__heading::after {
   content: '';
   position: absolute;
@@ -5719,24 +5738,44 @@ body .tno-product__trust-item strong,
   left: 0;
   width: 80px;
   height: 2px;
-  background: var(--brand-accent);
-  box-shadow: 0 0 12px rgba(0, 240, 255, 0.6);
-  transition: width var(--brand-transition-base);
+  background: linear-gradient(
+    to right,
+    rgba(0, 240, 255, 1) 0%,
+    rgba(0, 240, 255, 0.7) 100%
+  );
+  box-shadow: 
+    0 0 8px rgba(0, 240, 255, 0.6),
+    0 1px 16px rgba(0, 240, 255, 0.3);
+  filter: blur(0.5px);
+  transition: all var(--brand-transition-base);
+}
+
+.brand-details__heading:hover {
+  color: color-mix(in srgb, var(--brand-accent) 90%, white);
 }
 
 .brand-details__heading:hover::after {
   width: 120px;
+  background: linear-gradient(
+    to right,
+    rgba(0, 240, 255, 1) 0%,
+    rgba(0, 240, 255, 0.8) 100%
+  );
+  box-shadow: 
+    0 0 12px rgba(0, 240, 255, 0.8),
+    0 1px 20px rgba(0, 240, 255, 0.4);
 }
 
-/* Body Text – Readable, proper contrast */
+/* Body Text – V3 Enhanced readability with brighter contrast */
 .brand-details__content {
   font-size: var(--brand-font-base);
-  line-height: var(--brand-line-relaxed);
-  color: var(--brand-text-muted);
+  line-height: 1.7;
+  color: color-mix(in srgb, var(--brand-text-muted) 90%, white);
 }
 
 .brand-details__content p {
   margin: 0 0 var(--brand-space-md);
+  line-height: 1.7;
 }
 
 .brand-details__content p:last-child {
@@ -5744,7 +5783,7 @@ body .tno-product__trust-item strong,
 }
 
 .brand-details__content strong {
-  color: var(--brand-text-main);
+  color: color-mix(in srgb, var(--brand-text-main) 95%, white);
   font-weight: 600;
 }
 
@@ -5785,11 +5824,12 @@ body .tno-product__trust-item strong,
   align-items: baseline;
   padding-bottom: var(--brand-space-md);
   border-bottom: 1px solid var(--brand-border);
-  transition: border-color var(--brand-transition-fast);
+  transition: all var(--brand-transition-fast);
 }
 
 .brand-specs__item:hover {
   border-bottom-color: var(--brand-accent);
+  box-shadow: 0 1px 0 0 rgba(0, 240, 255, 0.4);
 }
 
 .brand-specs__label {
@@ -5910,10 +5950,10 @@ body .tno-product__trust-item strong,
 
 /* 19) MOBILE-SPECIFIC IMPROVEMENTS & STICKY CTA */
 @media (max-width: 767px) {
-  /* Hero grid on mobile – reduce padding */
+  /* V3 Hero grid on mobile with refined gaps */
   .brand-product__grid {
     padding: var(--brand-space-md);
-    gap: var(--brand-space-lg);
+    gap: var(--brand-space-xl); /* Increased from lg to xl for better breathing room */
   }
 
   /* Media takes full width */
@@ -5931,7 +5971,7 @@ body .tno-product__trust-item strong,
     font-size: var(--brand-font-lg);
   }
 
-  /* Sticky CTA Container on Mobile */
+  /* V3 Enhanced sticky CTA on mobile with refined shadow */
   .brand-product__cta-container {
     position: fixed;
     bottom: 0;
@@ -5945,9 +5985,11 @@ body .tno-product__trust-item strong,
       var(--brand-bg) 85%,
       transparent 100%
     );
-    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 
+      0 -4px 16px rgba(0, 0, 0, 0.6),
+      0 -1px 0 0 rgba(0, 240, 255, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 
   /* Add bottom padding to info column to prevent content hiding */
