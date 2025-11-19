@@ -5013,8 +5013,11 @@ body .tno-product__trust-item strong,
 }
 
 /* ==========================================================================
-   BRAND-NEUTRAL CYBER-TECH DESIGN SYSTEM
+   BRAND-NEUTRAL CYBER-TECH DESIGN SYSTEM V2 (POLISH PASS)
    For use with main-product-brand.liquid section
+   
+   Version: 2.0
+   Focus: Premium typography, refined spacing, proper grid specs, micro-interactions
    ========================================================================== */
 
 /* 01) CSS Variables – Neutral "Brand Core" Tokens */
@@ -5042,13 +5045,36 @@ body .tno-product__trust-item strong,
   --brand-warning: #FBBF24;
   --brand-error: #EF4444;
 
-  /* Spacing Scale */
-  --brand-space-xs: 0.5rem;
-  --brand-space-sm: 0.75rem;
-  --brand-space-md: 1rem;
-  --brand-space-lg: 1.5rem;
-  --brand-space-xl: 2rem;
-  --brand-space-2xl: 3rem;
+  /* Spacing Scale (refined for better hierarchy) */
+  --brand-space-xs: 0.5rem;      /* 8px */
+  --brand-space-sm: 0.75rem;     /* 12px */
+  --brand-space-md: 1rem;        /* 16px */
+  --brand-space-lg: 1.5rem;      /* 24px */
+  --brand-space-xl: 2rem;        /* 32px */
+  --brand-space-2xl: 3rem;       /* 48px */
+  --brand-space-3xl: 4rem;       /* 64px */
+
+  /* Typography Scale (consistent, readable) */
+  --brand-font-xs: 0.75rem;      /* 12px - labels, captions */
+  --brand-font-sm: 0.875rem;     /* 14px - body small, metadata */
+  --brand-font-base: 0.9375rem;  /* 15px - body text */
+  --brand-font-md: 1rem;         /* 16px - body large */
+  --brand-font-lg: 1.125rem;     /* 18px - subheadings */
+  --brand-font-xl: 1.5rem;       /* 24px - price, h3 */
+  --brand-font-2xl: 2rem;        /* 32px - h2, section titles */
+  --brand-font-3xl: 2.5rem;      /* 40px - h1, product title */
+
+  /* Line Heights */
+  --brand-line-tight: 1.2;
+  --brand-line-snug: 1.4;
+  --brand-line-normal: 1.6;
+  --brand-line-relaxed: 1.7;
+
+  /* Letter Spacing */
+  --brand-tracking-tight: -0.02em;
+  --brand-tracking-normal: 0;
+  --brand-tracking-wide: 0.05em;
+  --brand-tracking-wider: 0.1em;
 
   /* Border Radius */
   --brand-radius-sm: 0.5rem;
@@ -5056,13 +5082,14 @@ body .tno-product__trust-item strong,
   --brand-radius-lg: 1.25rem;
   --brand-radius-pill: 999px;
 
-  /* Shadows */
+  /* Shadows (enhanced with glow) */
   --brand-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
   --brand-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
   --brand-shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
   --brand-shadow-glow: 0 0 20px rgba(0, 240, 255, 0.3);
+  --brand-shadow-glow-strong: 0 0 30px rgba(0, 240, 255, 0.5);
 
-  /* Transitions */
+  /* Transitions (micro-interactions) */
   --brand-transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   --brand-transition-base: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   --brand-transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -5204,9 +5231,9 @@ body .tno-product__trust-item strong,
   border: 1px solid var(--brand-border);
   border-radius: var(--brand-radius-pill);
   background: var(--brand-surface);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.05em;
+  font-size: var(--brand-font-xs);
+  font-weight: 600;
+  letter-spacing: var(--brand-tracking-wide);
   text-transform: uppercase;
   color: var(--brand-text-muted);
   transition: all var(--brand-transition-fast);
@@ -5222,31 +5249,41 @@ body .tno-product__trust-item strong,
   background: var(--brand-accent-dim);
 }
 
-/* Product Title */
+/* TYPOGRAPHY HIERARCHY V2 */
+
+/* H1: Product Title – Premium, readable, tech-inspired */
 .brand-product__title {
   font-family: var(--font-heading-family, inherit);
-  font-size: clamp(1.75rem, 5vw, 2.25rem);
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
   font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: var(--brand-line-tight);
+  letter-spacing: var(--brand-tracking-tight);
   color: var(--brand-text-main);
-  margin: 0;
+  margin: 0 0 var(--brand-space-md);
+  text-transform: uppercase;
 }
 
-/* Price Block */
+/* Price Block – Prominent cyan accent */
 .brand-product__price-block {
-  font-size: 1.5rem;
+  font-size: var(--brand-font-xl);
   font-weight: 600;
-  color: var(--brand-text-main);
+  color: var(--brand-accent);
+  margin-bottom: var(--brand-space-sm);
 }
 
-/* Shipping Meta Row */
+.brand-product__price-block .price {
+  color: var(--brand-accent);
+}
+
+/* Shipping Meta Row – Subtle, informative */
 .brand-product__shipping-meta {
   display: flex;
   align-items: center;
   gap: var(--brand-space-sm);
-  font-size: 0.875rem;
+  font-size: var(--brand-font-sm);
+  line-height: var(--brand-line-snug);
   color: var(--brand-text-soft);
+  margin-bottom: var(--brand-space-lg);
 }
 
 .brand-dot {
@@ -5311,46 +5348,53 @@ body .tno-product__trust-item strong,
   cursor: not-allowed;
 }
 
-/* 07) BUTTONS */
+/* 07) BUTTONS – Enhanced Micro-Interactions */
 .brand-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--brand-space-sm);
-  padding: 0.875rem 1.75rem;
+  padding: 1rem 2rem;
   border: 2px solid transparent;
   border-radius: var(--brand-radius-pill);
   font-family: inherit;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  font-size: var(--brand-font-sm);
+  font-weight: 700;
+  letter-spacing: var(--brand-tracking-wide);
   text-transform: uppercase;
   cursor: pointer;
   transition: all var(--brand-transition-base);
   user-select: none;
   -webkit-appearance: none;
   appearance: none;
+  position: relative;
+  overflow: hidden;
 }
 
 .brand-button:focus-visible {
   outline: 2px solid var(--brand-accent);
-  outline-offset: 2px;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px rgba(0, 240, 255, 0.2);
 }
 
+/* Primary CTA – Cyber-tech neon glow on hover */
 .brand-button--primary {
   background: var(--brand-accent);
   color: var(--brand-text-dark);
   box-shadow: var(--brand-shadow-md);
+  border-color: var(--brand-accent);
 }
 
 .brand-button--primary:hover:not(:disabled) {
   background: color-mix(in srgb, var(--brand-accent) 90%, white);
   transform: translateY(-2px);
-  box-shadow: var(--brand-shadow-lg), var(--brand-shadow-glow);
+  box-shadow: var(--brand-shadow-lg), var(--brand-shadow-glow-strong);
+  border-color: color-mix(in srgb, var(--brand-accent) 80%, white);
 }
 
 .brand-button--primary:active:not(:disabled) {
   transform: translateY(0);
+  box-shadow: var(--brand-shadow-sm);
 }
 
 .brand-button--primary:disabled {
@@ -5358,17 +5402,25 @@ body .tno-product__trust-item strong,
   color: var(--brand-text-soft);
   cursor: not-allowed;
   box-shadow: none;
+  border-color: var(--brand-border);
+  transform: none;
 }
 
 .brand-button--full {
   width: 100%;
 }
 
-/* CTA Row */
-.brand-product__cta-row {
+/* CTA Container & Row */
+.brand-product__cta-container {
   display: flex;
   flex-direction: column;
   gap: var(--brand-space-md);
+}
+
+.brand-product__cta-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--brand-space-sm);
 }
 
 /* Express Checkout */
@@ -5439,7 +5491,7 @@ body .tno-product__trust-item strong,
   font-weight: 600;
 }
 
-/* 10) ACCORDIONS */
+/* 10) ACCORDIONS – Enhanced Micro-Interactions */
 .brand-product__accordions {
   display: flex;
   flex-direction: column;
@@ -5449,6 +5501,11 @@ body .tno-product__trust-item strong,
 
 .brand-accordion {
   border-bottom: 1px solid var(--brand-border);
+  transition: border-color var(--brand-transition-fast);
+}
+
+.brand-accordion:hover {
+  border-bottom-color: var(--brand-border-hover);
 }
 
 .brand-accordion__summary {
@@ -5456,14 +5513,15 @@ body .tno-product__trust-item strong,
   align-items: center;
   justify-content: space-between;
   padding: var(--brand-space-lg) 0;
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
+  font-size: var(--brand-font-sm);
+  font-weight: 700;
+  letter-spacing: var(--brand-tracking-wide);
   text-transform: uppercase;
   color: var(--brand-text-main);
   cursor: pointer;
   user-select: none;
   list-style: none;
+  transition: all var(--brand-transition-fast);
 }
 
 .brand-accordion__summary::-webkit-details-marker {
@@ -5472,21 +5530,28 @@ body .tno-product__trust-item strong,
 
 .brand-accordion__summary:hover {
   color: var(--brand-accent);
+  padding-left: var(--brand-space-xs);
 }
 
 .brand-accordion__icon {
   flex-shrink: 0;
-  transition: transform var(--brand-transition-base);
+  transition: transform var(--brand-transition-base), color var(--brand-transition-fast);
+  color: var(--brand-text-soft);
+}
+
+.brand-accordion__summary:hover .brand-accordion__icon {
+  color: var(--brand-accent);
 }
 
 .brand-accordion[open] .brand-accordion__icon {
   transform: rotate(45deg);
+  color: var(--brand-accent);
 }
 
 .brand-accordion__content {
   padding-bottom: var(--brand-space-lg);
-  font-size: 0.9375rem;
-  line-height: 1.7;
+  font-size: var(--brand-font-base);
+  line-height: var(--brand-line-relaxed);
   color: var(--brand-text-muted);
 }
 
@@ -5632,36 +5697,41 @@ body .tno-product__trust-item strong,
   margin-bottom: 0;
 }
 
-/* Section headings – Cyber-tech style */
+/* H2: Section Headings – Cyber-tech style with neon glow */
 .brand-details__heading {
   font-family: var(--font-heading-family, inherit);
-  font-size: 0.875rem;
+  font-size: var(--brand-font-sm);
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: var(--brand-tracking-wider);
   text-transform: uppercase;
   color: var(--brand-accent);
-  margin: 0 0 var(--brand-space-lg);
-  padding-bottom: var(--brand-space-sm);
+  margin: 0 0 var(--brand-space-xl);
+  padding-bottom: var(--brand-space-md);
   border-bottom: 1px solid var(--brand-border);
   position: relative;
 }
 
-/* Subtle neon underline effect */
+/* Subtle neon underline glow effect */
 .brand-details__heading::after {
   content: '';
   position: absolute;
   bottom: -1px;
   left: 0;
-  width: 60px;
-  height: 1px;
+  width: 80px;
+  height: 2px;
   background: var(--brand-accent);
-  box-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.6);
+  transition: width var(--brand-transition-base);
 }
 
-/* Content styling – Fix contrast issues */
+.brand-details__heading:hover::after {
+  width: 120px;
+}
+
+/* Body Text – Readable, proper contrast */
 .brand-details__content {
-  font-size: 0.9375rem;
-  line-height: 1.7;
+  font-size: var(--brand-font-base);
+  line-height: var(--brand-line-relaxed);
   color: var(--brand-text-muted);
 }
 
@@ -5689,7 +5759,57 @@ body .tno-product__trust-item strong,
   opacity: 0.8;
 }
 
-/* 16) SPECIFICATIONS LIST – Grid Layout */
+/* 16) SPECIFICATIONS – Proper 2-Column Grid V2 */
+
+/* New specs grid (replaces old brand-spec__list) */
+.brand-specs {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--brand-space-lg);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 640px) {
+  .brand-specs {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--brand-space-xl);
+  }
+}
+
+.brand-specs__item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--brand-space-md);
+  align-items: baseline;
+  padding-bottom: var(--brand-space-md);
+  border-bottom: 1px solid var(--brand-border);
+  transition: border-color var(--brand-transition-fast);
+}
+
+.brand-specs__item:hover {
+  border-bottom-color: var(--brand-accent);
+}
+
+.brand-specs__label {
+  font-size: var(--brand-font-xs);
+  font-weight: 700;
+  letter-spacing: var(--brand-tracking-wider);
+  text-transform: uppercase;
+  color: var(--brand-accent);
+  margin: 0;
+  min-width: 80px;
+}
+
+.brand-specs__value {
+  font-size: var(--brand-font-base);
+  line-height: var(--brand-line-normal);
+  color: var(--brand-text-main);
+  margin: 0;
+}
+
+/* Legacy support for old brand-spec__ classes */
 .brand-spec__list {
   display: grid;
   grid-template-columns: 1fr;
@@ -5721,17 +5841,17 @@ body .tno-product__trust-item strong,
 }
 
 .brand-spec__term {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-size: var(--brand-font-xs);
+  font-weight: 700;
+  letter-spacing: var(--brand-tracking-wider);
   text-transform: uppercase;
   color: var(--brand-accent);
   margin: 0;
 }
 
 .brand-spec__value {
-  font-size: 0.9375rem;
-  line-height: 1.5;
+  font-size: var(--brand-font-base);
+  line-height: var(--brand-line-normal);
   color: var(--brand-text-main);
   margin: 0;
 }
@@ -5788,7 +5908,7 @@ body .tno-product__trust-item strong,
   color: var(--brand-text-soft);
 }
 
-/* 19) MOBILE-SPECIFIC IMPROVEMENTS */
+/* 19) MOBILE-SPECIFIC IMPROVEMENTS & STICKY CTA */
 @media (max-width: 767px) {
   /* Hero grid on mobile – reduce padding */
   .brand-product__grid {
@@ -5801,27 +5921,74 @@ body .tno-product__trust-item strong,
     border-radius: var(--brand-radius-md);
   }
 
-  /* Title size on mobile */
+  /* Title responsive sizing */
   .brand-product__title {
-    font-size: 1.5rem;
+    font-size: clamp(1.5rem, 8vw, 2rem);
   }
 
-  /* CTA remains accessible, not too sticky */
-  .brand-product__cta-row {
-    position: relative; /* Remove fixed positioning conflicts */
+  /* Price block mobile */
+  .brand-product__price-block {
+    font-size: var(--brand-font-lg);
+  }
+
+  /* Sticky CTA Container on Mobile */
+  .brand-product__cta-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: var(--brand-space-md);
+    background: linear-gradient(
+      to top,
+      var(--brand-bg) 0%,
+      var(--brand-bg) 85%,
+      transparent 100%
+    );
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  /* Add bottom padding to info column to prevent content hiding */
+  .brand-product__info-column {
+    padding-bottom: calc(var(--brand-space-3xl) + 100px);
   }
 
   /* Details block mobile padding */
   .brand-product__details {
     border-radius: var(--brand-radius-md);
+    padding: var(--brand-space-lg);
+    margin-top: var(--brand-space-xl);
   }
 
-  /* Spec list single column on mobile */
+  /* New specs grid mobile */
+  .brand-specs {
+    grid-template-columns: 1fr;
+    gap: var(--brand-space-md);
+  }
+
+  .brand-specs__item {
+    grid-template-columns: 1fr;
+    gap: var(--brand-space-xs);
+  }
+
+  .brand-specs__label {
+    min-width: auto;
+  }
+
+  /* Legacy spec list single column */
   .brand-spec__list {
     grid-template-columns: 1fr;
   }
 
-  /* Reviews placeholder mobile padding */
+  /* Section headings mobile */
+  .brand-details__heading {
+    font-size: var(--brand-font-xs);
+    margin-bottom: var(--brand-space-lg);
+  }
+
+  /* Reviews placeholder mobile */
   .brand-details__reviews-placeholder {
     padding: var(--brand-space-lg);
   }

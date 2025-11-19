@@ -1,16 +1,18 @@
 {% comment %}
-  BRAND-NEUTRAL CYBER-TECH PRODUCT SECTION
+  BRAND-NEUTRAL CYBER-TECH PRODUCT SECTION V2 (POLISH PASS)
   
   Architecture:
   - Desktop: 2-column grid (media left ~55%, info right ~45%)
   - Mobile: Single column with sticky CTA
-  - Cyber-tech streetwear aesthetic (dark UI, neon accents, minimal glitch)
+  - Premium cyber-tech streetwear aesthetic
+  - Typography hierarchy: H1 → H2 → eyebrow → body
+  - Metafield-driven with smart fallbacks
   - Brand-neutral class naming: .brand-product__*
-  - Metafield-driven content
-  - Accessible, semantic HTML
-{% endcomment %}
-
-<section
+  - Accessible, semantic HTML, WCAG 2.1 AA
+  
+  Version: 2.0
+  Last updated: 2025-11-19
+{% endcomment %}<section
   id="MainProduct-{{ section.id }}"
   class="brand-product section-{{ section.id }}-padding"
   data-section="{{ section.id }}"
@@ -46,7 +48,7 @@
 
   <div class="page-width">
     <div class="brand-product__grid">
-      
+
       {%- comment -%} ========== LEFT COLUMN: MEDIA ========== {%- endcomment -%}
       <div class="brand-product__media-column">
         {%- comment -%} Main Featured Media {%- endcomment -%}
@@ -102,7 +104,7 @@
 
       {%- comment -%} ========== RIGHT COLUMN: INFO ========== {%- endcomment -%}
       <div class="brand-product__info-column">
-        
+
         {%- comment -%} Eyebrow: Badges {%- endcomment -%}
         <div class="brand-product__eyebrow">
           <span class="brand-badge brand-badge--primary">{{ product.vendor | escape }}</span>
@@ -148,30 +150,33 @@
               </div>
             {%- endunless -%}
 
-            {%- comment -%} Primary CTA: Add to Cart {%- endcomment -%}
-            <div class="brand-product__cta-row">
-              <button
-                type="submit"
-                name="add"
-                class="brand-button brand-button--primary brand-button--full"
-                {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
-              >
-                <span>
-                  {%- if product.selected_or_first_available_variant.available == false -%}
-                    SOLD OUT
-                  {%- else -%}
-                    ADD TO CART
-                  {%- endif -%}
-                </span>
-              </button>
-            </div>
-
-            {%- comment -%} Express Checkout Buttons {%- endcomment -%}
-            {%- if section.settings.show_dynamic_checkout -%}
-              <div class="brand-product__express-checkout">
-                {{ form | payment_button }}
+            {%- comment -%} CTA Container (can be sticky on mobile) {%- endcomment -%}
+            <div class="brand-product__cta-container">
+              {%- comment -%} Primary CTA: Add to Cart {%- endcomment -%}
+              <div class="brand-product__cta-row">
+                <button
+                  type="submit"
+                  name="add"
+                  class="brand-button brand-button--primary brand-button--full"
+                  {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+                >
+                  <span>
+                    {%- if product.selected_or_first_available_variant.available == false -%}
+                      SOLD OUT
+                    {%- else -%}
+                      ADD TO CART
+                    {%- endif -%}
+                  </span>
+                </button>
               </div>
-            {%- endif -%}
+
+              {%- comment -%} Express Checkout Buttons {%- endcomment -%}
+              {%- if section.settings.show_dynamic_checkout -%}
+                <div class="brand-product__express-checkout">
+                  {{ form | payment_button }}
+                </div>
+              {%- endif -%}
+            </div>
           {%- endform -%}
         </product-form>
 
@@ -204,7 +209,7 @@
 
         {%- comment -%} Collapsible Accordions {%- endcomment -%}
         <div class="brand-product__accordions">
-          
+
           {%- comment -%} Details / Description {%- endcomment -%}
           {%- if product.description != blank -%}
             <details class="brand-accordion" open>
@@ -266,48 +271,94 @@
 
     {%- comment -%} ========== BELOW THE FOLD: STORY / SPEC / REVIEWS ========== {%- endcomment -%}
     <div class="brand-product__details">
-      
-      {%- comment -%} 1. PRODUCT STORY {%- endcomment -%}
-      {%- if product.description != blank and section.settings.show_story_section -%}
-        <section class="brand-details__section" aria-labelledby="brand-product-story-heading">
-          <h2 id="brand-product-story-heading" class="brand-details__heading">PRODUCT.STORY</h2>
-          <div class="brand-details__content">
-            {{ product.description }}
-          </div>
-        </section>
+
+      {%- comment -%} 1. PRODUCT STORY (metafield or description) {%- endcomment -%}
+      {%- if section.settings.show_story_section -%}
+        {%- liquid
+          assign story_content = product.metafields.custom.story.value
+          if story_content == blank
+            assign story_content = product.description
+          endif
+        -%}
+        {%- if story_content != blank -%}
+          <section class="brand-details__section" aria-labelledby="brand-product-story-heading">
+            <h2 id="brand-product-story-heading" class="brand-details__heading">PRODUCT.STORY</h2>
+            <div class="brand-details__content">
+              {{ story_content }}
+            </div>
+          </section>
+        {%- endif -%}
       {%- endif -%}
 
-      {%- comment -%} 2. SPECIFICATIONS {%- endcomment -%}
+      {%- comment -%} 2. SPECIFICATIONS (proper 2-column grid) {%- endcomment -%}
       {%- if section.settings.show_specs_section -%}
-        <section class="brand-details__section" aria-labelledby="brand-product-specs-heading">
-          <h2 id="brand-product-specs-heading" class="brand-details__heading">SPECIFICATIONS</h2>
-          <dl class="brand-spec__list">
-            {%- if product.metafields.custom.material.value != blank -%}
-              <div class="brand-spec__row">
-                <dt class="brand-spec__term">MATERIAL</dt>
-                <dd class="brand-spec__value">{{ product.metafields.custom.material.value | escape }}</dd>
-              </div>
-            {%- endif -%}
-            {%- if product.metafields.custom.fit.value != blank -%}
-              <div class="brand-spec__row">
-                <dt class="brand-spec__term">FIT</dt>
-                <dd class="brand-spec__value">{{ product.metafields.custom.fit.value | escape }}</dd>
-              </div>
-            {%- endif -%}
-            {%- if product.metafields.custom.print.value != blank -%}
-              <div class="brand-spec__row">
-                <dt class="brand-spec__term">PRINT</dt>
-                <dd class="brand-spec__value">{{ product.metafields.custom.print.value | escape }}</dd>
-              </div>
-            {%- endif -%}
-            {%- if product.metafields.custom.care_instructions.value != blank -%}
-              <div class="brand-spec__row">
-                <dt class="brand-spec__term">CARE</dt>
-                <dd class="brand-spec__value">{{ product.metafields.custom.care_instructions.value | escape | newline_to_br }}</dd>
-              </div>
-            {%- endif -%}
-          </dl>
-        </section>
+        {%- liquid
+          assign has_material = false
+          assign has_fit = false
+          assign has_print = false
+          assign has_care = false
+          
+          if product.metafields.custom.material.value != blank or product.metafields.custom.spec_material.value != blank
+            assign has_material = true
+          endif
+          if product.metafields.custom.fit.value != blank or product.metafields.custom.spec_fit.value != blank
+            assign has_fit = true
+          endif
+          if product.metafields.custom.print.value != blank or product.metafields.custom.spec_print.value != blank
+            assign has_print = true
+          endif
+          if product.metafields.custom.care_instructions.value != blank
+            assign has_care = true
+          endif
+          
+          assign has_any_specs = false
+          if has_material or has_fit or has_print or has_care
+            assign has_any_specs = true
+          endif
+        -%}
+        
+        {%- if has_any_specs -%}
+          <section class="brand-details__section" aria-labelledby="brand-product-specs-heading">
+            <h2 id="brand-product-specs-heading" class="brand-details__heading">SPECIFICATIONS</h2>
+            <dl class="brand-specs">
+              {%- if has_material -%}
+                <div class="brand-specs__item">
+                  <dt class="brand-specs__label">MATERIAL</dt>
+                  <dd class="brand-specs__value">
+                    {{- product.metafields.custom.spec_material.value | default: product.metafields.custom.material.value | escape -}}
+                  </dd>
+                </div>
+              {%- endif -%}
+              
+              {%- if has_fit -%}
+                <div class="brand-specs__item">
+                  <dt class="brand-specs__label">FIT</dt>
+                  <dd class="brand-specs__value">
+                    {{- product.metafields.custom.spec_fit.value | default: product.metafields.custom.fit.value | escape -}}
+                  </dd>
+                </div>
+              {%- endif -%}
+              
+              {%- if has_print -%}
+                <div class="brand-specs__item">
+                  <dt class="brand-specs__label">PRINT</dt>
+                  <dd class="brand-specs__value">
+                    {{- product.metafields.custom.spec_print.value | default: product.metafields.custom.print.value | escape -}}
+                  </dd>
+                </div>
+              {%- endif -%}
+              
+              {%- if has_care -%}
+                <div class="brand-specs__item">
+                  <dt class="brand-specs__label">CARE</dt>
+                  <dd class="brand-specs__value">
+                    {{- product.metafields.custom.care_instructions.value | escape | newline_to_br -}}
+                  </dd>
+                </div>
+              {%- endif -%}
+            </dl>
+          </section>
+        {%- endif -%}
       {%- endif -%}
 
       {%- comment -%} 3. REVIEWS.UGC {%- endcomment -%}
@@ -319,7 +370,7 @@
           </div>
         </section>
       {%- endif -%}
-      
+
     </div>
   </div>
 
@@ -328,7 +379,7 @@
     (function() {
       const mainImage = document.getElementById('BrandMediaMain-{{ section.id }}');
       const thumbButtons = document.querySelectorAll('.brand-product__thumb-button');
-      
+
       if (!mainImage || !thumbButtons.length) return;
 
       thumbButtons.forEach(button => {
@@ -337,11 +388,11 @@
           thumbButtons.forEach(btn => btn.classList.remove('is-active'));
           // Add active to clicked
           this.classList.add('is-active');
-          
+
           // Get media data
           const mediaId = this.dataset.mediaId;
           const mediaPosition = this.dataset.mediaPosition;
-          
+
           // Find the media in product.media
           {%- assign media_json = '' -%}
           {%- for media in product.media -%}
@@ -356,10 +407,10 @@
               {%- assign media_json = media_json | append: ']' -%}
             {%- endif -%}
           {%- endfor -%}
-          
+
           const productMedia = {{ media_json | default: '[]' }};
           const selectedMedia = productMedia.find(m => m.id == mediaId);
-          
+
           if (selectedMedia) {
             const img = mainImage.querySelector('img');
             if (img) {
