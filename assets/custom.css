@@ -5551,12 +5551,355 @@ body .tno-product__trust-item strong,
   outline-offset: 2px;
 }
 
-/* 13) PLACEHOLDER / LOADING STATES */
+/* 13) HERO LAYOUT IMPROVEMENTS – Cohesive Dark Surface Card */
+
+/* Wrap hero in unified dark surface */
+.brand-product__grid {
+  background: var(--brand-surface);
+  border-radius: var(--brand-radius-lg);
+  padding: var(--brand-space-xl);
+  border: 1px solid var(--brand-border);
+}
+
+@media (min-width: 768px) {
+  .brand-product__grid {
+    padding: var(--brand-space-2xl);
+  }
+}
+
+/* Remove gradient from media, keep it clean */
+.brand-product__media-main {
+  background: var(--brand-surface-raised);
+  border: 1px solid var(--brand-border);
+}
+
+/* Info column: sits naturally on same surface */
+.brand-product__info-column {
+  background: transparent; /* Inherits from grid */
+  padding: 0;
+}
+
+/* 14) EXPRESS CHECKOUT – De-emphasized but Visible */
+.brand-product__express-checkout {
+  filter: grayscale(0.3) brightness(0.95);
+  transform: scale(0.98);
+  transform-origin: center;
+  transition: all var(--brand-transition-base);
+  opacity: 0.85;
+}
+
+.brand-product__express-checkout:hover {
+  filter: grayscale(0) brightness(1);
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* Style payment buttons to match dark theme */
+.brand-product__express-checkout .shopify-payment-button__button {
+  border-radius: var(--brand-radius-pill) !important;
+  transition: all var(--brand-transition-base);
+  min-height: 48px !important;
+}
+
+.brand-product__express-checkout .shopify-payment-button__button--unbranded {
+  background-color: var(--brand-surface-raised) !important;
+  color: var(--brand-text-main) !important;
+  border: 1px solid var(--brand-border) !important;
+}
+
+/* 15) BELOW-FOLD DETAILS BLOCK – Story / Spec / Reviews */
+.brand-product__details {
+  margin-top: var(--brand-space-2xl);
+  background: var(--brand-surface);
+  border-radius: var(--brand-radius-lg);
+  padding: var(--brand-space-2xl);
+  border: 1px solid var(--brand-border);
+}
+
+@media (max-width: 767px) {
+  .brand-product__details {
+    margin-top: var(--brand-space-xl);
+    padding: var(--brand-space-lg);
+  }
+}
+
+/* Individual sections within details */
+.brand-details__section {
+  margin-bottom: var(--brand-space-2xl);
+}
+
+.brand-details__section:last-child {
+  margin-bottom: 0;
+}
+
+/* Section headings – Cyber-tech style */
+.brand-details__heading {
+  font-family: var(--font-heading-family, inherit);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brand-accent);
+  margin: 0 0 var(--brand-space-lg);
+  padding-bottom: var(--brand-space-sm);
+  border-bottom: 1px solid var(--brand-border);
+  position: relative;
+}
+
+/* Subtle neon underline effect */
+.brand-details__heading::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 60px;
+  height: 1px;
+  background: var(--brand-accent);
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+}
+
+/* Content styling – Fix contrast issues */
+.brand-details__content {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--brand-text-muted);
+}
+
+.brand-details__content p {
+  margin: 0 0 var(--brand-space-md);
+}
+
+.brand-details__content p:last-child {
+  margin-bottom: 0;
+}
+
+.brand-details__content strong {
+  color: var(--brand-text-main);
+  font-weight: 600;
+}
+
+.brand-details__content a {
+  color: var(--brand-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: opacity var(--brand-transition-fast);
+}
+
+.brand-details__content a:hover {
+  opacity: 0.8;
+}
+
+/* 16) SPECIFICATIONS LIST – Grid Layout */
+.brand-spec__list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--brand-space-md);
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 640px) {
+  .brand-spec__list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--brand-space-lg);
+  }
+}
+
+.brand-spec__row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--brand-space-xs);
+  padding: var(--brand-space-md);
+  background: var(--brand-surface-raised);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--brand-radius-sm);
+  transition: border-color var(--brand-transition-fast);
+}
+
+.brand-spec__row:hover {
+  border-color: var(--brand-border-hover);
+}
+
+.brand-spec__term {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand-accent);
+  margin: 0;
+}
+
+.brand-spec__value {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--brand-text-main);
+  margin: 0;
+}
+
+/* 17) REVIEWS PLACEHOLDER – Styled Container */
+.brand-details__reviews-placeholder {
+  padding: var(--brand-space-2xl);
+  background: var(--brand-surface-raised);
+  border: 1px dashed var(--brand-border);
+  border-radius: var(--brand-radius-md);
+  text-align: center;
+}
+
+.brand-details__reviews-placeholder p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--brand-text-soft);
+  font-style: italic;
+}
+
+/* 18) TYPOGRAPHY & SPACING REFINEMENTS */
+
+/* Reduce giant gaps between hero and below-fold */
+.brand-product {
+  padding-bottom: var(--brand-space-xl);
+}
+
+/* Product title – Modern techy look, but readable */
+.brand-product__title {
+  font-family: var(--font-heading-family, inherit);
+  font-size: clamp(1.75rem, 5vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--brand-text-main);
+  margin: 0 0 var(--brand-space-md);
+  text-transform: uppercase;
+}
+
+/* Price block – Prominent but not overwhelming */
+.brand-product__price-block {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--brand-accent);
+}
+
+.brand-product__price-block .price {
+  color: var(--brand-accent);
+}
+
+/* Shipping meta – Softer, less prominent */
+.brand-product__shipping-meta {
+  font-size: 0.8125rem;
+  color: var(--brand-text-soft);
+}
+
+/* 19) MOBILE-SPECIFIC IMPROVEMENTS */
+@media (max-width: 767px) {
+  /* Hero grid on mobile – reduce padding */
+  .brand-product__grid {
+    padding: var(--brand-space-md);
+    gap: var(--brand-space-lg);
+  }
+
+  /* Media takes full width */
+  .brand-product__media-main {
+    border-radius: var(--brand-radius-md);
+  }
+
+  /* Title size on mobile */
+  .brand-product__title {
+    font-size: 1.5rem;
+  }
+
+  /* CTA remains accessible, not too sticky */
+  .brand-product__cta-row {
+    position: relative; /* Remove fixed positioning conflicts */
+  }
+
+  /* Details block mobile padding */
+  .brand-product__details {
+    border-radius: var(--brand-radius-md);
+  }
+
+  /* Spec list single column on mobile */
+  .brand-spec__list {
+    grid-template-columns: 1fr;
+  }
+
+  /* Reviews placeholder mobile padding */
+  .brand-details__reviews-placeholder {
+    padding: var(--brand-space-lg);
+  }
+}
+
+/* 20) DARK THEME ADJUSTMENTS – Ensure Consistent Look */
+
+/* Override any theme defaults that might interfere */
+.brand-product *,
+.brand-product__details * {
+  box-sizing: border-box;
+}
+
+/* Ensure all text inherits proper colors */
+.brand-product h1,
+.brand-product h2,
+.brand-product h3,
+.brand-product h4,
+.brand-product h5,
+.brand-product h6 {
+  color: var(--brand-text-main);
+}
+
+.brand-product p,
+.brand-product li,
+.brand-product dd,
+.brand-product dt {
+  color: inherit;
+}
+
+/* Links within brand product section */
+.brand-product a {
+  color: var(--brand-accent);
+}
+
+.brand-product a:hover {
+  color: color-mix(in srgb, var(--brand-accent) 80%, white);
+}
+
+/* 21) ACCESSIBILITY & FOCUS IMPROVEMENTS */
+@media (prefers-reduced-motion: reduce) {
+  .brand-product *,
+  .brand-product__details * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Enhanced focus states for keyboard navigation */
+.brand-button:focus-visible,
+.brand-chip__label:focus-visible,
+.brand-accordion__summary:focus-visible,
+.brand-product__thumb-button:focus-visible,
+.brand-details__content a:focus-visible {
+  outline: 2px solid var(--brand-accent);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px rgba(0, 240, 255, 0.2);
+}
+
+/* 22) PLACEHOLDER / LOADING STATES */
 .brand-product__media-main .placeholder-svg {
   width: 100%;
   height: auto;
   min-height: 400px;
-  background: var(--brand-surface);
+  background: var(--brand-surface-raised);
+  border-radius: var(--brand-radius-md);
+}
+
+/* Empty state for specs when no metafields */
+.brand-spec__list:empty::before {
+  content: 'No specifications available';
+  display: block;
+  padding: var(--brand-space-xl);
+  text-align: center;
+  color: var(--brand-text-soft);
+  font-style: italic;
+  font-size: 0.875rem;
 }
 
 /* ==========================================================================

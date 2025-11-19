@@ -263,6 +263,64 @@
         </div>
       </div>
     </div>
+
+    {%- comment -%} ========== BELOW THE FOLD: STORY / SPEC / REVIEWS ========== {%- endcomment -%}
+    <div class="brand-product__details">
+      
+      {%- comment -%} 1. PRODUCT STORY {%- endcomment -%}
+      {%- if product.description != blank and section.settings.show_story_section -%}
+        <section class="brand-details__section" aria-labelledby="brand-product-story-heading">
+          <h2 id="brand-product-story-heading" class="brand-details__heading">PRODUCT.STORY</h2>
+          <div class="brand-details__content">
+            {{ product.description }}
+          </div>
+        </section>
+      {%- endif -%}
+
+      {%- comment -%} 2. SPECIFICATIONS {%- endcomment -%}
+      {%- if section.settings.show_specs_section -%}
+        <section class="brand-details__section" aria-labelledby="brand-product-specs-heading">
+          <h2 id="brand-product-specs-heading" class="brand-details__heading">SPECIFICATIONS</h2>
+          <dl class="brand-spec__list">
+            {%- if product.metafields.custom.material.value != blank -%}
+              <div class="brand-spec__row">
+                <dt class="brand-spec__term">MATERIAL</dt>
+                <dd class="brand-spec__value">{{ product.metafields.custom.material.value | escape }}</dd>
+              </div>
+            {%- endif -%}
+            {%- if product.metafields.custom.fit.value != blank -%}
+              <div class="brand-spec__row">
+                <dt class="brand-spec__term">FIT</dt>
+                <dd class="brand-spec__value">{{ product.metafields.custom.fit.value | escape }}</dd>
+              </div>
+            {%- endif -%}
+            {%- if product.metafields.custom.print.value != blank -%}
+              <div class="brand-spec__row">
+                <dt class="brand-spec__term">PRINT</dt>
+                <dd class="brand-spec__value">{{ product.metafields.custom.print.value | escape }}</dd>
+              </div>
+            {%- endif -%}
+            {%- if product.metafields.custom.care_instructions.value != blank -%}
+              <div class="brand-spec__row">
+                <dt class="brand-spec__term">CARE</dt>
+                <dd class="brand-spec__value">{{ product.metafields.custom.care_instructions.value | escape | newline_to_br }}</dd>
+              </div>
+            {%- endif -%}
+          </dl>
+        </section>
+      {%- endif -%}
+
+      {%- comment -%} 3. REVIEWS.UGC {%- endcomment -%}
+      {%- if section.settings.show_reviews_section -%}
+        <section class="brand-details__section" id="brand-product-reviews" aria-labelledby="brand-product-reviews-heading">
+          <h2 id="brand-product-reviews-heading" class="brand-details__heading">REVIEWS.UGC</h2>
+          <div class="brand-details__reviews-placeholder">
+            <p>Review integration placeholder • Connect your reviews app here</p>
+          </div>
+        </section>
+      {%- endif -%}
+      
+    </div>
   </div>
 
   {%- comment -%} Minimal JS for Thumbnail Switching {%- endcomment -%}
@@ -327,6 +385,28 @@
       "type": "checkbox",
       "id": "show_dynamic_checkout",
       "label": "Show express checkout buttons",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Below-fold sections"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_story_section",
+      "label": "Show product story section",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_specs_section",
+      "label": "Show specifications section",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reviews_section",
+      "label": "Show reviews section",
       "default": true
     },
     {
