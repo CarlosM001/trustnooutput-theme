@@ -233,72 +233,7 @@
     });
   }
 
-  function openMobileMenu() {
-    if (!mobileMenu || !mobileToggle) {
-      dbg('openMobileMenu: missing elements', { mobileMenu: !!mobileMenu, mobileToggle: !!mobileToggle });
-      return;
-    }
-    // If using <details>, rely on native open attribute to drive CSS
-    if (detailsContainer) {
-      if (detailsContainer.hasAttribute('open')) {
-        dbg('menu already open');
-        return; // already open
-      }
-      detailsContainer.setAttribute('open', '');
-      // Also trigger the opening animation class
-      detailsContainer.classList.add('menu-opening');
-      setTimeout(() => {
-        if (detailsContainer) {
-          detailsContainer.classList.remove('menu-opening');
-        }
-      }, 300);
-    }
-    if (mobileMenu.classList.contains('is-active')) {
-      // Custom panel already open
-      dbg('menu already active (class check)');
-      return;
-    }
-    mobileMenu.classList.add('is-active');
-    mobileToggle.classList.add('is-active');
-    mobileToggle.setAttribute('aria-expanded', 'true');
-    mobileMenu.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('tno-no-scroll');
-    dbg('mobile menu opened');
-
-    // Update bottom tab bar menu button state
-    if (bottomTabMenu) {
-      bottomTabMenu.classList.add('is-active');
-      bottomTabMenu.setAttribute('aria-expanded', 'true');
-    }
-
-    // Ensure menu starts at top on open to avoid first item appearing under header
-    try {
-      if (mobileMenu.scrollTop !== 0) {
-        // Some browsers support 'instant'; fallback to direct assignment
-        mobileMenu.scrollTo({ top: 0, behavior: 'instant' });
-        if (mobileMenu.scrollTop !== 0) {
-          mobileMenu.scrollTop = 0;
-        }
-      }
-    } catch {
-      mobileMenu.scrollTop = 0;
-    }
-
-    const focusables = getFocusable(mobileMenu);
-    if (focusables.length) {
-      focusables[0].focus();
-    } else {
-      mobileMenu.setAttribute('tabindex', '-1');
-      mobileMenu.focus();
-    }
-
-    STATE.mobileOutsideHandler = (e) => {
-      if (!mobileMenu.contains(e.target) && e.target !== mobileToggle) {
-        closeMobileMenu();
-      }
-    };
-    document.addEventListener('mousedown', STATE.mobileOutsideHandler);
-  }
+  // Removed unused openMobileMenu function to resolve compile error.
 
   function closeMobileMenu() {
     if (!mobileMenu || !mobileToggle) {
@@ -319,48 +254,20 @@
         return;
       }
     }
-    mobileMenu.classList.remove('is-active');
-    mobileToggle.classList.remove('is-active');
-    mobileToggle.setAttribute('aria-expanded', 'false');
-    mobileMenu.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('tno-no-scroll');
+    detailsContainer.removeAttribute('open');
     dbg('mobile menu closed');
-
-    // Update bottom tab bar menu button state
-    if (bottomTabMenu) {
-      bottomTabMenu.classList.remove('is-active');
-      bottomTabMenu.setAttribute('aria-expanded', 'false');
-    }
-
-    if (STATE.mobileOutsideHandler) {
-      document.removeEventListener('mousedown', STATE.mobileOutsideHandler);
-      STATE.mobileOutsideHandler = null;
-    }
-    mobileToggle.focus();
   }
 
   function toggleMobileMenu() {
-    if (!mobileMenu || !detailsContainer) return;
-
+    if (!detailsContainer) {
+      return;
+    }
     const isOpen = detailsContainer.hasAttribute('open');
     dbg('toggleMobileMenu called', { currentlyOpen: isOpen, willToggleTo: !isOpen });
-
     if (isOpen) {
-      // Close it
       detailsContainer.removeAttribute('open');
-      mobileMenu.classList.remove('is-active');
-      if (mobileToggle) mobileToggle.classList.remove('is-active');
-      if (bottomTabMenu) bottomTabMenu.classList.remove('is-active');
-      document.body.classList.remove('tno-no-scroll');
-      dbg('menu closed');
     } else {
-      // Open it
       detailsContainer.setAttribute('open', '');
-      mobileMenu.classList.add('is-active');
-      if (mobileToggle) mobileToggle.classList.add('is-active');
-      if (bottomTabMenu) bottomTabMenu.classList.add('is-active');
-      document.body.classList.add('tno-no-scroll');
-      dbg('menu opened');
     }
   }
 
@@ -370,14 +277,8 @@
       return;
     }
 
-    // Header toggle - prevent default and use our toggle function
-    if (mobileToggle && detailsContainer) {
-      mobileToggle.addEventListener('click', (e) => {
-        e.preventDefault();
-        dbg('header toggle clicked');
-        toggleMobileMenu();
-      });
-    }
+    // Header toggle - let native <details>/<summary> handle open/close
+    // No custom click handler needed for native drawer
 
     // Bottom tab menu toggle
     if (bottomTabMenu && detailsContainer) {
@@ -422,6 +323,38 @@
     });
   }
 
+
+  function wireBottomTabMenuToDrawer() {
+    var bottomTabMenu = document.getElementById('bottom-tab-menu');
+    var drawerSummary = document.getElementById('mobile-menu-toggle');
+    if (bottomTabMenu && detailsContainer) {
+      var menuDrawer = detailsContainer.querySelector('.menu-drawer');
+      var drawerSummary = detailsContainer.querySelector('summary');
+      bottomTabMenu.addEventListener('click', function () {
+        console.log('[TNO DEBUG] Bottom tab menu button clicked');
+        if (detailsContainer.hasAttribute('open')) {
+          // Simulate native summary click to close
+          if (drawerSummary) drawerSummary.click();
+          detailsContainer.removeAttribute('open');
+          if (menuDrawer) {
+            menuDrawer.classList.remove('menu-opening');
+            menuDrawer.style.visibility = '';
+            menuDrawer.style.transform = '';
+          }
+        } else {
+          // Simulate native summary click to open
+          if (drawerSummary) drawerSummary.click();
+          detailsContainer.setAttribute('open', '');
+          if (menuDrawer) {
+            menuDrawer.classList.add('menu-opening');
+            menuDrawer.style.visibility = 'visible';
+            menuDrawer.style.transform = 'translateX(0)';
+          }
+        }
+      });
+    }
+  }
+
   function init() {
     // Query DOM elements after DOM is ready
     header = document.getElementById('site-header');
@@ -449,9 +382,15 @@
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', function () {
+      document.body.classList.add('js');
+      init();
+      wireBottomTabMenuToDrawer();
+    });
   } else {
+    document.body.classList.add('js');
     init();
+    wireBottomTabMenuToDrawer();
   }
 
   // Export (designMode only) for quick re-init

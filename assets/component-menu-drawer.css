@@ -1,3 +1,10 @@
+/* Force hamburger icon and summary visible for mobile menu */
+#mobile-menu-toggle,
+.header__icon--menu {
+  display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
 .header__icon--menu {
   position: initial;
 }

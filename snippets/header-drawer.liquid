@@ -5,7 +5,7 @@
   {% render 'header-drawer' %}
 {% endcomment %}
 
-<header-drawer data-breakpoint="{% if section.settings.menu_type_desktop == 'drawer' %}desktop{% else %}tablet{% endif %}">
+<!-- Removed custom <header-drawer> wrapper for native Shopify drawer compatibility -->
   <details id="Details-menu-drawer-container" class="menu-drawer-container">
     <summary
       id="mobile-menu-toggle"
@@ -47,15 +47,7 @@
                         tabindex="-1"
                       >
                         <div class="menu-drawer__inner-submenu">
-                          <button
-                            class="menu-drawer__close-button link link--text focus-inset"
-                            aria-expanded="true"
-                          >
-                            <span class="svg-wrapper">
-                              {{- 'icon-arrow.svg' | inline_asset_content -}}
-                            </span>
-                            {{ link.title | escape }}
-                          </button>
+                          <!-- Removed: <button> menu toggle, replaced by native <summary> in <details> -->
                           <ul class="menu-drawer__menu list-menu" role="list" tabindex="-1">
                             {%- for childlink in link.links -%}
                               <li>
@@ -88,15 +80,7 @@
                                       id="childlink-{{ childlink.handle | escape }}"
                                       class="menu-drawer__submenu has-submenu gradient motion-reduce"
                                     >
-                                      <button
-                                        class="menu-drawer__close-button link link--text focus-inset"
-                                        aria-expanded="true"
-                                      >
-                                        <span class="svg-wrapper">
-                                          {{- 'icon-arrow.svg' | inline_asset_content -}}
-                                        </span>
-                                        {{ childlink.title | escape }}
-                                      </button>
+                                      <!-- Removed: <button> menu toggle, replaced by native <summary> in <details> -->
                                       <ul
                                         class="menu-drawer__menu list-menu"
                                         role="list"
@@ -311,4 +295,3 @@
       </div>
     </div>
   </details>
-</header-drawer>
