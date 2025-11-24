@@ -22,11 +22,9 @@
         "accessories_menu": "accessories-submenu",
         "prints_menu": "prints-submenu",
         "featured_collection": "",
-        "mobile_menu": "main-menu"
+        "mobile_menu": ""
       }
     }
   },
-  "order": [
-    "header"
-  ]
+  "order": ["header"]
 }
