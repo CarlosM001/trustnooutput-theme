@@ -12,6 +12,22 @@
 (function TNO_HEADER() {
   'use strict';
 
+  // Lightweight conditional debug utility. Enable via:
+  // 1) window.TNO_DEBUG = true in console
+  // 2) Adding ?debug=1 to the URL
+  function dbg() {
+    try {
+      if (window.TNO_DEBUG || /[?&]debug=1(&|$)/.test(window.location.search)) {
+        const args = Array.from(arguments);
+        args.unshift('[TNO header]');
+        // eslint-disable-next-line no-console
+        console.debug.apply(console, args);
+      }
+    } catch {
+      /* silent */
+    }
+  }
+
   const STATE = {
     scrollThreshold: 20,
     openPanel: null,
@@ -20,11 +36,13 @@
     hoverCloseTimer: null,
   };
 
-  const header = document.getElementById('site-header');
-  const nav = document.querySelector('.tno-nav');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const mobileToggle = document.getElementById('mobile-menu-toggle');
-  const bottomTabMenu = document.getElementById('bottom-tab-menu');
+  // Element references - initialized after DOM is ready
+  let header;
+  let nav;
+  let detailsContainer;
+  let mobileMenu;
+  let mobileToggle;
+  let bottomTabMenu;
 
   function initScrollState() {
     if (!header) {
@@ -34,8 +52,10 @@
       const y = window.pageYOffset || document.documentElement.scrollTop;
       if (y > STATE.scrollThreshold) {
         header.classList.add('is-scrolled');
+        dbg('scroll state: is-scrolled');
       } else {
         header.classList.remove('is-scrolled');
+        dbg('scroll state: reset');
       }
     };
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -123,12 +143,14 @@
         const isOpen = btn.getAttribute('aria-expanded') === 'true';
         if (isOpen) {
           closeNavPanel();
+          dbg('desktop panel closed via click', panelId);
         } else {
           closeNavPanel();
           btn.setAttribute('aria-expanded', 'true');
           panel.classList.add('is-open');
           STATE.openPanel = panel;
           STATE.openToggle = btn;
+          dbg('desktop panel opened via click', panelId);
           const focusables = getFocusable(panel);
           if (focusables.length) {
             focusables[0].focus();
@@ -154,6 +176,7 @@
             panel.classList.add('is-open');
             STATE.openPanel = panel;
             STATE.openToggle = btn;
+            dbg('desktop panel opened via hover', panelId);
           }
         }
       });
@@ -164,6 +187,7 @@
         // Schedule close with default buffer; enhanced delay handled in custom.js
         // Will only close if panel is also not hovered
         scheduleCloseNavPanel(600);
+        dbg('desktop panel leave scheduling close', panelId);
       });
 
       panel.addEventListener('mouseenter', () => {
@@ -171,6 +195,7 @@
         panel.dataset.hovering = 'true';
         // Cancel any pending close
         cancelCloseNavPanel();
+        dbg('panel hover cancel close', panelId);
       });
 
       panel.addEventListener('mouseleave', () => {
@@ -179,12 +204,14 @@
         // Schedule close with default buffer; enhanced delay handled in custom.js
         // Will only close if parent nav item is also not hovered
         scheduleCloseNavPanel(600);
+        dbg('panel leave scheduling close', panelId);
       });
     });
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         closeNavPanel();
+        dbg('escape key pressed - close panel');
       }
       if (e.key === 'Tab' && STATE.openPanel) {
         const focusables = getFocusable(STATE.openPanel);
@@ -196,9 +223,11 @@
         if (e.shiftKey && document.activeElement === first) {
           e.preventDefault();
           last.focus();
+          dbg('focus trap shift+tab to last');
         } else if (!e.shiftKey && document.activeElement === last) {
           e.preventDefault();
           first.focus();
+          dbg('focus trap tab to first');
         }
       }
     });
@@ -206,9 +235,27 @@
 
   function openMobileMenu() {
     if (!mobileMenu || !mobileToggle) {
+      dbg('openMobileMenu: missing elements', { mobileMenu: !!mobileMenu, mobileToggle: !!mobileToggle });
       return;
     }
+    // If using <details>, rely on native open attribute to drive CSS
+    if (detailsContainer) {
+      if (detailsContainer.hasAttribute('open')) {
+        dbg('menu already open');
+        return; // already open
+      }
+      detailsContainer.setAttribute('open', '');
+      // Also trigger the opening animation class
+      detailsContainer.classList.add('menu-opening');
+      setTimeout(() => {
+        if (detailsContainer) {
+          detailsContainer.classList.remove('menu-opening');
+        }
+      }, 300);
+    }
     if (mobileMenu.classList.contains('is-active')) {
+      // Custom panel already open
+      dbg('menu already active (class check)');
       return;
     }
     mobileMenu.classList.add('is-active');
@@ -216,6 +263,7 @@
     mobileToggle.setAttribute('aria-expanded', 'true');
     mobileMenu.setAttribute('aria-hidden', 'false');
     document.body.classList.add('tno-no-scroll');
+    dbg('mobile menu opened');
 
     // Update bottom tab bar menu button state
     if (bottomTabMenu) {
@@ -254,16 +302,29 @@
 
   function closeMobileMenu() {
     if (!mobileMenu || !mobileToggle) {
+      dbg('closeMobileMenu: missing elements', { mobileMenu: !!mobileMenu, mobileToggle: !!mobileToggle });
       return;
     }
+    // Handle <details> closing - force it closed
+    if (detailsContainer) {
+      if (detailsContainer.hasAttribute('open')) {
+        detailsContainer.removeAttribute('open');
+        detailsContainer.open = false; // Also set the property directly
+      }
+    }
     if (!mobileMenu.classList.contains('is-active')) {
-      return;
+      // If using details only, proceed with cleanup/focus anyway
+      if (!detailsContainer) {
+        dbg('menu already closed (no is-active class)');
+        return;
+      }
     }
     mobileMenu.classList.remove('is-active');
     mobileToggle.classList.remove('is-active');
     mobileToggle.setAttribute('aria-expanded', 'false');
     mobileMenu.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('tno-no-scroll');
+    dbg('mobile menu closed');
 
     // Update bottom tab bar menu button state
     if (bottomTabMenu) {
@@ -278,18 +339,58 @@
     mobileToggle.focus();
   }
 
+  function toggleMobileMenu() {
+    if (!mobileMenu || !detailsContainer) return;
+
+    const isOpen = detailsContainer.hasAttribute('open');
+    dbg('toggleMobileMenu called', { currentlyOpen: isOpen, willToggleTo: !isOpen });
+
+    if (isOpen) {
+      // Close it
+      detailsContainer.removeAttribute('open');
+      mobileMenu.classList.remove('is-active');
+      if (mobileToggle) mobileToggle.classList.remove('is-active');
+      if (bottomTabMenu) bottomTabMenu.classList.remove('is-active');
+      document.body.classList.remove('tno-no-scroll');
+      dbg('menu closed');
+    } else {
+      // Open it
+      detailsContainer.setAttribute('open', '');
+      mobileMenu.classList.add('is-active');
+      if (mobileToggle) mobileToggle.classList.add('is-active');
+      if (bottomTabMenu) bottomTabMenu.classList.add('is-active');
+      document.body.classList.add('tno-no-scroll');
+      dbg('menu opened');
+    }
+  }
+
   function initMobileMenu() {
     if (!mobileMenu || !mobileToggle) {
+      dbg('initMobileMenu: missing elements', { mobileMenu: !!mobileMenu, mobileToggle: !!mobileToggle });
       return;
     }
-    mobileToggle.addEventListener('click', () => {
-      mobileMenu.classList.contains('is-active') ? closeMobileMenu() : openMobileMenu();
-    });
 
-    // Connect bottom tab bar Menu button to mobile menu
-    if (bottomTabMenu) {
-      bottomTabMenu.addEventListener('click', () => {
-        mobileMenu.classList.contains('is-active') ? closeMobileMenu() : openMobileMenu();
+    // Header toggle - prevent default and use our toggle function
+    if (mobileToggle && detailsContainer) {
+      mobileToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        dbg('header toggle clicked');
+        toggleMobileMenu();
+      });
+    }
+
+    // Bottom tab menu toggle
+    if (bottomTabMenu && detailsContainer) {
+      bottomTabMenu.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dbg('bottom tab menu clicked');
+        toggleMobileMenu();
+      });
+    } else {
+      dbg('bottomTabMenu or detailsContainer not found', {
+        hasBottomTab: !!bottomTabMenu,
+        hasDetails: !!detailsContainer
       });
     }
 
@@ -299,6 +400,7 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && mobileMenu.classList.contains('is-active')) {
         closeMobileMenu();
+        dbg('escape key pressed - mobile menu');
       }
       if (e.key === 'Tab' && mobileMenu.classList.contains('is-active')) {
         const focusables = getFocusable(mobileMenu);
@@ -310,18 +412,40 @@
         if (e.shiftKey && document.activeElement === first) {
           e.preventDefault();
           last.focus();
+          dbg('mobile focus trap shift+tab last');
         } else if (!e.shiftKey && document.activeElement === last) {
           e.preventDefault();
           first.focus();
+          dbg('mobile focus trap tab first');
         }
       }
     });
   }
 
   function init() {
+    // Query DOM elements after DOM is ready
+    header = document.getElementById('site-header');
+    nav = document.querySelector('.tno-nav');
+    // Support legacy drawer structure (Shopify <details> pattern) instead of a custom panel
+    detailsContainer = document.getElementById('Details-menu-drawer-container');
+    // Attempt standard id first, fall back to existing drawer id
+    mobileMenu = document.getElementById('mobile-menu') || document.getElementById('menu-drawer');
+    mobileToggle =
+      document.getElementById('mobile-menu-toggle') ||
+      (detailsContainer ? detailsContainer.querySelector('summary.header__icon--menu') : null);
+    bottomTabMenu = document.getElementById('bottom-tab-menu');
+
     initScrollState();
     initDesktopNavPanels();
     initMobileMenu();
+    dbg('header init complete', {
+      hasHeader: !!header,
+      hasNav: !!nav,
+      mobileMenuResolved: !!mobileMenu,
+      mobileToggleResolved: !!mobileToggle,
+      bottomTabMenuResolved: !!bottomTabMenu,
+      detailsContainerResolved: !!detailsContainer,
+    });
   }
 
   if (document.readyState === 'loading') {

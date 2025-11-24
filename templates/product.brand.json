@@ -36,8 +36,5 @@
       }
     }
   },
-  "order": [
-    "main_product_brand",
-    "related_products"
-  ]
+  "order": ["main_product_brand", "related_products"]
 }

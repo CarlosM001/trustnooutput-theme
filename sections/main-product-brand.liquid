@@ -12,7 +12,8 @@
 
   Version: 2.0
   Last updated: 2025-11-19
-{% endcomment %}<section
+{% endcomment %}
+<section
   id="MainProduct-{{ section.id }}"
   class="brand-product section-{{ section.id }}-padding"
   data-section="{{ section.id }}"
@@ -67,7 +68,6 @@
 
   <div class="page-width">
     <div class="brand-product__grid">
-
       {%- comment -%} ========== LEFT COLUMN: MEDIA ========== {%- endcomment -%}
       <div class="brand-product__media-column">
         {%- comment -%} Main Featured Media {%- endcomment -%}
@@ -125,7 +125,6 @@
 
       {%- comment -%} ========== RIGHT COLUMN: INFO ========== {%- endcomment -%}
       <div class="brand-product__info-column">
-
         {%- comment -%} Eyebrow: Badges {%- endcomment -%}
         <div class="brand-product__eyebrow">
           <span class="brand-badge brand-badge--primary">{{ product.vendor | escape }}</span>
@@ -157,7 +156,9 @@
               name="id"
               value="{{ product.selected_or_first_available_variant.id }}"
               class="product-variant-id"
-              {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+              {% if product.selected_or_first_available_variant.available == false %}
+                disabled
+              {% endif %}
             >
 
             {%- comment -%} Variant Picker: Chip/Pill Style {%- endcomment -%}
@@ -179,7 +180,9 @@
                   type="submit"
                   name="add"
                   class="brand-button brand-button--primary brand-button--full"
-                  {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+                  {% if product.selected_or_first_available_variant.available == false %}
+                    disabled
+                  {% endif %}
                 >
                   <span>
                     {%- if product.selected_or_first_available_variant.available == false -%}
@@ -204,13 +207,29 @@
         {%- comment -%} Trust Row {%- endcomment -%}
         <div class="brand-product__trust-row">
           <div class="brand-trust-badge">
-            <svg class="brand-trust-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg
+              class="brand-trust-icon"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
             </svg>
             <span>Secure checkout</span>
           </div>
           <div class="brand-trust-badge">
-            <svg class="brand-trust-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg
+              class="brand-trust-icon"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
               <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
               <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
             </svg>
@@ -230,7 +249,6 @@
 
         {%- comment -%} Collapsible Accordions {%- endcomment -%}
         <div class="brand-product__accordions">
-
           {%- comment -%} Details / Description {%- endcomment -%}
           {%- if product.description != blank -%}
             <details class="brand-accordion" open>
@@ -256,10 +274,15 @@
             </summary>
             <div class="brand-accordion__content">
               {%- if product.metafields.custom.material.value != blank -%}
-                <p><strong>Material:</strong> {{ product.metafields.custom.material.value | escape }}</p>
+                <p>
+                  <strong>Material:</strong> {{ product.metafields.custom.material.value | escape }}
+                </p>
               {%- endif -%}
               {%- if product.metafields.custom.care_instructions.value != blank -%}
-                <p><strong>Care:</strong> {{ product.metafields.custom.care_instructions.value | escape }}</p>
+                <p>
+                  <strong>Care:</strong>
+                  {{ product.metafields.custom.care_instructions.value | escape }}
+                </p>
               {%- else -%}
                 <p>Machine wash cold. Tumble dry low. Do not iron on print.</p>
               {%- endif -%}
@@ -285,14 +308,12 @@
               {%- endif -%}
             </div>
           </details>
-
         </div>
       </div>
     </div>
 
     {%- comment -%} ========== BELOW THE FOLD: STORY / SPEC / REVIEWS ========== {%- endcomment -%}
     <div class="brand-product__details">
-
       {%- comment -%} 1. PRODUCT STORY (metafield or description) {%- endcomment -%}
       {%- if section.settings.show_story_section -%}
         {%- liquid
@@ -303,7 +324,12 @@
         -%}
         {%- if story_content != blank -%}
           <section class="brand-details__section" aria-labelledby="brand-product-story-heading">
-            <h2 id="brand-product-story-heading" class="brand-details__heading brand-section-heading label-system label-tech">PRODUCT.STORY</h2>
+            <h2
+              id="brand-product-story-heading"
+              class="brand-details__heading brand-section-heading label-system label-tech"
+            >
+              PRODUCT.STORY
+            </h2>
             <div class="brand-details__content">
               {{ story_content }}
             </div>
@@ -340,13 +366,22 @@
 
         {%- if has_any_specs -%}
           <section class="brand-details__section" aria-labelledby="brand-product-specs-heading">
-            <h2 id="brand-product-specs-heading" class="brand-details__heading brand-section-heading label-system label-tech">SPECIFICATIONS</h2>
+            <h2
+              id="brand-product-specs-heading"
+              class="brand-details__heading brand-section-heading label-system label-tech"
+            >
+              SPECIFICATIONS
+            </h2>
             <dl class="brand-specs">
               {%- if has_material -%}
                 <div class="brand-specs__item">
                   <dt class="brand-specs__label">MATERIAL</dt>
                   <dd class="brand-specs__value">
-                    {{- product.metafields.custom.spec_material.value | default: product.metafields.custom.material.value | escape -}}
+                    {{-
+                      product.metafields.custom.spec_material.value
+                      | default: product.metafields.custom.material.value
+                      | escape
+                    -}}
                   </dd>
                 </div>
               {%- endif -%}
@@ -355,7 +390,11 @@
                 <div class="brand-specs__item">
                   <dt class="brand-specs__label">FIT</dt>
                   <dd class="brand-specs__value">
-                    {{- product.metafields.custom.spec_fit.value | default: product.metafields.custom.fit.value | escape -}}
+                    {{-
+                      product.metafields.custom.spec_fit.value
+                      | default: product.metafields.custom.fit.value
+                      | escape
+                    -}}
                   </dd>
                 </div>
               {%- endif -%}
@@ -364,7 +403,11 @@
                 <div class="brand-specs__item">
                   <dt class="brand-specs__label">PRINT</dt>
                   <dd class="brand-specs__value">
-                    {{- product.metafields.custom.spec_print.value | default: product.metafields.custom.print.value | escape -}}
+                    {{-
+                      product.metafields.custom.spec_print.value
+                      | default: product.metafields.custom.print.value
+                      | escape
+                    -}}
                   </dd>
                 </div>
               {%- endif -%}
@@ -373,7 +416,11 @@
                 <div class="brand-specs__item">
                   <dt class="brand-specs__label">CARE</dt>
                   <dd class="brand-specs__value">
-                    {{- product.metafields.custom.care_instructions.value | escape | newline_to_br -}}
+                    {{-
+                      product.metafields.custom.care_instructions.value
+                      | escape
+                      | newline_to_br
+                    -}}
                   </dd>
                 </div>
               {%- endif -%}
@@ -384,14 +431,17 @@
 
       {%- comment -%} 3. REVIEWS.UGC {%- endcomment -%}
       {%- if section.settings.show_reviews_section -%}
-        <section class="brand-details__section" id="brand-product-reviews" aria-labelledby="brand-product-reviews-heading">
+        <section
+          class="brand-details__section"
+          id="brand-product-reviews"
+          aria-labelledby="brand-product-reviews-heading"
+        >
           <h2 id="brand-product-reviews-heading" class="brand-details__heading">REVIEWS.UGC</h2>
           <div class="brand-details__reviews-placeholder">
             <p>Review integration placeholder • Connect your reviews app here</p>
           </div>
         </section>
       {%- endif -%}
-
     </div>
   </div>
 

@@ -1040,24 +1040,36 @@ function enhanceMegaMenuHover() {
       };
 
       // Unify handlers across trigger, panel and buffer
-      trigger.addEventListener('mouseenter', () => {
-        clearLeave();
-        setHovering(true);
-      }, { passive: true });
+      trigger.addEventListener(
+        'mouseenter',
+        () => {
+          clearLeave();
+          setHovering(true);
+        },
+        { passive: true }
+      );
 
       trigger.addEventListener('mouseleave', scheduleLeave, { passive: true });
 
-      panel.addEventListener('mouseenter', () => {
-        clearLeave();
-        setHovering(true);
-      }, { passive: true });
+      panel.addEventListener(
+        'mouseenter',
+        () => {
+          clearLeave();
+          setHovering(true);
+        },
+        { passive: true }
+      );
 
       panel.addEventListener('mouseleave', scheduleLeave, { passive: true });
 
-      buffer.addEventListener('mouseenter', () => {
-        clearLeave();
-        setHovering(true);
-      }, { passive: true });
+      buffer.addEventListener(
+        'mouseenter',
+        () => {
+          clearLeave();
+          setHovering(true);
+        },
+        { passive: true }
+      );
 
       buffer.addEventListener('mouseleave', scheduleLeave, { passive: true });
 
@@ -1197,6 +1209,150 @@ if (window.Shopify && window.Shopify.designMode) {
           pdpRoot.dataset.pdpInit = 'false'; // Allow re-init
         }
         initHighConversionPDP();
+      }
+    } catch {
+      // Silent guard for editor-only code
+    }
+  });
+}
+
+/* ==========================================================================
+   UNIFIED MOBILE MENU CONTROL
+   Handles menu open/close from both header toggle AND bottom navigation
+   ========================================================================== */
+
+/**
+ * Get the mobile menu details element and its summary toggle
+ * @returns {Object} { detailsEl, summaryEl } or { detailsEl: null, summaryEl: null }
+ */
+function getMobileMenuElements() {
+  const detailsEl = document.getElementById('Details-menu-drawer-container');
+  const summaryEl = detailsEl ? detailsEl.querySelector('summary') : null;
+  return { detailsEl, summaryEl };
+}
+
+/**
+ * Open the mobile menu
+ */
+function openMobileMenu() {
+  const { detailsEl, summaryEl } = getMobileMenuElements();
+  if (!detailsEl) {
+    return;
+  }
+
+  if (!detailsEl.hasAttribute('open')) {
+    detailsEl.setAttribute('open', '');
+    if (summaryEl) {
+      summaryEl.setAttribute('aria-expanded', 'true');
+    }
+  }
+}
+
+/**
+ * Close the mobile menu
+ */
+function closeMobileMenu() {
+  const { detailsEl, summaryEl } = getMobileMenuElements();
+  if (!detailsEl) {
+    return;
+  }
+
+  if (detailsEl.hasAttribute('open')) {
+    detailsEl.removeAttribute('open');
+    if (summaryEl) {
+      summaryEl.setAttribute('aria-expanded', 'false');
+    }
+  }
+}
+
+/**
+ * Toggle the mobile menu (open if closed, close if open)
+ */
+function toggleMobileMenu() {
+  const { detailsEl } = getMobileMenuElements();
+  if (!detailsEl) {
+    return;
+  }
+
+  if (detailsEl.hasAttribute('open')) {
+    closeMobileMenu();
+  } else {
+    openMobileMenu();
+  }
+}
+
+/**
+ * Initialize unified mobile menu controls
+ * Connects both header toggle and bottom-nav toggle to the same menu
+ */
+function initUnifiedMobileMenu() {
+  // Guard against double initialization
+  if (window.TNO && window.TNO.mobileMenuInitialized) {
+    return;
+  }
+
+  window.TNO = window.TNO || {};
+  window.TNO.mobileMenuInitialized = true;
+
+  // Bottom navigation menu toggle
+  const bottomMenuToggle = document.querySelector('[data-tno="bottom-menu-toggle"]');
+  if (bottomMenuToggle) {
+    bottomMenuToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      toggleMobileMenu();
+    });
+
+    // Keyboard support
+    bottomMenuToggle.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleMobileMenu();
+      }
+    });
+  }
+
+  // Update bottom-nav button aria-expanded to match menu state
+  const { detailsEl } = getMobileMenuElements();
+  if (detailsEl && bottomMenuToggle) {
+    const syncBottomNavAria = () => {
+      const isOpen = detailsEl.hasAttribute('open');
+      bottomMenuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    };
+
+    // Listen for menu state changes
+    const menuObserver = new MutationObserver(syncBottomNavAria);
+    menuObserver.observe(detailsEl, {
+      attributes: true,
+      attributeFilter: ['open'],
+    });
+
+    // Initial sync
+    syncBottomNavAria();
+  }
+}
+
+// Initialize unified mobile menu on DOM ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initUnifiedMobileMenu);
+} else {
+  initUnifiedMobileMenu();
+}
+
+// Re-init in Shopify Theme Editor when header section reloads
+if (window.Shopify && window.Shopify.designMode) {
+  document.addEventListener('shopify:section:load', (e) => {
+    try {
+      const el =
+        e.target ||
+        (e.detail &&
+          e.detail.sectionId &&
+          document.getElementById(`shopify-section-${e.detail.sectionId}`));
+      if (el && (el.querySelector('#Details-menu-drawer-container') || el.querySelector('[data-tno="bottom-menu-toggle"]'))) {
+        // Reset guard and re-init
+        if (window.TNO) {
+          window.TNO.mobileMenuInitialized = false;
+        }
+        initUnifiedMobileMenu();
       }
     } catch {
       // Silent guard for editor-only code

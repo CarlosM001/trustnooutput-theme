@@ -339,27 +339,14 @@
     {%- if settings.predictive_search_enabled -%}
       <script src="{{ 'predictive-search.js' | asset_url }}" defer></script>
     {%- endif -%}
-    {%- if settings.cart_type == 'drawer' -%}
-      <script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
-    {%- endif -%}
+      {%- if settings.cart_type == 'drawer' -%}
+        <script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
+      {%- endif -%}
 
-    <script src="{{ 'header.js' | asset_url }}" defer></script>
+      <script src="{{ 'header.js' | asset_url }}" defer></script>
+    <script src="{{ 'product-recommendations.js' | asset_url }}" defer></script>
     <script src="{{ 'custom.js' | asset_url }}" defer></script>
 
-    {%- comment -%} Mobile bottom navigation - globally available on all pages {%- endcomment -%}
-    {% render 'tno-bottom-tabs' %}
 
-    <script>
-      // Connect mobile bottom menu button to header drawer
-      document.addEventListener('DOMContentLoaded', function () {
-        var menuBtn = document.getElementById('bottom-tab-menu');
-        var drawerSummary = document.querySelector('header-drawer summary.header__icon--menu');
-        if (menuBtn && drawerSummary) {
-          menuBtn.addEventListener('click', function () {
-            drawerSummary.click();
-          });
-        }
-      });
-    </script>
   </body>
 </html>
