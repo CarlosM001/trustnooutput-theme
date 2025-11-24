@@ -2255,9 +2255,9 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     display: flex;
   }
 
-  /* Add bottom padding to body to prevent content from being hidden behind tab bar */
-  body {
-    padding-bottom: calc(70px + env(safe-area-inset-bottom)) !important;
+  /* Add bottom padding to main content to prevent it from being hidden behind tab bar */
+  #MainContent {
+    padding-bottom: calc(80px + env(safe-area-inset-bottom)) !important;
   }
 }
 
@@ -5015,7 +5015,7 @@ body .tno-product__trust-item strong,
 /* ==========================================================================
    BRAND-NEUTRAL CYBER-TECH DESIGN SYSTEM V2 (POLISH PASS)
    For use with main-product-brand.liquid section
-   
+
    Version: 2.0
    Focus: Premium typography, refined spacing, proper grid specs, micro-interactions
    ========================================================================== */
@@ -5024,7 +5024,7 @@ body .tno-product__trust-item strong,
 :root {
   /* Smooth scroll for anchor navigation within brand sections */
   scroll-behavior: smooth;
-  
+
   /* Dark UI Foundation */
   --brand-bg: #050608;
   --brand-surface: #0C0F14;
@@ -5183,14 +5183,14 @@ body .tno-product__trust-item strong,
 .brand-product__thumb-button:hover {
   border-color: var(--brand-accent);
   transform: translateY(-1px);
-  box-shadow: 
+  box-shadow:
     0 4px 8px rgba(0, 0, 0, 0.15),
     0 0 12px rgba(0, 240, 255, 0.3);
 }
 
 .brand-product__thumb-button.is-active {
   border-color: var(--brand-accent);
-  box-shadow: 
+  box-shadow:
     0 0 0 1px var(--brand-accent),
     0 0 16px rgba(0, 240, 255, 0.5),
     0 4px 8px rgba(0, 0, 0, 0.2);
@@ -5407,7 +5407,7 @@ body .tno-product__trust-item strong,
 .brand-button--primary {
   background: var(--brand-accent);
   color: var(--brand-text-dark);
-  box-shadow: 
+  box-shadow:
     var(--brand-shadow-md),
     0 2px 8px rgba(0, 240, 255, 0.2);
   border-color: var(--brand-accent);
@@ -5416,7 +5416,7 @@ body .tno-product__trust-item strong,
 .brand-button--primary:hover:not(:disabled) {
   background: color-mix(in srgb, var(--brand-accent) 90%, white);
   transform: translateY(-2px);
-  box-shadow: 
+  box-shadow:
     0 6px 20px rgba(0, 0, 0, 0.3),
     0 4px 24px rgba(0, 240, 255, 0.5),
     0 0 40px rgba(0, 240, 255, 0.3);
@@ -5425,7 +5425,7 @@ body .tno-product__trust-item strong,
 
 .brand-button--primary:active:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 
+  box-shadow:
     var(--brand-shadow-sm),
     0 2px 12px rgba(0, 240, 255, 0.3);
 }
@@ -5452,7 +5452,7 @@ body .tno-product__trust-item strong,
   color: color-mix(in srgb, var(--brand-accent) 90%, white);
   border-color: color-mix(in srgb, var(--brand-accent) 80%, white);
   transform: translateY(-1px);
-  box-shadow: 
+  box-shadow:
     0 4px 16px rgba(0, 0, 0, 0.2),
     0 0 20px rgba(0, 240, 255, 0.3);
 }
@@ -5813,7 +5813,7 @@ body .tno-product__trust-item strong,
     rgba(0, 240, 255, 1) 0%,
     rgba(0, 240, 255, 0.7) 100%
   );
-  box-shadow: 
+  box-shadow:
     0 0 8px rgba(0, 240, 255, 0.6),
     0 1px 16px rgba(0, 240, 255, 0.3);
   filter: blur(0.5px);
@@ -5831,7 +5831,7 @@ body .tno-product__trust-item strong,
     rgba(0, 240, 255, 1) 0%,
     rgba(0, 240, 255, 0.8) 100%
   );
-  box-shadow: 
+  box-shadow:
     0 0 12px rgba(0, 240, 255, 0.8),
     0 1px 20px rgba(0, 240, 255, 0.4);
 }
@@ -6027,6 +6027,59 @@ body .tno-product__trust-item strong,
   color: var(--brand-text-soft);
 }
 
+/* Mobile Back Navigation Bar */
+.brand-mobile-back-bar {
+  display: none;
+}
+
+@media (max-width: 749px) {
+  .brand-mobile-back-bar {
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 25;
+    background: var(--brand-bg, #050608);
+    border-bottom: 1px solid var(--brand-border, rgba(255, 255, 255, 0.08));
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+
+  .brand-mobile-back-bar__link {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.7rem 1rem;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+  }
+
+  .brand-mobile-back-bar__link:hover,
+  .brand-mobile-back-bar__link:active {
+    background: var(--brand-surface, rgba(255, 255, 255, 0.03));
+  }
+
+  .brand-mobile-back-bar__icon {
+    font-size: 0.9rem;
+    line-height: 1;
+    color: var(--brand-accent, #00F0FF);
+    transition: transform 0.2s ease;
+  }
+
+  .brand-mobile-back-bar__link:hover .brand-mobile-back-bar__icon {
+    transform: translateX(-2px);
+  }
+
+  .brand-mobile-back-bar__label {
+    font-size: 0.82rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--brand-text-muted, #A3A7B5);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
 /* 19) MOBILE-SPECIFIC IMPROVEMENTS & STICKY CTA */
 @media (max-width: 767px) {
   /* V3 Hero grid on mobile with refined gaps */
@@ -6051,9 +6104,10 @@ body .tno-product__trust-item strong,
   }
 
   /* V3 Enhanced sticky CTA on mobile with refined shadow */
+  /* Positioned above the bottom navigation tabs */
   .brand-product__cta-container {
     position: fixed;
-    bottom: 0;
+    bottom: 70px; /* Space for bottom navigation bar */
     left: 0;
     right: 0;
     z-index: 100;
@@ -6064,7 +6118,7 @@ body .tno-product__trust-item strong,
       var(--brand-bg) 85%,
       transparent 100%
     );
-    box-shadow: 
+    box-shadow:
       0 -4px 16px rgba(0, 0, 0, 0.6),
       0 -1px 0 0 rgba(0, 240, 255, 0.15);
     backdrop-filter: blur(12px);
@@ -6072,8 +6126,9 @@ body .tno-product__trust-item strong,
   }
 
   /* Add bottom padding to info column to prevent content hiding */
+  /* Accounts for sticky CTA (100px) + bottom nav (70px) + extra space */
   .brand-product__info-column {
-    padding-bottom: calc(var(--brand-space-3xl) + 100px);
+    padding-bottom: calc(var(--brand-space-3xl) + 180px);
   }
 
   /* Details block mobile padding */
@@ -6157,7 +6212,7 @@ body .tno-product__trust-item strong,
   .brand-product__details {
     scroll-behavior: auto !important;
   }
-  
+
   /* Remove all transforms and animations for users who prefer reduced motion */
   .brand-button,
   .brand-badge,
@@ -6174,7 +6229,7 @@ body .tno-product__trust-item strong,
     transform: none !important;
     animation: none !important;
   }
-  
+
   /* Keep essential color transitions but remove motion */
   .brand-button,
   .brand-badge,
@@ -6182,7 +6237,7 @@ body .tno-product__trust-item strong,
   .brand-chip__label {
     transition: background 0.1s ease, border-color 0.1s ease, color 0.1s ease !important;
   }
-  
+
   /* Disable hover box-shadows that create visual movement */
   .brand-button:hover,
   .brand-badge:hover,

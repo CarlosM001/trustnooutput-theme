@@ -1,6 +1,6 @@
 {% comment %}
   BRAND-NEUTRAL CYBER-TECH PRODUCT SECTION V2 (POLISH PASS)
-  
+
   Architecture:
   - Desktop: 2-column grid (media left ~55%, info right ~45%)
   - Mobile: Single column with sticky CTA
@@ -9,7 +9,7 @@
   - Metafield-driven with smart fallbacks
   - Brand-neutral class naming: .brand-product__*
   - Accessible, semantic HTML, WCAG 2.1 AA
-  
+
   Version: 2.0
   Last updated: 2025-11-19
 {% endcomment %}<section
@@ -45,6 +45,25 @@
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
   {%- assign product_form_id = 'product-form-' | append: section.id -%}
+
+  {%- comment -%} Mobile Back Navigation Bar {%- endcomment -%}
+  {%- assign back_collection = product.collections.first -%}
+  <div class="brand-mobile-back-bar" role="navigation">
+    <a
+      class="brand-mobile-back-bar__link"
+      href="{% if back_collection %}{{ back_collection.url }}{% else %}/collections/all{% endif %}"
+      aria-label="{% if back_collection %}Back to {{ back_collection.title }}{% else %}Back to products{% endif %}"
+    >
+      <span class="brand-mobile-back-bar__icon" aria-hidden="true">←</span>
+      <span class="brand-mobile-back-bar__label">
+        {% if back_collection %}
+          Back to {{ back_collection.title }}
+        {% else %}
+          Back to products
+        {% endif %}
+      </span>
+    </a>
+  </div>
 
   <div class="page-width">
     <div class="brand-product__grid">
@@ -299,7 +318,7 @@
           assign has_fit = false
           assign has_print = false
           assign has_care = false
-          
+
           if product.metafields.custom.material.value != blank or product.metafields.custom.spec_material.value != blank
             assign has_material = true
           endif
@@ -312,13 +331,13 @@
           if product.metafields.custom.care_instructions.value != blank
             assign has_care = true
           endif
-          
+
           assign has_any_specs = false
           if has_material or has_fit or has_print or has_care
             assign has_any_specs = true
           endif
         -%}
-        
+
         {%- if has_any_specs -%}
           <section class="brand-details__section" aria-labelledby="brand-product-specs-heading">
             <h2 id="brand-product-specs-heading" class="brand-details__heading brand-section-heading label-system label-tech">SPECIFICATIONS</h2>
@@ -331,7 +350,7 @@
                   </dd>
                 </div>
               {%- endif -%}
-              
+
               {%- if has_fit -%}
                 <div class="brand-specs__item">
                   <dt class="brand-specs__label">FIT</dt>
@@ -340,7 +359,7 @@
                   </dd>
                 </div>
               {%- endif -%}
-              
+
               {%- if has_print -%}
                 <div class="brand-specs__item">
                   <dt class="brand-specs__label">PRINT</dt>
@@ -349,7 +368,7 @@
                   </dd>
                 </div>
               {%- endif -%}
-              
+
               {%- if has_care -%}
                 <div class="brand-specs__item">
                   <dt class="brand-specs__label">CARE</dt>
