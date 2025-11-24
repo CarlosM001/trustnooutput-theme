@@ -6481,6 +6481,43 @@ body .tno-product__trust-item strong,
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35), 0 0 18px rgba(0, 240, 255, 0.18);
 }
 
+/* Related Products Section - Dark Theme Override */
+.related-products,
+.related-products .color-scheme-1,
+.related-products .gradient {
+  background: var(--brand-bg, #050608) !important;
+  color: var(--brand-text-main, #F5F5F5) !important;
+}
+
+.related-products__heading {
+  color: var(--brand-text-main, #F5F5F5) !important;
+  margin-bottom: var(--brand-space-xl, 2rem) !important;
+}
+
+/* Related products grid styling */
+.related-products .product-grid {
+  gap: var(--brand-space-lg, 1.5rem);
+}
+
+/* Ensure product cards in related section use dark theme */
+.related-products .card {
+  background: var(--brand-surface, #0C0F14) !important;
+  border: 1px solid var(--brand-border, #20232B) !important;
+  color: var(--brand-text-main, #F5F5F5) !important;
+}
+
+.related-products .card__heading,
+.related-products .card__information,
+.related-products .card-information,
+.related-products .price {
+  color: var(--brand-text-main, #F5F5F5) !important;
+}
+
+.related-products .card:hover {
+  border-color: var(--brand-accent, #00F0FF) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 12px rgba(0, 240, 255, 0.2) !important;
+}
+
 /* Part 5 — Reduced motion: extend list */
 @media (prefers-reduced-motion: reduce) {
   .brand-section-heading,
