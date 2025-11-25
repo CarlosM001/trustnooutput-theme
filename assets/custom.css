@@ -4049,9 +4049,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* --------------------------------------------------------------------------
    4. Variant Selectors
    -------------------------------------------------------------------------- */
-.tno-product__variants {
-  /* Inherits styles from component-product-variant-picker.css */
-}
+/* .tno-product__variants styles are inherited from component-product-variant-picker.css; no direct rules needed here. */
 
 /* Ensure variant buttons meet accessibility requirements */
 .tno-product__variants fieldset {
@@ -4145,9 +4143,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* --------------------------------------------------------------------------
    6. Quantity Selector
    -------------------------------------------------------------------------- */
-.tno-product__quantity {
-  /* Inherits from existing quantity component */
-}
+/* .tno-product__quantity inherits from existing quantity component; no direct rules needed. */
 
 .tno-product__quantity-label {
   font-family: var(--font-mono, ui-monospace, monospace);
@@ -4246,9 +4242,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   margin-top: 0.75rem;
 }
 
-.tno-product__secondary-cta .shopify-payment-button {
-  /* Inherits Shopify styles */
-}
+/* Removed empty ruleset for .tno-product__secondary-cta .shopify-payment-button (inherits Shopify styles) */
 
 /* --------------------------------------------------------------------------
    8. Trust Cluster (POD Transparency)
@@ -4378,9 +4372,8 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* --------------------------------------------------------------------------
    Product Story Section
    -------------------------------------------------------------------------- */
-.tno-product__story {
-  /* Container */
-}
+
+ /* Removed empty ruleset for .tno-product__story */
 
 .tno-product__story-content {
   font-size: 1rem;
@@ -4399,9 +4392,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* --------------------------------------------------------------------------
    Spec Sheet Section
    -------------------------------------------------------------------------- */
-.tno-product__specs {
-  /* Container */
-}
+/* Removed empty ruleset for .tno-product__specs */
 
 .tno-product__specs-list {
   display: grid;
@@ -4449,9 +4440,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* --------------------------------------------------------------------------
    Reviews / UGC Section
    -------------------------------------------------------------------------- */
-.tno-product__reviews {
-  /* Container */
-}
+/* Removed empty ruleset for .tno-product__reviews */
 
 .tno-product__reviews-placeholder {
   padding: 2rem;
@@ -6515,22 +6504,7 @@ body .tno-product__trust-item strong,
 
 /* ==========================================================================
    PRODUCT GRIDS & CARDS - TNO Dark Theme
-   
-   SCOPING STRATEGY:
-   All TNO dark theme overrides are scoped to specific contexts to avoid
-   breaking Shopify Dawn's default behavior on other pages:
-   
-   - body.template-collection → Collection pages only
-   - body.template-search → Search results only  
-   - body.template-product .related-products → Related products section only
-   
-   This prevents global CSS pollution and ensures:
-   - Homepage hero/header remain unchanged
-   - Cart, checkout, blog pages use Dawn defaults
-   - Theme editor color schemes work correctly on non-TNO pages
-   
-   NOTE: Avoid unscoped selectors like .card__heading or .price-item as
-   they will affect ALL pages including cart, checkout, and blog.
+   Scoped to template-collection and template-search to avoid conflicts
    ========================================================================== */
 
 /* Collection page product grid - dark background */
@@ -6648,7 +6622,6 @@ body.template-product .related-products .product-grid {
 
 /* Related product cards - dark theme */
 body.template-product .related-products .card {
-  position: relative;
   background: #0c0f14 !important;
   border: 1px solid #20232b !important;
   color: #f5f5f5 !important;
@@ -6658,22 +6631,10 @@ body.template-product .related-products .card {
     border-color 0.16s ease;
 }
 
-/* Ensure card media/images are visible in related products */
-body.template-product .related-products .card__media,
-body.template-product .related-products .card .media,
-body.template-product .related-products .card img {
-  position: relative;
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
 body.template-product .related-products .card__heading,
 body.template-product .related-products .card__information,
 body.template-product .related-products .card-information,
 body.template-product .related-products .price,
-body.template-product .related-products .price__regular,
-body.template-product .related-products .price-item,
-body.template-product .related-products .price-item--regular,
 body.template-product .related-products .card__heading a,
 body.template-product .related-products .full-unstyled-link {
   color: #f5f5f5 !important;
@@ -6703,6 +6664,43 @@ body.template-product .related-products .card:hover {
   }
 }
 
+/* TRUST.NO.OUTPUT – Fix: Product grids & Related Products dunkel + sichtbar */
+
+/* Collection-Seiten: Produktgitter-Karten */
+.template-collection .product-grid .card {
+  background: var(--brand-surface, #0c0f14) !important;
+  border: 1px solid var(--brand-border, #20232b) !important;
+  color: var(--brand-text-main, #f5f5f5) !important;
+}
+
+/* Ähnliche Produkte Sektion (related-products.liquid) */
+.template-product .related-products .product-grid .card {
+  background: var(--brand-surface, #0c0f14) !important;
+  border: 1px solid var(--brand-border, #20232b) !important;
+  color: var(--brand-text-main, #f5f5f5) !important;
+}
+
+/* Text & Preis in Karten immer gut lesbar */
+.template-collection .product-grid .card__heading,
+.template-collection .product-grid .card__information,
+.template-collection .product-grid .card-information,
+.template-collection .product-grid .price,
+.template-product .related-products .card__heading,
+.template-product .related-products .card__information,
+.template-product .related-products .card-information,
+.template-product .related-products .price {
+  color: var(--brand-text-main, #f5f5f5) !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Bilder in Karten niemals „unsichtbar“ */
+.template-collection .product-grid .card img,
+.template-product .related-products .card img {
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+  filter: none !important;
+}
 
 /* ==========================================================================
    SEARCH PAGE LAYOUT FIX (/search)
@@ -6827,118 +6825,152 @@ body.template-search .field__button .icon {
   }
 }
 
-/* ==========================================================================
-   SEARCH PAGE DARK THEME & DUPLICATE FORM FIX
-   Hide/restyle the duplicate white search block on /search page
-   ========================================================================== */
-
-/* Dark background for entire search page */
-body.template-search {
-  background: #050608 !important;
-}
-
-/* Hide or minimize the duplicate search form section */
-body.template-search .template-search__search {
-  display: none !important; /* Remove duplicate search form entirely */
-}
-
-/* Alternative: if you want to keep it but style it dark */
-
-/*
-body.template-search .template-search__search {
-  background: transparent !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-body.template-search .template-search__search .search {
-  background: #0c0f14 !important;
-  border: 1px solid #20232b !important;
-  border-radius: var(--tno-r-md, 16px) !important;
-  padding: 1rem !important;
-}
-*/
-
-/* Dark theme for search page header */
-body.template-search .template-search__header {
-  background: transparent !important;
-  color: #f5f5f5 !important;
-}
-
-body.template-search .template-search__header h1,
-body.template-search .template-search__header .h2 {
-  color: #f5f5f5 !important;
-}
-
-/* Dark theme for search results section */
-body.template-search .template-search .page-width {
-  background: transparent !important;
-}
-
-/* Ensure search results grid uses dark theme */
-body.template-search .collection {
-  background: transparent !important;
-}
-
-/* Search results should inherit product grid dark styling */
-body.template-search .product-grid-container {
-  background: transparent !important;
-}
-
-/* ==========================================================================
-   COLLECTION GRID - FIX PERSISTENT LOADING OVERLAY
-   Ensure loading overlays don't stay visible after content loads
-   ========================================================================== */
-
-/* Ensure loading overlay is hidden when not actively loading */
-body.template-collection .loading-overlay,
-body.template-search .loading-overlay {
-  pointer-events: none !important;
-  transition: opacity 0.3s ease, visibility 0.3s ease !important;
-}
-
-/* Force loading overlay to hide when collection is not in loading state */
-body.template-collection:not(.loading) .loading-overlay,
-body.template-search:not(.loading) .loading-overlay {
-  opacity: 0 !important;
-  visibility: hidden !important;
+/* TNO: Remove default search section on /search and keep only header search */
+body.template-search .shopify-section[id^="template--"][id*="search"] .search,
+body.template-search main .search,
+body.template-search .search__form {
   display: none !important;
 }
 
-/* Explicitly show overlay only when actively loading */
-body.template-collection.loading .loading-overlay,
-body.template-search.loading .loading-overlay {
-  opacity: 0.7 !important;
-  visibility: visible !important;
-  display: block !important;
+/* Optional: keep the page heading "Search" nicely styled */
+body.template-search h1,
+body.template-search .search__title {
+  text-align: center;
+  margin: 2rem 0 1rem;
+  font-size: 1.5rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #f5f5f5;
 }
 
-/* Ensure collection container doesn't hide content */
-body.template-collection .collection,
-body.template-search .collection {
-  position: relative !important;
+/* TRUST.NO.OUTPUT – Nur Header-Suche verwenden, Standard-Suchfeld auf /search ausblenden */
+
+body.template-search .template-search__header,
+body.template-search .template-search__search,
+body.template-search form.search__form {
+  display: none !important;
 }
 
-/* Make sure color schemes don't create white overlays */
-body.template-collection .color-scheme-1::before,
-body.template-collection .color-scheme-2::before,
-body.template-collection .color-scheme-3::before,
-body.template-collection .gradient::before {
-  display: none !important; /* Remove any pseudo-element overlays from color schemes */
-}
 
-/* Ensure facets/filters don't create overlay issues */
-body.template-collection .facets-wrapper,
-body.template-collection .facets-container {
-  background: transparent !important;
-  position: relative !important;
-  z-index: 2 !important;
-}
+/* TNO: Hard fix for product grid visibility (collections + search results) */
 
-/* Product count and sorting should be visible */
-body.template-collection .product-count,
-body.template-collection .facet-filters {
+/* Basiskarte im Grid */
+.product-grid .card,
+.collection .product-grid .card,
+.template-search .product-grid .card {
+  background: #050608 !important;
+  border: 1px solid rgb(255 255 255 / 12%) !important;
   color: #f5f5f5 !important;
-  background: transparent !important;
 }
 
+/* Bild wirklich anzeigen */
+.product-grid .card__media,
+.product-grid .card__inner,
+.product-grid .media,
+.product-grid .media img {
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+  filter: none !important;
+}
+
+/* Titel & Preis gut lesbar */
+.product-grid .card__heading .full-unstyled-link,
+.product-grid .price,
+.product-grid .price-item,
+.product-grid .price__regular .price-item--regular {
+  color: #f5f5f5 !important;
+}
+
+/* Hover darf heller sein, aber nicht verschwinden */
+.product-grid .card:hover {
+  border-color: #00f0ff !important;
+  box-shadow:
+    0 8px 24px rgb(0 0 0 / 60%),
+    0 0 16px rgb(0 240 255 / 25%) !important;
+}
+
+/* TNO: Force dark theme for related products section on product pages */
+.related-products,
+.related-products .color-scheme-1,
+.related-products .color-scheme-2,
+.related-products .gradient,
+.related-products .page-width,
+.related-products .product-grid-container {
+  background: #050608 !important;
+  color: #f5f5f5 !important;
+}
+
+/* Karten in "Ähnliche Produkte" */
+.related-products .card {
+  background: #0c0f14 !important;
+  border: 1px solid color-mix(in srgb, #fff 12%, transparent) !important;
+  color: #f5f5f5 !important;
+}
+
+.related-products .card__media img,
+.related-products .media img {
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+  filter: none !important;
+}
+
+.related-products .card__heading .full-unstyled-link,
+.related-products .price,
+.related-products .price-item {
+  color: #f5f5f5 !important;
+}
+
+/* TNO – Disable white loading overlay that hides collection grid / related products */
+.collection .loading-overlay,
+.collection .loading-overlay.gradient,
+.related-products .loading-overlay,
+.related-products .loading-overlay.gradient {
+  background: transparent !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* TNO – Disable white loading overlay that hides collection grid / related products */
+.collection .loading-overlay,
+.collection .loading-overlay.gradient,
+.related-products .loading-overlay,
+.related-products .loading-overlay.gradient {
+  background: transparent !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* TNO – Dark background for related products section (wrapper + cards) */
+.shopify-section:has(.related-products),
+.shopify-section[id*="related-products"] {
+  background: var(--brand-bg, #050608) !important;
+  color: var(--brand-text-main, #f5f5f5) !important;
+}
+
+/* Karten in Related Products immer im Dark-Style */
+.related-products .card {
+  background: var(--brand-surface, #0c0f14) !important;
+  border: 1px solid var(--brand-border, #20232b) !important;
+  color: var(--brand-text-main, #f5f5f5) !important;
+}
+
+.related-products .card__heading,
+.related-products .card__information,
+.related-products .card-information,
+.related-products .price {
+  color: var(--brand-text-main, #f5f5f5) !important;
+}
+
+/* TNO – use only header search on /search, hide native search form */
+body.template-search .template-search__header,
+body.template-search .template-search__forms,
+body.template-search .search__form {
+  display: none !important;
+}
+
+/* Dark background for search results page */
+body.template-search .template-search,
+body.template-search main {
+  background: #050608 !important;
+  color: #f5f5f5 !important;
+}
