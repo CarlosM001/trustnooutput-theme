@@ -298,13 +298,13 @@
               {%- if customer and customer.has_avatar? -%}
                 {{ customer | avatar }}
               {%- else -%}
-                <span class="svg-wrapper"><img src="{{ 'icon-account.svg' | asset_url }}" alt="icon-account.svg icon" /> ```
-(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt=""> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
+                <span class="svg-wrapper"><img src="{{ 'icon-account.svg' | asset_url }}" alt="icon-account.svg icon" / width="24" height="24"> ```
+(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" / width="24" height="24">)</span>
               {%- endif -%}
             </account-icon>
           {%- else -%}
-            <span class="svg-wrapper"><img src="{{ 'icon-account.svg' | asset_url }}" alt="icon-account.svg icon" /> ```
-(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt=""> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
+            <span class="svg-wrapper"><img src="{{ 'icon-account.svg' | asset_url }}" alt="icon-account.svg icon" / width="24" height="24"> ```
+(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" / width="24" height="24">)</span>
           {%- endif -%}
           <span class="visually-hidden">
             {%- liquid
@@ -331,11 +331,11 @@
         id="cart-icon-bubble"
       >
         {% if cart == empty %}
-          <span class="svg-wrapper"><img src="{{ 'icon-cart-empty.svg' | asset_url }}" alt="icon-cart-empty.svg icon" /> ```
-(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt=""> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
+          <span class="svg-wrapper"><img src="{{ 'icon-cart-empty.svg' | asset_url }}" alt="icon-cart-empty.svg icon" / width="24" height="24"> ```
+(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" / width="24" height="24">)</span>
         {% else %}
-          <span class="svg-wrapper"><img src="{{ 'icon-cart.svg' | asset_url }}" alt="icon-cart.svg icon" /> ```
-(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt=""> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
+          <span class="svg-wrapper"><img src="{{ 'icon-cart.svg' | asset_url }}" alt="icon-cart.svg icon" / width="24" height="24"> ```
+(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" / width="24" height="24">)</span>
         {% endif %}
         <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
         {%- if cart != empty -%}

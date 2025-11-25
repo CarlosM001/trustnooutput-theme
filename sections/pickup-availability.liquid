@@ -8,8 +8,8 @@
     {% assign closest_location = pick_up_availabilities.first %}
 
     {% if closest_location.available %}
-      <span class="svg-wrapper"><img src="{{ 'icon-tick.svg' | asset_url }}" alt="icon-tick.svg icon" /> ```
-(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt=""> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
+      <span class="svg-wrapper"><img src="{{ 'icon-tick.svg' | asset_url }}" alt="icon-tick.svg icon" / width="24" height="24"> ```
+(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" / width="24" height="24">)</span>
     {% endif %}
 
     <div class="pickup-availability-info">
@@ -68,7 +68,7 @@
         type="button"
         aria-label="{{ 'accessibility.close' | t }}"
       >
-        <img src="{{ 'icon-close.svg' | asset_url }}" alt="icon-close" />
+        <img src="{{ 'icon-close.svg' | asset_url }}" alt="icon-close" / width="24" height="24">
       </button>
     </div>
 
@@ -97,7 +97,7 @@
           <p class="pickup-availability-preview caption-large">
             {%- if availability.available -%}
               <span class="svg-wrapper">
-                <img src="{{ 'icon-tick.svg' | asset_url }}" alt="icon-tick" />
+                <img src="{{ 'icon-tick.svg' | asset_url }}" alt="icon-tick" / width="24" height="24">
               </span>
               {{ 'products.product.pickup_availability.pick_up_available' | t }},
               {{ availability.pick_up_time | downcase }}

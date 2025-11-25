@@ -42,7 +42,7 @@
           <p class="announcement-bar__message h5">
             <span>{{ section.blocks.first.settings.text | escape }}</span>
             {%- if section.blocks.first.settings.link != blank -%}
-              <img src="{{ 'icon-arrow.svg' | asset_url }}" alt="">
+              <img src="{{ 'icon-arrow.svg' | asset_url }}" alt="" width="24" height="24">
             {%- endif -%}
           </p>
           {%- if section.blocks.first.settings.link != blank -%}
@@ -66,7 +66,7 @@
             aria-controls="Slider-{{ section.id }}"
           >
             <span class="svg-wrapper">
-              <img src="{{ 'icon-caret.svg' | asset_url }}" alt="">
+              <img src="{{ 'icon-caret.svg' | asset_url }}" alt="" width="24" height="24">
             </span>
           </button>
           <div
@@ -102,7 +102,7 @@
                     <p class="announcement-bar__message h5">
                       <span>{{ block.settings.text | escape }}</span>
                       {%- if block.settings.link != blank -%}
-                        <img src="{{ 'icon-arrow.svg' | asset_url }}" alt="">
+                        <img src="{{ 'icon-arrow.svg' | asset_url }}" alt="" width="24" height="24">
                       {%- endif -%}
                     </p>
                     {%- if block.settings.link != blank -%}
@@ -121,7 +121,7 @@
             aria-controls="Slider-{{ section.id }}"
           >
             <span class="svg-wrapper">
-              <img src="{{ 'icon-caret.svg' | asset_url }}" alt="">
+              <img src="{{ 'icon-caret.svg' | asset_url }}" alt="" width="24" height="24">
             </span>
           </button>
         </div>

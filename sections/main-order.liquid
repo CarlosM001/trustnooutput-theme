@@ -106,7 +106,7 @@
                       {%- for discount_allocation in line_item.line_level_discount_allocations -%}
                         <li>
                           <span class="svg-wrapper">
-                            <img src="{{ 'icon-discount.svg' | asset_url }}" alt="">
+                            <img src="{{ 'icon-discount.svg' | asset_url }}" alt="" width="24" height="24">
                           </span>
                           {{- discount_allocation.discount_application.title | escape }} (-
                           {{- discount_allocation.amount | money -}}
@@ -254,7 +254,7 @@
                   {{ 'customer.order.discount' | t }}
                   <span class="cart-discount">
                     <span class="svg-wrapper">
-                      <img src="{{ 'icon-discount.svg' | asset_url }}" alt="">
+                      <img src="{{ 'icon-discount.svg' | asset_url }}" alt="" width="24" height="24">
                     </span>
                     {{- discount_application.title | escape -}}
                   </span>
@@ -268,7 +268,7 @@
                     <span>-{{ discount_application.total_allocated_amount | money }}</span>
                     <span class="cart-discount">
                       <span class="svg-wrapper">
-                        <img src="{{ 'icon-discount.svg' | asset_url }}" alt="">
+                        <img src="{{ 'icon-discount.svg' | asset_url }}" alt="" width="24" height="24">
                       </span>
                       {{- discount_application.title | escape -}}
                     </span>

@@ -181,7 +181,7 @@
                             <= block.settings.inventory_threshold
                         -%}
                           <span class="svg-wrapper" style="color: rgb(238, 148, 65)">
-                            <img src="{{ 'icon-inventory-status.svg' | asset_url }}" alt="icon-inventory-status icon" width="20" height="20" />
+                            <img src="{{ 'icon-inventory-status.svg' | asset_url }}" alt="icon-inventory-status icon" width="20" height="20" / width="24" height="24">
                           </span>
                           {%- if block.settings.show_inventory_quantity -%}
                             {{-
@@ -194,7 +194,7 @@
                           {%- endif -%}
                         {%- else -%}
                           <span class="svg-wrapper" style="color: rgb(62, 214, 96)">
-                            <img src="{{ 'icon-inventory-status.svg' | asset_url }}" alt="icon-inventory-status icon" width="20" height="20" />
+                            <img src="{{ 'icon-inventory-status.svg' | asset_url }}" alt="icon-inventory-status icon" width="20" height="20" / width="24" height="24">
                           </span>
                           {%- if block.settings.show_inventory_quantity -%}
                             {{-
@@ -211,12 +211,12 @@
                             == 'continue'
                         -%}
                           <span class="svg-wrapper" style="color: rgb(62, 214, 96)">
-                            <img src="{{ 'icon-inventory-status.svg' | asset_url }}" alt="icon-inventory-status icon" width="20" height="20" />
+                            <img src="{{ 'icon-inventory-status.svg' | asset_url }}" alt="icon-inventory-status icon" width="20" height="20" / width="24" height="24">
                           </span>
                           {{- 'products.product.inventory_out_of_stock_continue_selling' | t -}}
                         {%- else -%}
                           <span class="svg-wrapper" style="color: rgb(200, 200, 200)">
-                            <img src="{{ 'icon-inventory-status.svg' | asset_url }}" alt="icon-inventory-status icon" width="20" height="20" />
+                            <img src="{{ 'icon-inventory-status.svg' | asset_url }}" alt="icon-inventory-status icon" width="20" height="20" / width="24" height="24">
                           </span>
                           {{- 'products.product.inventory_out_of_stock' | t -}}
                         {%- endif -%}
@@ -261,7 +261,7 @@
                             }}
                           </h2>
                         </div>
-                        <img src="{{ 'icon-caret.svg' | asset_url }}" alt="icon-caret icon" width="20" height="20" />
+                        <img src="{{ 'icon-caret.svg' | asset_url }}" alt="icon-caret icon" width="20" height="20" / width="24" height="24">
                       </summary>
                       <div
                         class="accordion__content rte"
@@ -327,7 +327,7 @@
                             -}}
                           </span>
                           <span class="svg-wrapper">
-                            <img src="{{ 'icon-minus.svg' | asset_url }}" alt="icon-minus icon" width="20" height="20" />
+                            <img src="{{ 'icon-minus.svg' | asset_url }}" alt="icon-minus icon" width="20" height="20" / width="24" height="24">
                           </span>
                         </button>
                         <input
@@ -357,7 +357,7 @@
                             -}}
                           </span>
                           <span class="svg-wrapper">
-                            <img src="{{ 'icon-plus.svg' | asset_url }}" alt="icon-plus icon" width="20" height="20" />
+                            <img src="{{ 'icon-plus.svg' | asset_url }}" alt="icon-plus icon" width="20" height="20" / width="24" height="24">
                           </span>
                         </button>
                       </quantity-input>
@@ -661,7 +661,7 @@
                             {%- endif -%}
                           </div>
                           {%- if block.settings.make_collapsible_row -%}
-                            <img src="{{ 'icon-caret.svg' | asset_url }}" alt="icon-caret icon" width="20" height="20" />
+                            <img src="{{ 'icon-caret.svg' | asset_url }}" alt="icon-caret icon" width="20" height="20" / width="24" height="24">
                             </summary>
                           {%- endif -%}
                           <slideshow-component class="slider-mobile-gutter">
@@ -731,7 +731,7 @@
                                   aria-label="{{ 'general.slider.previous_slide' | t }}"
                                 >
                                   <span class="svg-wrapper">
-                                    <img src="{{ 'icon-caret.svg' | asset_url }}" alt="icon-caret icon" width="20" height="20" />
+                                    <img src="{{ 'icon-caret.svg' | asset_url }}" alt="icon-caret icon" width="20" height="20" / width="24" height="24">
                                   </span>
                                 </button>
                                 <div class="slider-counter slider-counter--{{ block.settings.pagination_style }}{% if block.settings.pagination_style == 'counter' or block.settings.pagination_style == 'numbers' %} caption{% endif %}">
@@ -769,7 +769,7 @@
                                   aria-label="{{ 'general.slider.next_slide' | t }}"
                                 >
                                   <span class="svg-wrapper">
-                                    <img src="{{ 'icon-caret.svg' | asset_url }}" alt="icon-caret icon" width="20" height="20" />
+                                    <img src="{{ 'icon-caret.svg' | asset_url }}" alt="icon-caret icon" width="20" height="20" / width="24" height="24">
                                   </span>
                                 </button>
                               </div>
@@ -831,7 +831,7 @@
             </div>
             <a href="{{ product.url }}" class="link product__view-details animate-arrow">
               {{ 'products.product.view_full_details' | t }}
-              <img src="{{ 'icon-arrow.svg' | asset_url }}" alt="icon-arrow icon" width="20" height="20" />
+              <img src="{{ 'icon-arrow.svg' | asset_url }}" alt="icon-arrow icon" width="20" height="20" / width="24" height="24">
             </a>
             <!-- TNO: Size Guide Drawer markup -->
             <div
@@ -884,7 +884,7 @@
             class="product-popup-modal__toggle"
             aria-label="{{ 'accessibility.close' | t }}"
           >
-            <img src="{{ 'icon-close.svg' | asset_url }}" alt="icon-close icon" width="20" height="20" />
+            <img src="{{ 'icon-close.svg' | asset_url }}" alt="icon-close icon" width="20" height="20" / width="24" height="24">
           </button>
           <div class="product-popup-modal__content-info">
             <h1 class="h2">{{ block.settings.page.title | escape }}</h1>

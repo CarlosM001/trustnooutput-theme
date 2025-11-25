@@ -64,15 +64,15 @@
       {% case media.media_type %}
         {% when 'video', 'external_video' %}
           <span class="svg-wrapper">
-            <img src="{{ 'icon-play.svg' | asset_url }}" alt="">
+            <img src="{{ 'icon-play.svg' | asset_url }}" alt="" width="24" height="24">
           </span>
         {% when 'model' %}
           <span class="svg-wrapper">
-            <img src="{{ 'icon-3d-model.svg' | asset_url }}" alt="">
+            <img src="{{ 'icon-3d-model.svg' | asset_url }}" alt="" width="24" height="24">
           </span>
         {% else %}
           <span class="svg-wrapper">
-            <img src="{{ 'icon-zoom.svg' | asset_url }}" alt="">
+            <img src="{{ 'icon-zoom.svg' | asset_url }}" alt="" width="24" height="24">
           </span>
       {% endcase %}
     </span>
@@ -114,12 +114,12 @@
         {%- if media.media_type == 'model' -%}
           <span class="visually-hidden">{{ 'products.product.media.play_model' | t }}</span>
           <span class="svg-wrapper">
-            <img src="{{ 'icon-3d-model.svg' | asset_url }}" alt="">
+            <img src="{{ 'icon-3d-model.svg' | asset_url }}" alt="" width="24" height="24">
           </span>
         {%- else -%}
           <span class="visually-hidden">{{ 'products.product.media.play_video' | t }}</span>
           <span class="svg-wrapper">
-            <img src="{{ 'icon-play.svg' | asset_url }}" alt="">
+            <img src="{{ 'icon-play.svg' | asset_url }}" alt="" width="24" height="24">
           </span>
         {%- endif -%}
       </span>
@@ -163,7 +163,7 @@
           data-shopify-xr-hidden
         >
           <span class="svg-wrapper">
-            <img src="{{ 'icon-3d-model.svg' | asset_url }}" alt="">
+            <img src="{{ 'icon-3d-model.svg' | asset_url }}" alt="" width="24" height="24">
           </span>
           {{ 'products.product.xr_button' | t }}
         </button>

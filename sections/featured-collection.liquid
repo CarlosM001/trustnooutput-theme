@@ -175,7 +175,7 @@
             aria-controls="Slider-{{ section.id }}"
           >
             <span class="svg-wrapper">
-              <img src="{{ 'icon-caret.svg' | asset_url }}" alt="">
+              <img src="{{ 'icon-caret.svg' | asset_url }}" alt="" width="24" height="24">
             </span>
           </button>
           <div class="slider-counter caption">
@@ -192,7 +192,7 @@
             aria-controls="Slider-{{ section.id }}"
           >
             <span class="svg-wrapper">
-              <img src="{{ 'icon-caret.svg' | asset_url }}" alt="">
+              <img src="{{ 'icon-caret.svg' | asset_url }}" alt="" width="24" height="24">
             </span>
           </button>
         </div>
@@ -211,8 +211,8 @@
       </div>
     {%- endif -%}
     {% if section.settings.image_shape == 'arch' %}
-      <img src="{{ 'mask-arch.svg' | asset_url }}" alt="mask-arch.svg icon" /> ```
-(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt=""> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)
+      <img src="{{ 'mask-arch.svg' | asset_url }}" alt="mask-arch.svg icon" / width="24" height="24"> ```
+(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" / width="24" height="24">)
     {%- endif -%}
   </div>
 </div>

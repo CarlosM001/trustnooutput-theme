@@ -215,14 +215,14 @@
                       aria-label="{{ 'newsletter.button_label' | t }}"
                     >
                       <span class="svg-wrapper">
-                        <img src="{{ 'icon-arrow.svg' | asset_url }}" alt="">
+                        <img src="{{ 'icon-arrow.svg' | asset_url }}" alt="" width="24" height="24">
                       </span>
                     </button>
                   </div>
                   {%- if form.errors -%}
                     <small class="newsletter-form__message form__message" id="ContactFooter-error">
                       <span class="svg-wrapper">
-                        <img src="{{ 'icon-error.svg' | asset_url }}" alt="">
+                        <img src="{{ 'icon-error.svg' | asset_url }}" alt="" width="24" height="24">
                       </span>
                       {{- form.errors.translated_fields.email | capitalize }}
                       {{ form.errors.messages.email -}}
@@ -237,7 +237,7 @@
                     autofocus
                   >
                     <span class="svg-wrapper">
-                      <img src="{{ 'icon-success.svg' | asset_url }}" alt="">
+                      <img src="{{ 'icon-success.svg' | asset_url }}" alt="" width="24" height="24">
                     </span>
                     {{- 'newsletter.success' | t }}
                   </h3>

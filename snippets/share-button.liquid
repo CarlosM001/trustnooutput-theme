@@ -18,14 +18,14 @@
   {{ block.shopify_attributes }}
 >
   <button class="share-button__button hidden">
-    <span class="svg-wrapper"><img src="{{ 'icon-share.svg' | asset_url }}" alt="icon-share.svg icon" /> ```
-(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt=""> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
+    <span class="svg-wrapper"><img src="{{ 'icon-share.svg' | asset_url }}" alt="icon-share.svg icon" / width="24" height="24"> ```
+(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" / width="24" height="24">)</span>
     {{ block.settings.share_label | escape }}
   </button>
   <details id="Details-{{ block.id }}-{{ section.id }}">
     <summary class="share-button__button">
-      <span class="svg-wrapper"><img src="{{ 'icon-share.svg' | asset_url }}" alt="icon-share.svg icon" /> ```
-(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt=""> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
+      <span class="svg-wrapper"><img src="{{ 'icon-share.svg' | asset_url }}" alt="icon-share.svg icon" / width="24" height="24"> ```
+(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" / width="24" height="24">)</span>
       {{ block.settings.share_label | escape }}
     </summary>
     <div class="share-button__fallback motion-reduce">
@@ -47,13 +47,13 @@
       </div>
       <button class="share-button__close hidden">
         <span class="svg-wrapper">
-          <img src="{{ 'icon-close.svg' | asset_url }}" alt="">
+          <img src="{{ 'icon-close.svg' | asset_url }}" alt="" width="24" height="24">
         </span>
         <span class="visually-hidden">{{ 'general.share.close' | t }}</span>
       </button>
       <button class="share-button__copy">
         <span class="svg-wrapper">
-          <img src="{{ 'icon-copy.svg' | asset_url }}" alt="">
+          <img src="{{ 'icon-copy.svg' | asset_url }}" alt="" width="24" height="24">
         </span>
         <span class="visually-hidden">{{ 'general.share.copy_to_clipboard' | t }}</span>
       </button>
