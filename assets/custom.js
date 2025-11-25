@@ -12,7 +12,9 @@
   }
 
   const variant = document.documentElement.getAttribute('data-ab-variant') || 'unknown';
-  document.documentElement.classList.add(variant === 'glitch_pulse' ? 'tno-ab-pulse' : 'tno-ab-continuous');
+  document.documentElement.classList.add(
+    variant === 'glitch_pulse' ? 'tno-ab-pulse' : 'tno-ab-continuous'
+  );
   window.TNO.abVariant = variant;
 
   pushEvent({ event: 'tno_variant', variant });
@@ -81,79 +83,81 @@
       return;
     }
 
-    const glitchObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        const sec = entry.target;
-        const mode = (sec.dataset.glitchMode || 'pulse').toLowerCase();
-        const all = sec.querySelectorAll('.tno-glitch-strong, .tno-glitch-soft, .glitch');
+    const glitchObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const sec = entry.target;
+          const mode = (sec.dataset.glitchMode || 'pulse').toLowerCase();
+          const all = sec.querySelectorAll('.tno-glitch-strong, .tno-glitch-soft, .glitch');
 
-        if (entry.isIntersecting) {
-          sec.classList.add('tno-hero--active');
+          if (entry.isIntersecting) {
+            sec.classList.add('tno-hero--active');
 
-          if (prefersReducedMotion || mode === 'off') {
-            all.forEach((el) => {
-              el.style.animation = 'none';
-              el.classList.remove('is-glitching');
-            });
-            return;
-          }
+            if (prefersReducedMotion || mode === 'off') {
+              all.forEach((el) => {
+                el.style.animation = 'none';
+                el.classList.remove('is-glitching');
+              });
+              return;
+            }
 
-          if (mode === 'continuous') {
-            all.forEach((el) => {
-              el.style.animation = 'none';
-              setTimeout(
-                () => {
-                  el.style.animation = '';
-                },
-                CONFIG.glitch.minDelay +
-                Math.random() * (CONFIG.glitch.maxDelay - CONFIG.glitch.minDelay)
-              );
-            });
-          } else {
-            // Pulse mode
-            const pulseEls = sec.querySelectorAll('.tno-glitch-pulse');
+            if (mode === 'continuous') {
+              all.forEach((el) => {
+                el.style.animation = 'none';
+                setTimeout(
+                  () => {
+                    el.style.animation = '';
+                  },
+                  CONFIG.glitch.minDelay +
+                    Math.random() * (CONFIG.glitch.maxDelay - CONFIG.glitch.minDelay)
+                );
+              });
+            } else {
+              // Pulse mode
+              const pulseEls = sec.querySelectorAll('.tno-glitch-pulse');
 
-            pulseEls.forEach((el) => {
-              // alten Timer ggf. aufräumen
-              if (el._tnoGlitchTimer) {
-                clearTimeout(el._tnoGlitchTimer);
-              }
-
-              const burst = () => {
-                // abbrechen, wenn Element/Section nicht mehr aktiv ist
-                if (!document.body.contains(el) || !sec.classList.contains('tno-hero--active')) {
-                  return;
+              pulseEls.forEach((el) => {
+                // alten Timer ggf. aufräumen
+                if (el._tnoGlitchTimer) {
+                  clearTimeout(el._tnoGlitchTimer);
                 }
 
-                el.classList.add('is-glitching');
-                setTimeout(() => {
-                  el.classList.remove('is-glitching');
-                }, 900);
+                const burst = () => {
+                  // abbrechen, wenn Element/Section nicht mehr aktiv ist
+                  if (!document.body.contains(el) || !sec.classList.contains('tno-hero--active')) {
+                    return;
+                  }
 
-                const delay =
-                  CONFIG.glitch.minDelay +
-                  Math.random() * (CONFIG.glitch.maxDelay - CONFIG.glitch.minDelay);
+                  el.classList.add('is-glitching');
+                  setTimeout(() => {
+                    el.classList.remove('is-glitching');
+                  }, 900);
 
-                el._tnoGlitchTimer = setTimeout(burst, delay + 900);
-              };
+                  const delay =
+                    CONFIG.glitch.minDelay +
+                    Math.random() * (CONFIG.glitch.maxDelay - CONFIG.glitch.minDelay);
 
-              el._tnoGlitchTimer = setTimeout(burst, 200 + Math.random() * 600);
+                  el._tnoGlitchTimer = setTimeout(burst, delay + 900);
+                };
+
+                el._tnoGlitchTimer = setTimeout(burst, 200 + Math.random() * 600);
+              });
+            }
+          } else {
+            sec.classList.remove('tno-hero--active');
+            all.forEach((el) => {
+              if (el._tnoGlitchTimer) {
+                clearTimeout(el._tnoGlitchTimer);
+                el._tnoGlitchTimer = null;
+              }
+              el.classList.remove('is-glitching');
+              el.style.animation = 'none';
             });
           }
-
-        } else {
-          sec.classList.remove('tno-hero--active');
-          all.forEach((el) => {
-            if (el._tnoGlitchTimer) {
-              clearTimeout(el._tnoGlitchTimer);
-              el._tnoGlitchTimer = null;
-            }
-            el.classList.remove('is-glitching');
-            el.style.animation = 'none';
-          });
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '50px' });
+        });
+      },
+      { threshold: 0.1, rootMargin: '50px' }
+    );
 
     sections.forEach((sec) => glitchObserver.observe(sec));
   }
@@ -189,30 +193,34 @@
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 
-
   function initHeaderTransparency() {
     const header = document.getElementById('site-header');
     if (!header || !header.classList.contains('is-transparent')) {
       return;
     }
 
-    const hero = document.getElementById('shopify-section-motion-hero-tno') || document.querySelector('.tno-hero, .motion-hero');
+    const hero =
+      document.getElementById('shopify-section-motion-hero-tno') ||
+      document.querySelector('.tno-hero, .motion-hero');
     if (!hero) {
       return;
     }
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          header.classList.add('is-transparent');
-        } else {
-          header.classList.remove('is-transparent');
-        }
-      });
-    }, {
-      rootMargin: '-120px 0px 0px 0px',
-      threshold: 0,
-    });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            header.classList.add('is-transparent');
+          } else {
+            header.classList.remove('is-transparent');
+          }
+        });
+      },
+      {
+        rootMargin: '-120px 0px 0px 0px',
+        threshold: 0,
+      }
+    );
 
     observer.observe(hero);
   }
@@ -236,5 +244,4 @@
       initAll();
     });
   }
-
 })();

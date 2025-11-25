@@ -53,6 +53,7 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
 /*
   transition:
     transform var(--tno-fast),
@@ -2205,6 +2206,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* ==========================================================================
    MOBILE BOTTOM TAB BAR – App-like navigation
    Fixed to bottom of screen with 4 tabs: Home | Shop | Account | Menu
+   Z-index: 1200 - highest layer to ensure MENU button is always clickable
    ========================================================================== */
 
 .tno-bottom-tabs,
@@ -2213,8 +2215,9 @@ html.tno-ab-continuous .tno-glitch-soft::after {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1100; /* HÖHER als .mobile-menu */
+  z-index: 1200; /* Highest layer - always above header (1100) and mobile menu (900) */
 }
+
 .tno-tab::before,
 .tno-tab::after {
   pointer-events: none;
@@ -3263,7 +3266,6 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     font-size: 1.125rem;
     line-height: 1.75;
   }
-
 }
 
 .tno-product-title {
@@ -5664,17 +5666,17 @@ body .tno-product__trust-item strong,
     font-size: 1.75rem;
   }
 
-/* Sticky CTA on Mobile */
-.brand-product__cta-row {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
-  padding: var(--brand-space-md);
-  background: linear-gradient(to top, var(--brand-bg) 0%, var(--brand-bg) 70%, transparent 100%);
-  box-shadow: 0 -4px 12px rgb(0 0 0 / 30%);
-}
+  /* Sticky CTA on Mobile */
+  .brand-product__cta-row {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: var(--brand-space-md);
+    background: linear-gradient(to top, var(--brand-bg) 0%, var(--brand-bg) 70%, transparent 100%);
+    box-shadow: 0 -4px 12px rgb(0 0 0 / 30%);
+  }
 }
 
 /* 12) ACCESSIBILITY & FOCUS STATES */
@@ -6099,8 +6101,7 @@ body .tno-product__trust-item strong,
     bottom: 70px; /* Space for bottom navigation bar */
     left: 0;
     right: 0;
-    z-index: 900
-    ;
+    z-index: 900;
     padding: var(--brand-space-md);
     background: linear-gradient(to top, var(--brand-bg) 0%, var(--brand-bg) 85%, transparent 100%);
     box-shadow:

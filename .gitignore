@@ -23,3 +23,7 @@ pnpm-debug.log*
 
 # Reports
 /reports/*.html
+
+# Backup directories (development artifacts)
+backup-phase1/
+*.bak
