@@ -8,16 +8,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.tno-numeric {
-  font-variant-numeric: tabular-nums;
-}
-
-.tno-container {
-  max-width: 1280px;
-  margin-inline: auto;
-  padding-inline: 1rem;
-}
-
+/*
 /* 01) Design tokens (heller Default für Spotlight) */
 :root {
   --tno-cyan: #00e5ff;
@@ -62,14 +53,7 @@ a {
 a:hover {
   text-decoration: underline;
 }
-
-/* 03) Buttons */
-.button,
-.shopify-challenge__button,
-.product-form__submit,
-button,
-.btn {
-  border-radius: var(--tno-r-sm);
+/*
   transition:
     transform var(--tno-fast),
     box-shadow var(--tno-fast),
@@ -1664,35 +1648,24 @@ html.tno-ab-continuous .tno-glitch-soft::after {
    - Back button has z: 1050, high enough to be clickable in its area
    - Header's footprint only covers top 120px, menu occupies space below
    Result: Both header AND back button fully functional, no clipping */
+
 .mobile-menu {
   position: fixed;
-  inset: var(--tno-mobile-header-height) 0 0 0; /* Start below mobile header */
-  background: #000; /* Opaque to eliminate any mid-screen seam */
+  inset: var(--tno-mobile-header-height) 0 0 0;
+  background: #000;
   backdrop-filter: blur(20px);
-  z-index: 999; /* Below header so search bar stays visible */
+  z-index: 900; /* unter Bottom-Tabs (1100) */
   opacity: 0;
   visibility: hidden;
   transition:
     opacity 0.3s ease,
     visibility 0.3s ease;
-  overflow: hidden; /* Hide sliding panels outside bounds */
-}
-
-@supports (height: 100dvh) {
-  .mobile-menu {
-    top: var(--tno-mobile-header-height);
-    bottom: 0;
-
-    /* Height automatically calculated by fixed positioning */
-  }
+  overflow: hidden;
 }
 
 .mobile-menu.is-active {
   opacity: 1;
   visibility: visible;
-
-  /* Ensure panels can scroll properly */
-  overflow: hidden; /* Container hides panels, panels selbst sind scrollbar */
 }
 
 /* Drilldown Panel Base Styles */
@@ -2233,21 +2206,18 @@ html.tno-ab-continuous .tno-glitch-soft::after {
    MOBILE BOTTOM TAB BAR – App-like navigation
    Fixed to bottom of screen with 4 tabs: Home | Shop | Account | Menu
    ========================================================================== */
-.tno-bottom-tabs {
-  display: none; /* Hidden on desktop */
+
+.tno-bottom-tabs,
+.tno-bottom-nav {
   position: fixed;
-  bottom: 0;
   left: 0;
   right: 0;
-  z-index: 1050; /* Below header but above content */
-  background: rgb(10 10 10 / 95%);
-  backdrop-filter: blur(20px);
-  border-top: 1px solid rgb(255 255 255 / 8%);
-  box-shadow: 0 -2px 12px rgb(0 0 0 / 20%);
-  padding: 0.5rem 0 calc(0.5rem + env(safe-area-inset-bottom));
-  justify-content: space-around;
-  align-items: center;
-  gap: 0.5rem;
+  bottom: 0;
+  z-index: 1100; /* HÖHER als .mobile-menu */
+}
+.tno-tab::before,
+.tno-tab::after {
+  pointer-events: none;
 }
 
 @media (width <= 768px) {
@@ -3293,16 +3263,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     font-size: 1.125rem;
     line-height: 1.75;
   }
-}
 
-/* ==========================================================================
-   TNO PRODUCT PAGE — Scoped Enhancements
-   ========================================================================== */
-.tno-product-layout {
-  position: relative;
-  margin-inline: auto;
-  padding-inline: clamp(0.75rem, 2vw, 1.25rem);
-  max-width: 1480px;
 }
 
 .tno-product-title {
@@ -5703,17 +5664,17 @@ body .tno-product__trust-item strong,
     font-size: 1.75rem;
   }
 
-  /* Sticky CTA on Mobile */
-  .brand-product__cta-row {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
-    padding: var(--brand-space-md);
-    background: linear-gradient(to top, var(--brand-bg) 0%, var(--brand-bg) 70%, transparent 100%);
-    box-shadow: 0 -4px 12px rgb(0 0 0 / 30%);
-  }
+/* Sticky CTA on Mobile */
+.brand-product__cta-row {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  padding: var(--brand-space-md);
+  background: linear-gradient(to top, var(--brand-bg) 0%, var(--brand-bg) 70%, transparent 100%);
+  box-shadow: 0 -4px 12px rgb(0 0 0 / 30%);
+}
 }
 
 /* 12) ACCESSIBILITY & FOCUS STATES */
@@ -6138,7 +6099,8 @@ body .tno-product__trust-item strong,
     bottom: 70px; /* Space for bottom navigation bar */
     left: 0;
     right: 0;
-    z-index: 100;
+    z-index: 900
+    ;
     padding: var(--brand-space-md);
     background: linear-gradient(to top, var(--brand-bg) 0%, var(--brand-bg) 85%, transparent 100%);
     box-shadow:

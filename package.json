@@ -4,6 +4,10 @@
   "description": "TRUST.NO.OUTPUT Shopify Theme Development",
   "scripts": {
     "dev": "npm run dev:serve",
+    "theme:dev": "shopify theme dev --store 9csvgi-16.myshopify.com",
+    "theme:push": "shopify theme push --store 9csvgi-16.myshopify.com",
+    "theme:pull": "shopify theme pull --store 9csvgi-16.myshopify.com",
+    "theme:check": "shopify theme check",
     "dev:serve": "node scripts/dev-check.js",
     "dev:restart": "node scripts/dev-check.js --restart",
     "dev:theme": "shopify theme dev --store=9csvgi-16.myshopify.com",
@@ -23,7 +27,14 @@
     "validate:json": "node scripts/validate-json.js",
     "hygiene": "npm-run-all -s fmt lint:css:fix lint:js:fix validate:json",
     "lh:report": "lighthouse http://localhost:3000 --quiet --chrome-flags='--headless' --output html --output-path ./reports/lh.html",
-    "a11y:smoke": "node ./tests/a11y/smoke-a11y.js"
+    "a11y:smoke": "node ./tests/a11y/smoke-a11y.js",
+    "theme:dev": "shopify theme dev --store 9csvgi-16.myshopify.com",
+    "theme:push": "shopify theme push --store 9csvgi-16.myshopify.com",
+    "theme:pull": "shopify theme pull --theme 187839807863 --store 9csvgi-16.myshopify.com",
+    "theme:check": "shopify theme check",
+    "theme:safe-pull": "git stash push -m \"auto-stash before theme pull\" || echo \"Nothing to stash\" && shopify theme pull --theme 187839807863 --store 9csvgi-16.myshopify.com",
+    "theme:backup": "git add . && git commit -m \"backup before theme push\" || echo \"No changes to commit\"",
+    "theme:deploy": "npm run theme:backup && npm run theme:push"
   },
   "devDependencies": {
     "browser-sync": "^2.29.3",

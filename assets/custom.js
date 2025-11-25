@@ -1,7 +1,6 @@
 (function () {
   'use strict';
 
-
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   window.TNO = window.TNO || {};
   window.TNO.events = window.TNO.events || [];
