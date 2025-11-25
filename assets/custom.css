@@ -2358,6 +2358,14 @@ html.tno-ab-continuous .tno-glitch-soft::after {
    .mobile-menu.is-active ~ .tno-bottom-tabs { transform: translateY(100%); opacity: 0; }
 */
 
+/* Hide mobile bottom tabs on desktop */
+@media screen and (min-width: 990px) {
+  .tno-bottom-tabs,
+  .tno-bottom-nav {
+    display: none !important;
+  }
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .tno-tab,
@@ -2531,6 +2539,38 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 .tno-search__button:hover {
   filter: saturate(1.2);
 }
+
+/* TRUST.NO.OUTPUT – Fix header search button alignment on desktop */
+@media (min-width: 990px) {
+  /* Button im TNO-Suchfeld immer in einer Reihe mit dem Input anzeigen */
+  .tno-search button[type="submit"],
+  .tno-search .search__button,
+  .tno-search .field__button {
+    height: 28px;
+    min-width: 36px;
+    padding: 0 10px;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #0ff, #0cc);
+    color: #000;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0; /* entfernt das Standard-margin-top aus dem Theme */
+    position: static; /* falls das Theme irgendetwas Komisches setzt */
+  }
+
+  /* Sicherheit: Container zwingend als horizontale Flex-Leiste */
+  .tno-search {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    width: auto;
+  }
+}
+
 
 /* ==========================================================================
    13) HEADER—REQUESTED STYLE RULES (HIGHER PRIORITY)
