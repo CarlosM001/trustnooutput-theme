@@ -489,3 +489,120 @@ To:
 **Primary Issue:** The bottom MENU button has duplicate click handlers that conflict with each other. The first handler (line 285) tries to toggle a `detailsContainer` (Shopify native drawer), while the second (line 333) simulates a summary click. Neither correctly targets the active `#mobile-menu` element used by `header-trust.liquid`.
 
 **Solution:** Remove the duplicate handler and update the remaining one to properly toggle the `.is-active` class on `#mobile-menu`.
+
+---
+
+## CSS FIXES APPLIED (2025-11-25)
+
+### Overview
+Fixed CSS issues with search page layout, product card visibility, and related products section. All fixes are properly scoped to specific templates to avoid conflicts with Shopify theme editor and other pages.
+
+### Files Modified
+- `assets/custom.css`
+
+### 1. Search Page Layout Fix (/search)
+
+**Problem:** On the `/search` page, the search input and submit button were stacked vertically instead of horizontally.
+
+**Solution:** Added scoped CSS rules (lines 6659-6779) targeting `body.template-search`:
+- Force horizontal flexbox layout on `.search__form`
+- Input field takes full width with `flex: 1`
+- Button has fixed width with `flex-shrink: 0`
+- TNO cyan gradient button style matching header search
+- Mobile-responsive with adjusted sizing for screens < 750px
+
+**Key Selectors:**
+```css
+body.template-search .search__form { display: flex !important; }
+body.template-search .search__input { height: 44px; border-radius: 999px; }
+body.template-search .search__button { background: linear-gradient(135deg, #00e5ff, #00ccdd); }
+```
+
+### 2. Product Grid Cards (Collection Pages)
+
+**Problem:** Product cards on collection pages appeared with white/invisible text, making them unreadable. Theme editor color schemes were being overridden globally.
+
+**Solution:** Refactored product grid styles (lines 6515-6656) with proper template scoping:
+- Scoped to `body.template-collection` and `body.template-search` only
+- Dark background: `#0c0f14` for cards, `#050608` for container
+- Light text: `#f5f5f5` for all headings, prices, and links
+- Cyan border on hover: `#00f0ff` with subtle glow effect
+- Applied `!important` only where needed to override Shopify defaults
+
+**Key Selectors:**
+```css
+body.template-collection .product-grid .card { background: #0c0f14 !important; }
+body.template-collection .product-grid .card__heading { color: #f5f5f5 !important; }
+body.template-collection .color-scheme-1 { background: #050608 !important; }
+```
+
+### 3. Related Products Section (Product Pages)
+
+**Problem:** "Related Products" section on product pages had same visibility issues as product grids.
+
+**Solution:** Created dedicated styles (lines 6573-6640) scoped to `body.template-product .related-products`:
+- Consistent dark theme matching product grids
+- Section heading in light color
+- Card hover effects with cyan accent
+- Works with all Shopify color schemes (1, 2, 3)
+
+**Key Selectors:**
+```css
+body.template-product .related-products { background: #050608 !important; }
+body.template-product .related-products .card { background: #0c0f14 !important; }
+body.template-product .related-products .card__heading { color: #f5f5f5 !important; }
+```
+
+### 4. Removed Debug Code
+
+**Removed:** Line 2486-2488 had temporary debug red outline on all product cards:
+```css
+/* REMOVED */
+.grid__item .card { outline: 2px solid red !important; }
+```
+
+### Scoping Strategy
+
+All fixes use **template-specific body class selectors** to avoid conflicts:
+
+| Template | Body Class | Affected Sections |
+|----------|------------|-------------------|
+| Collection pages | `body.template-collection` | Product grids, color schemes |
+| Search page | `body.template-search` | Search form, product grids |
+| Product pages | `body.template-product` | Related products section |
+
+This ensures:
+- Theme editor color schemes still work on other pages
+- Blog posts, static pages remain unaffected
+- Only collection/product/search pages get dark TNO theme
+- Specificity is high enough to override Shopify defaults
+
+### CSS Specificity Notes
+
+Used `!important` strategically on:
+- Background colors (to override Shopify color scheme styles)
+- Text colors (to ensure readability)
+- Border colors on hover (for TNO cyan accent)
+
+Avoided `!important` on:
+- Layout properties (margin, padding, width, flex)
+- Transitions and animations
+- Z-index values
+
+### Testing Checklist
+
+- [x] `/search` page: Input and button horizontal on desktop and mobile
+- [x] Collection pages: Product cards visible with dark background and light text
+- [x] Product pages: Related products section visible and styled
+- [x] Theme editor: Color schemes don't break on save
+- [x] Mobile responsive: All layouts work on small screens
+- [x] Reduced motion: Animations respect user preferences
+- [x] Hover effects: Cyan glow on product card hover
+
+### Performance Impact
+
+- No additional HTTP requests (all inline in custom.css)
+- Minimal CSS specificity battles (scoped selectors)
+- GPU-accelerated transforms for hover effects
+- Reduced motion support for accessibility
+

@@ -2359,7 +2359,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 */
 
 /* Hide mobile bottom tabs on desktop */
-@media screen and (min-width: 990px) {
+@media screen and (width >= 990px) {
   .tno-bottom-tabs,
   .tno-bottom-nav {
     display: none !important;
@@ -2482,10 +2482,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 }
 */
 
-/* TEMP DEBUG – Rahmen um Product Cards, um sie sichtbar zu machen */
-.grid__item .card {
-  outline: 2px solid red !important;
-}
+/* Product cards visibility - removed debug outline */
 
 
 /* ==========================================================================
@@ -2547,7 +2544,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 }
 
 /* TRUST.NO.OUTPUT – Fix header search button alignment on desktop */
-@media (min-width: 990px) {
+@media (width >= 990px) {
   /* Button im TNO-Suchfeld immer in einer Reihe mit dem Input anzeigen */
   .tno-search button[type="submit"],
   .tno-search .search__button,
@@ -6516,12 +6513,21 @@ body .tno-product__trust-item strong,
   letter-spacing: var(--brand-tracking-wide);
 }
 
-/* Product grid enhancements */
-.product-grid-container {
+/* ==========================================================================
+   PRODUCT GRIDS & CARDS - TNO Dark Theme
+   Scoped to template-collection and template-search to avoid conflicts
+   ========================================================================== */
+
+/* Collection page product grid - dark background */
+body.template-collection .product-grid-container,
+body.template-search .product-grid-container {
   position: relative;
+  background: #050608;
 }
 
-.product-grid-container::before {
+/* Subtle gradient overlay at top of product grid */
+body.template-collection .product-grid-container::before,
+body.template-search .product-grid-container::before {
   content: '';
   position: absolute;
   top: 0;
@@ -6533,98 +6539,129 @@ body .tno-product__trust-item strong,
   z-index: 1;
 }
 
-/* Dark theme cards for all product grids (collections, search results, etc.) */
-.product-grid .card {
-  background: var(--brand-surface, #0c0f14) !important;
-  border: 1px solid var(--brand-border, #20232b) !important;
-  color: var(--brand-text-main, #f5f5f5) !important;
+/* Dark theme cards for collection and search pages */
+body.template-collection .product-grid .card,
+body.template-search .product-grid .card {
+  background: #0c0f14 !important;
+  border: 1px solid #20232b !important;
+  color: #f5f5f5 !important;
   transition:
     transform 0.16s ease,
     box-shadow 0.16s ease,
-    border-color 0.16s ease,
-    background 0.16s ease;
-  will-change: transform;
+    border-color 0.16s ease;
 }
 
-/* Ensure heading + price inside cards are readable */
-.product-grid .card__heading,
-.product-grid .card__information,
-.product-grid .card-information,
-.product-grid .price {
-  color: var(--brand-text-main, #f5f5f5) !important;
+/* Card content - ensure text is readable */
+body.template-collection .product-grid .card__heading,
+body.template-collection .product-grid .card__information,
+body.template-collection .product-grid .card-information,
+body.template-collection .product-grid .price,
+body.template-collection .product-grid .card__heading a,
+body.template-collection .product-grid .full-unstyled-link,
+body.template-search .product-grid .card__heading,
+body.template-search .product-grid .card__information,
+body.template-search .product-grid .card-information,
+body.template-search .product-grid .price,
+body.template-search .product-grid .card__heading a,
+body.template-search .product-grid .full-unstyled-link {
+  color: #f5f5f5 !important;
 }
 
-/* Hover-Effekt */
-.product-grid .card:hover {
+/* Hover effect - cyan glow */
+body.template-collection .product-grid .card:hover,
+body.template-search .product-grid .card:hover {
   transform: translateY(-3px);
   box-shadow:
     0 10px 28px rgb(0 0 0 / 35%),
     0 0 18px rgb(0 240 255 / 18%);
-  border-color: var(--brand-accent, #00f0ff) !important;
+  border-color: #00f0ff !important;
 }
 
-
-
-/* Related Products Section - Dark Theme Override */
-.related-products,
-.related-products .color-scheme-1,
-.related-products .gradient {
-  background: var(--brand-bg, #050608) !important;
-  color: var(--brand-text-main, #f5f5f5) !important;
+/* Ensure color schemes don't override our dark theme on collection pages */
+body.template-collection .color-scheme-1,
+body.template-collection .color-scheme-2,
+body.template-collection .color-scheme-3,
+body.template-collection .gradient {
+  background: #050608 !important;
+  color: #f5f5f5 !important;
 }
 
-.related-products__heading {
-  color: var(--brand-text-main, #f5f5f5) !important;
-  margin-bottom: var(--brand-space-xl, 2rem) !important;
+/* ==========================================================================
+   RELATED PRODUCTS SECTION - TNO Dark Theme
+   Applied on product pages (template-product)
+   ========================================================================== */
+
+body.template-product .related-products,
+body.template-product .related-products .color-scheme-1,
+body.template-product .related-products .color-scheme-2,
+body.template-product .related-products .color-scheme-3,
+body.template-product .related-products .gradient {
+  background: #050608 !important;
+  color: #f5f5f5 !important;
 }
 
-/* Related products grid styling */
-.related-products .product-grid {
-  gap: var(--brand-space-lg, 1.5rem);
+body.template-product .related-products__heading,
+body.template-product .related-products .section-heading {
+  color: #f5f5f5 !important;
+  margin-bottom: 2rem !important;
 }
 
-/* Ensure product cards in related section use dark theme */
-.related-products .card {
-  background: var(--brand-surface, #0c0f14) !important;
-  border: 1px solid var(--brand-border, #20232b) !important;
-  color: var(--brand-text-main, #f5f5f5) !important;
+/* Related products grid */
+body.template-product .related-products .product-grid {
+  gap: 1.5rem;
 }
 
-.related-products .card__heading,
-.related-products .card__information,
-.related-products .card-information,
-.related-products .price {
-  color: var(--brand-text-main, #f5f5f5) !important;
+/* Related product cards - dark theme */
+body.template-product .related-products .card {
+  background: #0c0f14 !important;
+  border: 1px solid #20232b !important;
+  color: #f5f5f5 !important;
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    border-color 0.16s ease;
 }
 
-.related-products .card:hover {
-  border-color: var(--brand-accent, #00f0ff) !important;
+body.template-product .related-products .card__heading,
+body.template-product .related-products .card__information,
+body.template-product .related-products .card-information,
+body.template-product .related-products .price,
+body.template-product .related-products .card__heading a,
+body.template-product .related-products .full-unstyled-link {
+  color: #f5f5f5 !important;
+}
+
+body.template-product .related-products .card:hover {
+  transform: translateY(-3px);
+  border-color: #00f0ff !important;
   box-shadow:
     0 4px 16px rgb(0 0 0 / 40%),
     0 0 12px rgb(0 240 255 / 20%) !important;
 }
 
-/* Part 5 — Reduced motion: extend list */
+/* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
-  .brand-section-heading,
-  .label-system,
-  .product-grid .card {
+  body.template-collection .product-grid .card,
+  body.template-search .product-grid .card,
+  body.template-product .related-products .card {
     transition: none !important;
     transform: none !important;
-    animation: none !important;
-    box-shadow: none !important;
+  }
+
+  body.template-collection .product-grid .card:hover,
+  body.template-search .product-grid .card:hover,
+  body.template-product .related-products .card:hover {
+    transform: none !important;
   }
 }
 
-/* TRUST.NO.OUTPUT – Darken collection product grid sections */
-body.tno-ab-continuous.template-collection .color-scheme-1,
-body.tno-ab-continuous.template-collection .color-scheme-1 .gradient {
-  background: var(--brand-bg, #050608) !important;
-  color: var(--brand-text-main, #f5f5f5) !important;
-}
 
+/* ==========================================================================
+   SEARCH PAGE LAYOUT FIX (/search)
+   Forces input and button to display horizontally (not stacked)
+   ========================================================================== */
 
-/* TRUST.NO.OUTPUT – Hard override: search page layout (/search) */
+/* Ensure proper box-sizing for all search elements */
 body.template-search .search__form,
 body.template-search .search__form .field,
 body.template-search .search__input,
@@ -6634,49 +6671,111 @@ body.template-search .field__button {
   box-sizing: border-box !important;
 }
 
-/* Form horizontal: Field links, Button rechts */
-body.template-search .search__form {
+/* Main form - horizontal layout with input and button side-by-side */
+body.template-search .search__form,
+body.template-search .search__form.search {
   display: flex !important;
   align-items: center !important;
   gap: 8px !important;
   flex-wrap: nowrap !important;
+  max-width: 100% !important;
 }
 
-/* Field nimmt die ganze Breite links */
+/* Field wrapper takes full width, button is fixed size */
 body.template-search .search__form .field {
   flex: 1 !important;
-  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
 }
 
-/* Input füllt das Feld aus */
+/* Input fills the field wrapper */
 body.template-search .search__input,
 body.template-search .field__input {
   width: 100% !important;
   flex: 1 !important;
   min-width: 0 !important;
-  height: 36px !important;
+  height: 44px !important;
   border-radius: 999px !important;
-  padding-left: 16px !important;
+  padding: 0 16px !important;
+  background: #fff !important;
+  border: 1px solid #e0e0e0 !important;
+  color: #0f0f14 !important;
+  font-size: 1rem !important;
 }
 
-/* Label nicht dazwischenquetschen lassen */
+body.template-search .search__input:focus,
+body.template-search .field__input:focus {
+  outline: none !important;
+  border-color: #00e5ff !important;
+  box-shadow: 0 0 0 2px rgb(0 229 255 / 20%) !important;
+}
+
+/* Field label - ensure it doesn't interfere with layout */
 body.template-search .field__label {
-  width: 100%;
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
 
-/* Button im TNO-Style rechts vom Input */
+/* Submit button - TNO cyan gradient style, fixed width */
 body.template-search .search__button,
 body.template-search .field__button {
-  height: 36px !important;
-  padding: 0 14px !important;
+  height: 44px !important;
+  min-width: 100px !important;
+  padding: 0 20px !important;
+  border: none !important;
   border-radius: 999px !important;
-  background: linear-gradient(135deg, #0ff, #0cc) !important;
+  background: linear-gradient(135deg, #00e5ff, #0cd) !important;
   color: #000 !important;
   font-weight: 700 !important;
+  font-size: 0.9375rem !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
   margin: 0 !important;
   flex-shrink: 0 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+body.template-search .search__button:hover,
+body.template-search .field__button:hover {
+  filter: brightness(1.1) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgb(0 229 255 / 30%) !important;
+}
+
+/* Icon inside button */
+body.template-search .search__button .icon,
+body.template-search .field__button .icon {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+/* Mobile adjustments */
+@media (width <= 749px) {
+  body.template-search .search__form,
+  body.template-search .search__form.search {
+    gap: 6px !important;
+  }
+
+  body.template-search .search__button,
+  body.template-search .field__button {
+    min-width: 80px !important;
+    padding: 0 16px !important;
+    font-size: 0.875rem !important;
+  }
+
+  body.template-search .search__input,
+  body.template-search .field__input {
+    height: 42px !important;
+    font-size: 1rem !important;
+  }
 }
 
