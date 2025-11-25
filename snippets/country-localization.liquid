@@ -39,7 +39,7 @@
       {{ localization.country.currency.symbol -}}
     </span>
     <img src="{{ 'icon-caret.svg' | asset_url }}" alt="icon-caret.svg icon" /> ```
-(This replaces every {{ 'icon-example.svg' | inline_asset_content }} with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)
+(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt=""> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)
   </button>
   <div class="disclosure__list-wrapper country-selector" hidden>
     <div class="country-filter{% unless show_country_filter %} country-filter--no-padding{% endunless %}">
@@ -70,10 +70,10 @@
             class="country-filter__reset-button field__button hidden"
             aria-label="{{ 'general.search.reset' | t }}"
           >
-            {{- 'icon-reset.svg' | inline_asset_content -}}
+            <img src="{{ 'icon-reset.svg' | asset_url }}" alt="">
           </button>
           <div class="country-filter__search-icon field__button motion-reduce">
-            {{- 'icon-search.svg' | inline_asset_content -}}
+            <img src="{{ 'icon-search.svg' | asset_url }}" alt="">
           </div>
         </div>
       {% endif %}
@@ -82,7 +82,7 @@
         type="button"
         aria-label="{{ 'accessibility.close' | t }}"
       >
-        {{- 'icon-close.svg' | inline_asset_content -}}
+        <img src="{{ 'icon-close.svg' | asset_url }}" alt="">
       </button>
     </div>
     <div id="sr-country-search-results" class="visually-hidden" aria-live="polite"></div>
@@ -112,7 +112,7 @@
                     class="visibility-hidden"
                   {% endif %}
                 >
-                  {{- 'icon-checkmark.svg' | inline_asset_content -}}
+                  <img src="{{ 'icon-checkmark.svg' | asset_url }}" alt="">
                 </span>
                 <span class="country">{{- country.name }}</span>
                 <span class="localization-form__currency motion-reduce{% unless show_currencies %} hidden{% endunless %}">
@@ -141,7 +141,7 @@
                   class="visibility-hidden"
                 {% endif %}
               >
-                {{- 'icon-checkmark.svg' | inline_asset_content -}}
+                <img src="{{ 'icon-checkmark.svg' | asset_url }}" alt="">
               </span>
               <span class="country">{{- country.name }}</span>
               <span class="localization-form__currency motion-reduce{% unless show_currencies %} hidden{% endunless %}">

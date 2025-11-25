@@ -193,7 +193,7 @@
                       >
                         {%- for discount in item.line_level_discount_allocations -%}
                           <li class="discounts__discount">
-                            {{- 'icon-discount.svg' | inline_asset_content -}}
+                            <img src="{{ 'icon-discount.svg' | asset_url }}" alt="">
                             {{ discount.discount_application.title | escape }}
                           </li>
                         {%- endfor -%}
@@ -258,7 +258,7 @@
                                 aria-expanded="false"
                                 class="quantity-popover__info-button quantity-popover__info-button--icon-only button button--tertiary small-hide medium-hide"
                               >
-                                {{- 'icon-info.svg' | inline_asset_content -}}
+                                <img src="{{ 'icon-info.svg' | asset_url }}" alt="">
                               </button>
                             {%- endif -%}
                             <quantity-input class="quantity cart-quantity">
@@ -281,7 +281,7 @@
                                   -}}
                                 </span>
                                 <span class="svg-wrapper">
-                                  {{- 'icon-minus.svg' | inline_asset_content -}}
+                                  <img src="{{ 'icon-minus.svg' | asset_url }}" alt="">
                                 </span>
                               </button>
                               <input
@@ -322,7 +322,7 @@
                                   -}}
                                 </span>
                                 <span class="svg-wrapper">
-                                  {{- 'icon-plus.svg' | inline_asset_content -}}
+                                  <img src="{{ 'icon-plus.svg' | asset_url }}" alt="">
                                 </span>
                               </button>
                             </quantity-input>
@@ -341,7 +341,7 @@
                               aria-label="{{ 'sections.cart.remove_title' | t: title: item.title | escape }}"
                             >
                               <span class="svg-wrapper">
-                                {{- 'icon-remove.svg' | inline_asset_content -}}
+                                <img src="{{ 'icon-remove.svg' | asset_url }}" alt="">
                               </span>
                             </a>
                           </cart-remove-button>
@@ -352,7 +352,7 @@
                             class="quantity-popover__info-button quantity-popover__info-button--icon-with-label button button--tertiary large-up-hide"
                             aria-expanded="false"
                           >
-                            {{- 'icon-info.svg' | inline_asset_content -}}
+                            <img src="{{ 'icon-info.svg' | asset_url }}" alt="">
                             <span>
                               {%- if has_vol_pricing -%}
                                 {{ 'products.product.volume_pricing.note' | t }}
@@ -405,7 +405,7 @@
                               aria-label="{{ 'accessibility.close' | t }}"
                             >
                               <span class="svg-wrapper">
-                                {{- 'icon-close.svg' | inline_asset_content -}}
+                                <img src="{{ 'icon-close.svg' | asset_url }}" alt="">
                               </span>
                             </button>
                             {%- if item.variant.quantity_price_breaks.size > 0 -%}
@@ -442,7 +442,7 @@
                         >
                           <small class="cart-item__error-text"></small>
                           <span class="svg-wrapper">
-                            {{- 'icon-error.svg' | inline_asset_content -}}
+                            <img src="{{ 'icon-error.svg' | asset_url }}" alt="">
                           </span>
                         </div>
                       </quantity-popover>

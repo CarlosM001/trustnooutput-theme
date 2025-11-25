@@ -149,7 +149,7 @@
                 >
                   <button class="button button--tertiary" type="button">
                     <span class="svg-wrapper">
-                      {{- 'icon-remove.svg' | inline_asset_content -}}
+                      <img src="{{ 'icon-remove.svg' | asset_url }}" alt="">
                     </span>
                     <span class="text-body">{{ 'sections.quick_order_list.remove_all' | t }}</span>
                   </button>
@@ -159,7 +159,7 @@
             <span class="quick-order-list__message caption-large" role="status">
               <span class="quick-order-list__message-icon hidden">
                 <span class="svg-wrapper">
-                  {{- 'icon-checkmark.svg' | inline_asset_content -}}
+                  <img src="{{ 'icon-checkmark.svg' | asset_url }}" alt="">
                 </span>
               </span>
               <span class="quick-order-list__message-text"></span>
@@ -248,7 +248,7 @@
                 >
                   <button class="button button--tertiary" type="button">
                     <span class="svg-wrapper">
-                      {{- 'icon-remove.svg' | inline_asset_content -}}
+                      <img src="{{ 'icon-remove.svg' | asset_url }}" alt="">
                     </span>
 
                     <span class="text-body">{{ 'sections.quick_order_list.remove_all' | t }}</span>
@@ -259,7 +259,7 @@
             <span class="quick-order-list__message caption-large" role="status">
               <span class="quick-order-list__message-icon hidden">
                 <span class="svg-wrapper">
-                  {{- 'icon-checkmark.svg' | inline_asset_content -}}
+                  <img src="{{ 'icon-checkmark.svg' | asset_url }}" alt="">
                 </span>
               </span>
               <span class="quick-order-list__message-text"></span>
@@ -307,7 +307,7 @@
   <template id="QuickOrderListErrorTemplate-{{ product.id }}">
     <span class="svg-wrapper">
       <img src="{{ 'icon-error.svg' | asset_url }}" alt="icon-error.svg icon" /> ```
-(This replaces every {{ 'icon-example.svg' | inline_asset_content }} with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)
+(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt=""> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)
     </span>
     <span class="quick-order-list-error-message caption-large" role="alert"></span>
   </template>

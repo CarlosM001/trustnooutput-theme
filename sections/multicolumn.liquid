@@ -139,7 +139,7 @@
                     {{- block.settings.link_label | escape -}}
                     <span class="svg-wrapper"
                       ><span class="icon-wrap"
-                        >&nbsp;{{ 'icon-arrow.svg' | inline_asset_content -}}
+                        >&nbsp;<img src="{{ 'icon-arrow.svg' | asset_url }}" alt="">
                       </span></span
                     >
                   </a>
@@ -159,7 +159,7 @@
             aria-label="{{ 'general.slider.previous_slide' | t }}"
           >
             <span class="svg-wrapper"><img src="{{ 'icon-caret.svg' | asset_url }}" alt="icon-caret.svg icon" /> ```
-(This replaces every {{ 'icon-example.svg' | inline_asset_content }} with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
+(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt=""> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
           </button>
           <div class="slider-counter caption">
             <span class="slider-counter--current">1</span>
@@ -174,7 +174,7 @@
             aria-label="{{ 'general.slider.next_slide' | t }}"
           >
             <span class="svg-wrapper"><img src="{{ 'icon-caret.svg' | asset_url }}" alt="icon-caret.svg icon" /> ```
-(This replaces every {{ 'icon-example.svg' | inline_asset_content }} with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
+(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt=""> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
           </button>
         </div>
       {%- endif -%}

@@ -55,10 +55,10 @@
     <span class="deferred-media__poster-button motion-reduce">
       {%- if media.media_type == 'model' -%}
         <span class="svg-wrapper"><img src="{{ 'icon-3d-model' | asset_url }}" alt="icon-3d-model icon" /> ```
-(This replaces every {{ 'icon-example.svg' | inline_asset_content }} with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
+(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt=""> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
       {%- else -%}
         <span class="svg-wrapper"><img src="{{ 'icon-play.svg' | asset_url }}" alt="icon-play.svg icon" /> ```
-(This replaces every {{ 'icon-example.svg' | inline_asset_content }} with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
+(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt=""> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
       {%- endif -%}
     </span>
     <img
@@ -121,7 +121,7 @@
       data-shopify-xr-hidden
     >
       <span class="svg-wrapper"><img src="{{ 'icon-3d-model' | asset_url }}" alt="icon-3d-model icon" /> ```
-(This replaces every {{ 'icon-example.svg' | inline_asset_content }} with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
+(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt=""> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
       {{ 'products.product.xr_button' | t }}
     </button>
     </div>

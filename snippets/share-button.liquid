@@ -19,13 +19,13 @@
 >
   <button class="share-button__button hidden">
     <span class="svg-wrapper"><img src="{{ 'icon-share.svg' | asset_url }}" alt="icon-share.svg icon" /> ```
-(This replaces every {{ 'icon-example.svg' | inline_asset_content }} with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
+(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt=""> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
     {{ block.settings.share_label | escape }}
   </button>
   <details id="Details-{{ block.id }}-{{ section.id }}">
     <summary class="share-button__button">
       <span class="svg-wrapper"><img src="{{ 'icon-share.svg' | asset_url }}" alt="icon-share.svg icon" /> ```
-(This replaces every {{ 'icon-example.svg' | inline_asset_content }} with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
+(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt=""> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
       {{ block.settings.share_label | escape }}
     </summary>
     <div class="share-button__fallback motion-reduce">
@@ -47,13 +47,13 @@
       </div>
       <button class="share-button__close hidden">
         <span class="svg-wrapper">
-          {{- 'icon-close.svg' | inline_asset_content -}}
+          <img src="{{ 'icon-close.svg' | asset_url }}" alt="">
         </span>
         <span class="visually-hidden">{{ 'general.share.close' | t }}</span>
       </button>
       <button class="share-button__copy">
         <span class="svg-wrapper">
-          {{- 'icon-copy.svg' | inline_asset_content -}}
+          <img src="{{ 'icon-copy.svg' | asset_url }}" alt="">
         </span>
         <span class="visually-hidden">{{ 'general.share.copy_to_clipboard' | t }}</span>
       </button>

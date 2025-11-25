@@ -25,8 +25,8 @@
     >
     <label class="recipient-checkbox" for="Recipient-checkbox-{{ section.id }}">
       <img src="{{ 'square.svg' | asset_url }}" alt="square.svg icon" /> ```
-(This replaces every {{ 'icon-example.svg' | inline_asset_content }} with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)
-      {{- 'icon-checkmark.svg' | inline_asset_content -}}
+(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt=""> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)
+      <img src="{{ 'icon-checkmark.svg' | asset_url }}" alt="">
       <span>{{ 'recipient.form.checkbox' | t }}</span>
     </label>
     <div
@@ -37,7 +37,7 @@
       {% endunless %}
     >
       <h2 class="form__message" tabindex="-1" autofocus>
-        {{- 'icon-error.svg' | inline_asset_content -}}
+        <img src="{{ 'icon-error.svg' | asset_url }}" alt="">
         <span class="error-message">{{ 'templates.contact.form.error_heading' | t }}</span>
       </h2>
 
@@ -92,7 +92,7 @@
           id="RecipientForm-email-error-{{ section.id }}"
           class="form__message{% unless form.errors contains 'email' %} hidden{% endunless %}"
         >
-          {{- 'icon-error.svg' | inline_asset_content -}}
+          <img src="{{ 'icon-error.svg' | asset_url }}" alt="">
           <span class="error-message">
             {%- if form.errors contains 'email' -%}
               {{ form.errors.messages.email }}.
@@ -125,7 +125,7 @@
           id="RecipientForm-name-error-{{ section.id }}"
           class="form__message{% unless form.errors contains 'name' %} hidden{% endunless %}"
         >
-          {{- 'icon-error.svg' | inline_asset_content -}}
+          <img src="{{ 'icon-error.svg' | asset_url }}" alt="">
           <span class="error-message">
             {%- if form.errors contains 'name' -%}
               {{ form.errors.messages.name }}.
@@ -167,7 +167,7 @@
           id="RecipientForm-message-error-{{ section.id }}"
           class="form__message{% unless form.errors contains 'message' %} hidden{% endunless %}"
         >
-          {{- 'icon-error.svg' | inline_asset_content -}}
+          <img src="{{ 'icon-error.svg' | asset_url }}" alt="">
           <span class="error-message">
             {%- if form.errors contains 'message' -%}
               {{ form.errors.messages.message }}.
@@ -201,7 +201,7 @@
           id="RecipientForm-send_on-error-{{ section.id }}"
           class="form__message{% unless form.errors contains 'send_on' %} hidden{% endunless %}"
         >
-          {{- 'icon-error.svg' | inline_asset_content -}}
+          <img src="{{ 'icon-error.svg' | asset_url }}" alt="">
           <span class="error-message">
             {%- if form.errors contains 'send_on' -%}
               {{ form.errors.messages.send_on }}.

@@ -136,7 +136,7 @@
         aria-label="{{ 'general.slider.previous_slide' | t }}"
       >
         <span class="svg-wrapper">
-          {{- 'icon-caret.svg' | inline_asset_content -}}
+          <img src="{{ 'icon-caret.svg' | asset_url }}" alt="">
         </span>
       </button>
       <div class="slider-counter caption">
@@ -152,7 +152,7 @@
         aria-label="{{ 'general.slider.next_slide' | t }}"
       >
         <span class="svg-wrapper">
-          {{- 'icon-caret.svg' | inline_asset_content -}}
+          <img src="{{ 'icon-caret.svg' | asset_url }}" alt="">
         </span>
       </button>
     </div>
@@ -168,7 +168,7 @@
       data-shopify-xr-hidden
     >
       <span class="svg-wrapper">
-        {{- 'icon-3d-model.svg' | inline_asset_content -}}
+        <img src="{{ 'icon-3d-model.svg' | asset_url }}" alt="">
       </span>
       {{ 'products.product.xr_button' | t }}
     </button>
@@ -197,7 +197,7 @@
         data-step="3"
       >
         <span class="svg-wrapper">
-          {{- 'icon-caret.svg' | inline_asset_content -}}
+          <img src="{{ 'icon-caret.svg' | asset_url }}" alt="">
         </span>
       </button>
       <ul
@@ -277,13 +277,13 @@
               {%- if media.media_type == 'model' -%}
                 <span class="thumbnail__badge" aria-hidden="true">
                   <span class="svg-wrapper">
-                    {{- 'icon-3d-model.svg' | inline_asset_content -}}
+                    <img src="{{ 'icon-3d-model.svg' | asset_url }}" alt="">
                   </span>
                 </span>
               {%- elsif media.media_type == 'video' or media.media_type == 'external_video' -%}
                 <span class="thumbnail__badge" aria-hidden="true">
                   <span class="svg-wrapper">
-                    {{- 'icon-play.svg' | inline_asset_content -}}
+                    <img src="{{ 'icon-play.svg' | asset_url }}" alt="">
                   </span>
                 </span>
               {%- endif -%}
@@ -327,7 +327,7 @@
         data-step="3"
       >
         <span class="svg-wrapper">
-          {{- 'icon-caret.svg' | inline_asset_content -}}
+          <img src="{{ 'icon-caret.svg' | asset_url }}" alt="">
         </span>
       </button>
     </slider-component>

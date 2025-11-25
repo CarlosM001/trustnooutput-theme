@@ -53,8 +53,8 @@
           height="{{ section.settings.image.width | divided_by: section.settings.image.aspect_ratio }}"
         >
       {%- else -%}
-        {{- 'email-signup-banner-background.svg' | inline_asset_content -}}
-        {{- 'email-signup-banner-background-mobile.svg' | inline_asset_content -}}
+        <img src="{{ 'email-signup-banner-background.svg' | asset_url }}" alt="">
+        <img src="{{ 'email-signup-banner-background-mobile.svg' | asset_url }}" alt="">
       {%- endif -%}
     </div>
   {%- endif -%}
@@ -113,7 +113,7 @@
                       aria-label="{{ 'newsletter.button_label' | t }}"
                     >
                       <span class="svg-wrapper">
-                        {{- 'icon-arrow.svg' | inline_asset_content -}}
+                        <img src="{{ 'icon-arrow.svg' | asset_url }}" alt="">
                       </span>
                     </button>
                   </div>
@@ -123,7 +123,7 @@
                       id="Newsletter-error--{{ section.id }}"
                     >
                       <span class="svg-wrapper">
-                        {{- 'icon-error.svg' | inline_asset_content -}}
+                        <img src="{{ 'icon-error.svg' | asset_url }}" alt="">
                       </span>
                       {{- form.errors.translated_fields.email | capitalize }}
                       {{ form.errors.messages.email -}}
@@ -138,7 +138,7 @@
                     autofocus
                   >
                     <span class="svg-wrapper">
-                      {{- 'icon-success.svg' | inline_asset_content -}}
+                      <img src="{{ 'icon-success.svg' | asset_url }}" alt="">
                     </span>
                     {{- 'newsletter.success' | t }}
                   </h3>

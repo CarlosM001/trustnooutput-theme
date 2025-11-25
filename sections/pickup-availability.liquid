@@ -9,7 +9,7 @@
 
     {% if closest_location.available %}
       <span class="svg-wrapper"><img src="{{ 'icon-tick.svg' | asset_url }}" alt="icon-tick.svg icon" /> ```
-(This replaces every {{ 'icon-example.svg' | inline_asset_content }} with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
+(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt=""> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
     {% endif %}
 
     <div class="pickup-availability-info">

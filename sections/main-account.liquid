@@ -19,7 +19,7 @@
     <h1 class="customer__title">{{ 'customer.account.title' | t }}</h1>
     <a href="{{ routes.account_logout_url }}">
       <span class="svg-wrapper">
-        {{- 'icon-account.svg' | inline_asset_content -}}
+        <img src="{{ 'icon-account.svg' | asset_url }}" alt="">
       </span>
       {{ 'customer.log_out' | t }}
     </a>
@@ -121,7 +121,7 @@
                       aria-label="{{ 'general.pagination.previous' | t }}"
                     >
                       <span class="svg-wrapper">
-                        {{- 'icon-caret.svg' | inline_asset_content -}}
+                        <img src="{{ 'icon-caret.svg' | asset_url }}" alt="">
                       </span>
                     </a>
                   </li>
@@ -158,7 +158,7 @@
                       aria-label="{{ 'general.pagination.next' | t }}"
                     >
                       <span class="svg-wrapper">
-                        {{- 'icon-caret.svg' | inline_asset_content -}}
+                        <img src="{{ 'icon-caret.svg' | asset_url }}" alt="">
                       </span>
                     </a>
                   </li>

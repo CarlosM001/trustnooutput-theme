@@ -64,15 +64,15 @@
       {% case media.media_type %}
         {% when 'video', 'external_video' %}
           <span class="svg-wrapper">
-            {{- 'icon-play.svg' | inline_asset_content -}}
+            <img src="{{ 'icon-play.svg' | asset_url }}" alt="">
           </span>
         {% when 'model' %}
           <span class="svg-wrapper">
-            {{- 'icon-3d-model.svg' | inline_asset_content -}}
+            <img src="{{ 'icon-3d-model.svg' | asset_url }}" alt="">
           </span>
         {% else %}
           <span class="svg-wrapper">
-            {{- 'icon-zoom.svg' | inline_asset_content -}}
+            <img src="{{ 'icon-zoom.svg' | asset_url }}" alt="">
           </span>
       {% endcase %}
     </span>
@@ -114,12 +114,12 @@
         {%- if media.media_type == 'model' -%}
           <span class="visually-hidden">{{ 'products.product.media.play_model' | t }}</span>
           <span class="svg-wrapper">
-            {{- 'icon-3d-model.svg' | inline_asset_content -}}
+            <img src="{{ 'icon-3d-model.svg' | asset_url }}" alt="">
           </span>
         {%- else -%}
           <span class="visually-hidden">{{ 'products.product.media.play_video' | t }}</span>
           <span class="svg-wrapper">
-            {{- 'icon-play.svg' | inline_asset_content -}}
+            <img src="{{ 'icon-play.svg' | asset_url }}" alt="">
           </span>
         {%- endif -%}
       </span>
@@ -163,7 +163,7 @@
           data-shopify-xr-hidden
         >
           <span class="svg-wrapper">
-            {{- 'icon-3d-model.svg' | inline_asset_content -}}
+            <img src="{{ 'icon-3d-model.svg' | asset_url }}" alt="">
           </span>
           {{ 'products.product.xr_button' | t }}
         </button>

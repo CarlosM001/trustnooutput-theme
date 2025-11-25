@@ -67,7 +67,7 @@
                   {%- endfor -%}
                 </select>
                 <span class="svg-wrapper">
-                  {{- 'icon-caret.svg' | inline_asset_content -}}
+                  <img src="{{ 'icon-caret.svg' | asset_url }}" alt="">
                 </span>
               </div>
             </div>
@@ -198,7 +198,7 @@
   {%- endpaginate -%}
   {% if section.settings.image_shape == 'arch' %}
     <img src="{{ 'mask-arch.svg' | asset_url }}" alt="mask-arch.svg icon" /> ```
-(This replaces every {{ 'icon-example.svg' | inline_asset_content }} with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)
+(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt=""> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)
   {%- endif -%}
 </div>
 

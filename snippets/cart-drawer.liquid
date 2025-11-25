@@ -39,7 +39,7 @@
                 aria-label="{{ 'accessibility.close' | t }}"
               >
                 <span class="svg-wrapper">
-                  {{- 'icon-close.svg' | inline_asset_content -}}
+                  <img src="{{ 'icon-close.svg' | asset_url }}" alt="">
                 </span>
               </button>
               <a href="{{ routes.all_products_collection_url }}" class="button">
@@ -73,7 +73,7 @@
           aria-label="{{ 'accessibility.close' | t }}"
         >
           <span class="svg-wrapper">
-            {{- 'icon-close.svg' | inline_asset_content -}}
+            <img src="{{ 'icon-close.svg' | asset_url }}" alt="">
           </span>
         </button>
       </div>
@@ -247,7 +247,7 @@
                           >
                             {%- for discount in item.line_level_discount_allocations -%}
                               <li class="discounts__discount">
-                                {{- 'icon-discount.svg' | inline_asset_content -}}
+                                <img src="{{ 'icon-discount.svg' | asset_url }}" alt="">
                                 {{ discount.discount_application.title }}
                               </li>
                             {%- endfor -%}
@@ -328,7 +328,7 @@
                                       -}}
                                     </span>
                                     <span class="svg-wrapper">
-                                      {{- 'icon-minus.svg' | inline_asset_content -}}
+                                      <img src="{{ 'icon-minus.svg' | asset_url }}" alt="">
                                     </span>
                                   </button>
                                   <input
@@ -373,7 +373,7 @@
                                       -}}
                                     </span>
                                     <span class="svg-wrapper">
-                                      {{- 'icon-plus.svg' | inline_asset_content -}}
+                                      <img src="{{ 'icon-plus.svg' | asset_url }}" alt="">
                                     </span>
                                   </button>
                                 </quantity-input>
@@ -394,7 +394,7 @@
                                   {% endif %}
                                 >
                                   <span class="svg-wrapper">
-                                    {{- 'icon-remove.svg' | inline_asset_content -}}
+                                    <img src="{{ 'icon-remove.svg' | asset_url }}" alt="">
                                   </span>
                                 </button>
                               </cart-remove-button>
@@ -406,7 +406,7 @@
                                 aria-expanded="false"
                               >
                                 <span class="svg-wrapper">
-                                  {{- 'icon-info.svg' | inline_asset_content -}}
+                                  <img src="{{ 'icon-info.svg' | asset_url }}" alt="">
                                 </span>
                                 <span>
                                   {%- if has_vol_pricing -%}
@@ -460,7 +460,7 @@
                                   aria-label="{{ 'accessibility.close' | t }}"
                                 >
                                   <span class="svg-wrapper">
-                                    {{- 'icon-close.svg' | inline_asset_content -}}
+                                    <img src="{{ 'icon-close.svg' | asset_url }}" alt="">
                                   </span>
                                 </button>
                                 {%- if item.variant.quantity_price_breaks.size > 0 -%}
@@ -495,7 +495,7 @@
                             >
                               <small class="cart-item__error-text"></small>
                               <span class="svg-wrapper">
-                                {{- 'icon-error.svg' | inline_asset_content -}}
+                                <img src="{{ 'icon-error.svg' | asset_url }}" alt="">
                               </span>
                             </div>
                           </quantity-popover>
@@ -525,7 +525,7 @@
             <summary>
               <span class="summary__title">
                 {{ 'sections.cart.note' | t }}
-                {{- 'icon-caret.svg' | inline_asset_content -}}
+                <img src="{{ 'icon-caret.svg' | asset_url }}" alt="">
               </span>
             </summary>
             <cart-note class="cart__note field">
@@ -555,7 +555,7 @@
               >
                 {%- for discount in cart.cart_level_discount_applications -%}
                   <li class="discounts__discount discounts__discount--end">
-                    {{- 'icon-discount.svg' | inline_asset_content -}}
+                    <img src="{{ 'icon-discount.svg' | asset_url }}" alt="">
                     {{ discount.title | escape }}
                     (-{{ discount.total_allocated_amount | money }})
                   </li>
