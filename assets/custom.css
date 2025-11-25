@@ -2470,17 +2470,23 @@ html.tno-ab-continuous .tno-glitch-soft::after {
    These selectors target Spotlight card/link structures.
    ========================================================================== */
 
-/* Besserer Kontrast für Collection-Titel */
+/* DISABLED – caused white-on-white product cards, will be revisited later
 .card__heading .full-unstyled-link,
 .collection-list__item .card__caption {
-  color: #f5f5f5; /* fast weiß */
+  color: #f5f5f5;
 }
 
-/* Besserer Kontrast für Produktnamen & Preise in der Suche */
 .grid__item .card__information .card__heading .full-unstyled-link,
 .grid__item .price__regular .price-item--regular {
   color: #f5f5f5;
 }
+*/
+
+/* TEMP DEBUG – Rahmen um Product Cards, um sie sichtbar zu machen */
+.grid__item .card {
+  outline: 2px solid red !important;
+}
+
 
 /* ==========================================================================
    12) SEARCH BAR (TNO)
@@ -6527,20 +6533,37 @@ body .tno-product__trust-item strong,
   z-index: 1;
 }
 
+/* Dark theme cards for all product grids (collections, search results, etc.) */
 .product-grid .card {
+  background: var(--brand-surface, #0c0f14) !important;
+  border: 1px solid var(--brand-border, #20232b) !important;
+  color: var(--brand-text-main, #f5f5f5) !important;
   transition:
     transform 0.16s ease,
     box-shadow 0.16s ease,
-    border-color 0.16s ease;
+    border-color 0.16s ease,
+    background 0.16s ease;
   will-change: transform;
 }
 
+/* Ensure heading + price inside cards are readable */
+.product-grid .card__heading,
+.product-grid .card__information,
+.product-grid .card-information,
+.product-grid .price {
+  color: var(--brand-text-main, #f5f5f5) !important;
+}
+
+/* Hover-Effekt */
 .product-grid .card:hover {
   transform: translateY(-3px);
   box-shadow:
     0 10px 28px rgb(0 0 0 / 35%),
     0 0 18px rgb(0 240 255 / 18%);
+  border-color: var(--brand-accent, #00f0ff) !important;
 }
+
+
 
 /* Related Products Section - Dark Theme Override */
 .related-products,
@@ -6592,3 +6615,68 @@ body .tno-product__trust-item strong,
     box-shadow: none !important;
   }
 }
+
+/* TRUST.NO.OUTPUT – Darken collection product grid sections */
+body.tno-ab-continuous.template-collection .color-scheme-1,
+body.tno-ab-continuous.template-collection .color-scheme-1 .gradient {
+  background: var(--brand-bg, #050608) !important;
+  color: var(--brand-text-main, #f5f5f5) !important;
+}
+
+
+/* TRUST.NO.OUTPUT – Hard override: search page layout (/search) */
+body.template-search .search__form,
+body.template-search .search__form .field,
+body.template-search .search__input,
+body.template-search .search__button,
+body.template-search .field__input,
+body.template-search .field__button {
+  box-sizing: border-box !important;
+}
+
+/* Form horizontal: Field links, Button rechts */
+body.template-search .search__form {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-wrap: nowrap !important;
+}
+
+/* Field nimmt die ganze Breite links */
+body.template-search .search__form .field {
+  flex: 1 !important;
+  width: 100% !important;
+}
+
+/* Input füllt das Feld aus */
+body.template-search .search__input,
+body.template-search .field__input {
+  width: 100% !important;
+  flex: 1 !important;
+  min-width: 0 !important;
+  height: 36px !important;
+  border-radius: 999px !important;
+  padding-left: 16px !important;
+}
+
+/* Label nicht dazwischenquetschen lassen */
+body.template-search .field__label {
+  width: 100%;
+}
+
+/* Button im TNO-Style rechts vom Input */
+body.template-search .search__button,
+body.template-search .field__button {
+  height: 36px !important;
+  padding: 0 14px !important;
+  border-radius: 999px !important;
+  background: linear-gradient(135deg, #0ff, #0cc) !important;
+  color: #000 !important;
+  font-weight: 700 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  flex-shrink: 0 !important;
+}
+
