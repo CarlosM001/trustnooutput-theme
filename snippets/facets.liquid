@@ -85,7 +85,12 @@
                         <span class="active-facets__button-inner button button--tertiary">
                           {{ filter.label | escape }}: {{ value.label | escape }}
                           <span class="svg-wrapper">
-                            <img src="{{ 'icon-close-small.svg' | asset_url }}" alt="" width="24" height="24">
+                            <img
+                              src="{{ 'icon-close-small.svg' | asset_url }}"
+                              alt=""
+                              width="24"
+                              height="24"
+                            >
                           </span>
                           <span class="visually-hidden">
                             {{- 'products.facets.clear_filter' | t -}}
@@ -107,7 +112,12 @@
                             {{ min | default: 0 | money }} -
                             {{ max | default: filter.range_max | money }}
                             <span class="svg-wrapper">
-                              <img src="{{ 'icon-close-small.svg' | asset_url }}" alt="" width="24" height="24">
+                              <img
+                                src="{{ 'icon-close-small.svg' | asset_url }}"
+                                alt=""
+                                width="24"
+                                height="24"
+                              >
                             </span>
                             <span class="visually-hidden">
                               {{- 'products.facets.clear_filter' | t -}}
@@ -283,10 +293,20 @@
                                       {%- endif -%}
                                     </div>
                                   {%- else -%}
-                                    <img src="{{ 'square.svg' | asset_url }}" alt="" width="24" height="24">
+                                    <img
+                                      src="{{ 'square.svg' | asset_url }}"
+                                      alt=""
+                                      width="24"
+                                      height="24"
+                                    >
 
                                     <div class="svg-wrapper">
-                                      <img src="{{ 'icon-checkmark.svg' | asset_url }}" alt="" width="24" height="24">
+                                      <img
+                                        src="{{ 'icon-checkmark.svg' | asset_url }}"
+                                        alt=""
+                                        width="24"
+                                        height="24"
+                                      >
                                     </div>
                                   {%- endif -%}
 
@@ -381,7 +401,12 @@
                       <span class="active-facets__button-inner button button--tertiary">
                         {{ filter.label | escape }}: {{ value.label | escape }}
                         <span class="svg-wrapper">
-                          <img src="{{ 'icon-close-small.svg' | asset_url }}" alt="" width="24" height="24">
+                          <img
+                            src="{{ 'icon-close-small.svg' | asset_url }}"
+                            alt=""
+                            width="24"
+                            height="24"
+                          >
                         </span>
                         <span class="visually-hidden">
                           {{- 'products.facets.clear_filter' | t -}}
@@ -403,7 +428,12 @@
                           {{ min | default: 0 | money }} -
                           {{ max | default: filter.range_max | money }}
                           <span class="svg-wrapper">
-                            <img src="{{ 'icon-close-small.svg' | asset_url }}" alt="" width="24" height="24">
+                            <img
+                              src="{{ 'icon-close-small.svg' | asset_url }}"
+                              alt=""
+                              width="24"
+                              height="24"
+                            >
                           </span>
                           <span class="visually-hidden">
                             {{- 'products.facets.clear_filter' | t -}}
@@ -583,7 +613,12 @@
                           <div>
                             <span>{{ filter.label | escape }}</span>
                             <span class="mobile-facets__arrow">
-                              <img src="{{ 'icon-arrow.svg' | asset_url }}" alt="" width="24" height="24">
+                              <img
+                                src="{{ 'icon-arrow.svg' | asset_url }}"
+                                alt=""
+                                width="24"
+                                height="24"
+                              >
                             </span>
                           </div>
                         </summary>
@@ -596,7 +631,12 @@
                             aria-expanded="true"
                             type="button"
                           >
-                            <img src="{{ 'icon-arrow.svg' | asset_url }}" alt="" width="24" height="24">
+                            <img
+                              src="{{ 'icon-arrow.svg' | asset_url }}"
+                              alt=""
+                              width="24"
+                              height="24"
+                            >
                             <span>{{ filter.label | escape }}</span>
                             {%- if filter.operator == 'AND' -%}
                               <span class="facets__and-helptext">
@@ -691,8 +731,18 @@
                                       </div>
                                     {%- else -%}
                                       <span class="mobile-facets__highlight"></span>
-                                      <img src="{{ 'square.svg' | asset_url }}" alt="" width="24" height="24">
-                                      <img src="{{ 'icon-checkmark.svg' | asset_url }}" alt="" width="24" height="24">
+                                      <img
+                                        src="{{ 'square.svg' | asset_url }}"
+                                        alt=""
+                                        width="24"
+                                        height="24"
+                                      >
+                                      <img
+                                        src="{{ 'icon-checkmark.svg' | asset_url }}"
+                                        alt=""
+                                        width="24"
+                                        height="24"
+                                      >
                                     {%- endif %}
 
                                     {{ text_value }}
@@ -731,7 +781,12 @@
                           <div>
                             <span>{{ filter.label | escape }}</span>
                             <span class="mobile-facets__arrow">
-                              <img src="{{ 'icon-arrow.svg' | asset_url }}" alt="" width="24" height="24">
+                              <img
+                                src="{{ 'icon-arrow.svg' | asset_url }}"
+                                alt=""
+                                width="24"
+                                height="24"
+                              >
                             </span>
                           </div>
                         </summary>
@@ -744,7 +799,12 @@
                             aria-expanded="true"
                             type="button"
                           >
-                            <img src="{{ 'icon-arrow.svg' | asset_url }}" alt="" width="24" height="24">
+                            <img
+                              src="{{ 'icon-arrow.svg' | asset_url }}"
+                              alt=""
+                              width="24"
+                              height="24"
+                            >
                             {{ filter.label | escape }}
                           </button>
 
@@ -811,7 +871,12 @@
                           {%- endfor -%}
                         </select>
                         <span class="svg-wrapper">
-                          <img src="{{ 'icon-caret.svg' | asset_url }}" alt="" width="24" height="24">
+                          <img
+                            src="{{ 'icon-caret.svg' | asset_url }}"
+                            alt=""
+                            width="24"
+                            height="24"
+                          >
                         </span>
                       </div>
                     </div>
@@ -986,7 +1051,12 @@
                   <span class="active-facets__button-inner button button--tertiary">
                     {{ filter.label | escape }}: {{ value.label | escape }}
                     <span class="svg-wrapper">
-                      <img src="{{ 'icon-close-small.svg' | asset_url }}" alt="" width="24" height="24">
+                      <img
+                        src="{{ 'icon-close-small.svg' | asset_url }}"
+                        alt=""
+                        width="24"
+                        height="24"
+                      >
                     </span>
                     <span class="visually-hidden">{{ 'products.facets.clear_filter' | t }}</span>
                   </span>
@@ -1006,7 +1076,12 @@
                     <span class="active-facets__button-inner button button--tertiary">
                       {{ min | default: 0 | money }} - {{ max | default: filter.range_max | money }}
                       <span class="svg-wrapper">
-                        <img src="{{ 'icon-close-small.svg' | asset_url }}" alt="" width="24" height="24">
+                        <img
+                          src="{{ 'icon-close-small.svg' | asset_url }}"
+                          alt=""
+                          width="24"
+                          height="24"
+                        >
                       </span>
                       <span class="visually-hidden">{{ 'products.facets.clear_filter' | t }}</span>
                     </span>

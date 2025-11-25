@@ -1,4 +1,3 @@
-
 <div
   id="mobile-menu"
   class="tno-mobile-menu-overlay"
@@ -13,7 +12,7 @@
 
   {%- comment -%} Hier bleibt der eigentliche Menü-Inhalt wie im Drawer {%- endcomment -%}
   <div class="tno-mobile-menu-inner">
-    {{ 'tno-bottom-tabs' | render }}
+    {% render 'tno-bottom-tabs' %}
   </div>
   <!-- Fallback: transparent hit area below overlay to allow MENU button clicks -->
   <div class="tno-mobile-menu-hitbox"></div>

@@ -54,11 +54,44 @@
   <button id="Deferred-Poster-Modal-{{ media.id }}" class="deferred-media__poster" type="button">
     <span class="deferred-media__poster-button motion-reduce">
       {%- if media.media_type == 'model' -%}
-        <span class="svg-wrapper"><img src="{{ 'icon-3d-model' | asset_url }}" alt="icon-3d-model icon" / width="24" height="24"> ```
-(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" / width="24" height="24">)</span>
+        <span class="svg-wrapper"
+          ><img
+            src="{{ 'icon-3d-model.svg' | asset_url }}"
+            alt="icon-3d-model icon"
+            width="24"
+            height="24"
+          >
+          (This replaces every
+          <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with
+          <img
+            src="{{ 'icon-example.svg' | asset_url }}"
+            alt="icon-example.svg icon"
+            /
+            width="24"
+            height="24"
+
+          >)</span
+        >
       {%- else -%}
-        <span class="svg-wrapper"><img src="{{ 'icon-play.svg' | asset_url }}" alt="icon-play.svg icon" / width="24" height="24"> ```
-(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" / width="24" height="24">)</span>
+        <span class="svg-wrapper"
+          ><img
+            src="{{ 'icon-play.svg' | asset_url }}"
+            alt="icon-play.svg icon"
+            /
+            width="24"
+            height="24"
+          >
+          ``` (This replaces every
+          <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with
+          <img
+            src="{{ 'icon-example.svg' | asset_url }}"
+            alt="icon-example.svg icon"
+            /
+            width="24"
+            height="24"
+
+          >)</span
+        >
       {%- endif -%}
     </span>
     <img
@@ -120,8 +153,24 @@
       data-shopify-title="title"
       data-shopify-xr-hidden
     >
-      <span class="svg-wrapper"><img src="{{ 'icon-3d-model' | asset_url }}" alt="icon-3d-model icon" / width="24" height="24"> ```
-(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" / width="24" height="24">)</span>
+      <span class="svg-wrapper"
+        ><img
+          src="{{ 'icon-3d-model.svg' | asset_url }}"
+          alt="icon-3d-model icon"
+          width="24"
+          height="24"
+        >
+        (This replaces every
+        <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with
+        <img
+          src="{{ 'icon-example.svg' | asset_url }}"
+          alt="icon-example.svg icon"
+          /
+          width="24"
+          height="24"
+
+        >)</span
+      >
       {{ 'products.product.xr_button' | t }}
     </button>
     </div>

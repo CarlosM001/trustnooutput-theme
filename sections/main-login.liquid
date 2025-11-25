@@ -75,7 +75,13 @@
     {%- if recover_success == true -%}
       <h3 class="form__message" tabindex="-1" autofocus>
         <span class="svg-wrapper">
-          <img src="{{ 'icon-success.svg' | asset_url }}" alt="icon-success" / width="24" height="24">
+          <img
+            src="{{ 'icon-success.svg' | asset_url }}"
+            alt="icon-success"
+            /
+            width="24"
+            height="24"
+          >
         </span>
         {{ 'customer.recover_password.success' | t }}
       </h3>

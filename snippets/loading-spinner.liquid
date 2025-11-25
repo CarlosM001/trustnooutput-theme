@@ -8,6 +8,21 @@
 {% endcomment %}
 
 <div class="{% if class %}{{ class }}{% else %}loading__spinner hidden{% endif %}">
-  <img src="{{ 'loading-spinner.svg' | asset_url }}" alt="loading-spinner.svg icon" / width="24" height="24"> ```
-(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" / width="24" height="24">)
+  <img
+    src="{{ 'loading-spinner.svg' | asset_url }}"
+    alt="loading-spinner.svg icon"
+    /
+    width="24"
+    height="24"
+  >
+  ``` (This replaces every
+  <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with
+  <img
+    src="{{ 'icon-example.svg' | asset_url }}"
+    alt="icon-example.svg icon"
+    /
+    width="24"
+    height="24"
+
+  >)
 </div>

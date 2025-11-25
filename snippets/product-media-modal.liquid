@@ -23,8 +23,23 @@
       class="product-media-modal__toggle"
       aria-label="{{ 'accessibility.close' | t }}"
     >
-      <img src="{{ 'icon-close.svg' | asset_url }}" alt="icon-close.svg icon" / width="24" height="24"> ```
-(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" / width="24" height="24">)
+      <img
+        src="{{ 'icon-close.svg' | asset_url }}"
+        alt="icon-close.svg icon"
+        /
+        width="24"
+        height="24"
+      >
+      ``` (This replaces every
+      <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with
+      <img
+        src="{{ 'icon-example.svg' | asset_url }}"
+        alt="icon-example.svg icon"
+        /
+        width="24"
+        height="24"
+
+      >)
     </button>
 
     <div

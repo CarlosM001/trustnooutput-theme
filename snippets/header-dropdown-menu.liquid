@@ -51,7 +51,12 @@
                           class="header__menu-item link link--text list-menu__item focus-inset caption-large"
                         >
                           <span>{{ childlink.title | escape }}</span>
-                          <img src="{{ 'icon-caret.svg' | asset_url }}" alt="" width="24" height="24">
+                          <img
+                            src="{{ 'icon-caret.svg' | asset_url }}"
+                            alt=""
+                            width="24"
+                            height="24"
+                          >
                         </summary>
                         <ul
                           id="HeaderMenu-SubMenuList-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"

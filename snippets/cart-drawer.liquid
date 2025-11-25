@@ -247,7 +247,12 @@
                           >
                             {%- for discount in item.line_level_discount_allocations -%}
                               <li class="discounts__discount">
-                                <img src="{{ 'icon-discount.svg' | asset_url }}" alt="" width="24" height="24">
+                                <img
+                                  src="{{ 'icon-discount.svg' | asset_url }}"
+                                  alt=""
+                                  width="24"
+                                  height="24"
+                                >
                                 {{ discount.discount_application.title }}
                               </li>
                             {%- endfor -%}
@@ -328,7 +333,12 @@
                                       -}}
                                     </span>
                                     <span class="svg-wrapper">
-                                      <img src="{{ 'icon-minus.svg' | asset_url }}" alt="" width="24" height="24">
+                                      <img
+                                        src="{{ 'icon-minus.svg' | asset_url }}"
+                                        alt=""
+                                        width="24"
+                                        height="24"
+                                      >
                                     </span>
                                   </button>
                                   <input
@@ -373,7 +383,12 @@
                                       -}}
                                     </span>
                                     <span class="svg-wrapper">
-                                      <img src="{{ 'icon-plus.svg' | asset_url }}" alt="" width="24" height="24">
+                                      <img
+                                        src="{{ 'icon-plus.svg' | asset_url }}"
+                                        alt=""
+                                        width="24"
+                                        height="24"
+                                      >
                                     </span>
                                   </button>
                                 </quantity-input>
@@ -394,7 +409,12 @@
                                   {% endif %}
                                 >
                                   <span class="svg-wrapper">
-                                    <img src="{{ 'icon-remove.svg' | asset_url }}" alt="" width="24" height="24">
+                                    <img
+                                      src="{{ 'icon-remove.svg' | asset_url }}"
+                                      alt=""
+                                      width="24"
+                                      height="24"
+                                    >
                                   </span>
                                 </button>
                               </cart-remove-button>
@@ -406,7 +426,12 @@
                                 aria-expanded="false"
                               >
                                 <span class="svg-wrapper">
-                                  <img src="{{ 'icon-info.svg' | asset_url }}" alt="" width="24" height="24">
+                                  <img
+                                    src="{{ 'icon-info.svg' | asset_url }}"
+                                    alt=""
+                                    width="24"
+                                    height="24"
+                                  >
                                 </span>
                                 <span>
                                   {%- if has_vol_pricing -%}
@@ -460,7 +485,12 @@
                                   aria-label="{{ 'accessibility.close' | t }}"
                                 >
                                   <span class="svg-wrapper">
-                                    <img src="{{ 'icon-close.svg' | asset_url }}" alt="" width="24" height="24">
+                                    <img
+                                      src="{{ 'icon-close.svg' | asset_url }}"
+                                      alt=""
+                                      width="24"
+                                      height="24"
+                                    >
                                   </span>
                                 </button>
                                 {%- if item.variant.quantity_price_breaks.size > 0 -%}
@@ -495,7 +525,12 @@
                             >
                               <small class="cart-item__error-text"></small>
                               <span class="svg-wrapper">
-                                <img src="{{ 'icon-error.svg' | asset_url }}" alt="" width="24" height="24">
+                                <img
+                                  src="{{ 'icon-error.svg' | asset_url }}"
+                                  alt=""
+                                  width="24"
+                                  height="24"
+                                >
                               </span>
                             </div>
                           </quantity-popover>

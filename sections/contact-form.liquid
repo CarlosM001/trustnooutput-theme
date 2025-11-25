@@ -32,7 +32,13 @@
     {%- form 'contact', id: 'ContactForm', class: contact_form_class -%}
       {%- if form.posted_successfully? -%}
         <h2 class="form-status form-status-list form__message" tabindex="-1" autofocus>
-          <img src="{{ 'icon-success.svg' | asset_url }}" alt="icon-success" / width="24" height="24">
+          <img
+            src="{{ 'icon-success.svg' | asset_url }}"
+            alt="icon-success"
+            /
+            width="24"
+            height="24"
+          >
           {{ 'templates.contact.form.post_success' | t }}
         </h2>
       {%- elsif form.errors -%}
@@ -92,7 +98,13 @@
               <span class="visually-hidden">{{ 'accessibility.error' | t }}</span>
               <span class="form__message">
                 <span class="svg-wrapper">
-                  <img src="{{ 'icon-error.svg' | asset_url }}" alt="icon-error" / width="24" height="24">
+                  <img
+                    src="{{ 'icon-error.svg' | asset_url }}"
+                    alt="icon-error"
+                    /
+                    width="24"
+                    height="24"
+                  >
                 </span>
                 {{- form.errors.translated_fields.email | capitalize }}
                 {{ form.errors.messages.email -}}

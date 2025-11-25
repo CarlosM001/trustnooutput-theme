@@ -20,8 +20,13 @@
     <span class="visually-hidden">
       {{- 'products.product.quantity.decrease' | t: product: variant.title | escape -}}
     </span>
-    <span class="svg-wrapper"><img src="{{ 'icon-minus.svg' | asset_url }}" alt="icon-minus.svg icon" / width="24" height="24"> ```
-(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" / width="24" height="24">)</span>
+    <span class="svg-wrapper"
+      ><img
+        src="{{ 'icon-minus.svg' | asset_url }}"
+        alt="icon-minus.svg icon"
+        width="24"
+        height="24"
+    ></span>
   </button>
   <input
     class="quantity__input"
@@ -52,8 +57,11 @@
     <span class="visually-hidden">
       {{- 'products.product.quantity.increase' | t: product: variant.title | escape -}}
     </span>
-    <span class="svg-wrapper"><img src="{{ 'icon-plus.svg' | asset_url }}" alt="icon-plus.svg icon" / width="24" height="24"> ```
-(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" / width="24" height="24">)</span>
+    <span class="svg-wrapper"
+      ><img src="{{ 'icon-plus.svg' | asset_url }}" alt="icon-plus.svg icon" width="24" height="24"
+    ></span>
+    <span class="svg-wrapper"
+      ><img src="{{ 'icon-plus.svg' | asset_url }}" alt="icon-plus.svg icon" width="24" height="24"
+    ></span>
   </button>
-  {%- render 'progress-bar' -%}
 </quantity-input>

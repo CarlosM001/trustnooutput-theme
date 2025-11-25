@@ -14,8 +14,23 @@
     aria-describedby="{{ localPosition }}Label"
   >
     <span>{{ localization.language.endonym_name | capitalize }}</span>
-    <img src="{{ 'icon-caret.svg' | asset_url }}" alt="icon-caret.svg icon" / width="24" height="24"> ```
-(This replaces every <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" / width="24" height="24">)
+    <img
+      src="{{ 'icon-caret.svg' | asset_url }}"
+      alt="icon-caret.svg icon"
+      /
+      width="24"
+      height="24"
+    >
+    ``` (This replaces every
+    <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with
+    <img
+      src="{{ 'icon-example.svg' | asset_url }}"
+      alt="icon-example.svg icon"
+      /
+      width="24"
+      height="24"
+
+    >)
   </button>
   <div class="disclosure__list-wrapper language-selector" hidden>
     <ul id="{{ localPosition }}List" role="list" class="disclosure__list list-unstyled">

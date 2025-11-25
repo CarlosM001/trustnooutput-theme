@@ -53,8 +53,18 @@
           height="{{ section.settings.image.width | divided_by: section.settings.image.aspect_ratio }}"
         >
       {%- else -%}
-        <img src="{{ 'email-signup-banner-background.svg' | asset_url }}" alt="" width="24" height="24">
-        <img src="{{ 'email-signup-banner-background-mobile.svg' | asset_url }}" alt="" width="24" height="24">
+        <img
+          src="{{ 'email-signup-banner-background.svg' | asset_url }}"
+          alt=""
+          width="24"
+          height="24"
+        >
+        <img
+          src="{{ 'email-signup-banner-background-mobile.svg' | asset_url }}"
+          alt=""
+          width="24"
+          height="24"
+        >
       {%- endif -%}
     </div>
   {%- endif -%}

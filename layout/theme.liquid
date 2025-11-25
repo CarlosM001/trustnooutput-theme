@@ -285,8 +285,6 @@
     {% sections 'header-group' %}
 
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
-
-
       {{ content_for_layout }}
     </main>
 
@@ -341,14 +339,13 @@
     {%- if settings.predictive_search_enabled -%}
       <script src="{{ 'predictive-search.js' | asset_url }}" defer></script>
     {%- endif -%}
-      {%- if settings.cart_type == 'drawer' -%}
-        <script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
-      {%- endif -%}
+    {%- if settings.cart_type == 'drawer' -%}
+      <script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
+    {%- endif -%}
 
-      <script src="{{ 'header.js' | asset_url }}" defer></script>
-    <script src="{{ 'product-recommendations.js' | asset_url }}" defer></script>
+    <script src="{{ 'header.js' | asset_url }}" defer></script>
+    {%- comment -%} product-recommendations.js script intentionally omitted (asset does not exist) {%- endcomment -%}
+    {# No product-recommendations.js script included #}
     <script src="{{ 'custom.js' | asset_url }}" defer></script>
-
-
   </body>
 </html>
