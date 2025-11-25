@@ -6799,3 +6799,118 @@ body.template-search .field__button .icon {
   }
 }
 
+/* ==========================================================================
+   SEARCH PAGE DARK THEME & DUPLICATE FORM FIX
+   Hide/restyle the duplicate white search block on /search page
+   ========================================================================== */
+
+/* Dark background for entire search page */
+body.template-search {
+  background: #050608 !important;
+}
+
+/* Hide or minimize the duplicate search form section */
+body.template-search .template-search__search {
+  display: none !important; /* Remove duplicate search form entirely */
+}
+
+/* Alternative: if you want to keep it but style it dark */
+
+/*
+body.template-search .template-search__search {
+  background: transparent !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+body.template-search .template-search__search .search {
+  background: #0c0f14 !important;
+  border: 1px solid #20232b !important;
+  border-radius: var(--tno-r-md, 16px) !important;
+  padding: 1rem !important;
+}
+*/
+
+/* Dark theme for search page header */
+body.template-search .template-search__header {
+  background: transparent !important;
+  color: #f5f5f5 !important;
+}
+
+body.template-search .template-search__header h1,
+body.template-search .template-search__header .h2 {
+  color: #f5f5f5 !important;
+}
+
+/* Dark theme for search results section */
+body.template-search .template-search .page-width {
+  background: transparent !important;
+}
+
+/* Ensure search results grid uses dark theme */
+body.template-search .collection {
+  background: transparent !important;
+}
+
+/* Search results should inherit product grid dark styling */
+body.template-search .product-grid-container {
+  background: transparent !important;
+}
+
+/* ==========================================================================
+   COLLECTION GRID - FIX PERSISTENT LOADING OVERLAY
+   Ensure loading overlays don't stay visible after content loads
+   ========================================================================== */
+
+/* Ensure loading overlay is hidden when not actively loading */
+body.template-collection .loading-overlay,
+body.template-search .loading-overlay {
+  pointer-events: none !important;
+  transition: opacity 0.3s ease, visibility 0.3s ease !important;
+}
+
+/* Force loading overlay to hide when collection is not in loading state */
+body.template-collection:not(.loading) .loading-overlay,
+body.template-search:not(.loading) .loading-overlay {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  display: none !important;
+}
+
+/* Explicitly show overlay only when actively loading */
+body.template-collection.loading .loading-overlay,
+body.template-search.loading .loading-overlay {
+  opacity: 0.7 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+/* Ensure collection container doesn't hide content */
+body.template-collection .collection,
+body.template-search .collection {
+  position: relative !important;
+}
+
+/* Make sure color schemes don't create white overlays */
+body.template-collection .color-scheme-1::before,
+body.template-collection .color-scheme-2::before,
+body.template-collection .color-scheme-3::before,
+body.template-collection .gradient::before {
+  display: none !important; /* Remove any pseudo-element overlays from color schemes */
+}
+
+/* Ensure facets/filters don't create overlay issues */
+body.template-collection .facets-wrapper,
+body.template-collection .facets-container {
+  background: transparent !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* Product count and sorting should be visible */
+body.template-collection .product-count,
+body.template-collection .facet-filters {
+  color: #f5f5f5 !important;
+  background: transparent !important;
+}
+
