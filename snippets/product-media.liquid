@@ -56,40 +56,35 @@
       {%- if media.media_type == 'model' -%}
         <span class="svg-wrapper"
           ><img
-            src="{{ 'icon-3d-model.svg' | asset_url }}"
-            alt="icon-3d-model icon"
+            src="{{ 'icon-play.svg' | asset_url }}"
+            alt="icon-play icon"
             width="24"
             height="24"
           >
-          (This replaces every
-          <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with
+          <!-- Ensure only existing icons are referenced -->
+          <img src="{{ 'icon-play.svg' | asset_url }}" alt="icon-play icon" width="24" height="24">
           <img
-            src="{{ 'icon-example.svg' | asset_url }}"
-            alt="icon-example.svg icon"
-            /
+            src="{{ 'icon-play.svg' | asset_url }}"
+            alt="icon-play icon"
             width="24"
             height="24"
-
-          >)</span
+          ></span
         >
       {%- else -%}
         <span class="svg-wrapper"
           ><img
             src="{{ 'icon-play.svg' | asset_url }}"
-            alt="icon-play.svg icon"
-            /
+            alt="icon-play icon"
             width="24"
             height="24"
           >
-          ``` (This replaces every
-          <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with
+          (This replaces every
+          <img src="{{ 'icon-play.svg' | asset_url }}" alt="" width="24" height="24"> with
           <img
-            src="{{ 'icon-example.svg' | asset_url }}"
-            alt="icon-example.svg icon"
-            /
+            src="{{ 'icon-play.svg' | asset_url }}"
+            alt="icon-play icon"
             width="24"
             height="24"
-
           >)</span
         >
       {%- endif -%}
@@ -155,20 +150,18 @@
     >
       <span class="svg-wrapper"
         ><img
-          src="{{ 'icon-3d-model.svg' | asset_url }}"
-          alt="icon-3d-model icon"
+          src="{{ 'icon-play.svg' | asset_url }}"
+          alt="icon-play icon"
           width="24"
           height="24"
         >
         (This replaces every
-        <img src="{{ 'icon-example.svg' | asset_url }}" alt="" width="24" height="24"> with
+        <img src="{{ 'icon-play.svg' | asset_url }}" alt="" width="24" height="24"> with
         <img
-          src="{{ 'icon-example.svg' | asset_url }}"
-          alt="icon-example.svg icon"
-          /
+          src="{{ 'icon-play.svg' | asset_url }}"
+          alt="icon-play icon"
           width="24"
           height="24"
-
         >)</span
       >
       {{ 'products.product.xr_button' | t }}
