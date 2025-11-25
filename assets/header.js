@@ -272,6 +272,8 @@
     if (detailsContainer && detailsContainer.hasAttribute('open')) {
       detailsContainer.removeAttribute('open');
     }
+    // Reset drilldown panels to root state when menu closes
+    resetMobilePanels();
     dbg('mobile menu closed');
   }
 
@@ -289,37 +291,144 @@
     }
   }
 
+  // ==========================================================================
+  // Mobile Menu Drilldown Panel Navigation
+  // Handles APPAREL / ACCESSORIES / PRINTS submenu transitions
+  // ==========================================================================
+
+  function initMobilePanelNavigation() {
+    if (!mobileMenu) {
+      return;
+    }
+
+    const drillTriggers = mobileMenu.querySelectorAll('.tno-mobile-drill-trigger');
+    const backButtons = mobileMenu.querySelectorAll('.tno-mobile-back');
+    const rootPanel = mobileMenu.querySelector('.tno-mobile-panel.is-root');
+
+    drillTriggers.forEach((trigger) => {
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const targetPanelId = trigger.getAttribute('data-mobile-panel-target');
+        if (!targetPanelId) {
+          dbg('Drill trigger missing data-mobile-panel-target attribute:', trigger);
+          return;
+        }
+
+        const targetPanel = document.getElementById(targetPanelId);
+        if (!targetPanel) {
+          dbg('Target panel not found for trigger:', { targetPanelId, trigger });
+          return;
+        }
+
+        // Hide root panel
+        if (rootPanel) {
+          rootPanel.classList.add('is-hidden');
+          rootPanel.classList.remove('is-active');
+        }
+
+        // Show target child panel
+        targetPanel.classList.add('is-active');
+
+        // Update ARIA
+        trigger.setAttribute('aria-expanded', 'true');
+
+        dbg('Drilldown to panel:', targetPanelId);
+      });
+    });
+
+    backButtons.forEach((backBtn) => {
+      backBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const childPanel = backBtn.closest('.tno-mobile-panel.is-child');
+
+        if (childPanel) {
+          childPanel.classList.remove('is-active');
+
+          // Find and update the trigger that opened this panel
+          const panelId = childPanel.id;
+          if (panelId) {
+            const trigger = mobileMenu.querySelector(`[data-mobile-panel-target="${panelId}"]`);
+            if (trigger) {
+              trigger.setAttribute('aria-expanded', 'false');
+            }
+          }
+        }
+
+        // Show root panel
+        if (rootPanel) {
+          rootPanel.classList.remove('is-hidden');
+          rootPanel.classList.add('is-active');
+        }
+
+        dbg('Back to root panel');
+      });
+    });
+  }
+
+  function resetMobilePanels() {
+    if (!mobileMenu) {
+      return;
+    }
+
+    // Reset all child panels to hidden
+    const childPanels = mobileMenu.querySelectorAll('.tno-mobile-panel.is-child');
+    childPanels.forEach((panel) => {
+      panel.classList.remove('is-active');
+    });
+
+    // Reset root panel to visible
+    const rootPanel = mobileMenu.querySelector('.tno-mobile-panel.is-root');
+    if (rootPanel) {
+      rootPanel.classList.remove('is-hidden');
+      rootPanel.classList.add('is-active');
+    }
+
+    // Reset all drill triggers
+    const drillTriggers = mobileMenu.querySelectorAll('.tno-mobile-drill-trigger');
+    drillTriggers.forEach((trigger) => {
+      trigger.setAttribute('aria-expanded', 'false');
+    });
+  }
+
   function initMobileMenu() {
     if (!mobileMenu) {
       dbg('initMobileMenu: mobileMenu not found');
       return;
     }
 
-    // Bottom tab menu toggle
+    // Initialize drilldown panel navigation
+    initMobilePanelNavigation();
+
+    // Central toggle handler - used by both hamburger and bottom tab
+    function handleMenuToggle(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleMobileMenu();
+    }
+
+    // Header hamburger toggle - this is the primary controller
+    if (mobileToggle) {
+      mobileToggle.addEventListener('click', handleMenuToggle);
+    }
+
+    // Bottom tab menu toggle - delegates to the same handler
+    // This ensures both buttons behave identically
     if (bottomTabMenu) {
-      bottomTabMenu.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        dbg('bottom tab menu clicked');
-        toggleMobileMenu();
-      });
+      bottomTabMenu.addEventListener('click', handleMenuToggle);
     } else {
       dbg('bottomTabMenu not found');
     }
 
-    // Header hamburger toggle
-    if (mobileToggle) {
-      mobileToggle.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        dbg('mobile toggle (hamburger) clicked');
-        toggleMobileMenu();
-      });
-    }
-
-    // Close menu when clicking links inside
-    const links = mobileMenu.querySelectorAll('.tno-mobile-link, .mobile-menu__link');
-    links.forEach((l) => l.addEventListener('click', closeMobileMenu));
+    // Close menu when clicking navigation links inside (not drill triggers)
+    // Selectors for links that should close the menu when clicked:
+    const closeableLinksSelector = '.tno-mobile-link:not(.tno-mobile-link--drill)';
+    const legacyLinksSelector = '.mobile-menu__link';
+    const closeableLinks = mobileMenu.querySelectorAll(`${closeableLinksSelector}, ${legacyLinksSelector}`);
+    closeableLinks.forEach((link) => link.addEventListener('click', closeMobileMenu));
 
     // Escape key to close
     document.addEventListener('keydown', (e) => {
