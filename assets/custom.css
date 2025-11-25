@@ -6515,7 +6515,22 @@ body .tno-product__trust-item strong,
 
 /* ==========================================================================
    PRODUCT GRIDS & CARDS - TNO Dark Theme
-   Scoped to template-collection and template-search to avoid conflicts
+   
+   SCOPING STRATEGY:
+   All TNO dark theme overrides are scoped to specific contexts to avoid
+   breaking Shopify Dawn's default behavior on other pages:
+   
+   - body.template-collection → Collection pages only
+   - body.template-search → Search results only  
+   - body.template-product .related-products → Related products section only
+   
+   This prevents global CSS pollution and ensures:
+   - Homepage hero/header remain unchanged
+   - Cart, checkout, blog pages use Dawn defaults
+   - Theme editor color schemes work correctly on non-TNO pages
+   
+   NOTE: Avoid unscoped selectors like .card__heading or .price-item as
+   they will affect ALL pages including cart, checkout, and blog.
    ========================================================================== */
 
 /* Collection page product grid - dark background */
@@ -6633,6 +6648,7 @@ body.template-product .related-products .product-grid {
 
 /* Related product cards - dark theme */
 body.template-product .related-products .card {
+  position: relative;
   background: #0c0f14 !important;
   border: 1px solid #20232b !important;
   color: #f5f5f5 !important;
@@ -6642,10 +6658,22 @@ body.template-product .related-products .card {
     border-color 0.16s ease;
 }
 
+/* Ensure card media/images are visible in related products */
+body.template-product .related-products .card__media,
+body.template-product .related-products .card .media,
+body.template-product .related-products .card img {
+  position: relative;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
 body.template-product .related-products .card__heading,
 body.template-product .related-products .card__information,
 body.template-product .related-products .card-information,
 body.template-product .related-products .price,
+body.template-product .related-products .price__regular,
+body.template-product .related-products .price-item,
+body.template-product .related-products .price-item--regular,
 body.template-product .related-products .card__heading a,
 body.template-product .related-products .full-unstyled-link {
   color: #f5f5f5 !important;
