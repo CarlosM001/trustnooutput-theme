@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "TRUST.NO.OUTPUT Shopify Theme Development",
   "scripts": {
-  "dev": "npm run dev:serve",
-  "dev:serve": "node scripts/dev-check.js",
-  "dev:restart": "node scripts/dev-check.js --restart",
+    "dev": "npm run dev:serve",
+    "dev:serve": "node scripts/dev-check.js",
+    "dev:restart": "node scripts/dev-check.js --restart",
     "dev:theme": "shopify theme dev --store=9csvgi-16.myshopify.com",
     "dev:sync": "browser-sync start --config bs-config.js",
     "dev:windows": "concurrently \"npm:dev:theme\" \"npm:dev:sync\"",
@@ -20,7 +20,8 @@
     "lint:css:fix": "stylelint \"assets/**/*.css\" --fix --allow-empty-input",
     "lint:js": "eslint \"assets/**/*.js\" --no-error-on-unmatched-pattern",
     "lint:js:fix": "eslint \"assets/**/*.js\" --fix --no-error-on-unmatched-pattern",
-    "hygiene": "npm-run-all -s fmt lint:css:fix lint:js:fix",
+    "validate:json": "node scripts/validate-json.js",
+    "hygiene": "npm-run-all -s fmt lint:css:fix lint:js:fix validate:json",
     "lh:report": "lighthouse http://localhost:3000 --quiet --chrome-flags='--headless' --output html --output-path ./reports/lh.html",
     "a11y:smoke": "node ./tests/a11y/smoke-a11y.js"
   },

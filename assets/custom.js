@@ -102,14 +102,26 @@
           if (mode === 'continuous') {
             all.forEach((el) => {
               el.style.animation = 'none';
-              setTimeout(() => {
-                el.style.animation = '';
-              }, CONFIG.glitch.minDelay + Math.random() * (CONFIG.glitch.maxDelay - CONFIG.glitch.minDelay));
+              setTimeout(
+                () => {
+                  el.style.animation = '';
+                },
+                CONFIG.glitch.minDelay +
+                Math.random() * (CONFIG.glitch.maxDelay - CONFIG.glitch.minDelay)
+              );
             });
           } else {
+            // Pulse mode
             const pulseEls = sec.querySelectorAll('.tno-glitch-pulse');
+
             pulseEls.forEach((el) => {
+              // alten Timer ggf. aufräumen
+              if (el._tnoGlitchTimer) {
+                clearTimeout(el._tnoGlitchTimer);
+              }
+
               const burst = () => {
+                // abbrechen, wenn Element/Section nicht mehr aktiv ist
                 if (!document.body.contains(el) || !sec.classList.contains('tno-hero--active')) {
                   return;
                 }
@@ -119,13 +131,17 @@
                   el.classList.remove('is-glitching');
                 }, 900);
 
-                const delay = CONFIG.glitch.minDelay + Math.random() * (CONFIG.glitch.maxDelay - CONFIG.glitch.minDelay);
+                const delay =
+                  CONFIG.glitch.minDelay +
+                  Math.random() * (CONFIG.glitch.maxDelay - CONFIG.glitch.minDelay);
+
                 el._tnoGlitchTimer = setTimeout(burst, delay + 900);
               };
 
               el._tnoGlitchTimer = setTimeout(burst, 200 + Math.random() * 600);
             });
           }
+
         } else {
           sec.classList.remove('tno-hero--active');
           all.forEach((el) => {

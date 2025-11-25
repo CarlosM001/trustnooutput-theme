@@ -146,7 +146,10 @@ function spawnBrowserSync(port) {
 
   proc.on('error', () => {
     log('BrowserSync spawn failed; attempting npx fallback...');
-    proc = spawn('npx', ['browser-sync', 'start', '--config', 'bs-config.js'], { stdio: 'inherit', env });
+    proc = spawn('npx', ['browser-sync', 'start', '--config', 'bs-config.js'], {
+      stdio: 'inherit',
+      env,
+    });
   });
 
   proc.on('exit', async (code) => {
@@ -213,7 +216,9 @@ function setupCleanup() {
         log(`Shopify CLI already running healthy on ${SHOPIFY_PORT}; reusing.`);
         shopifyHealthy = true;
       } else {
-        log(`Port ${SHOPIFY_PORT} busy but not serving healthy theme. Please kill stale process and retry.`);
+        log(
+          `Port ${SHOPIFY_PORT} busy but not serving healthy theme. Please kill stale process and retry.`
+        );
         log('Hint: netstat -ano | findstr :9292 then taskkill /PID <pid> /F');
         process.exit(1);
       }
