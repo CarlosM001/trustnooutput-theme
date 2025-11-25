@@ -45,7 +45,12 @@
     <span class="tno-tab__label">Account</span>
   </a>
 
-  <!-- Menu button controls the native Shopify menu drawer -->
+  <!--
+    Menu button controls the native Shopify menu drawer (details element).
+    aria-controls points to Details-menu-drawer-container (not menu-drawer)
+    to match the actual controlled element. The JS handler in header.js
+    toggles the details[open] attribute and updates aria-expanded dynamically.
+  -->
   <button
     class="tno-tab"
     id="bottom-tab-menu"

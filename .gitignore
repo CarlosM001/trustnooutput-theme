@@ -23,3 +23,6 @@ pnpm-debug.log*
 
 # Reports
 /reports/*.html
+
+# Dev server state
+.dev-server.json

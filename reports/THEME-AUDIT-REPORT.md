@@ -35,8 +35,8 @@ This audit found **several issues** that could potentially affect the mobile bot
 
 #### Duplicate Files ✅ DELETED
 
-| File                                                 | Issue                  | Status    |
-| ---------------------------------------------------- | ---------------------- | --------- |
+| File                                                 | Issue                  | Status     |
+| ---------------------------------------------------- | ---------------------- | ---------- |
 | `sections/main-product-tno-BACKUP.liquid` (23KB)     | Legacy backup file     | ✅ Deleted |
 | `sections/main-product-tno-REFACTORED.liquid` (32KB) | Identical to main file | ✅ Deleted |
 | `backup-phase1/custom.css.bak`                       | Old CSS backup         | ✅ Deleted |

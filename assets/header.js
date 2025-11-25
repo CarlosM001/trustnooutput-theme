@@ -278,15 +278,15 @@
     // Bottom tab menu toggle - SINGLE consolidated handler
     // FIX: Previously had duplicate handlers causing double-toggle
     if (bottomTabMenu && detailsContainer) {
-      var menuDrawer = detailsContainer.querySelector('.menu-drawer');
-      var drawerSummary = detailsContainer.querySelector('summary');
+      const menuDrawer = detailsContainer.querySelector('.menu-drawer');
+      const drawerSummary = detailsContainer.querySelector('summary');
 
-      bottomTabMenu.addEventListener('click', function (e) {
+      bottomTabMenu.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
         dbg('bottom tab menu clicked (consolidated handler)');
 
-        var isOpen = detailsContainer.hasAttribute('open');
+        const isOpen = detailsContainer.hasAttribute('open');
 
         // Update aria-expanded for accessibility
         bottomTabMenu.setAttribute('aria-expanded', !isOpen);
