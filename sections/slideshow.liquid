@@ -43,7 +43,7 @@
         aria-controls="Slider-{{ section.id }}"
       >
         <span class="svg-wrapper">
-          {{- 'icon-caret.svg' | inline_asset_content -}}
+          <img src="{{ 'icon-caret.svg' | asset_url }}" alt="icon-caret" />
         </span>
       </button>
       <div class="slider-counter slider-counter--{{ section.settings.slider_visual }}{% if section.settings.slider_visual == 'counter' or section.settings.slider_visual == 'numbers' %} caption{% endif %}">
@@ -78,7 +78,7 @@
         aria-controls="Slider-{{ section.id }}"
       >
         <span class="svg-wrapper">
-          {{- 'icon-caret.svg' | inline_asset_content -}}
+          <img src="{{ 'icon-caret.svg' | asset_url }}" alt="icon-caret" />
         </span>
       </button>
 
@@ -89,10 +89,10 @@
           aria-label="{{ 'sections.slideshow.pause_slideshow' | t }}"
         >
           <span class="svg-wrapper">
-            {{- 'icon-pause.svg' | inline_asset_content -}}
+            <img src="{{ 'icon-pause.svg' | asset_url }}" alt="icon-pause" />
           </span>
           <span class="svg-wrapper">
-            {{- 'icon-play.svg' | inline_asset_content -}}
+            <img src="{{ 'icon-play.svg' | asset_url }}" alt="icon-play" />
           </span>
         </button>
       {%- endif -%}
@@ -206,7 +206,7 @@
         aria-controls="Slider-{{ section.id }}"
       >
         <span class="svg-wrapper">
-          {{- 'icon-caret.svg' | inline_asset_content -}}
+          <img src="{{ 'icon-caret.svg' | asset_url }}" alt="icon-caret" />
         </span>
       </button>
       <div class="slider-counter slider-counter--{{ section.settings.slider_visual }}{% if section.settings.slider_visual == 'counter' or section.settings.slider_visual == 'numbers' %} caption{% endif %}">
@@ -241,7 +241,7 @@
         aria-controls="Slider-{{ section.id }}"
       >
         <span class="svg-wrapper">
-          {{- 'icon-caret.svg' | inline_asset_content -}}
+          <img src="{{ 'icon-caret.svg' | asset_url }}" alt="icon-caret" />
         </span>
       </button>
 
@@ -252,10 +252,10 @@
           aria-label="{{ 'sections.slideshow.pause_slideshow' | t }}"
         >
           <span class="svg-wrapper">
-            {{- 'icon-pause.svg' | inline_asset_content -}}
+            <img src="{{ 'icon-pause.svg' | asset_url }}" alt="icon-pause" />
           </span>
           <span class="svg-wrapper">
-            {{- 'icon-play.svg' | inline_asset_content -}}
+            <img src="{{ 'icon-play.svg' | asset_url }}" alt="icon-play" />
           </span>
         </button>
       {%- endif -%}

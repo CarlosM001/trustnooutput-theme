@@ -86,7 +86,7 @@
                     aria-label="{{ 'newsletter.button_label' | t }}"
                   >
                     <span class="svg-wrapper">
-                      {{- 'icon-arrow.svg' | inline_asset_content -}}
+                      <img src="{{ 'icon-arrow.svg' | asset_url }}" alt="icon-arrow" />
                     </span>
                   </button>
                 </div>
@@ -96,7 +96,7 @@
                     id="Newsletter-error--{{ section.id }}"
                   >
                     <span class="svg-wrapper">
-                      {{- 'icon-error.svg' | inline_asset_content -}}
+                      <img src="{{ 'icon-error.svg' | asset_url }}" alt="icon-error" />
                     </span>
                     {{- form.errors.translated_fields.email | capitalize }}
                     {{ form.errors.messages.email -}}
@@ -111,7 +111,7 @@
                   autofocus
                 >
                   <span class="svg-wrapper">
-                    {{- 'icon-success.svg' | inline_asset_content -}}
+                    <img src="{{ 'icon-success.svg' | asset_url }}" alt="icon-success" />
                   </span>
                   {{- 'newsletter.success' | t }}
                 </h3>

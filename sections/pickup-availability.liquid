@@ -68,7 +68,7 @@
         type="button"
         aria-label="{{ 'accessibility.close' | t }}"
       >
-        {{- 'icon-close.svg' | inline_asset_content -}}
+        <img src="{{ 'icon-close.svg' | asset_url }}" alt="icon-close" />
       </button>
     </div>
 
@@ -97,7 +97,7 @@
           <p class="pickup-availability-preview caption-large">
             {%- if availability.available -%}
               <span class="svg-wrapper">
-                {{- 'icon-tick.svg' | inline_asset_content -}}
+                <img src="{{ 'icon-tick.svg' | asset_url }}" alt="icon-tick" />
               </span>
               {{ 'products.product.pickup_availability.pick_up_available' | t }},
               {{ availability.pick_up_time | downcase }}
