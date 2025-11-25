@@ -6525,7 +6525,7 @@ body.template-search .product-grid-container {
   background: #050608;
 }
 
-/* Subtle gradient overlay at top of product grid */
+/* Subtle gradient overlay at top of product grid - decorative only, behind content */
 body.template-collection .product-grid-container::before,
 body.template-search .product-grid-container::before {
   content: '';
@@ -6536,12 +6536,20 @@ body.template-search .product-grid-container::before {
   height: 48px;
   background: linear-gradient(to bottom, rgb(12 15 20 / 80%), rgb(12 15 20 / 0%));
   pointer-events: none;
+  z-index: 0;
+}
+
+/* Product grid itself - ensure proper stacking above overlay */
+body.template-collection .product-grid,
+body.template-search .product-grid {
+  position: relative;
   z-index: 1;
 }
 
 /* Dark theme cards for collection and search pages */
 body.template-collection .product-grid .card,
 body.template-search .product-grid .card {
+  position: relative;
   background: #0c0f14 !important;
   border: 1px solid #20232b !important;
   color: #f5f5f5 !important;
@@ -6549,6 +6557,18 @@ body.template-search .product-grid .card {
     transform 0.16s ease,
     box-shadow 0.16s ease,
     border-color 0.16s ease;
+}
+
+/* Card media/images - ensure visibility */
+body.template-collection .product-grid .card__media,
+body.template-collection .product-grid .card .media,
+body.template-collection .product-grid .card img,
+body.template-search .product-grid .card__media,
+body.template-search .product-grid .card .media,
+body.template-search .product-grid .card img {
+  position: relative;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 /* Card content - ensure text is readable */
