@@ -45,7 +45,7 @@
     <span class="tno-tab__label">Account</span>
   </a>
 
-  <!-- Removed: <button> for menu tab, replaced by native <details>/<summary> -->
+  <!-- Menu button controls the native Shopify menu drawer -->
   <button
     class="tno-tab"
     id="bottom-tab-menu"
@@ -53,9 +53,16 @@
     data-tno="bottom-menu-toggle"
     aria-label="Menu"
     aria-expanded="false"
-    aria-controls="menu-drawer"
+    aria-controls="Details-menu-drawer-container"
   >
-    <svg class="tno-tab__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <svg
+      class="tno-tab__icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      focusable="false"
+    >
       <line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       <line x1="3" y1="12" x2="21" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       <line x1="3" y1="18" x2="21" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>

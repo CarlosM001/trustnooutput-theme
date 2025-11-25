@@ -237,7 +237,10 @@
 
   function closeMobileMenu() {
     if (!mobileMenu || !mobileToggle) {
-      dbg('closeMobileMenu: missing elements', { mobileMenu: !!mobileMenu, mobileToggle: !!mobileToggle });
+      dbg('closeMobileMenu: missing elements', {
+        mobileMenu: !!mobileMenu,
+        mobileToggle: !!mobileToggle,
+      });
       return;
     }
     // Handle <details> closing - force it closed
@@ -258,40 +261,66 @@
     dbg('mobile menu closed');
   }
 
-  function toggleMobileMenu() {
-    if (!detailsContainer) {
-      return;
-    }
-    const isOpen = detailsContainer.hasAttribute('open');
-    dbg('toggleMobileMenu called', { currentlyOpen: isOpen, willToggleTo: !isOpen });
-    if (isOpen) {
-      detailsContainer.removeAttribute('open');
-    } else {
-      detailsContainer.setAttribute('open', '');
-    }
-  }
+  // Removed toggleMobileMenu() - logic consolidated into initMobileMenu click handler
 
   function initMobileMenu() {
     if (!mobileMenu || !mobileToggle) {
-      dbg('initMobileMenu: missing elements', { mobileMenu: !!mobileMenu, mobileToggle: !!mobileToggle });
+      dbg('initMobileMenu: missing elements', {
+        mobileMenu: !!mobileMenu,
+        mobileToggle: !!mobileToggle,
+      });
       return;
     }
 
     // Header toggle - let native <details>/<summary> handle open/close
     // No custom click handler needed for native drawer
 
-    // Bottom tab menu toggle
+    // Bottom tab menu toggle - SINGLE consolidated handler
+    // FIX: Previously had duplicate handlers causing double-toggle
     if (bottomTabMenu && detailsContainer) {
-      bottomTabMenu.addEventListener('click', (e) => {
+      var menuDrawer = detailsContainer.querySelector('.menu-drawer');
+      var drawerSummary = detailsContainer.querySelector('summary');
+
+      bottomTabMenu.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
-        dbg('bottom tab menu clicked');
-        toggleMobileMenu();
+        dbg('bottom tab menu clicked (consolidated handler)');
+
+        var isOpen = detailsContainer.hasAttribute('open');
+
+        // Update aria-expanded for accessibility
+        bottomTabMenu.setAttribute('aria-expanded', !isOpen);
+
+        if (isOpen) {
+          // Close the drawer
+          detailsContainer.removeAttribute('open');
+          if (menuDrawer) {
+            menuDrawer.classList.remove('menu-opening');
+            menuDrawer.style.visibility = '';
+            menuDrawer.style.transform = '';
+          }
+          if (drawerSummary) {
+            drawerSummary.setAttribute('aria-expanded', 'false');
+          }
+          dbg('drawer closed');
+        } else {
+          // Open the drawer
+          detailsContainer.setAttribute('open', '');
+          if (menuDrawer) {
+            menuDrawer.classList.add('menu-opening');
+            menuDrawer.style.visibility = 'visible';
+            menuDrawer.style.transform = 'translateX(0)';
+          }
+          if (drawerSummary) {
+            drawerSummary.setAttribute('aria-expanded', 'true');
+          }
+          dbg('drawer opened');
+        }
       });
     } else {
       dbg('bottomTabMenu or detailsContainer not found', {
         hasBottomTab: !!bottomTabMenu,
-        hasDetails: !!detailsContainer
+        hasDetails: !!detailsContainer,
       });
     }
 
@@ -323,37 +352,8 @@
     });
   }
 
-
-  function wireBottomTabMenuToDrawer() {
-    var bottomTabMenu = document.getElementById('bottom-tab-menu');
-    var drawerSummary = document.getElementById('mobile-menu-toggle');
-    if (bottomTabMenu && detailsContainer) {
-      var menuDrawer = detailsContainer.querySelector('.menu-drawer');
-      var drawerSummary = detailsContainer.querySelector('summary');
-      bottomTabMenu.addEventListener('click', function () {
-        console.log('[TNO DEBUG] Bottom tab menu button clicked');
-        if (detailsContainer.hasAttribute('open')) {
-          // Simulate native summary click to close
-          if (drawerSummary) drawerSummary.click();
-          detailsContainer.removeAttribute('open');
-          if (menuDrawer) {
-            menuDrawer.classList.remove('menu-opening');
-            menuDrawer.style.visibility = '';
-            menuDrawer.style.transform = '';
-          }
-        } else {
-          // Simulate native summary click to open
-          if (drawerSummary) drawerSummary.click();
-          detailsContainer.setAttribute('open', '');
-          if (menuDrawer) {
-            menuDrawer.classList.add('menu-opening');
-            menuDrawer.style.visibility = 'visible';
-            menuDrawer.style.transform = 'translateX(0)';
-          }
-        }
-      });
-    }
-  }
+  // Removed wireBottomTabMenuToDrawer() - logic consolidated into initMobileMenu()
+  // This fixes the double-toggle bug where two click handlers were attached
 
   function init() {
     // Query DOM elements after DOM is ready
@@ -385,12 +385,10 @@
     document.addEventListener('DOMContentLoaded', function () {
       document.body.classList.add('js');
       init();
-      wireBottomTabMenuToDrawer();
     });
   } else {
     document.body.classList.add('js');
     init();
-    wireBottomTabMenuToDrawer();
   }
 
   // Export (designMode only) for quick re-init

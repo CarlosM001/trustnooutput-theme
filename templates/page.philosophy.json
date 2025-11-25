@@ -40,11 +40,7 @@
           }
         }
       },
-      "block_order": [
-        "thinker_1",
-        "thinker_2",
-        "thinker_3"
-      ],
+      "block_order": ["thinker_1", "thinker_2", "thinker_3"],
       "settings": {
         "eyebrow": "Theoretical Foundation",
         "headline": "Philosophy",
@@ -55,7 +51,5 @@
       }
     }
   },
-  "order": [
-    "philosophy"
-  ]
+  "order": ["philosophy"]
 }
