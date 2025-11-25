@@ -158,7 +158,8 @@
             name="previous"
             aria-label="{{ 'general.slider.previous_slide' | t }}"
           >
-            <span class="svg-wrapper">{{ 'icon-caret.svg' | inline_asset_content }}</span>
+            <span class="svg-wrapper"><img src="{{ 'icon-caret.svg' | asset_url }}" alt="icon-caret.svg icon" /> ```
+(This replaces every {{ 'icon-example.svg' | inline_asset_content }} with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
           </button>
           <div class="slider-counter caption">
             <span class="slider-counter--current">1</span>
@@ -172,7 +173,8 @@
             name="next"
             aria-label="{{ 'general.slider.next_slide' | t }}"
           >
-            <span class="svg-wrapper">{{ 'icon-caret.svg' | inline_asset_content }}</span>
+            <span class="svg-wrapper"><img src="{{ 'icon-caret.svg' | asset_url }}" alt="icon-caret.svg icon" /> ```
+(This replaces every {{ 'icon-example.svg' | inline_asset_content }} with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
           </button>
         </div>
       {%- endif -%}

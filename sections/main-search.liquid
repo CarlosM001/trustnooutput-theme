@@ -349,7 +349,8 @@
   </div>
 {% endpaginate %}
 {% if section.settings.image_shape == 'arch' %}
-  {{ 'mask-arch.svg' | inline_asset_content }}
+  <img src="{{ 'mask-arch.svg' | asset_url }}" alt="mask-arch.svg icon" /> ```
+(This replaces every {{ 'icon-example.svg' | inline_asset_content }} with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)
 {%- endif -%}
 
 {% schema %}

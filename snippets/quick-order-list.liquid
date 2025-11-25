@@ -306,7 +306,8 @@
   </quick-order-list>
   <template id="QuickOrderListErrorTemplate-{{ product.id }}">
     <span class="svg-wrapper">
-      {{ 'icon-error.svg' | inline_asset_content }}
+      <img src="{{ 'icon-error.svg' | asset_url }}" alt="icon-error.svg icon" /> ```
+(This replaces every {{ 'icon-example.svg' | inline_asset_content }} with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)
     </span>
     <span class="quick-order-list-error-message caption-large" role="alert"></span>
   </template>

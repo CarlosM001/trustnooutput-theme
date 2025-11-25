@@ -14,7 +14,8 @@
     aria-describedby="{{ localPosition }}Label"
   >
     <span>{{ localization.language.endonym_name | capitalize }}</span>
-    {{ 'icon-caret.svg' | inline_asset_content }}
+    <img src="{{ 'icon-caret.svg' | asset_url }}" alt="icon-caret.svg icon" /> ```
+(This replaces every {{ 'icon-example.svg' | inline_asset_content }} with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)
   </button>
   <div class="disclosure__list-wrapper language-selector" hidden>
     <ul id="{{ localPosition }}List" role="list" class="disclosure__list list-unstyled">

@@ -24,7 +24,8 @@
       disabled
     >
     <label class="recipient-checkbox" for="Recipient-checkbox-{{ section.id }}">
-      {{ 'square.svg' | inline_asset_content }}
+      <img src="{{ 'square.svg' | asset_url }}" alt="square.svg icon" /> ```
+(This replaces every {{ 'icon-example.svg' | inline_asset_content }} with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)
       {{- 'icon-checkmark.svg' | inline_asset_content -}}
       <span>{{ 'recipient.form.checkbox' | t }}</span>
     </label>

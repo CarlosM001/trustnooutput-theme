@@ -38,7 +38,8 @@
       {{ localization.country.currency.iso_code }}
       {{ localization.country.currency.symbol -}}
     </span>
-    {{ 'icon-caret.svg' | inline_asset_content }}
+    <img src="{{ 'icon-caret.svg' | asset_url }}" alt="icon-caret.svg icon" /> ```
+(This replaces every {{ 'icon-example.svg' | inline_asset_content }} with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)
   </button>
   <div class="disclosure__list-wrapper country-selector" hidden>
     <div class="country-filter{% unless show_country_filter %} country-filter--no-padding{% endunless %}">

@@ -18,12 +18,14 @@
   {{ block.shopify_attributes }}
 >
   <button class="share-button__button hidden">
-    <span class="svg-wrapper">{{ 'icon-share.svg' | inline_asset_content }}</span>
+    <span class="svg-wrapper"><img src="{{ 'icon-share.svg' | asset_url }}" alt="icon-share.svg icon" /> ```
+(This replaces every {{ 'icon-example.svg' | inline_asset_content }} with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
     {{ block.settings.share_label | escape }}
   </button>
   <details id="Details-{{ block.id }}-{{ section.id }}">
     <summary class="share-button__button">
-      <span class="svg-wrapper">{{ 'icon-share.svg' | inline_asset_content }}</span>
+      <span class="svg-wrapper"><img src="{{ 'icon-share.svg' | asset_url }}" alt="icon-share.svg icon" /> ```
+(This replaces every {{ 'icon-example.svg' | inline_asset_content }} with <img src="{{ 'icon-example.svg' | asset_url }}" alt="icon-example.svg icon" />)</span>
       {{ block.settings.share_label | escape }}
     </summary>
     <div class="share-button__fallback motion-reduce">
