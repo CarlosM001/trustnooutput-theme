@@ -6539,6 +6539,7 @@ body.template-search .product-grid {
 body.template-collection .product-grid .card,
 body.template-search .product-grid .card {
   position: relative;
+  z-index: 2; /* Ensure cards stay above any overlays */
   background: #0c0f14 !important;
   border: 1px solid #20232b !important;
   color: #f5f5f5 !important;
@@ -6548,16 +6549,31 @@ body.template-search .product-grid .card {
     border-color 0.16s ease;
 }
 
-/* Card media/images - ensure visibility */
+/* Card media/images - ensure visibility with z-index */
 body.template-collection .product-grid .card__media,
 body.template-collection .product-grid .card .media,
 body.template-collection .product-grid .card img,
 body.template-search .product-grid .card__media,
 body.template-search .product-grid .card .media,
 body.template-search .product-grid .card img {
-  position: relative;
+  position: relative !important;
+  z-index: 1 !important;
   opacity: 1 !important;
   visibility: visible !important;
+  background: transparent !important;
+}
+
+/* Force hide any loading overlays on product grids */
+body.template-collection .product-grid .loading-overlay,
+body.template-search .product-grid .loading-overlay,
+body.template-collection .product-grid-container .loading-overlay,
+body.template-search .product-grid-container .loading-overlay,
+body.template-collection .loading-overlay.gradient,
+body.template-search .loading-overlay.gradient {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 
 /* Card content - ensure text is readable */
@@ -6622,6 +6638,8 @@ body.template-product .related-products .product-grid {
 
 /* Related product cards - dark theme */
 body.template-product .related-products .card {
+  position: relative !important;
+  z-index: 2 !important;
   background: #0c0f14 !important;
   border: 1px solid #20232b !important;
   color: #f5f5f5 !important;
@@ -6631,10 +6649,32 @@ body.template-product .related-products .card {
     border-color 0.16s ease;
 }
 
+/* Related product card images - ensure full visibility */
+body.template-product .related-products .card__media,
+body.template-product .related-products .card .media,
+body.template-product .related-products .card img {
+  position: relative !important;
+  z-index: 1 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  background: transparent !important;
+}
+
+/* Force hide any loading overlays in related products */
+body.template-product .related-products .loading-overlay,
+body.template-product .related-products .loading-overlay.gradient {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 body.template-product .related-products .card__heading,
 body.template-product .related-products .card__information,
 body.template-product .related-products .card-information,
 body.template-product .related-products .price,
+body.template-product .related-products .price__regular,
+body.template-product .related-products .price-item,
 body.template-product .related-products .card__heading a,
 body.template-product .related-products .full-unstyled-link {
   color: #f5f5f5 !important;
@@ -6825,10 +6865,14 @@ body.template-search .field__button .icon {
   }
 }
 
-/* TNO: Remove default search section on /search and keep only header search */
-body.template-search .shopify-section[id^="template--"][id*="search"] .search,
-body.template-search main .search,
-body.template-search .search__form {
+/* TNO: Hide duplicate search wrapper but keep the form itself visible with horizontal layout */
+body.template-search .template-search__header,
+body.template-search .template-search__search {
+  display: none !important;
+}
+
+/* Keep search__form visible but remove any wrapper that creates duplicate UI */
+body.template-search .shopify-section > .search:not(.search__form) {
   display: none !important;
 }
 
