@@ -5,12 +5,13 @@
 
 /* 
    NOTE: All other .tno-search rules in this file are intentionally
-   overridden by this block which appears first with high specificity.
+   overridden by the final block at the end of this file.
    
    Mobile reference values applied to desktop:
-   - Container: 46px height, pill shape, cyan border glow
+   - Container: 46px height (48px mobile), pill shape, cyan border glow
    - Input: transparent bg, white text, flex grow
-   - Button: 40x40px cyan gradient circle, dark icon
+   - Button: 38x38px (42x42px mobile) cyan gradient circle, dark icon
+   - Background: rgba(0,0,0,0.5) semi-transparent
    - Focus: single glow on container only
 */
 /* ==========================================================================
