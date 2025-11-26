@@ -225,12 +225,47 @@
     observer.observe(hero);
   }
 
+  /**
+   * TNO Header Search - Glitch effect on button mousedown
+   * Attaches a short glitch animation when clicking the search button.
+   * Uses data-tno-search-init attribute to prevent duplicate listeners.
+   */
+  function initTnoHeaderSearch() {
+    const buttons = document.querySelectorAll(
+      '.tno-search__button, .tno-search button[type="submit"], .tno-search .field__button'
+    );
+
+    buttons.forEach((btn) => {
+      // Prevent duplicate event listeners
+      if (btn.dataset.tnoSearchInit) {
+        return;
+      }
+      btn.dataset.tnoSearchInit = 'true';
+
+      btn.addEventListener('mousedown', () => {
+        btn.classList.add('is-glitching');
+      });
+
+      btn.addEventListener('mouseup', () => {
+        // Remove glitch class after animation completes
+        setTimeout(() => {
+          btn.classList.remove('is-glitching');
+        }, 120);
+      });
+
+      btn.addEventListener('mouseleave', () => {
+        btn.classList.remove('is-glitching');
+      });
+    });
+  }
+
   function initAll() {
     initPageFade();
     initScrollEffects();
     initGlitchEffects();
     initScrollParallax();
     initHeaderTransparency();
+    initTnoHeaderSearch();
   }
 
   if (document.readyState === 'loading') {
