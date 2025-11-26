@@ -938,6 +938,14 @@ button.shopify-payment-button__button--unbranded {
   .tno-hero-img {
     transform: scale(1) !important;
   }
+
+  /* Disable search button glitch animation */
+  .tno-search__button.is-glitching,
+  .tno-search button[type="submit"].is-glitching,
+  .tno-search .field__button.is-glitching {
+    animation: none !important;
+    transform: none !important;
+  }
 }
 
 /* ==========================================================================

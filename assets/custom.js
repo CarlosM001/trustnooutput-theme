@@ -229,8 +229,10 @@
    * TNO Header Search - Glitch effect on button mousedown
    * Attaches a short glitch animation when clicking the search button.
    * Uses data-tno-search-init attribute to prevent duplicate listeners.
+   * Animation duration: 120ms (must match CSS @keyframes tno-search-glitch)
    */
   function initTnoHeaderSearch() {
+    const GLITCH_DURATION_MS = 120; // Matches CSS animation: 0.12s
     const buttons = document.querySelectorAll(
       '.tno-search__button, .tno-search button[type="submit"], .tno-search .field__button'
     );
@@ -242,19 +244,31 @@
       }
       btn.dataset.tnoSearchInit = 'true';
 
+      // Track if animation is in progress to avoid conflicts
+      let glitchTimeout = null;
+
       btn.addEventListener('mousedown', () => {
+        // Clear any pending timeout
+        if (glitchTimeout) {
+          clearTimeout(glitchTimeout);
+          glitchTimeout = null;
+        }
         btn.classList.add('is-glitching');
       });
 
       btn.addEventListener('mouseup', () => {
         // Remove glitch class after animation completes
-        setTimeout(() => {
+        glitchTimeout = setTimeout(() => {
           btn.classList.remove('is-glitching');
-        }, 120);
+          glitchTimeout = null;
+        }, GLITCH_DURATION_MS);
       });
 
+      // Only remove on mouseleave if animation has completed
       btn.addEventListener('mouseleave', () => {
-        btn.classList.remove('is-glitching');
+        if (!glitchTimeout) {
+          btn.classList.remove('is-glitching');
+        }
       });
     });
   }
