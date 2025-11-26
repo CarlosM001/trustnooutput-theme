@@ -15,20 +15,25 @@
 <div class="card-wrapper product-card-wrapper" data-product-id="{{ card_product.id }}">
   <div class="card card--product tno-card">
     <div class="card__inner">
-
       {%- comment -%}
         MEDIA
       {%- endcomment -%}
       <div class="card__media">
-        <a href="{{ card_product.url }}" class="full-unstyled-link" aria-label="{{ card_product.title | escape }}">
+        <a
+          href="{{ card_product.url }}"
+          class="full-unstyled-link"
+          aria-label="{{ card_product.title | escape }}"
+        >
           {%- if featured_media -%}
             <div class="media">
-              {{ featured_media
+              {{
+                featured_media
                 | image_url: width: 900
                 | image_tag:
                   loading: loading,
                   sizes: '(min-width: 1200px) 20vw, (min-width: 750px) 33vw, 100vw',
-                  alt: featured_media.alt | escape
+                  alt: featured_media.alt
+                | escape
               }}
             </div>
           {%- else -%}
@@ -39,7 +44,9 @@
         {%- comment -%}
           Badges: Sale / Sold out
         {%- endcomment -%}
-        {%- if card_product.available == false or card_product.compare_at_price > card_product.price -%}
+        {%- if card_product.available == false
+          or card_product.compare_at_price > card_product.price
+        -%}
           <div class="card__badge">
             {%- if card_product.available == false -%}
               <span class="badge badge--sold-out">
@@ -59,7 +66,6 @@
       {%- endcomment -%}
       <div class="card__content">
         <div class="card__information">
-
           {%- if show_vendor -%}
             <span class="card__vendor">
               {{ card_product.vendor }}
@@ -76,13 +82,32 @@
             {%- render 'price', product: card_product, price_class: 'price' -%}
 
             {%- if show_rating and card_product.metafields.reviews.rating.value != blank -%}
-              <span class="tno-rating" aria-label="Product rating: {{ card_product.metafields.reviews.rating.value }}/5">
+              <span
+                class="tno-rating"
+                aria-label="Product rating: {{ card_product.metafields.reviews.rating.value }}/5"
+              >
                 {% assign rating = card_product.metafields.reviews.rating.value | round: 1 %}
                 {% for i in (1..5) %}
                   {% if i <= rating %}
-                    <svg class="tno-star tno-star--filled" width="16" height="16" aria-hidden="true" focusable="false"><use xlink:href="#icon-star-filled"></use></svg>
+                    <svg
+                      class="tno-star tno-star--filled"
+                      width="16"
+                      height="16"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <use xlink:href="#icon-star-filled"></use>
+                    </svg>
                   {% else %}
-                    <svg class="tno-star tno-star--empty" width="16" height="16" aria-hidden="true" focusable="false"><use xlink:href="#icon-star-empty"></use></svg>
+                    <svg
+                      class="tno-star tno-star--empty"
+                      width="16"
+                      height="16"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <use xlink:href="#icon-star-empty"></use>
+                    </svg>
                   {% endif %}
                 {% endfor %}
               </span>
@@ -129,7 +154,6 @@
           </div>
         {%- endif -%}
       </div>
-
     </div>
   </div>
 </div>

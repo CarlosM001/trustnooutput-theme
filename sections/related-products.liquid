@@ -40,7 +40,9 @@
           id="product-grid-{{ section.id }}"
         >
           {%- if source == 'recommendations' -%}
-            {%- for related_product in recommendations.products limit: section.settings.products_to_show -%}
+            {%- for related_product in recommendations.products
+              limit: section.settings.products_to_show
+            -%}
               <li class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
                 {% render 'card-product',
                   card_product: related_product,
@@ -54,7 +56,9 @@
               </li>
             {%- endfor -%}
           {%- elsif source == 'collection' -%}
-            {%- for related_product in fallback_collection.products limit: section.settings.products_to_show -%}
+            {%- for related_product in fallback_collection.products
+              limit: section.settings.products_to_show
+            -%}
               {%- if related_product.id == product.id -%}
                 {%- continue -%}
               {%- endif -%}

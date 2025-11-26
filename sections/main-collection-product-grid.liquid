@@ -119,20 +119,19 @@
         </aside>
       {%- endif -%}
 
-           <div
+      <div
         class="product-grid-container{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
         id="ProductGridContainer"
         {% if settings.animations_reveal_on_scroll %}
           data-cascade
         {% endif %}
       >
-
         {!-- DEBUG-BLOCK: Kann später wieder entfernt werden --}
         <div class="page-width" style="color:#00ffff; padding: 24px 0;">
           <p style="margin:0; font-size:14px;">
-            DEBUG → Collection: <strong>{{ collection.title }}</strong>
-            (Handle: <code>{{ collection.handle }}</code>) ·
-            Produkte: <strong>{{ collection.products.size }}</strong>
+            DEBUG → Collection: <strong>{{ collection.title }}</strong> (Handle:
+            <code>{{ collection.handle }}</code>) · Produkte:
+            <strong>{{ collection.products.size }}</strong>
           </p>
         </div>
 
@@ -206,7 +205,6 @@
             {%- endif -%}
           </div>
         {%- endif -%}
-
       </div>
     </div>
   {%- endpaginate -%}
@@ -217,7 +215,7 @@
       alt="mask-arch.svg icon"
       width="24"
       height="24"
-    />
+    >
   {% endif %}
 </div>
 

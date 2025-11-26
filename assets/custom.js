@@ -109,7 +109,7 @@
                     el.style.animation = '';
                   },
                   CONFIG.glitch.minDelay +
-                    Math.random() * (CONFIG.glitch.maxDelay - CONFIG.glitch.minDelay)
+                  Math.random() * (CONFIG.glitch.maxDelay - CONFIG.glitch.minDelay)
                 );
               });
             } else {
@@ -225,12 +225,38 @@
     observer.observe(hero);
   }
 
+
+  function initSearchInputClear() {
+    // =========================================================
+    // TNO – SEARCH: Clear input after submit
+    // =========================================================
+    var searchForms = document.querySelectorAll('.tno-search form');
+    searchForms.forEach(function (form) {
+      var input = form.querySelector('.tno-search__input');
+      if (!input) {
+        return;
+      }
+      // Prevent duplicate listeners
+      if (!form.hasAttribute('data-tno-search-clear')) {
+        form.addEventListener('submit', function () {
+          setTimeout(function () {
+            input.value = '';
+          }, 100);
+        });
+        form.setAttribute('data-tno-search-clear', 'true');
+      }
+    });
+  }
+
   function initAll() {
     initPageFade();
     initScrollEffects();
     initGlitchEffects();
     initScrollParallax();
     initHeaderTransparency();
+    initSearchInputClear();
+    // Initialisiere die neue Header-Suchfunktion für Glitch-Effekt und Clear
+    initTnoHeaderSearch();
   }
 
   if (document.readyState === 'loading') {
@@ -242,6 +268,43 @@
   if (window.Shopify && window.Shopify.designMode) {
     document.addEventListener('shopify:section:load', () => {
       initAll();
+    });
+  }
+
+  // =========================================================
+  // TNO – Header-Suche: Glitch-Effekt & Input-Clear
+  // Diese Funktion ergänzt das bestehende Clear-Verhalten um einen
+  // kurzen Glitch-Effekt auf dem Button. Sie ist unabhängig von
+  // initAll, wird aber im initAll aufgerufen.
+  // =========================================================
+  function initTnoHeaderSearch() {
+    const searchForms = document.querySelectorAll('.tno-search form');
+    searchForms.forEach((form) => {
+      const input = form.querySelector('.tno-search__input');
+      const button = form.querySelector('.tno-search__button');
+
+      if (button) {
+        // Füge nur einen Listener hinzu, falls noch keiner existiert
+        if (!button.hasAttribute('data-tno-glitch')) {
+          button.addEventListener('mousedown', () => {
+            button.classList.add('is-glitching');
+            setTimeout(() => {
+              button.classList.remove('is-glitching');
+            }, 300);
+          });
+          button.setAttribute('data-tno-glitch', 'true');
+        }
+      }
+
+      if (input && !form.hasAttribute('data-tno-search-clear-enhanced')) {
+        // Leere das Eingabefeld nach dem Absenden
+        form.addEventListener('submit', () => {
+          setTimeout(() => {
+            input.value = '';
+          }, 100);
+        });
+        form.setAttribute('data-tno-search-clear-enhanced', 'true');
+      }
     });
   }
 })();

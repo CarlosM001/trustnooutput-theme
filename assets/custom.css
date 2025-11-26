@@ -1,12 +1,98 @@
 /* =========================================================
+   TNO – SEARCH: FINAL LOOK (DESKTOP + MOBILE)
+   ========================================================= */
+
+/* Background always dark, border white by default */
+.tno-search form {
+  border-color: #fff !important;
+  /* stylelint-disable-next-line color-function-notation */
+  background: rgba(0, 0, 0, 50%) !important;
+
+/* On focus: cyan border + neon glow like header icons */
+.tno-search form:focus-within {
+  border-color: #0ff !important;
+  box-shadow: 0 0 16px rgba(0, 255, 255, 60%) !important;
+}
+
+/* Input: white text, transparent background */
+.tno-search__input {
+  color: #fff !important;
+  background: transparent !important;
+}
+
+.tno-search__input::placeholder {
+  color: rgba(255, 255, 255, 60%) !important;
+}
+
+/* Button: transparent like mobile version */
+.tno-search__button {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Icon: cyan, fully visible */
+.tno-search__button svg,
+.tno-search__button .icon {
+  width: 16px;
+  height: 16px;
+  fill: #0ff !important;
+  stroke: #0ff !important;
+  opacity: 0.95;
+}
+/* =========================================================
+   TNO – SEARCH: FINAL LOOK (DESKTOP + MOBILE)
+   ========================================================= */
+
+/* Background always dark, border white by default */
+.tno-search form {
+  border-color: #fff !important;
+  background: rgba(0, 0, 0, 50%) !important;
+}
+
+/* On focus: cyan border + neon glow like header icons */
+.tno-search form:focus-within {
+  border-color: #0ff !important;
+  box-shadow: 0 0 16px rgba(0, 255, 255, 60%) !important;
+}
+
+/* Input: white text, transparent background */
+.tno-search__input {
+  color: #fff !important;
+  background: transparent !important;
+}
+
+.tno-search__input::placeholder {
+  color: rgba(255, 255, 255, 60%) !important;
+}
+
+/* Button: transparent like mobile version */
+.tno-search__button {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Icon: cyan, fully visible */
+.tno-search__button svg,
+.tno-search__button .icon {
+  width: 16px;
+  height: 16px;
+  fill: #0ff !important;
+  stroke: #0ff !important;
+  opacity: 0.95;
+}
+/* =========================================================
    TNO – HEADER SEARCH: UNIFIED DESKTOP & MOBILE STYLING
    Single source of truth - Desktop matches Mobile 1:1
    ========================================================= */
 
-/* 
+/*
    NOTE: All other .tno-search rules in this file are intentionally
    overridden by the final block at the end of this file.
-   
+
    Mobile reference values applied to desktop:
    - Container: 46px height (48px mobile), pill shape, cyan border glow
    - Input: transparent bg, white text, flex grow
@@ -6980,7 +7066,7 @@ body.template-product .related-products .scroll-trigger.animate--slide-in {
     height: 48px !important;
     max-width: 100% !important;
   }
-  
+
   .tno-search__button,
   .tno-search button[type="submit"] {
     width: 42px !important;
@@ -6995,3 +7081,201 @@ body.template-product .related-products .scroll-trigger.animate--slide-in {
     min-width: 280px !important;
   }
 }
+
+/* =========================================================
+   TNO – SEARCH: HARD RESET, NUR ÄUSSERES FORM HAT RAHMEN
+   ========================================================= */
+
+/* 0) Alles im Such-Wrapper: keine eigenen Ränder, Glows, Pseudo-Elemente */
+.tno-search,
+.tno-search *,
+.tno-search *::before,
+.tno-search *::after {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* 1) ÄUSSERES FORM = einzige sichtbare Pill + Neon-Rahmen */
+.tno-search form {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 46px;
+  max-width: 360px;
+  padding: 0 6px 0 14px;
+  margin: 0;
+
+  border-radius: 999px;
+  border: 2px solid rgba(0, 255, 255, 0.7) !important;
+  background: rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* 2) EINZIGER Glow beim Fokus */
+.tno-search form:focus-within {
+  box-shadow: 0 0 18px rgba(0, 255, 255, 0.6) !important;
+}
+
+/* 3) Input – durchsichtig, nimmt den Platz ein */
+.tno-search__input {
+  flex: 1;
+  height: 100%;
+  padding: 0 10px;
+  background: transparent !important;
+  color: #fff;
+  font-size: 15px;
+}
+
+/* 4) Button – runde Neon-Pill, kein eigener Rahmen/Glow */
+.tno-search__button {
+  width: 38px;
+  height: 38px;
+  margin-right: 2px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+  background: linear-gradient(135deg, #00ffee 0%, #00c2ff 100%);
+  cursor: pointer;
+
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Fokus/Active auf Button explizit killen */
+.tno-search__button:focus,
+.tno-search__button:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* 5) Icon gut sichtbar */
+.tno-search__button svg,
+.tno-search__button .icon {
+  width: 16px;
+  height: 16px;
+  fill: #000;
+  stroke: #000;
+  opacity: 0.9;
+}
+
+/* ==========================================================================
+   TNO – HEADER SEARCH: minimalistischer Look & Glitch-Effekt
+   Diese Regeln überschreiben vorherige Suchfeld-Stile. Sie stellen sicher,
+   dass das Suchfeld einen weißen Rahmen mit schwarzem Hintergrund besitzt,
+   beim Fokus cyan leuchtet und der Such-Button minimalistisch sowie transparent
+   bleibt.  Ein kurzer Glitch-Effekt wird per Klasse "is-glitching" getriggert.
+   ========================================================================= */
+
+/* Container: Pillenform mit weißem Standardrahmen und dunklem Hintergrund */
+header .tno-search form,
+.tno-search form {
+  display: flex;
+  align-items: center;
+  height: 40px !important;
+  padding-left: 1rem !important;
+  border: 1px solid #ffffff !important;
+  border-radius: 999px !important;
+  background: rgba(0, 0, 0, 0.5) !important;
+  box-shadow: none !important;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Fokus: Cyan-Rahmen und sanfte Neon-Glut */
+header .tno-search form:focus-within,
+.tno-search form:focus-within {
+  border-color: #00e5ff !important;
+  box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.45) !important;
+}
+
+/* Suchfeld (Input) – vollständig rahmenlos, weißer Text */
+header .tno-search__input,
+.tno-search__input {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  color: #ffffff !important;
+  font-size: 0.875rem !important;
+  outline: none !important;
+  padding: 0 !important;
+}
+
+header .tno-search__input::placeholder,
+.tno-search__input::placeholder {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Such-Button – minimalistisch, transparent, ohne Rahmen */
+header .tno-search__button,
+.tno-search__button {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 40px !important;
+  height: 40px !important;
+  margin-left: 0.25rem !important;
+  border: none !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  color: #00e5ff !important;
+  cursor: pointer !important;
+  transition: transform 0.15s ease !important;
+  flex-shrink: 0 !important;
+}
+
+/* Button-Druckeffekt: leichtes Skalieren */
+header .tno-search__button:active,
+.tno-search__button:active {
+  transform: scale(0.95) !important;
+}
+
+/* Icon im Button */
+header .tno-search__button svg,
+.tno-search__button svg,
+header .tno-search__button .icon,
+.tno-search__button .icon {
+  width: 16px !important;
+  height: 16px !important;
+  fill: currentColor !important;
+  stroke: currentColor !important;
+}
+
+/* Glitch-Animation für das Icon – wird per JS getriggert */
+@keyframes tno-search-btn-glitch {
+  0%   { transform: translate(0, 0); }
+  20%  { transform: translate(-2px, 1px); }
+  40%  { transform: translate(2px, -1px); }
+  60%  { transform: translate(-1px, 2px); }
+  80%  { transform: translate(1px, -2px); }
+  100% { transform: translate(0, 0); }
+}
+
+header .tno-search__button.is-glitching svg,
+.tno-search__button.is-glitching svg {
+  animation: tno-search-btn-glitch 0.3s steps(4) 1 !important;
+  filter: drop-shadow(0 0 3px #00e5ff) drop-shadow(0 0 2px #ff00cc) !important;
+}
+
+/* Mobile Anpassungen: größere Größe */
+@media (max-width: 749px) {
+  header .tno-search form,
+  .tno-search form {
+    height: 44px !important;
+  }
+
+  header .tno-search__button,
+  .tno-search__button {
+    width: 44px !important;
+    height: 44px !important;
+  }
+}
+
+
