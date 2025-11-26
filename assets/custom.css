@@ -2484,7 +2484,6 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 
 /* Product cards visibility - removed debug outline */
 
-
 /* ==========================================================================
    12) SEARCH BAR (TNO)
    ========================================================================== */
@@ -2546,7 +2545,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* TRUST.NO.OUTPUT – Fix header search button alignment on desktop */
 @media (width >= 990px) {
   /* Button im TNO-Suchfeld immer in einer Reihe mit dem Input anzeigen */
-  .tno-search button[type="submit"],
+  .tno-search button[type='submit'],
   .tno-search .search__button,
   .tno-search .field__button {
     height: 28px;
@@ -2573,7 +2572,6 @@ html.tno-ab-continuous .tno-glitch-soft::after {
     width: auto;
   }
 }
-
 
 /* ==========================================================================
    13) HEADER—REQUESTED STYLE RULES (HIGHER PRIORITY)
@@ -4049,6 +4047,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* --------------------------------------------------------------------------
    4. Variant Selectors
    -------------------------------------------------------------------------- */
+
 /* .tno-product__variants styles are inherited from component-product-variant-picker.css; no direct rules needed here. */
 
 /* Ensure variant buttons meet accessibility requirements */
@@ -4143,6 +4142,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* --------------------------------------------------------------------------
    6. Quantity Selector
    -------------------------------------------------------------------------- */
+
 /* .tno-product__quantity inherits from existing quantity component; no direct rules needed. */
 
 .tno-product__quantity-label {
@@ -4373,7 +4373,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
    Product Story Section
    -------------------------------------------------------------------------- */
 
- /* Removed empty ruleset for .tno-product__story */
+/* Removed empty ruleset for .tno-product__story */
 
 .tno-product__story-content {
   font-size: 1rem;
@@ -4392,6 +4392,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* --------------------------------------------------------------------------
    Spec Sheet Section
    -------------------------------------------------------------------------- */
+
 /* Removed empty ruleset for .tno-product__specs */
 
 .tno-product__specs-list {
@@ -4440,6 +4441,7 @@ html.tno-ab-continuous .tno-glitch-soft::after {
 /* --------------------------------------------------------------------------
    Reviews / UGC Section
    -------------------------------------------------------------------------- */
+
 /* Removed empty ruleset for .tno-product__reviews */
 
 .tno-product__reviews-placeholder {
@@ -6572,16 +6574,16 @@ body.template-collection .loading-overlay.gradient,
 body.template-search .loading-overlay.gradient,
 body.template-collection .shopify-section .loading-overlay,
 body.template-search .shopify-section .loading-overlay,
-body.template-collection [class*="product"] .loading-overlay,
-body.template-search [class*="product"] .loading-overlay,
+body.template-collection [class*='product'] .loading-overlay,
+body.template-search [class*='product'] .loading-overlay,
 body.template-collection .shopify-section.section .loading-overlay,
 body.template-search .shopify-section.section .loading-overlay,
 body.template-collection .product-grid-container > .loading-overlay,
 body.template-search .product-grid-container > .loading-overlay,
 body.template-collection #MainContent .loading-overlay,
 body.template-search #MainContent .loading-overlay,
-body.template-collection div[class*="loading"],
-body.template-search div[class*="loading"] {
+body.template-collection div[class*='loading'],
+body.template-search div[class*='loading'] {
   display: none !important;
   opacity: 0 !important;
   visibility: hidden !important;
@@ -6712,10 +6714,10 @@ body.template-product .related-products .card img {
 body.template-product .related-products .loading-overlay,
 body.template-product .related-products .loading-overlay.gradient,
 body.template-product .shopify-section .related-products .loading-overlay,
-body.template-product [class*="related"] .loading-overlay,
+body.template-product [class*='related'] .loading-overlay,
 body.template-product .related-products .product-grid-container .loading-overlay,
 body.template-product #MainContent .related-products .loading-overlay,
-body.template-product .related-products div[class*="loading"] {
+body.template-product .related-products div[class*='loading'] {
   display: none !important;
   opacity: 0 !important;
   visibility: hidden !important;
@@ -6929,10 +6931,11 @@ body.template-search .field__button .icon {
 }
 
 /* TNO: Hide duplicate search wrappers AND the white Shopify search section */
+
 /* This hides the entire Shopify search block on /search page - users will use header search only */
 body.template-search .shopify-section--main-search,
-body.template-search .shopify-section[id*="shopify-section-template--"][id*="search"],
-body.template-search section[id*="shopify-section-template--"] > div.search,
+body.template-search .shopify-section[id*='shopify-section-template--'][id*='search'],
+body.template-search section[id*='shopify-section-template--'] > div.search,
 body.template-search .template-search__header,
 body.template-search .template-search__search,
 body.template-search #MainContent > .shopify-section:first-child {
@@ -6953,7 +6956,6 @@ body.template-search .page-title {
   text-transform: uppercase;
   color: #f5f5f5;
 }
-
 
 /* TNO: Hard fix for product grid visibility (collections + search results) */
 
@@ -7045,7 +7047,7 @@ body.template-search .page-title {
 
 /* TNO – Dark background for related products section (wrapper + cards) */
 .shopify-section:has(.related-products),
-.shopify-section[id*="related-products"] {
+.shopify-section[id*='related-products'] {
   background: var(--brand-bg, #050608) !important;
   color: var(--brand-text-main, #f5f5f5) !important;
 }
@@ -7077,27 +7079,72 @@ body.template-search #MainContent {
    TNO – HEADER SEARCH FIX
    =========================== */
 
-/* Container immer als Flex-Zeile erzwingen */
-.tno-search {
+/* Container als Pill, ohne doppelte Outline */
+.tno-header__desktop-utility .tno-search {
   display: flex !important;
   align-items: center !important;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  overflow: hidden;              /* keine zweite Umrandung */
 }
 
-/* Input füllt die Breite */
-.tno-search__input {
-  flex: 1 1 auto !important;
-  min-width: 0 !important;
+/* Formular selbst als Flex-Zeile */
+.tno-header__desktop-utility .tno-search__form {
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
-/* Button als normaler Inline-Flex, nicht absolut/float */
-.tno-search__button {
-  position: static !important;
-  flex: 0 0 auto !important;
-  margin-left: 8px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+/* Input füllt die Breite, keine extra Linie links */
+.tno-header__desktop-utility .tno-search__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 1.2rem;
+  border: none;
+  background: transparent;
+  color: #f5f5f5;
 }
+
+.tno-header__desktop-utility .tno-search__input::placeholder {
+  color: rgba(245, 245, 245, 0.55);
+}
+
+.tno-header__desktop-utility .tno-search__input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Button: nur der cyan Bubble rechts, keine extra Border */
+.tno-header__desktop-utility .tno-search__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 36px;
+  margin: 0;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #00ffff, #00d7ff);
+  color: #050608;
+  cursor: pointer;
+}
+
+.tno-header__desktop-utility .tno-search__button:hover,
+.tno-header__desktop-utility .tno-search__button:focus {
+  filter: brightness(1.1);
+  outline: none;
+}
+
+/* Auf der Search-Seite keine zusätzliche Linie / keinen extra Rahmen */
+body.template-search .tno-header__desktop-utility .tno-search {
+  box-shadow: none;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
 
 /* ===========================
    TNO – COLLECTION PRODUCT GRID VISIBILITY
@@ -7149,4 +7196,275 @@ body.tno-ab-continuous .related-products .card__heading .full-unstyled-link,
 body.tno-ab-continuous .related-products .price,
 body.tno-ab-continuous .related-products .price__regular {
   color: #f5f5f5 !important;
+}
+
+/* =========================================================
+   TNO – HEADER SEARCH FINAL FIX
+   ========================================================= */
+
+/* Header-Suche immer als eine Zeile erzwingen */
+.tno-search {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+
+/* Input füllt die Breite */
+.tno-search__input {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+/* Button sitzt rechts daneben, NICHT unter dem Input */
+.tno-search__button {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Auf der Search-Template-Seite alle "einspaltigen" Dawn-Regeln aushebeln */
+body.template-search header .tno-search {
+  flex-direction: row !important;
+}
+
+body.template-search header .tno-search__input,
+body.template-search header .tno-search__button {
+  width: auto !important;
+  margin-top: 0 !important;
+}
+
+/* Falls Dawn trotzdem noch seine eigene Search-Section rendert – ausblenden */
+body.template-search .template-search__header,
+body.template-search .template-search__search {
+  display: none !important;
+}
+
+/* =========================================================
+   TNO – PRODUCT GRID / RELATED PRODUCTS VISIBILITY FIX
+   ========================================================= */
+
+/* Alle weißen Loading-/Gradient-Overlays killen */
+.loading-overlay,
+.loading-overlay.gradient,
+.product-grid-container::before,
+.collection.page-width::before,
+.related-products .loading-overlay,
+.related-products .loading-overlay.gradient {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Karten auf dunklem Hintergrund sichtbar machen */
+.product-grid .card,
+.related-products .card {
+  background-color: #050608 !important;
+  color: #f5f5f5 !important;
+}
+
+/* Keine extra Hintergründe im Media-Bereich */
+.product-grid .card__media,
+.related-products .card__media {
+  background: transparent !important;
+}
+
+/* Bilder immer sichtbar halten */
+.product-grid .card__media img,
+.product-grid .card__media picture,
+.related-products .card__media img,
+.related-products .card__media picture {
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+/* =========================================================
+   TNO – HEADER SEARCH (DESKTOP)
+   ========================================================= */
+
+.tno-header__search {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.tno-search {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 320px;
+}
+
+.tno-search__form {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.tno-search__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 36px;
+  padding: 0 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgb(255 255 255 / 14%);
+  background: rgb(0 0 0 / 40%);
+  color: #fff;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.9rem;
+}
+
+.tno-search__input::placeholder {
+  color: rgb(255 255 255 / 60%);
+}
+
+.tno-search__button {
+  flex: 0 0 auto;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, #0ff, #0cc);
+  color: #000;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    filter 0.16s ease;
+}
+
+.tno-search__button svg {
+  width: 16px;
+  height: 16px;
+}
+
+.tno-search__button:hover {
+  transform: translateY(-1px);
+  filter: saturate(1.1);
+  box-shadow: 0 0 10px rgb(0 240 255 / 30%);
+}
+
+/* Auf der Search-Template-Seite keinen Spezial-Mist im Header */
+body.template-search .tno-search,
+body.template-search .tno-search__form,
+body.template-search .tno-search__input,
+body.template-search .tno-search__button {
+  display: flex;
+}
+
+/* =========================================================
+   TNO – SEARCH TEMPLATE CLEANUP
+   Verhindert doppeltes Suchfeld auf /search
+   ========================================================= */
+
+/* Standard-Search-Header und das Formular der Template ausblenden */
+body.template-search .template-search__header,
+body.template-search .template-search__search,
+body.template-search .template-search__search .search__form {
+  display: none !important;
+}
+
+/* Ergebnisse und Grid bleiben sichtbar */
+body.template-search .template-search__results,
+body.template-search .template-search__results .product-grid {
+  display: block;
+}
+
+/* ===========================
+   TNO – HEADER SEARCH VISUAL CLEANUP
+   =========================== */
+
+/* Form als eine schlanke Pill-Bar */
+.tno-search {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.tno-search form {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  padding-left: 1rem;
+  height: 40px;
+}
+
+/* Innerer Input: keine eigene Umrandung mehr */
+.tno-search__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+
+  color: #f5f5f5;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.8125rem;
+}
+
+.tno-search__input::placeholder {
+  color: rgba(245, 245, 245, 0.55);
+}
+
+/* Button: nur der cyan Kreis, kein zusätzlicher Rahmen */
+.tno-search__button {
+  border: none !important;
+  outline: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+  margin-left: 0.25rem;
+  border-radius: 999px;
+
+  background: linear-gradient(90deg, #00ffff, #00ffcc);
+  color: #000;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tno-search__button:hover,
+.tno-search__button:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
+}
+
+/* ===========================
+   TNO – HEADER SEARCH CLEAN LINE FIX
+   =========================== */
+
+/* Alle eventuellen Ränder/Lines im Inneren entfernen */
+.tno-search form::before,
+.tno-search form::after {
+  content: none !important;
+}
+
+/* Falls irgendein globales Input-Styling noch eine Linie setzt */
+.tno-search__input,
+.tno-search__input:focus {
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Safari/Chrome Search-Deko entfernen (kann wie eine Linie wirken) */
+.tno-search__input::-webkit-search-decoration,
+.tno-search__input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
 }
