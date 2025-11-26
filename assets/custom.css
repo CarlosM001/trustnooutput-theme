@@ -1,156 +1,18 @@
 /* =========================================================
-   TNO – DESKTOP SEARCH = 1:1 MOBILE DESIGN
+   TNO – HEADER SEARCH: UNIFIED DESKTOP & MOBILE STYLING
+   Single source of truth - Desktop matches Mobile 1:1
    ========================================================= */
 
-/* Gesamter Container wie Mobile */
-.tno-search form {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  max-width: 350px;
-  height: 46px; /* gleiche Höhe wie Mobile */
-  border-radius: 40px;
-  padding: 0 0 0 14px;
-  background: rgba(0, 0, 0, 0.35);
-  border: 2px solid rgba(0, 255, 255, 0.7);
-  overflow: hidden;
-  transition: box-shadow 0.2s ease;
-}
-
-/* EINZIGER Glow-Effekt – identisch Mobile */
-.tno-search form:focus-within {
-  box-shadow: 0 0 14px rgba(0, 255, 255, 0.55);
-}
-
-/* Input wie Mobile */
-.tno-search__input {
-  flex: 1;
-  height: 100%;
-  background: transparent;
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
-  padding-left: 4px;
-  padding-right: 10px;
-  color: white;
-  font-size: 15px;
-}
-
-/* Button exakt wie Mobile */
-.tno-search__button {
-  height: 40px;
-  width: 40px;
-  margin-right: 3px;
-
-  background: linear-gradient(135deg, #00ffee 0%, #00c2ff 100%);
-  border-radius: 40px;
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Icon identisch Mobile */
-.tno-search__button svg,
-.tno-search__button .icon {
-  width: 16px;
-  height: 16px;
-  stroke: #000;
-  fill: #000;
-  opacity: 0.9;
-}
-
-.tno-search__button:hover {
-  background: linear-gradient(135deg, #00ffff 0%, #00baff 100%);
-}
-/* =========================================================
-   TNO – HEADER SEARCH BUTTON: MATCH MOBILE STYLE (DESKTOP)
-   ========================================================= */
-
-/* Basis-Container – verhindert doppelte Rahmen */
-.tno-search form {
-  display: flex;
-  align-items: center;
-  border-radius: 50px;
-  overflow: hidden;
-  border: 2px solid rgba(0, 255, 255, 0.7);
-  background: rgba(0, 0, 0, 0.35);
-}
-
-/* Input */
-.tno-search__input {
-  flex: 1;
-  padding: 10px 14px;
-  border: none !important;
-  background: transparent;
-  color: #fff;
-  font-size: 15px;
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-/* Button exakt wie MOBILE */
-.tno-search__button {
-  background: linear-gradient(135deg, #00ffee 0%, #00c2ff 100%);
-  border: none !important;
-  border-radius: 50px;
-  padding: 10px 16px !important;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: none !important;
-  outline: none !important;
-}
-
-/* Icon verbessern */
-.tno-search__button svg,
-.tno-search__button .icon {
-  width: 15px;
-  height: 15px;
-  stroke: #000;
-  fill: #000;
-  opacity: 0.9;
-}
-
-/* Hover: gleiche Mobile-Logik */
-.tno-search__button:hover {
-  background: linear-gradient(135deg, #00ffff 0%, #00baff 100%);
-}
-
-/* Glow nur auf dem Form-Container */
-.tno-search form:focus-within {
-  box-shadow: 0 0 14px rgba(0, 255, 255, 0.5);
-}
-/* =========================================================
-   TNO – HEADER SEARCH: EINHEITLICHER GLOW OHNE DOPPELRAHMEN
-   ========================================================= */
-
-/* 1) Alle Standard-Outlines entfernen */
-.tno-search form *,
-.tno-search form:focus,
-.tno-search form:focus-visible,
-.tno-search__input:focus,
-.tno-search__button:focus {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-/* 2) Nur EIN Glow, wenn der gesamte Form-Bereich aktiv ist */
-.tno-search form:focus-within {
-  border: 2px solid #00ffff !important;
-  box-shadow: 0 0 12px rgba(0, 255, 255, 0.5) !important;
-}
-
-/* 3) Keine extra Umrandung beim Button */
-.tno-search__button {
-  outline: none !important;
-  box-shadow: none !important;
-}
+/* 
+   NOTE: All other .tno-search rules in this file are intentionally
+   overridden by this block which appears first with high specificity.
+   
+   Mobile reference values applied to desktop:
+   - Container: 46px height, pill shape, cyan border glow
+   - Input: transparent bg, white text, flex grow
+   - Button: 40x40px cyan gradient circle, dark icon
+   - Focus: single glow on container only
+*/
 /* ==========================================================================
    TRUST.NO.OUTPUT — custom.css (CLEAN)
    ========================================================================== */
@@ -6990,4 +6852,145 @@ body.template-product .related-products .scroll-trigger,
 body.template-product .related-products .scroll-trigger.animate--slide-in {
   opacity: 1 !important;
   transform: none !important;
+}
+
+/* =========================================================
+   TNO – FINAL SEARCH STYLING: Desktop = Mobile (1:1)
+   This block MUST be at the end for highest CSS specificity
+   ========================================================= */
+
+/* Container wrapper */
+.tno-search {
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Form: Pill-shaped container with neon border */
+.tno-search form,
+.tno-search .tno-search__form {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0 !important;
+  width: 100% !important;
+  max-width: 350px !important;
+  height: 46px !important;
+  padding: 0 4px 0 16px !important;
+  margin: 0 !important;
+  border-radius: 999px !important;
+  border: 2px solid rgba(0, 255, 255, 0.7) !important;
+  background: rgba(0, 0, 0, 0.5) !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+/* Focus state: Single glow on the form container only */
+.tno-search form:focus-within,
+.tno-search .tno-search__form:focus-within {
+  border-color: #00ffff !important;
+  box-shadow: 0 0 14px rgba(0, 255, 255, 0.55) !important;
+}
+
+/* Input field: Transparent, fills available space */
+.tno-search__input,
+.tno-search input[type="search"] {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  height: 100% !important;
+  padding: 0 12px 0 0 !important;
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #ffffff !important;
+  font-family: var(--font-mono, ui-monospace, monospace) !important;
+  font-size: 15px !important;
+}
+
+.tno-search__input::placeholder,
+.tno-search input[type="search"]::placeholder {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+
+/* Remove all focus outlines from inner elements */
+.tno-search__input:focus,
+.tno-search__input:focus-visible,
+.tno-search input[type="search"]:focus,
+.tno-search input[type="search"]:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Button: Cyan gradient circle, matches mobile exactly */
+.tno-search__button,
+.tno-search button[type="submit"] {
+  flex-shrink: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 38px !important;
+  height: 38px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  outline: none !important;
+  border-radius: 999px !important;
+  background: linear-gradient(135deg, #00ffee 0%, #00c2ff 100%) !important;
+  color: #000000 !important;
+  font-size: 18px !important;
+  font-weight: bold !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+  transition: transform 0.15s ease, background 0.15s ease !important;
+}
+
+/* Button hover: Slight lift and brighter gradient */
+.tno-search__button:hover,
+.tno-search button[type="submit"]:hover {
+  transform: translateY(-1px) !important;
+  background: linear-gradient(135deg, #00ffff 0%, #00baff 100%) !important;
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.5) !important;
+}
+
+/* Button focus: No extra outline (form container handles focus) */
+.tno-search__button:focus,
+.tno-search__button:focus-visible,
+.tno-search button[type="submit"]:focus,
+.tno-search button[type="submit"]:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Icon styling (for SVG icons if used) */
+.tno-search__button svg,
+.tno-search__button .icon,
+.tno-search button[type="submit"] svg {
+  width: 16px !important;
+  height: 16px !important;
+  color: #000000 !important;
+  fill: currentColor !important;
+  stroke: currentColor !important;
+}
+
+/* Mobile adjustments: Slightly larger touch targets */
+@media (max-width: 749px) {
+  .tno-search form,
+  .tno-search .tno-search__form {
+    height: 48px !important;
+    max-width: 100% !important;
+  }
+  
+  .tno-search__button,
+  .tno-search button[type="submit"] {
+    width: 42px !important;
+    height: 42px !important;
+  }
+}
+
+/* Desktop specific: Ensure consistent width */
+@media (min-width: 990px) {
+  .tno-search form,
+  .tno-search .tno-search__form {
+    min-width: 280px !important;
+  }
 }
