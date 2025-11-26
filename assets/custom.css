@@ -7018,3 +7018,81 @@ body.template-search main {
   background: #050608 !important;
   color: #f5f5f5 !important;
 }
+
+/* ===========================
+   TNO – HEADER SEARCH FIX
+   =========================== */
+
+/* Container immer als Flex-Zeile erzwingen */
+.tno-search {
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Input füllt die Breite */
+.tno-search__input {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+/* Button als normaler Inline-Flex, nicht absolut/float */
+.tno-search__button {
+  position: static !important;
+  flex: 0 0 auto !important;
+  margin-left: 8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* ===========================
+   TNO – COLLECTION PRODUCT GRID VISIBILITY
+   =========================== */
+
+/* Lade-Overlay komplett abschalten, damit nichts mehr "drüber" liegt */
+.product-grid-container .loading-overlay,
+.related-products .loading-overlay {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Karten im Grid sichtbar & mit sinnvoller Z-Reihenfolge */
+.product-grid .card,
+.related-products .card {
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 2 !important;
+}
+
+/* Medienbereich (= Bilder) dürfen nicht verdeckt/ausgeblendet sein */
+.product-grid .card__media,
+.product-grid .card__media .media,
+.product-grid .card__media img,
+.related-products .card__media,
+.related-products .card__media .media,
+.related-products .card__media img {
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Falls irgendwo Höhen kollabieren – hier alles frei laufen lassen */
+.product-grid .card--standard .card__inner,
+.related-products .card--standard .card__inner {
+  height: auto !important;
+}
+
+/* ===========================
+   TNO – PRODUCT CARD TEXT COLORS
+   =========================== */
+
+body.tno-ab-continuous .product-grid .card__heading .full-unstyled-link,
+body.tno-ab-continuous .product-grid .price,
+body.tno-ab-continuous .product-grid .price__regular,
+body.tno-ab-continuous .related-products .card__heading .full-unstyled-link,
+body.tno-ab-continuous .related-products .price,
+body.tno-ab-continuous .related-products .price__regular {
+  color: #f5f5f5 !important;
+}
