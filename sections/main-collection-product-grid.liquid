@@ -126,6 +126,15 @@
           data-cascade
         {% endif %}
       >
+        {!-- DEBUG-BLOCK: Kann später wieder entfernt werden --}
+        <div class="page-width" style="color:#00ffff; padding: 24px 0;">
+          <p style="margin:0; font-size:14px;">
+            DEBUG → Collection: <strong>{{ collection.title }}</strong> (Handle:
+            <code>{{ collection.handle }}</code>) · Produkte:
+            <strong>{{ collection.products.size }}</strong>
+          </p>
+        </div>
+
         {%- if collection.products.size == 0 -%}
           <div
             class="collection collection--empty page-width"
@@ -149,6 +158,7 @@
             class="collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
           >
             <div class="loading-overlay gradient"></div>
+
             <ul
               id="product-grid"
               data-id="{{ section.id }}"
@@ -164,6 +174,7 @@
                 {%- if forloop.index > 2 -%}
                   {%- assign lazy_load = true -%}
                 {%- endif -%}
+
                 <li
                   class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
                   {% if settings.animations_reveal_on_scroll %}
@@ -184,6 +195,7 @@
                     section_id: section.id
                   %}
                 </li>
+
                 {%- assign skip_card_product_styles = true -%}
               {%- endfor -%}
             </ul>
@@ -196,17 +208,15 @@
       </div>
     </div>
   {%- endpaginate -%}
+
   {% if section.settings.image_shape == 'arch' %}
-    <img src="{{ 'mask-arch.svg' | asset_url }}" alt="mask-arch.svg icon" / width="24" height="24">
-    ``` (This replaces every
-    <img src="{{ 'icon-caret.svg' | asset_url }}" alt="" width="24" height="24"> with
     <img
-      src="{{ 'icon-caret.svg' | asset_url }}"
-      alt="Caret icon"
+      src="{{ 'mask-arch.svg' | asset_url }}"
+      alt="mask-arch.svg icon"
       width="24"
       height="24"
-    >)
-  {%- endif -%}
+    >
+  {% endif %}
 </div>
 
 {% schema %}

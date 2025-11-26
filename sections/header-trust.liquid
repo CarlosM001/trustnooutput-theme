@@ -864,19 +864,33 @@
       and preventing the icon group from shrinking (see assets/custom.css).
     {%- endcomment %}
     <div class="header-icons tno-nav__utility tno-header__desktop-utility">
-      {%- comment %} Search Field (Desktop) {%- endcomment %}
+      {%- comment %} Search Field (Desktop, TNO-aligned) {%- endcomment %}
       {% if section.settings.show_search %}
-        <div class="tno-search">
-          <form action="{{ routes.search_url }}" method="get" role="search">
-            <input
-              type="search"
-              name="q"
-              placeholder="Search..."
-              class="tno-search__input"
-              aria-label="Search"
+        <div class="tno-header__search">
+          <div class="tno-search">
+            <form
+              action="{{ routes.search_url }}"
+              method="get"
+              role="search"
+              class="tno-search__form"
             >
-            <button type="submit" class="tno-search__button" aria-label="Submit search">⌕</button>
-          </form>
+              <input
+                type="search"
+                name="q"
+                value="{{ search.terms | escape }}"
+                placeholder="{{ 'general.search.search' | t }}"
+                class="tno-search__input"
+                aria-label="{{ 'general.search.search' | t }}"
+              >
+              <button
+                type="submit"
+                class="tno-search__button"
+                aria-label="{{ 'general.search.search' | t }}"
+              >
+                ⌕
+              </button>
+            </form>
+          </div>
         </div>
       {% endif %}
 

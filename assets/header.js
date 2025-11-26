@@ -235,74 +235,210 @@
 
   // Removed unused openMobileMenu function to resolve compile error.
 
-  function closeMobileMenu() {
-    if (!mobileMenu || !mobileToggle) {
-      dbg('closeMobileMenu: missing elements', { mobileMenu: !!mobileMenu, mobileToggle: !!mobileToggle });
+  function openMobileMenu() {
+    if (!mobileMenu) {
+      dbg('openMobileMenu: mobileMenu not found');
       return;
     }
-    // Handle <details> closing - force it closed
-    if (detailsContainer) {
-      if (detailsContainer.hasAttribute('open')) {
-        detailsContainer.removeAttribute('open');
-        detailsContainer.open = false; // Also set the property directly
-      }
+    mobileMenu.classList.add('is-active');
+    mobileMenu.setAttribute('aria-hidden', 'false');
+    if (bottomTabMenu) {
+      bottomTabMenu.classList.add('is-active');
+      bottomTabMenu.setAttribute('aria-expanded', 'true');
     }
-    if (!mobileMenu.classList.contains('is-active')) {
-      // If using details only, proceed with cleanup/focus anyway
-      if (!detailsContainer) {
-        dbg('menu already closed (no is-active class)');
-        return;
-      }
+    if (mobileToggle) {
+      mobileToggle.setAttribute('aria-expanded', 'true');
     }
-    detailsContainer.removeAttribute('open');
+    document.body.classList.add('overflow-hidden-mobile');
+    dbg('mobile menu opened');
+  }
+
+  function closeMobileMenu() {
+    if (!mobileMenu) {
+      dbg('closeMobileMenu: mobileMenu not found');
+      return;
+    }
+    mobileMenu.classList.remove('is-active');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    if (bottomTabMenu) {
+      bottomTabMenu.classList.remove('is-active');
+      bottomTabMenu.setAttribute('aria-expanded', 'false');
+    }
+    if (mobileToggle) {
+      mobileToggle.setAttribute('aria-expanded', 'false');
+    }
+    document.body.classList.remove('overflow-hidden-mobile');
+    // Also handle Shopify native drawer if present
+    if (detailsContainer && detailsContainer.hasAttribute('open')) {
+      detailsContainer.removeAttribute('open');
+    }
+    // Reset drilldown panels to root state when menu closes
+    resetMobilePanels();
     dbg('mobile menu closed');
   }
 
   function toggleMobileMenu() {
-    if (!detailsContainer) {
+    if (!mobileMenu) {
+      dbg('toggleMobileMenu: mobileMenu not found');
       return;
     }
-    const isOpen = detailsContainer.hasAttribute('open');
+    const isOpen = mobileMenu.classList.contains('is-active');
     dbg('toggleMobileMenu called', { currentlyOpen: isOpen, willToggleTo: !isOpen });
     if (isOpen) {
-      detailsContainer.removeAttribute('open');
+      closeMobileMenu();
     } else {
-      detailsContainer.setAttribute('open', '');
+      openMobileMenu();
     }
   }
 
-  function initMobileMenu() {
-    if (!mobileMenu || !mobileToggle) {
-      dbg('initMobileMenu: missing elements', { mobileMenu: !!mobileMenu, mobileToggle: !!mobileToggle });
+  // ==========================================================================
+  // Mobile Menu Drilldown Panel Navigation
+  // Handles APPAREL / ACCESSORIES / PRINTS submenu transitions
+  // ==========================================================================
+
+  function initMobilePanelNavigation() {
+    if (!mobileMenu) {
       return;
     }
 
-    // Header toggle - let native <details>/<summary> handle open/close
-    // No custom click handler needed for native drawer
+    const drillTriggers = mobileMenu.querySelectorAll('.tno-mobile-drill-trigger');
+    const backButtons = mobileMenu.querySelectorAll('.tno-mobile-back');
+    const rootPanel = mobileMenu.querySelector('.tno-mobile-panel.is-root');
 
-    // Bottom tab menu toggle
-    if (bottomTabMenu && detailsContainer) {
-      bottomTabMenu.addEventListener('click', (e) => {
+    drillTriggers.forEach((trigger) => {
+      trigger.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        dbg('bottom tab menu clicked');
-        toggleMobileMenu();
+
+        const targetPanelId = trigger.getAttribute('data-mobile-panel-target');
+        if (!targetPanelId) {
+          dbg('Drill trigger missing data-mobile-panel-target attribute:', trigger);
+          return;
+        }
+
+        const targetPanel = document.getElementById(targetPanelId);
+        if (!targetPanel) {
+          dbg('Target panel not found for trigger:', { targetPanelId, trigger });
+          return;
+        }
+
+        // Hide root panel
+        if (rootPanel) {
+          rootPanel.classList.add('is-hidden');
+          rootPanel.classList.remove('is-active');
+        }
+
+        // Show target child panel
+        targetPanel.classList.add('is-active');
+
+        // Update ARIA
+        trigger.setAttribute('aria-expanded', 'true');
+
+        dbg('Drilldown to panel:', targetPanelId);
       });
-    } else {
-      dbg('bottomTabMenu or detailsContainer not found', {
-        hasBottomTab: !!bottomTabMenu,
-        hasDetails: !!detailsContainer
+    });
+
+    backButtons.forEach((backBtn) => {
+      backBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const childPanel = backBtn.closest('.tno-mobile-panel.is-child');
+
+        if (childPanel) {
+          childPanel.classList.remove('is-active');
+
+          // Find and update the trigger that opened this panel
+          const panelId = childPanel.id;
+          if (panelId) {
+            const trigger = mobileMenu.querySelector(`[data-mobile-panel-target="${panelId}"]`);
+            if (trigger) {
+              trigger.setAttribute('aria-expanded', 'false');
+            }
+          }
+        }
+
+        // Show root panel
+        if (rootPanel) {
+          rootPanel.classList.remove('is-hidden');
+          rootPanel.classList.add('is-active');
+        }
+
+        dbg('Back to root panel');
       });
+    });
+  }
+
+  function resetMobilePanels() {
+    if (!mobileMenu) {
+      return;
     }
 
-    const links = mobileMenu.querySelectorAll('.mobile-menu__link');
-    links.forEach((l) => l.addEventListener('click', closeMobileMenu));
+    // Reset all child panels to hidden
+    const childPanels = mobileMenu.querySelectorAll('.tno-mobile-panel.is-child');
+    childPanels.forEach((panel) => {
+      panel.classList.remove('is-active');
+    });
 
+    // Reset root panel to visible
+    const rootPanel = mobileMenu.querySelector('.tno-mobile-panel.is-root');
+    if (rootPanel) {
+      rootPanel.classList.remove('is-hidden');
+      rootPanel.classList.add('is-active');
+    }
+
+    // Reset all drill triggers
+    const drillTriggers = mobileMenu.querySelectorAll('.tno-mobile-drill-trigger');
+    drillTriggers.forEach((trigger) => {
+      trigger.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  function initMobileMenu() {
+    if (!mobileMenu) {
+      dbg('initMobileMenu: mobileMenu not found');
+      return;
+    }
+
+    // Initialize drilldown panel navigation
+    initMobilePanelNavigation();
+
+    // Central toggle handler - used by both hamburger and bottom tab
+    function handleMenuToggle(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleMobileMenu();
+    }
+
+    // Header hamburger toggle - this is the primary controller
+    if (mobileToggle) {
+      mobileToggle.addEventListener('click', handleMenuToggle);
+    }
+
+    // Bottom tab menu toggle - delegates to the same handler
+    // This ensures both buttons behave identically
+    if (bottomTabMenu) {
+      bottomTabMenu.addEventListener('click', handleMenuToggle);
+    } else {
+      dbg('bottomTabMenu not found');
+    }
+
+    // Close menu when clicking navigation links inside (not drill triggers)
+    // Selectors for links that should close the menu when clicked:
+    const closeableLinksSelector = '.tno-mobile-link:not(.tno-mobile-link--drill)';
+    const legacyLinksSelector = '.mobile-menu__link';
+    const closeableLinks = mobileMenu.querySelectorAll(
+      `${closeableLinksSelector}, ${legacyLinksSelector}`
+    );
+    closeableLinks.forEach((link) => link.addEventListener('click', closeMobileMenu));
+
+    // Escape key to close
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && mobileMenu.classList.contains('is-active')) {
         closeMobileMenu();
         dbg('escape key pressed - mobile menu');
       }
+      // Focus trap for accessibility
       if (e.key === 'Tab' && mobileMenu.classList.contains('is-active')) {
         const focusables = getFocusable(mobileMenu);
         if (!focusables.length) {
@@ -323,37 +459,8 @@
     });
   }
 
-
-  function wireBottomTabMenuToDrawer() {
-    var bottomTabMenu = document.getElementById('bottom-tab-menu');
-    var drawerSummary = document.getElementById('mobile-menu-toggle');
-    if (bottomTabMenu && detailsContainer) {
-      var menuDrawer = detailsContainer.querySelector('.menu-drawer');
-      var drawerSummary = detailsContainer.querySelector('summary');
-      bottomTabMenu.addEventListener('click', function () {
-        console.log('[TNO DEBUG] Bottom tab menu button clicked');
-        if (detailsContainer.hasAttribute('open')) {
-          // Simulate native summary click to close
-          if (drawerSummary) drawerSummary.click();
-          detailsContainer.removeAttribute('open');
-          if (menuDrawer) {
-            menuDrawer.classList.remove('menu-opening');
-            menuDrawer.style.visibility = '';
-            menuDrawer.style.transform = '';
-          }
-        } else {
-          // Simulate native summary click to open
-          if (drawerSummary) drawerSummary.click();
-          detailsContainer.setAttribute('open', '');
-          if (menuDrawer) {
-            menuDrawer.classList.add('menu-opening');
-            menuDrawer.style.visibility = 'visible';
-            menuDrawer.style.transform = 'translateX(0)';
-          }
-        }
-      });
-    }
-  }
+  // wireBottomTabMenuToDrawer removed - duplicate event handler causing double-toggle issues
+  // Mobile menu handling is now consolidated in initMobileMenu()
 
   function init() {
     // Query DOM elements after DOM is ready
@@ -385,12 +492,10 @@
     document.addEventListener('DOMContentLoaded', function () {
       document.body.classList.add('js');
       init();
-      wireBottomTabMenuToDrawer();
     });
   } else {
     document.body.classList.add('js');
     init();
-    wireBottomTabMenuToDrawer();
   }
 
   // Export (designMode only) for quick re-init
