@@ -495,9 +495,11 @@ To:
 ## CSS FIXES APPLIED (2025-11-25)
 
 ### Overview
+
 Fixed CSS issues with search page layout, product card visibility, and related products section. All fixes are properly scoped to specific templates to avoid conflicts with Shopify theme editor and other pages.
 
 ### Files Modified
+
 - `assets/custom.css`
 
 ### 1. Search Page Layout Fix (/search)
@@ -505,6 +507,7 @@ Fixed CSS issues with search page layout, product card visibility, and related p
 **Problem:** On the `/search` page, the search input and submit button were stacked vertically instead of horizontally.
 
 **Solution:** Added scoped CSS rules (lines 6659-6779) targeting `body.template-search`:
+
 - Force horizontal flexbox layout on `.search__form`
 - Input field takes full width with `flex: 1`
 - Button has fixed width with `flex-shrink: 0`
@@ -512,10 +515,18 @@ Fixed CSS issues with search page layout, product card visibility, and related p
 - Mobile-responsive with adjusted sizing for screens < 750px
 
 **Key Selectors:**
+
 ```css
-body.template-search .search__form { display: flex !important; }
-body.template-search .search__input { height: 44px; border-radius: 999px; }
-body.template-search .search__button { background: linear-gradient(135deg, #00e5ff, #00ccdd); }
+body.template-search .search__form {
+  display: flex !important;
+}
+body.template-search .search__input {
+  height: 44px;
+  border-radius: 999px;
+}
+body.template-search .search__button {
+  background: linear-gradient(135deg, #00e5ff, #00ccdd);
+}
 ```
 
 ### 2. Product Grid Cards (Collection Pages)
@@ -523,6 +534,7 @@ body.template-search .search__button { background: linear-gradient(135deg, #00e5
 **Problem:** Product cards on collection pages appeared with white/invisible text, making them unreadable. Theme editor color schemes were being overridden globally.
 
 **Solution:** Refactored product grid styles (lines 6515-6656) with proper template scoping:
+
 - Scoped to `body.template-collection` and `body.template-search` only
 - Dark background: `#0c0f14` for cards, `#050608` for container
 - Light text: `#f5f5f5` for all headings, prices, and links
@@ -530,10 +542,17 @@ body.template-search .search__button { background: linear-gradient(135deg, #00e5
 - Applied `!important` only where needed to override Shopify defaults
 
 **Key Selectors:**
+
 ```css
-body.template-collection .product-grid .card { background: #0c0f14 !important; }
-body.template-collection .product-grid .card__heading { color: #f5f5f5 !important; }
-body.template-collection .color-scheme-1 { background: #050608 !important; }
+body.template-collection .product-grid .card {
+  background: #0c0f14 !important;
+}
+body.template-collection .product-grid .card__heading {
+  color: #f5f5f5 !important;
+}
+body.template-collection .color-scheme-1 {
+  background: #050608 !important;
+}
 ```
 
 ### 3. Related Products Section (Product Pages)
@@ -541,37 +560,49 @@ body.template-collection .color-scheme-1 { background: #050608 !important; }
 **Problem:** "Related Products" section on product pages had same visibility issues as product grids.
 
 **Solution:** Created dedicated styles (lines 6573-6640) scoped to `body.template-product .related-products`:
+
 - Consistent dark theme matching product grids
 - Section heading in light color
 - Card hover effects with cyan accent
 - Works with all Shopify color schemes (1, 2, 3)
 
 **Key Selectors:**
+
 ```css
-body.template-product .related-products { background: #050608 !important; }
-body.template-product .related-products .card { background: #0c0f14 !important; }
-body.template-product .related-products .card__heading { color: #f5f5f5 !important; }
+body.template-product .related-products {
+  background: #050608 !important;
+}
+body.template-product .related-products .card {
+  background: #0c0f14 !important;
+}
+body.template-product .related-products .card__heading {
+  color: #f5f5f5 !important;
+}
 ```
 
 ### 4. Removed Debug Code
 
 **Removed:** Line 2486-2488 had temporary debug red outline on all product cards:
+
 ```css
 /* REMOVED */
-.grid__item .card { outline: 2px solid red !important; }
+.grid__item .card {
+  outline: 2px solid red !important;
+}
 ```
 
 ### Scoping Strategy
 
 All fixes use **template-specific body class selectors** to avoid conflicts:
 
-| Template | Body Class | Affected Sections |
-|----------|------------|-------------------|
+| Template         | Body Class                 | Affected Sections            |
+| ---------------- | -------------------------- | ---------------------------- |
 | Collection pages | `body.template-collection` | Product grids, color schemes |
-| Search page | `body.template-search` | Search form, product grids |
-| Product pages | `body.template-product` | Related products section |
+| Search page      | `body.template-search`     | Search form, product grids   |
+| Product pages    | `body.template-product`    | Related products section     |
 
 This ensures:
+
 - Theme editor color schemes still work on other pages
 - Blog posts, static pages remain unaffected
 - Only collection/product/search pages get dark TNO theme
@@ -580,11 +611,13 @@ This ensures:
 ### CSS Specificity Notes
 
 Used `!important` strategically on:
+
 - Background colors (to override Shopify color scheme styles)
 - Text colors (to ensure readability)
 - Border colors on hover (for TNO cyan accent)
 
 Avoided `!important` on:
+
 - Layout properties (margin, padding, width, flex)
 - Transitions and animations
 - Z-index values
@@ -605,4 +638,3 @@ Avoided `!important` on:
 - Minimal CSS specificity battles (scoped selectors)
 - GPU-accelerated transforms for hover effects
 - Reduced motion support for accessibility
-

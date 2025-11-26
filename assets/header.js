@@ -427,7 +427,9 @@
     // Selectors for links that should close the menu when clicked:
     const closeableLinksSelector = '.tno-mobile-link:not(.tno-mobile-link--drill)';
     const legacyLinksSelector = '.mobile-menu__link';
-    const closeableLinks = mobileMenu.querySelectorAll(`${closeableLinksSelector}, ${legacyLinksSelector}`);
+    const closeableLinks = mobileMenu.querySelectorAll(
+      `${closeableLinksSelector}, ${legacyLinksSelector}`
+    );
     closeableLinks.forEach((link) => link.addEventListener('click', closeMobileMenu));
 
     // Escape key to close
