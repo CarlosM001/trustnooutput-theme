@@ -6563,7 +6563,7 @@ body.template-search .product-grid .card img {
   background: transparent !important;
 }
 
-/* Force hide any loading overlays on product grids (ultra-high specificity to override Dawn after save) */
+/* CRITICAL FIX: Force hide loading overlays with MAXIMUM specificity - prevents persistence after theme editor save */
 body.template-collection .product-grid .loading-overlay,
 body.template-search .product-grid .loading-overlay,
 body.template-collection .product-grid-container .loading-overlay,
@@ -6575,15 +6575,27 @@ body.template-search .shopify-section .loading-overlay,
 body.template-collection [class*="product"] .loading-overlay,
 body.template-search [class*="product"] .loading-overlay,
 body.template-collection .shopify-section.section .loading-overlay,
-body.template-search .shopify-section.section .loading-overlay {
+body.template-search .shopify-section.section .loading-overlay,
+body.template-collection .product-grid-container > .loading-overlay,
+body.template-search .product-grid-container > .loading-overlay,
+body.template-collection #MainContent .loading-overlay,
+body.template-search #MainContent .loading-overlay,
+body.template-collection div[class*="loading"],
+body.template-search div[class*="loading"] {
   display: none !important;
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
   position: absolute !important;
-  z-index: -999 !important;
+  top: -9999px !important;
+  left: -9999px !important;
+  z-index: -9999 !important;
   width: 0 !important;
   height: 0 !important;
+  max-width: 0 !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
 }
 
 /* Card content - ensure text is readable */
@@ -6696,19 +6708,28 @@ body.template-product .related-products .card img {
   background: transparent !important;
 }
 
-/* Force hide any loading overlays in related products (high specificity) */
+/* CRITICAL FIX: Force hide loading overlays in related products with MAXIMUM specificity */
 body.template-product .related-products .loading-overlay,
 body.template-product .related-products .loading-overlay.gradient,
 body.template-product .shopify-section .related-products .loading-overlay,
-body.template-product [class*="related"] .loading-overlay {
+body.template-product [class*="related"] .loading-overlay,
+body.template-product .related-products .product-grid-container .loading-overlay,
+body.template-product #MainContent .related-products .loading-overlay,
+body.template-product .related-products div[class*="loading"] {
   display: none !important;
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
   position: absolute !important;
-  z-index: -999 !important;
+  top: -9999px !important;
+  left: -9999px !important;
+  z-index: -9999 !important;
   width: 0 !important;
   height: 0 !important;
+  max-width: 0 !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
 }
 
 body.template-product .related-products .card__heading,
@@ -6907,16 +6928,19 @@ body.template-search .field__button .icon {
   }
 }
 
-/* TNO: Hide duplicate search wrappers but keep the form itself visible with horizontal layout */
-body.template-search .template-search__header,
-body.template-search .template-search__search {
-  display: none !important;
-}
-
-/* Hide the entire native search section wrapper with white background */
+/* TNO: Hide duplicate search wrappers AND the white Shopify search section */
+/* This hides the entire Shopify search block on /search page - users will use header search only */
 body.template-search .shopify-section--main-search,
-body.template-search section[id*="shopify-section-template--"] > div.search {
+body.template-search .shopify-section[id*="shopify-section-template--"][id*="search"],
+body.template-search section[id*="shopify-section-template--"] > div.search,
+body.template-search .template-search__header,
+body.template-search .template-search__search,
+body.template-search #MainContent > .shopify-section:first-child {
   display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
 }
 
 /* Optional: keep the page heading "Search" nicely styled if it exists outside the form */
