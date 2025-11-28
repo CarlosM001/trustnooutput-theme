@@ -1,90 +1,140 @@
 /* =========================================================
-<<<<<<< HEAD
    TNO – SEARCH: FINAL LOOK (DESKTOP + MOBILE)
+   Single source of truth for header search styling
    ========================================================= */
 
-/* Background always dark, border white by default */
+/* Container: Pill-shaped form with subtle white border (matches header icons) */
 .tno-search form {
-  border-color: #fff !important;
-  /* stylelint-disable-next-line color-function-notation */
-  background: rgba(0, 0, 0, 50%) !important;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 1.25rem;
+  height: 46px;
+  border-radius: 999px;
 
-/* On focus: cyan border + neon glow like header icons */
-.tno-search form:focus-within {
-  border-color: #0ff !important;
-  box-shadow: 0 0 16px rgba(0, 255, 255, 60%) !important;
+  /* Subtle white border (lighter, similar to header icons) */
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+
+  /* Dark translucent background */
+  background: rgba(0, 0, 0, 0.65) !important;
+  transition:
+    box-shadow 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease;
 }
 
-/* Input: white text, transparent background */
+/* Focus state: Cyan border + glow (similar to header icons) */
+.tno-search form:focus-within {
+  border-color: #0ff !important;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.25),
+    0 0 0 3px rgba(0, 255, 255, 0.45) !important;
+  background: rgba(0, 0, 0, 0.85) !important;
+}
+
+/* Input: White text, transparent background, no borders */
 .tno-search__input {
-  color: #fff !important;
+  flex: 1 1 auto;
+  min-width: 0;
+  border: none !important;
   background: transparent !important;
+  color: #fff !important;
+  padding: 0;
+  font-size: 0.875rem;
+  outline: none !important;
+  font-family: var(--font-mono, monospace);
+  line-height: 1.4;
 }
 
 .tno-search__input::placeholder {
-  color: rgba(255, 255, 255, 60%) !important;
+  color: rgba(255, 255, 255, 0.4) !important;
 }
 
-/* Button: transparent like mobile version */
+/* Button: Transparent, only icon visible (exactly like mobile version) */
 .tno-search__button {
-  background: transparent !important;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  margin: 0;
   border: none !important;
+  background: transparent !important;
   box-shadow: none !important;
   outline: none !important;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+
+  /* Same color as mobile: rgba(255, 255, 255, 0.6) */
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 
-/* Icon: cyan, fully visible */
+/* Button hover: Cyan color (matches mobile) */
+.tno-search__button:hover,
+.tno-search__button:focus {
+  color: #00ffff !important;
+}
+
+/* Icon: Exactly like mobile version - 16px, stroke only, no fill */
 .tno-search__button svg,
 .tno-search__button .icon {
-  width: 16px;
-  height: 16px;
-  fill: #0ff !important;
-  stroke: #0ff !important;
-  opacity: 0.95;
-}
-/* =========================================================
-   TNO – SEARCH: FINAL LOOK (DESKTOP + MOBILE)
-   ========================================================= */
-
-/* Background always dark, border white by default */
-.tno-search form {
-  border-color: #fff !important;
-  background: rgba(0, 0, 0, 50%) !important;
+  width: 16px !important;
+  height: 16px !important;
+  stroke: currentColor !important;
+  fill: none !important;
+  stroke-width: 2 !important;
 }
 
-/* On focus: cyan border + neon glow like header icons */
-.tno-search form:focus-within {
-  border-color: #0ff !important;
-  box-shadow: 0 0 16px rgba(0, 255, 255, 60%) !important;
+/* Glitch effect: Only on icon (not whole form/button) */
+@keyframes tno-search-icon-glitch {
+  0% {
+    transform: translate(0, 0);
+    filter: hue-rotate(0deg);
+  }
+  25% {
+    transform: translate(-1px, 1px);
+    filter: hue-rotate(20deg);
+  }
+  50% {
+    transform: translate(1px, -1px);
+    filter: hue-rotate(-20deg);
+  }
+  75% {
+    transform: translate(-1px, -1px);
+    filter: hue-rotate(10deg);
+  }
+  100% {
+    transform: translate(0, 0);
+    filter: hue-rotate(0deg);
+  }
 }
 
-/* Input: white text, transparent background */
-.tno-search__input {
-  color: #fff !important;
-  background: transparent !important;
+/* Glitch animation triggers on icon hover/focus/active */
+.tno-search__button:hover svg,
+.tno-search__button:active svg,
+.tno-search__button:focus-visible svg,
+.tno-search__button:hover .icon,
+.tno-search__button:active .icon,
+.tno-search__button:focus-visible .icon {
+  animation: tno-search-icon-glitch 120ms steps(2, end);
 }
 
-.tno-search__input::placeholder {
-  color: rgba(255, 255, 255, 60%) !important;
+/* Mobile: Keep existing mobile behavior intact */
+@media (max-width: 749px) {
+  .tno-search form {
+    height: 44px;
+    padding: 0 1rem;
+  }
+
+  .tno-search__button {
+    width: 44px;
+    height: 44px;
+  }
 }
 
-/* Button: transparent like mobile version */
-.tno-search__button {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  outline: none !important;
-}
-
-/* Icon: cyan, fully visible */
-.tno-search__button svg,
-.tno-search__button .icon {
-  width: 16px;
-  height: 16px;
-  fill: #0ff !important;
-  stroke: #0ff !important;
-  opacity: 0.95;
-}
 /* =========================================================
    TNO – HEADER SEARCH: UNIFIED DESKTOP & MOBILE STYLING
    Single source of truth - Desktop matches Mobile 1:1
@@ -100,23 +150,6 @@
    - Button: 38x38px (42x42px mobile) cyan gradient circle, dark icon
    - Background: rgba(0,0,0,0.5) semi-transparent
    - Focus: single glow on container only
-=======
-   TNO – HEADER SEARCH: CONSOLIDATED STYLING
-   Single source of truth - See final block at end of file
-   ========================================================= */
-
-/* 
-   SEARCH COMPONENT SPECIFICATION:
-   - Container: White 1px border by default, dark translucent bg (rgba(0,0,0,0.5))
-   - Focus: Cyan border and glow on :focus-within
-   - Input: No borders, white text, light-grey placeholders
-   - Button: NO gradient, NO border, NO background by default
-            Icon appears in cyan. Glitch effect on mousedown via .is-glitching
-   - Mobile: 44px button for larger touch targets
-   
-   NOTE: All other .tno-search rules in this file are overridden by 
-   the final block at the end of this file.
->>>>>>> 85a19bdab3ba0208a4ecaeaa741f5c0783babf19
 */
 /* ==========================================================================
    TRUST.NO.OUTPUT — custom.css (CLEAN)
@@ -6974,7 +7007,7 @@ body.template-product .related-products .scroll-trigger.animate--slide-in {
    TNO – FINAL SEARCH STYLING: CONSOLIDATED & CLEANED
    This is the SINGLE source of truth for .tno-search styling
    All other .tno-search rules in this file are overridden here
-   
+
    Spec:
    - Container: White 1px border by default, dark translucent bg
    - Focus: Cyan border and glow on :focus-within
@@ -7140,7 +7173,7 @@ body.template-product .related-products .scroll-trigger.animate--slide-in {
     width: 44px !important;
     height: 44px !important;
   }
-  
+
   .tno-search__button svg,
   .tno-search button[type="submit"] svg,
   .tno-search .field__button svg {

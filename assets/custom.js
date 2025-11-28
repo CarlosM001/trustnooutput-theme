@@ -44,6 +44,24 @@
     }
     if (searchInput) {
       console.log('[TNO] Header search input found');
+
+      // Clear input value after page load (if it was pre-filled from URL)
+      // This ensures the placeholder shows instead of the search query
+      if (searchInput.value && document.activeElement !== searchInput) {
+        // Small delay to ensure page is fully loaded
+        setTimeout(() => {
+          if (searchInput.value && document.activeElement !== searchInput) {
+            searchInput.value = '';
+          }
+        }, 100);
+      }
+
+      // Also clear on blur if input is empty (show placeholder)
+      searchInput.addEventListener('blur', function () {
+        if (!this.value.trim()) {
+          this.value = '';
+        }
+      });
     }
     if (searchButton) {
       console.log('[TNO] Header search button found');
