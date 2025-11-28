@@ -126,15 +126,6 @@
           data-cascade
         {% endif %}
       >
-        {!-- DEBUG-BLOCK: Kann später wieder entfernt werden --}
-        <div class="page-width" style="color:#00ffff; padding: 24px 0;">
-          <p style="margin:0; font-size:14px;">
-            DEBUG → Collection: <strong>{{ collection.title }}</strong> (Handle:
-            <code>{{ collection.handle }}</code>) · Produkte:
-            <strong>{{ collection.products.size }}</strong>
-          </p>
-        </div>
-
         {%- if collection.products.size == 0 -%}
           <div
             class="collection collection--empty page-width"
