@@ -1,0 +1,350 @@
+{% comment %}
+  TRUST.NO.OUTPUT — SYSTEM Page Section
+
+  A dedicated SYSTEM landing page that presents the brand's operational
+  framework through a cyber-philosophy lens. Features:
+  - Hero block with status indicator
+  - Two-column architecture overview
+  - System layers cards grid
+  - CTA to enter the system (shop)
+{% endcomment %}
+
+{%- liquid
+  assign hero_label = section.settings.hero_label | default: '// SYSTEM'
+  assign hero_title = section.settings.hero_title | default: 'SYSTEM.STATUS: RUNNING'
+  assign hero_subtitle = section.settings.hero_subtitle | default: 'TRUST.NO.OUTPUT operates as a conscious system—examining the protocols that shape digital reality.'
+  assign hero_meta = section.settings.hero_meta | default: 'BUILD: 0.1.0 | REALITY.LAYER: BETA'
+
+  assign core_protocol_title = section.settings.core_protocol_title | default: 'Core Protocol'
+  assign execution_stack_title = section.settings.execution_stack_title | default: 'Execution Stack'
+
+  assign layer_1_label = section.settings.layer_1_label | default: 'INPUT'
+  assign layer_1_title = section.settings.layer_1_title | default: 'SIGNAL / HUMAN.NOISE'
+  assign layer_1_description = section.settings.layer_1_description | default: 'Raw data streams, human signals, and digital noise converge.'
+
+  assign layer_2_label = section.settings.layer_2_label | default: 'PROCESS'
+  assign layer_2_title = section.settings.layer_2_title | default: 'GLITCH / SIMULATE.MORE'
+  assign layer_2_description = section.settings.layer_2_description | default: 'Conscious disruption of predefined patterns.'
+
+  assign layer_3_label = section.settings.layer_3_label | default: 'OUTPUT'
+  assign layer_3_title = section.settings.layer_3_title | default: 'ARTIFACTS / CLOTHING.AS.CODE'
+  assign layer_3_description = section.settings.layer_3_description | default: 'Tangible artifacts emerge. Clothing becomes code.'
+
+  assign cta_text = section.settings.cta_text | default: 'ENTER.SYSTEM'
+  assign cta_url = section.settings.cta_url | default: routes.all_products_collection_url
+-%}
+
+<section class="tno-system" id="system-section">
+  <div class="tno-system__container page-width">
+    {%- comment %} Hero Block {%- endcomment %}
+    <header class="tno-system__hero">
+      {%- if hero_label != blank -%}
+        <p class="tno-system__label">{{ hero_label }}</p>
+      {%- endif -%}
+
+      {%- if hero_title != blank -%}
+        <h1 class="tno-system__headline">{{ hero_title }}</h1>
+      {%- endif -%}
+
+      {%- if hero_subtitle != blank -%}
+        <p class="tno-system__intro">{{ hero_subtitle }}</p>
+      {%- endif -%}
+
+      {%- if hero_meta != blank -%}
+        <p class="tno-system__meta">{{ hero_meta }}</p>
+      {%- endif -%}
+    </header>
+
+    {%- comment %} Two-Column Architecture Block {%- endcomment %}
+    <div class="tno-system__architecture">
+      <div class="tno-system__grid grid grid--2-col-desktop grid--1-col-tablet-down">
+        {%- comment %} Core Protocol Column {%- endcomment %}
+        <div class="tno-system__col grid__item">
+          <h2 class="tno-system__col-title">{{ core_protocol_title }}</h2>
+          <ul class="tno-system__list">
+            {%- if section.settings.core_protocol_item_1 != blank -%}
+              <li class="tno-system__list-item">{{ section.settings.core_protocol_item_1 }}</li>
+            {%- endif -%}
+            {%- if section.settings.core_protocol_item_2 != blank -%}
+              <li class="tno-system__list-item">{{ section.settings.core_protocol_item_2 }}</li>
+            {%- endif -%}
+            {%- if section.settings.core_protocol_item_3 != blank -%}
+              <li class="tno-system__list-item">{{ section.settings.core_protocol_item_3 }}</li>
+            {%- endif -%}
+            {%- if section.settings.core_protocol_item_4 != blank -%}
+              <li class="tno-system__list-item">{{ section.settings.core_protocol_item_4 }}</li>
+            {%- endif -%}
+            {%- if section.settings.core_protocol_item_5 != blank -%}
+              <li class="tno-system__list-item">{{ section.settings.core_protocol_item_5 }}</li>
+            {%- endif -%}
+          </ul>
+        </div>
+
+        {%- comment %} Execution Stack Column {%- endcomment %}
+        <div class="tno-system__col grid__item">
+          <h2 class="tno-system__col-title">{{ execution_stack_title }}</h2>
+          <ol class="tno-system__list tno-system__list--numbered">
+            {%- if section.settings.execution_stack_item_1 != blank -%}
+              <li class="tno-system__list-item">{{ section.settings.execution_stack_item_1 }}</li>
+            {%- endif -%}
+            {%- if section.settings.execution_stack_item_2 != blank -%}
+              <li class="tno-system__list-item">{{ section.settings.execution_stack_item_2 }}</li>
+            {%- endif -%}
+            {%- if section.settings.execution_stack_item_3 != blank -%}
+              <li class="tno-system__list-item">{{ section.settings.execution_stack_item_3 }}</li>
+            {%- endif -%}
+            {%- if section.settings.execution_stack_item_4 != blank -%}
+              <li class="tno-system__list-item">{{ section.settings.execution_stack_item_4 }}</li>
+            {%- endif -%}
+            {%- if section.settings.execution_stack_item_5 != blank -%}
+              <li class="tno-system__list-item">{{ section.settings.execution_stack_item_5 }}</li>
+            {%- endif -%}
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    {%- comment %} System Layers Cards {%- endcomment %}
+    <div class="tno-system__layers">
+      <h2 class="tno-system__layers-title">System Layers</h2>
+      <div class="tno-system__layers-grid grid grid--3-col-desktop grid--1-col-tablet-down">
+        {%- comment %} Layer 1 {%- endcomment %}
+        <article class="tno-system__layer-card grid__item">
+          {%- if layer_1_label != blank -%}
+            <p class="tno-system__layer-label">{{ layer_1_label }}</p>
+          {%- endif -%}
+          {%- if layer_1_title != blank -%}
+            <h3 class="tno-system__layer-title">{{ layer_1_title }}</h3>
+          {%- endif -%}
+          {%- if layer_1_description != blank -%}
+            <p class="tno-system__layer-description">{{ layer_1_description }}</p>
+          {%- endif -%}
+        </article>
+
+        {%- comment %} Layer 2 {%- endcomment %}
+        <article class="tno-system__layer-card grid__item">
+          {%- if layer_2_label != blank -%}
+            <p class="tno-system__layer-label">{{ layer_2_label }}</p>
+          {%- endif -%}
+          {%- if layer_2_title != blank -%}
+            <h3 class="tno-system__layer-title">{{ layer_2_title }}</h3>
+          {%- endif -%}
+          {%- if layer_2_description != blank -%}
+            <p class="tno-system__layer-description">{{ layer_2_description }}</p>
+          {%- endif -%}
+        </article>
+
+        {%- comment %} Layer 3 {%- endcomment %}
+        <article class="tno-system__layer-card grid__item">
+          {%- if layer_3_label != blank -%}
+            <p class="tno-system__layer-label">{{ layer_3_label }}</p>
+          {%- endif -%}
+          {%- if layer_3_title != blank -%}
+            <h3 class="tno-system__layer-title">{{ layer_3_title }}</h3>
+          {%- endif -%}
+          {%- if layer_3_description != blank -%}
+            <p class="tno-system__layer-description">{{ layer_3_description }}</p>
+          {%- endif -%}
+        </article>
+      </div>
+    </div>
+
+    {%- comment %} CTA Row {%- endcomment %}
+    {%- if cta_text != blank and cta_url != blank -%}
+      <div class="tno-system__cta">
+        <a href="{{ cta_url }}" class="button button--primary tno-system__cta-button">
+          {{ cta_text }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "System Page",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero Section"
+    },
+    {
+      "type": "text",
+      "id": "hero_label",
+      "label": "Hero Label",
+      "default": "// SYSTEM"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero Title",
+      "default": "SYSTEM.STATUS: RUNNING"
+    },
+    {
+      "type": "richtext",
+      "id": "hero_subtitle",
+      "label": "Hero Subtitle",
+      "default": "<p>TRUST.NO.OUTPUT operates as a conscious system—examining the protocols that shape digital reality. Mode becomes our interface for questioning the predefined output.</p>"
+    },
+    {
+      "type": "text",
+      "id": "hero_meta",
+      "label": "Hero Meta Line",
+      "default": "BUILD: 0.1.0 | REALITY.LAYER: BETA"
+    },
+    {
+      "type": "header",
+      "content": "Architecture Section"
+    },
+    {
+      "type": "text",
+      "id": "core_protocol_title",
+      "label": "Core Protocol Title",
+      "default": "Core Protocol"
+    },
+    {
+      "type": "text",
+      "id": "core_protocol_item_1",
+      "label": "Core Protocol Item 1",
+      "default": "Question predefined outputs"
+    },
+    {
+      "type": "text",
+      "id": "core_protocol_item_2",
+      "label": "Core Protocol Item 2",
+      "default": "Examine digital filters"
+    },
+    {
+      "type": "text",
+      "id": "core_protocol_item_3",
+      "label": "Core Protocol Item 3",
+      "default": "Operate in fluid boundaries"
+    },
+    {
+      "type": "text",
+      "id": "core_protocol_item_4",
+      "label": "Core Protocol Item 4",
+      "default": "Use mode as interface"
+    },
+    {
+      "type": "text",
+      "id": "core_protocol_item_5",
+      "label": "Core Protocol Item 5",
+      "default": "Maintain conscious awareness"
+    },
+    {
+      "type": "text",
+      "id": "execution_stack_title",
+      "label": "Execution Stack Title",
+      "default": "Execution Stack"
+    },
+    {
+      "type": "text",
+      "id": "execution_stack_item_1",
+      "label": "Execution Stack Item 1",
+      "default": "01 — Input: Human noise, signals, data streams"
+    },
+    {
+      "type": "text",
+      "id": "execution_stack_item_2",
+      "label": "Execution Stack Item 2",
+      "default": "02 — Process: Filter, glitch, simulate"
+    },
+    {
+      "type": "text",
+      "id": "execution_stack_item_3",
+      "label": "Execution Stack Item 3",
+      "default": "03 — Output: Artifacts, clothing, code"
+    },
+    {
+      "type": "text",
+      "id": "execution_stack_item_4",
+      "label": "Execution Stack Item 4",
+      "default": "04 — Feedback: Question, iterate, refine"
+    },
+    {
+      "type": "text",
+      "id": "execution_stack_item_5",
+      "label": "Execution Stack Item 5",
+      "default": "05 — Deploy: Wardrobe as statement"
+    },
+    {
+      "type": "header",
+      "content": "System Layers"
+    },
+    {
+      "type": "text",
+      "id": "layer_1_label",
+      "label": "Layer 1 Label",
+      "default": "INPUT"
+    },
+    {
+      "type": "text",
+      "id": "layer_1_title",
+      "label": "Layer 1 Title",
+      "default": "SIGNAL / HUMAN.NOISE"
+    },
+    {
+      "type": "richtext",
+      "id": "layer_1_description",
+      "label": "Layer 1 Description",
+      "default": "<p>Raw data streams, human signals, and digital noise converge. We filter what matters.</p>"
+    },
+    {
+      "type": "text",
+      "id": "layer_2_label",
+      "label": "Layer 2 Label",
+      "default": "PROCESS"
+    },
+    {
+      "type": "text",
+      "id": "layer_2_title",
+      "label": "Layer 2 Title",
+      "default": "GLITCH / SIMULATE.MORE"
+    },
+    {
+      "type": "richtext",
+      "id": "layer_2_description",
+      "label": "Layer 2 Description",
+      "default": "<p>Conscious disruption of predefined patterns. We simulate alternatives to question reality.</p>"
+    },
+    {
+      "type": "text",
+      "id": "layer_3_label",
+      "label": "Layer 3 Label",
+      "default": "OUTPUT"
+    },
+    {
+      "type": "text",
+      "id": "layer_3_title",
+      "label": "Layer 3 Title",
+      "default": "ARTIFACTS / CLOTHING.AS.CODE"
+    },
+    {
+      "type": "richtext",
+      "id": "layer_3_description",
+      "label": "Layer 3 Description",
+      "default": "<p>Tangible artifacts emerge. Clothing becomes code—a statement encoded in fabric.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Call to Action"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Button Text",
+      "default": "ENTER.SYSTEM"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA URL",
+      "default": "/collections/all"
+    }
+  ]
+}
+{% endschema %}
+

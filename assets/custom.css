@@ -3439,6 +3439,324 @@ button.shopify-payment-button__button--unbranded {
   }
 }
 
+/* ==========================================================================
+   TNO – SYSTEM Page
+   Cyber-philosophy system architecture page with dark background
+   ========================================================================== */
+
+.tno-system {
+  position: relative;
+  padding: var(--space-xl, 3rem) var(--space-md, 1.5rem);
+  background: var(--color-deep-black, #0a0a0a);
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.tno-system__container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Subtle background grid pattern */
+.tno-system::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgb(0 255 240 / 2%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(0 255 240 / 2%) 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Hero Block */
+.tno-system__hero {
+  text-align: center;
+  margin-bottom: var(--space-xl, 3rem);
+}
+
+.tno-system__label {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-cyan, #0ff);
+  margin: 0 0 var(--space-sm, 1rem);
+  opacity: 0.8;
+}
+
+.tno-system__headline {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #fff;
+  margin: 0 0 var(--space-md, 1.5rem);
+  position: relative;
+  line-height: 1.1;
+}
+
+.tno-system__headline::after {
+  content: '';
+  display: block;
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-cyan, #0ff), var(--color-magenta, #f0f));
+  margin: var(--space-sm, 1rem) auto 0;
+  animation: system-underline-glitch 4s ease-in-out infinite;
+}
+
+@keyframes system-underline-glitch {
+  0%,
+  100% {
+    width: 120px;
+    opacity: 1;
+  }
+
+  50% {
+    width: 100px;
+    opacity: 0.7;
+  }
+}
+
+.tno-system__intro {
+  font-family: var(--font-clean, var(--font-body-family));
+  font-size: clamp(1rem, 2.5vw, 1.125rem);
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--color-gray-ghost, #a0a0b0);
+  max-width: 700px;
+  margin: 0 auto var(--space-md, 1.5rem);
+}
+
+.tno-system__meta {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 50%);
+  margin: 0;
+}
+
+/* Architecture Section */
+.tno-system__architecture {
+  margin-bottom: var(--space-xl, 3rem);
+}
+
+.tno-system__grid {
+  gap: var(--space-lg, 2.5rem);
+}
+
+.tno-system__col {
+  padding: var(--space-lg, 2.5rem);
+  background: rgb(255 255 255 / 2%);
+  border: 1px solid rgb(255 255 255 / 5%);
+  border-radius: 4px;
+}
+
+.tno-system__col-title {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-cyan, #0ff);
+  margin: 0 0 var(--space-md, 1.5rem);
+  padding-bottom: var(--space-sm, 1rem);
+  border-bottom: 1px solid rgb(0 255 255 / 20%);
+}
+
+.tno-system__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tno-system__list--numbered {
+  counter-reset: system-counter;
+}
+
+.tno-system__list--numbered .tno-system__list-item {
+  counter-increment: system-counter;
+  padding-left: 2rem;
+  position: relative;
+}
+
+.tno-system__list--numbered .tno-system__list-item::before {
+  content: counter(system-counter, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: 0.875rem;
+  color: var(--color-cyan, #0ff);
+  opacity: 0.6;
+}
+
+.tno-system__list-item {
+  font-family: var(--font-clean, var(--font-body-family));
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--color-gray-ghost, #a0a0b0);
+  margin-bottom: var(--space-sm, 1rem);
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.tno-system__list-item::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--color-cyan, #0ff);
+  opacity: 0.6;
+}
+
+.tno-system__list--numbered .tno-system__list-item::before {
+  content: counter(system-counter, decimal-leading-zero);
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: 0.875rem;
+}
+
+/* System Layers Section */
+.tno-system__layers {
+  margin-bottom: var(--space-xl, 3rem);
+}
+
+.tno-system__layers-title {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #fff;
+  text-align: center;
+  margin: 0 0 var(--space-lg, 2.5rem);
+}
+
+.tno-system__layers-grid {
+  gap: var(--space-md, 1.5rem);
+}
+
+.tno-system__layer-card {
+  padding: var(--space-lg, 2.5rem);
+  background: rgb(255 255 255 / 2%);
+  border: 1px solid rgb(255 255 255 / 5%);
+  border-radius: 4px;
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease,
+    transform 0.3s ease;
+}
+
+.tno-system__layer-card:hover {
+  border-color: rgb(0 255 255 / 30%);
+  background: rgb(255 255 255 / 4%);
+  transform: translateY(-2px);
+}
+
+.tno-system__layer-label {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-cyan, #0ff);
+  margin: 0 0 var(--space-xs, 0.5rem);
+  opacity: 0.8;
+}
+
+.tno-system__layer-title {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #fff;
+  margin: 0 0 var(--space-sm, 1rem);
+  line-height: 1.3;
+}
+
+.tno-system__layer-description {
+  font-family: var(--font-clean, var(--font-body-family));
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--color-gray-ghost, #a0a0b0);
+  margin: 0;
+}
+
+/* CTA Section */
+.tno-system__cta {
+  text-align: center;
+  margin-top: var(--space-xl, 3rem);
+}
+
+.tno-system__cta-button {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: 0.9375rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 1rem 2.5rem;
+}
+
+/* Mobile adjustments */
+@media (width <= 768px) {
+  .tno-system {
+    padding: var(--space-lg, 2.5rem) var(--space-md, 1.5rem);
+  }
+
+  .tno-system__hero {
+    margin-bottom: var(--space-lg, 2.5rem);
+  }
+
+  .tno-system__intro {
+    font-size: 1.0625rem;
+    line-height: 1.85;
+  }
+
+  .tno-system__col {
+    padding: var(--space-md, 1.5rem);
+  }
+
+  .tno-system__layer-card {
+    padding: var(--space-md, 1.5rem);
+  }
+
+  .tno-system__layers-title {
+    font-size: 1.5rem;
+    margin-bottom: var(--space-md, 1.5rem);
+  }
+}
+
+/* Desktop refinements */
+@media (width >= 769px) {
+  .tno-system__container {
+    max-width: 1200px;
+  }
+
+  .tno-system__architecture {
+    margin-bottom: var(--space-xl, 3rem);
+  }
+
+  .tno-system__layers-grid {
+    gap: var(--space-lg, 2.5rem);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .tno-system__headline::after {
+    animation: none;
+  }
+
+  .tno-system__layer-card {
+    transition: none;
+  }
+
+  .tno-system__layer-card:hover {
+    transform: none;
+  }
+}
+
 .tno-product-title {
   margin: 0 0 1.1rem;
   font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
