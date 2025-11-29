@@ -21,15 +21,19 @@
     box-shadow 160ms ease,
     border-color 160ms ease,
     background 160ms ease;
+
+  /* Prevent double borders - ensure no nested outlines */
+  outline: none !important;
 }
 
-/* Focus state: Cyan border + glow (similar to header icons) */
+/* Focus state: Cyan border + glow (similar to header icons) - SINGLE outline only */
 .tno-search form:focus-within {
   border-color: #0ff !important;
   box-shadow:
     0 0 0 1px rgb(255 255 255 / 25%),
     0 0 0 3px rgb(0 255 255 / 45%) !important;
   background: rgb(0 0 0 / 85%) !important;
+  outline: none !important;
 }
 
 /* Input: White text, transparent background, no borders */
@@ -7416,5 +7420,553 @@ header .tno-search__button.is-glitching svg,
     width: auto !important;
     max-width: none !important;
     flex: 0 0 auto !important;
+  }
+}
+
+/* =========================================================
+   TNO HEADER (header-trust.liquid)
+   ========================================================= */
+
+/* ========================================
+   Header Base Styles
+   ======================================== */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+
+  /* Background handled by global CSS (.header--tno / .tno-header) and transparency setting */
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 1.5rem 2rem;
+  border: none;
+  box-shadow: none;
+}
+
+/* Scrolled state: Dark backdrop blur */
+.site-header.is-scrolled {
+  background: rgb(10 10 10 / 85%);
+  backdrop-filter: blur(20px);
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: none;
+  border: none;
+  padding: 1rem 2rem;
+}
+
+/* Mobile: compact header */
+@media (width <= 768px) {
+  .site-header {
+    padding: 0;
+    background: var(--color-body-bg, #0a0a0a);
+    border: none;
+    box-shadow: none;
+  }
+
+  .site-header.is-scrolled {
+    padding: 0;
+    background: rgb(10 10 10 / 95%);
+    box-shadow: none;
+    border-bottom: none;
+  }
+
+  /* Mobile: Two-row layout container */
+  .site-header__inner {
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+  }
+
+  /* Mobile Row 1: Top bar (burger + logo + icons) */
+  .tno-header__topbar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    min-height: 60px;
+    gap: 0.75rem;
+    background: var(--color-body-bg, #0a0a0a);
+  }
+
+  /* Mobile: Burger button (left) */
+  .tno-header__burger {
+    order: -1;
+    position: static;
+    margin-right: 0;
+    flex-shrink: 0;
+  }
+
+  /* Mobile: Logo (center) */
+  .tno-header__logo {
+    flex: 1;
+    text-align: center;
+    margin: 0;
+    padding: 0 0.5rem;
+  }
+
+  .tno-header__logo .header-logo__link {
+    font-size: 0.9375rem;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 100%;
+  }
+
+  /* Mobile: Icon group (right) - Account + Cart only */
+  .tno-header__icons {
+    display: flex !important;
+    gap: 0.5rem;
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  /* Mobile: Hide search icon from topbar (search bar below is sufficient) */
+  .tno-header__icons .header-icon--search {
+    display: none !important;
+  }
+
+  .tno-header__icon {
+    width: 20px;
+    height: 20px;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .tno-header__icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentcolor;
+    fill: none;
+    stroke-width: 2;
+  }
+
+  /* Mobile Row 2: Search bar - Uses unified .tno-search classes */
+  .tno-header__search-mobile {
+    width: 100%;
+    padding: 0 1rem 1rem;
+    display: block;
+    background: var(--color-body-bg, #0a0a0a);
+  }
+
+  /* Hide desktop navigation and desktop search on mobile */
+  .header-nav,
+  .tno-nav,
+  .tno-header__desktop-utility {
+    display: none !important;
+  }
+}
+
+/* TNO header cart fix: Ensure desktop utility icons are visible on desktop */
+@media (width >= 769px) {
+  .tno-header__desktop-utility {
+    display: flex !important;
+    align-items: center;
+    gap: 1.5rem;
+    flex-shrink: 0;
+  }
+}
+
+.site-header__inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+/* Desktop: hide mobile-specific elements */
+@media (width >= 769px) {
+  .tno-header__topbar {
+    display: contents;
+  }
+
+  .tno-header__search-mobile {
+    display: none;
+  }
+
+  /* Desktop: Show unified search */
+  .tno-header__search {
+    display: block;
+  }
+
+  .tno-header__burger {
+    display: none;
+  }
+
+  /* Hide mobile topbar icons (account/cart) on desktop - they appear in desktop utility bar */
+  .tno-header__icons {
+    display: none !important;
+  }
+}
+
+/* Mobile: hide mobile topbar icons (they appear in bottom tab bar) */
+@media (width <= 768px) {
+  .tno-header__icons {
+    display: none !important;
+  }
+}
+
+/* ========================================
+   Logo Area (Left)
+   ======================================== */
+
+.header-logo {
+  flex-shrink: 0;
+  position: relative;
+}
+
+.header-logo__link {
+  font-family: var(--font-mono, 'Space Mono', 'IBM Plex Mono', monospace);
+  font-size: clamp(0.875rem, 2vw, 1.25rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #eaeaea;
+  text-decoration: none;
+  display: inline-block;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+@media (width <= 768px) {
+  .header-logo__link {
+    font-size: 0.875rem;
+    letter-spacing: 0.03em;
+  }
+}
+
+/* Glitch effect on logo hover */
+.header-logo__link::before,
+.header-logo__link::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.header-logo__link::before {
+  color: #0ff;
+  z-index: -1;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+
+.header-logo__link::after {
+  color: #f0f;
+  z-index: -2;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+}
+
+.header-logo__link:hover::before,
+.header-logo__link:hover::after {
+  opacity: 0.7;
+  animation: glitch-logo 0.3s ease;
+}
+
+@keyframes glitch-logo {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  25% {
+    transform: translate(-2px, 1px);
+  }
+
+  50% {
+    transform: translate(2px, -1px);
+  }
+
+  75% {
+    transform: translate(-1px, -1px);
+  }
+}
+
+/* Tooltip: "Reality is under construction" */
+.header-logo__link[data-tooltip]:hover::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgb(0 0 0 / 95%);
+  border: 1px solid #0ff;
+  color: #0ff;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  opacity: 1;
+  clip-path: none;
+  z-index: 10;
+  animation: none;
+  pointer-events: none;
+}
+
+/* ========================================
+   Navigation (Centered)
+   ======================================== */
+
+.header-nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.header-nav__list {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header-nav__item {
+  position: relative;
+}
+
+.header-nav__link {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #eaeaea;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-block;
+}
+
+.header-nav__link:hover {
+  color: #0ff;
+}
+
+.header-nav__link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #0ff, #f0f);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.header-nav__link:hover::after {
+  width: 100%;
+}
+
+.header-nav__link.is-active {
+  color: #0ff;
+}
+
+.header-nav__link.is-active::after {
+  width: 100%;
+}
+
+/* ========================================
+   Icon Area (Right)
+   ======================================== */
+
+.header-icons {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-shrink: 0;
+}
+
+.header-icon {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #eaeaea;
+  min-width: 40px;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (width <= 768px) {
+  .header-icons {
+    gap: 0.5rem;
+  }
+
+  .header-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Hide desktop search on mobile (mobile search bar is shown instead) */
+  .tno-header__search {
+    display: none;
+  }
+}
+
+/* TNO header cart fix: Enhanced hover state with glitch effect */
+.header-icon:hover {
+  color: #0ff;
+  transform: translateY(-2px);
+  text-shadow:
+    0 0 8px rgb(0 255 255 / 60%),
+    -1px 0 rgb(255 0 255 / 40%),
+    1px 0 rgb(0 255 255 / 40%);
+  filter: drop-shadow(0 0 4px rgb(0 255 255 / 50%));
+}
+
+.header-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentcolor;
+  fill: none;
+  stroke-width: 2;
+}
+
+.header-icon--cart {
+  position: relative;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  background: #f0f;
+  color: #000;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.625rem;
+  font-weight: 700;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgb(255 0 255 / 50%);
+  animation: pulse-badge 2s ease-in-out infinite;
+}
+
+@keyframes pulse-badge {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* ======================================== Mobile Menu Toggle */
+.header-menu-toggle {
+  display: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  background: none;
+  border: none;
+  width: 32px;
+  height: 28px;
+  position: relative;
+  z-index: 1001;
+}
+
+.header-menu-toggle span {
+  width: 24px;
+  height: 2px;
+  background: #eaeaea;
+  transition: all 0.3s ease;
+}
+
+.header-menu-toggle:hover span {
+  background: #0ff;
+}
+
+.header-menu-toggle.is-active span:nth-child(1) {
+  transform: rotate(45deg) translateY(7px);
+}
+
+.header-menu-toggle.is-active span:nth-child(2) {
+  opacity: 0;
+}
+
+.header-menu-toggle.is-active span:nth-child(3) {
+  transform: rotate(-45deg) translateY(-7px);
+}
+
+/* Mobile Menu Overlay styles moved to assets/custom.css to avoid conflicts */
+
+/* ======================================== Responsive */
+@media (width <= 1024px) {
+  .header-nav__list {
+    gap: 1.5rem;
+  }
+
+  .header-nav__link {
+    font-size: 0.8rem;
+  }
+}
+
+@media (width <= 768px) {
+  .header-nav {
+    display: none;
+  }
+
+  /* Hide hamburger button on mobile - bottom tab MENU is the only trigger */
+  .header-menu-toggle {
+    display: none !important;
+  }
+}
+
+/* ======================================== Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .site-header,
+  .header-logo__link,
+  .header-nav__link,
+  .header-icon,
+  .mobile-menu,
+  .mobile-menu__item {
+    transition: none;
+    animation: none;
+  }
+
+  .header-logo__link::before,
+  .header-logo__link::after {
+    display: none;
+  }
+
+  .cart-badge {
+    animation: none;
+  }
+}
+
+/* ======================================== Optional Scanline (Disabled on mobile) */
+.site-header::before {
+  display: none;
+}
+
+/* ======================================== Body Padding */
+body {
+  padding-top: 80px;
+}
+
+@media (width <= 768px) {
+  body {
+    padding-top: 120px;
   }
 }

@@ -26,24 +26,23 @@
   /**
    * Initialize TNO Header Search
    *
-   * Future: Handle search input focus/blur, glitch effects on interaction,
-   * and search form submission enhancements.
+   * Handles search input focus/blur, form submission, and ensures clean UX.
    */
   function initTnoHeaderSearch() {
-    const searchForm = document.querySelector('.tno-search form');
-    const searchInput = document.querySelector('.tno-search__input');
-    const searchButton = document.querySelector('.tno-search__button');
+    const searchForms = document.querySelectorAll('.tno-search form');
+    const searchInputs = document.querySelectorAll('.tno-search__input');
 
-    if (!searchForm && !searchInput && !searchButton) {
+    if (searchForms.length === 0 && searchInputs.length === 0) {
       return; // Search elements not present on this page
     }
 
-    // Safe null checks
-    if (searchForm) {
-      // console.log('[TNO] Header search form found');
-    }
-    if (searchInput) {
-      // console.log('[TNO] Header search input found');
+    // Handle all search forms (desktop + mobile)
+    searchForms.forEach(function (searchForm) {
+      const searchInput = searchForm.querySelector('.tno-search__input');
+
+      if (!searchInput) {
+        return;
+      }
 
       // Clear input value after page load (if it was pre-filled from URL)
       // This ensures the placeholder shows instead of the search query
@@ -56,21 +55,25 @@
         }, 100);
       }
 
-      // Also clear on blur if input is empty (show placeholder)
+      // Clear on blur if input is empty (show placeholder)
       searchInput.addEventListener('blur', function () {
         if (!this.value.trim()) {
           this.value = '';
         }
       });
-    }
-    if (searchButton) {
-      // console.log('[TNO] Header search button found');
-    }
 
-    // TODO: Add search interaction logic here
-    // - Focus/blur handlers
-    // - Glitch effect triggers
-    // - Form submission enhancements
+      // Handle form submission: clear input and remove focus after submit
+      searchForm.addEventListener('submit', function () {
+        // Let the form submit normally (don't prevent default)
+        // After navigation, the input will be cleared by the page load handler above
+        // But also clear focus immediately to remove cyan glow
+        setTimeout(() => {
+          if (searchInput && document.activeElement === searchInput) {
+            searchInput.blur();
+          }
+        }, 0);
+      });
+    });
   }
 
   /**
