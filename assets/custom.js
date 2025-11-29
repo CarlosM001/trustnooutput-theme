@@ -40,10 +40,10 @@
 
     // Safe null checks
     if (searchForm) {
-      console.log('[TNO] Header search form found');
+      // console.log('[TNO] Header search form found');
     }
     if (searchInput) {
-      console.log('[TNO] Header search input found');
+      // console.log('[TNO] Header search input found');
 
       // Clear input value after page load (if it was pre-filled from URL)
       // This ensures the placeholder shows instead of the search query
@@ -64,7 +64,7 @@
       });
     }
     if (searchButton) {
-      console.log('[TNO] Header search button found');
+      // console.log('[TNO] Header search button found');
     }
 
     // TODO: Add search interaction logic here
@@ -90,16 +90,16 @@
     }
 
     if (productGrid) {
-      console.log('[TNO] Product grid found');
+      // console.log('[TNO] Product grid found');
     }
     if (productCards.length > 0) {
-      console.log('[TNO] Product cards found:', productCards.length);
+      // console.log('[TNO] Product cards found:', productCards.length);
     }
     if (variantButtons.length > 0) {
-      console.log('[TNO] Variant buttons found:', variantButtons.length);
+      // console.log('[TNO] Variant buttons found:', variantButtons.length);
     }
     if (addToCartButtons.length > 0) {
-      console.log('[TNO] Add to cart buttons found:', addToCartButtons.length);
+      // console.log('[TNO] Add to cart buttons found:', addToCartButtons.length);
     }
 
     // TODO: Add product grid interaction logic here
@@ -126,16 +126,16 @@
     }
 
     if (mobileMenu) {
-      console.log('[TNO] Mobile menu found');
+      // console.log('[TNO] Mobile menu found');
     }
     if (menuToggle) {
-      console.log('[TNO] Mobile menu toggle found');
+      // console.log('[TNO] Mobile menu toggle found');
     }
     if (mobilePanels.length > 0) {
-      console.log('[TNO] Mobile panels found:', mobilePanels.length);
+      // console.log('[TNO] Mobile panels found:', mobilePanels.length);
     }
     if (backButtons.length > 0) {
-      console.log('[TNO] Back buttons found:', backButtons.length);
+      // console.log('[TNO] Back buttons found:', backButtons.length);
     }
 
     // TODO: Add mobile menu interaction logic here
@@ -160,10 +160,10 @@
     }
 
     if (glitchElements.length > 0) {
-      console.log('[TNO] Glitch text elements found:', glitchElements.length);
+      // console.log('[TNO] Glitch text elements found:', glitchElements.length);
     }
     if (glitchButtons.length > 0) {
-      console.log('[TNO] Glitch buttons found:', glitchButtons.length);
+      // console.log('[TNO] Glitch buttons found:', glitchButtons.length);
     }
 
     // TODO: Add glitch effect logic here
@@ -188,10 +188,10 @@
     }
 
     if (cartBadges.length > 0) {
-      console.log('[TNO] Cart badges found:', cartBadges.length);
+      // console.log('[TNO] Cart badges found:', cartBadges.length);
     }
     if (cartDrawer) {
-      console.log('[TNO] Cart drawer found');
+      // console.log('[TNO] Cart drawer found');
     }
 
     // TODO: Add cart update logic here
@@ -207,7 +207,7 @@
    * Safe to call multiple times (idempotent).
    */
   function initTnoTheme() {
-    console.log('[TNO] Initializing TRUST.NO.OUTPUT theme...');
+    // console.log('[TNO] Initializing TRUST.NO.OUTPUT theme...');
 
     // Initialize all TNO features
     initTnoHeaderSearch();
@@ -216,7 +216,7 @@
     initTnoGlitchEffects();
     initTnoCartUpdates();
 
-    console.log('[TNO] Theme initialization complete');
+    // console.log('[TNO] Theme initialization complete');
   }
 
   /**

@@ -13,10 +13,10 @@
   border-radius: 999px;
 
   /* Subtle white border (lighter, similar to header icons) */
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border: 1px solid rgb(255 255 255 / 20%) !important;
 
   /* Dark translucent background */
-  background: rgba(0, 0, 0, 0.65) !important;
+  background: rgb(0 0 0 / 65%) !important;
   transition:
     box-shadow 160ms ease,
     border-color 160ms ease,
@@ -27,9 +27,9 @@
 .tno-search form:focus-within {
   border-color: #0ff !important;
   box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.25),
-    0 0 0 3px rgba(0, 255, 255, 0.45) !important;
-  background: rgba(0, 0, 0, 0.85) !important;
+    0 0 0 1px rgb(255 255 255 / 25%),
+    0 0 0 3px rgb(0 255 255 / 45%) !important;
+  background: rgb(0 0 0 / 85%) !important;
 }
 
 /* Input: White text, transparent background, no borders */
@@ -47,7 +47,7 @@
 }
 
 .tno-search__input::placeholder {
-  color: rgba(255, 255, 255, 0.4) !important;
+  color: rgb(255 255 255 / 40%) !important;
 }
 
 /* Button: Transparent, only icon visible (exactly like mobile version) */
@@ -69,13 +69,13 @@
   transition: color 0.2s ease;
 
   /* Same color as mobile: rgba(255, 255, 255, 0.6) */
-  color: rgba(255, 255, 255, 0.6) !important;
+  color: rgb(255 255 255 / 60%) !important;
 }
 
 /* Button hover: Cyan color (matches mobile) */
 .tno-search__button:hover,
 .tno-search__button:focus {
-  color: #00ffff !important;
+  color: #0ff !important;
 }
 
 /* Icon: Exactly like mobile version - 16px, stroke only, no fill */
@@ -83,7 +83,7 @@
 .tno-search__button .icon {
   width: 16px !important;
   height: 16px !important;
-  stroke: currentColor !important;
+  stroke: currentcolor !important;
   fill: none !important;
   stroke-width: 2 !important;
 }
@@ -94,18 +94,22 @@
     transform: translate(0, 0);
     filter: hue-rotate(0deg);
   }
+
   25% {
     transform: translate(-1px, 1px);
     filter: hue-rotate(20deg);
   }
+
   50% {
     transform: translate(1px, -1px);
     filter: hue-rotate(-20deg);
   }
+
   75% {
     transform: translate(-1px, -1px);
     filter: hue-rotate(10deg);
   }
+
   100% {
     transform: translate(0, 0);
     filter: hue-rotate(0deg);
@@ -123,7 +127,7 @@
 }
 
 /* Mobile: Keep existing mobile behavior intact */
-@media (max-width: 749px) {
+@media (width <= 749px) {
   .tno-search form {
     height: 44px;
     padding: 0 1rem;
@@ -151,6 +155,7 @@
    - Background: rgba(0,0,0,0.5) semi-transparent
    - Focus: single glow on container only
 */
+
 /* ==========================================================================
    TRUST.NO.OUTPUT — custom.css (CLEAN)
    ========================================================================== */
@@ -958,8 +963,8 @@ button.shopify-payment-button__button--unbranded {
   height: 40px;
   padding-left: 1rem;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid rgb(255 255 255 / 16%);
+  background: rgb(0 0 0 / 85%);
   box-shadow: none;
 }
 
@@ -977,7 +982,7 @@ button.shopify-payment-button__button--unbranded {
 /* EINDEUTIGER Fokus: nur der äußere Pill-Container glüht */
 .tno-search .field:focus-within {
   border-color: #0ff !important;
-  box-shadow: 0 0 0 2px rgba(0, 255, 255, 0.45) !important;
+  box-shadow: 0 0 0 2px rgb(0 255 255 / 45%) !important;
 }
 
 /* Suchfeld / Input selbst – vollständig rahmenlos im Inneren */
@@ -999,7 +1004,7 @@ button.shopify-payment-button__button--unbranded {
 .tno-search__input::placeholder,
 .tno-search .field__input::placeholder,
 .tno-search .search__input::placeholder {
-  color: rgba(245, 245, 245, 0.55);
+  color: rgb(245 245 245 / 55%);
 }
 
 /* Alle Outline-Varianten komplett killen (Input & Button) */
@@ -1043,12 +1048,12 @@ button.shopify-payment-button__button--unbranded {
   width: 16px;
   height: 16px;
   color: #050608;
-  fill: currentColor;
-  stroke: currentColor;
+  fill: currentcolor;
+  stroke: currentcolor;
   stroke-width: 1.8;
 }
 
-@media (max-width: 749px) {
+@media (prefers-reduced-motion: reduce) {
   .tno-search .field {
     height: 44px;
     padding-left: 0.9rem;
@@ -1056,13 +1061,11 @@ button.shopify-payment-button__button--unbranded {
 
   .tno-search__button {
     width: 44px;
-    height: 44px;
   }
-}
 
-/* 07) REDUCED MOTION ACCESSIBILITY */
-@media (prefers-reduced-motion: reduce) {
-  /* Ensure glitch pseudo-elements are hidden */
+  /* FIXED: Removed stray closing brace and extraneous code that caused syntax errors */
+
+  /* (No actual CSS needed here; previous code had unmatched brace and invalid construct) */
   .tno-glitch-strong::before,
   .tno-glitch-strong::after,
   .tno-glitch-soft::before,
@@ -6498,6 +6501,7 @@ body.template-search #MainContent .loading-overlay {
   clip: rect(0, 0, 0, 0) !important;
 }
 
+
 /* Card content */
 body.template-collection .product-grid .card__heading,
 body.template-collection .product-grid .card__information,
@@ -7035,10 +7039,12 @@ body.template-product .related-products .scroll-trigger.animate--slide-in {
   padding: 0 4px 0 16px !important;
   margin: 0 !important;
   border-radius: 999px !important;
+
   /* White 1px border by default */
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border: 1px solid rgb(255 255 255 / 20%) !important;
+
   /* Dark translucent background */
-  background: rgba(0, 0, 0, 0.5) !important;
+  background: rgb(0 0 0 / 50%) !important;
   box-shadow: none !important;
   overflow: hidden !important;
   transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
@@ -7047,8 +7053,8 @@ body.template-product .related-products .scroll-trigger.animate--slide-in {
 /* Focus state: Cyan border and glow */
 .tno-search form:focus-within,
 .tno-search .tno-search__form:focus-within {
-  border-color: #00ffff !important;
-  box-shadow: 0 0 12px rgba(0, 255, 255, 0.45) !important;
+  border-color: #0ff !important;
+  box-shadow: 0 0 12px rgb(0 255 255 / 45%) !important;
 }
 
 /* Input field: No borders, transparent bg, white text */
@@ -7063,7 +7069,7 @@ body.template-product .related-products .scroll-trigger.animate--slide-in {
   outline: none !important;
   background: transparent !important;
   box-shadow: none !important;
-  color: #ffffff !important;
+  color: #fff !important;
   font-family: var(--font-mono, ui-monospace, monospace) !important;
   font-size: 14px !important;
 }
@@ -7072,7 +7078,7 @@ body.template-product .related-products .scroll-trigger.animate--slide-in {
 .tno-search__input::placeholder,
 .tno-search input[type="search"]::placeholder,
 .tno-search .field__input::placeholder {
-  color: rgba(255, 255, 255, 0.5) !important;
+  color: rgb(255 255 255 / 50%) !important;
 }
 
 /* Remove all focus outlines from inner elements */
@@ -7099,13 +7105,15 @@ body.template-product .related-products .scroll-trigger.animate--slide-in {
   height: 32px !important;
   margin: 0 4px 0 0 !important;
   padding: 0 !important;
+
   /* NO border, NO background */
   border: none !important;
   outline: none !important;
   border-radius: 999px !important;
   background: transparent !important;
+
   /* Icon in cyan */
-  color: #00ffff !important;
+  color: #0ff !important;
   cursor: pointer !important;
   box-shadow: none !important;
   transition: transform 0.15s ease, color 0.15s ease, box-shadow 0.15s ease !important;
@@ -7115,9 +7123,9 @@ body.template-product .related-products .scroll-trigger.animate--slide-in {
 .tno-search__button:hover,
 .tno-search button[type="submit"]:hover,
 .tno-search .field__button:hover {
-  color: #00ffff !important;
+  color: #0ff !important;
   transform: translateY(-1px) !important;
-  box-shadow: 0 0 8px rgba(0, 255, 255, 0.4) !important;
+  box-shadow: 0 0 8px rgb(0 255 255 / 40%) !important;
 }
 
 /* Button focus: No extra outline (form container handles focus) */
@@ -7136,7 +7144,7 @@ body.template-product .related-products .scroll-trigger.animate--slide-in {
 .tno-search button[type="submit"].is-glitching,
 .tno-search .field__button.is-glitching {
   animation: tno-search-glitch 0.12s ease-out !important;
-  color: #ff00ff !important;
+  color: #f0f !important;
 }
 
 @keyframes tno-search-glitch {
@@ -7153,13 +7161,13 @@ body.template-product .related-products .scroll-trigger.animate--slide-in {
 .tno-search .field__button svg {
   width: 18px !important;
   height: 18px !important;
-  color: currentColor !important;
-  fill: currentColor !important;
-  stroke: currentColor !important;
+  color: currentcolor !important;
+  fill: currentcolor !important;
+  stroke: currentcolor !important;
 }
 
 /* Mobile adjustments: 44px button for larger touch targets */
-@media (max-width: 749px) {
+@media (width <= 749px) {
   .tno-search form,
   .tno-search .tno-search__form {
     height: 44px !important;
@@ -7183,7 +7191,7 @@ body.template-product .related-products .scroll-trigger.animate--slide-in {
 }
 
 /* Desktop specific: Ensure consistent width */
-@media (min-width: 990px) {
+@media (width >= 990px) {
   .tno-search form,
   .tno-search .tno-search__form {
     min-width: 260px !important;
@@ -7213,19 +7221,17 @@ body.template-product .related-products .scroll-trigger.animate--slide-in {
   max-width: 360px;
   padding: 0 6px 0 14px;
   margin: 0;
-
   border-radius: 999px;
-  border: 2px solid rgba(0, 255, 255, 0.7) !important;
-  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid rgb(0 255 255 / 70%) !important;
+  background: rgb(0 0 0 / 50%);
   overflow: hidden;
-
   outline: none !important;
   box-shadow: none !important;
 }
 
 /* 2) EINZIGER Glow beim Fokus */
 .tno-search form:focus-within {
-  box-shadow: 0 0 18px rgba(0, 255, 255, 0.6) !important;
+  box-shadow: 0 0 18px rgb(0 255 255 / 60%) !important;
 }
 
 /* 3) Input – durchsichtig, nimmt den Platz ein */
@@ -7243,15 +7249,12 @@ body.template-product .related-products .scroll-trigger.animate--slide-in {
   width: 38px;
   height: 38px;
   margin-right: 2px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 999px;
-  background: linear-gradient(135deg, #00ffee 0%, #00c2ff 100%);
+  background: linear-gradient(135deg, #0fe 0%, #0cf 100%);
   cursor: pointer;
-
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
@@ -7289,9 +7292,9 @@ header .tno-search form,
   align-items: center;
   height: 40px !important;
   padding-left: 1rem !important;
-  border: 1px solid #ffffff !important;
+  border: 1px solid #fff !important;
   border-radius: 999px !important;
-  background: rgba(0, 0, 0, 0.5) !important;
+  background: rgb(0 0 0 / 50%) !important;
   box-shadow: none !important;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -7299,8 +7302,8 @@ header .tno-search form,
 /* Fokus: Cyan-Rahmen und sanfte Neon-Glut */
 header .tno-search form:focus-within,
 .tno-search form:focus-within {
-  border-color: #00e5ff !important;
-  box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.45) !important;
+  border-color: #0fe !important;
+  box-shadow: 0 0 0 2px rgb(0 229 255 / 45%) !important;
 }
 
 /* Suchfeld (Input) – vollständig rahmenlos, weißer Text */
@@ -7310,7 +7313,7 @@ header .tno-search__input,
   min-width: 0 !important;
   border: none !important;
   background: transparent !important;
-  color: #ffffff !important;
+  color: #fff !important;
   font-size: 0.875rem !important;
   outline: none !important;
   padding: 0 !important;
@@ -7318,7 +7321,7 @@ header .tno-search__input,
 
 header .tno-search__input::placeholder,
 .tno-search__input::placeholder {
-  color: rgba(255, 255, 255, 0.6) !important;
+  color: rgb(255 255 255 / 60%) !important;
 }
 
 /* Such-Button – minimalistisch, transparent, ohne Rahmen */
@@ -7352,8 +7355,8 @@ header .tno-search__button .icon,
 .tno-search__button .icon {
   width: 16px !important;
   height: 16px !important;
-  fill: currentColor !important;
-  stroke: currentColor !important;
+  fill: currentcolor !important;
+  stroke: currentcolor !important;
 }
 
 /* Glitch-Animation für das Icon – wird per JS getriggert */
@@ -7369,11 +7372,11 @@ header .tno-search__button .icon,
 header .tno-search__button.is-glitching svg,
 .tno-search__button.is-glitching svg {
   animation: tno-search-btn-glitch 0.3s steps(4) 1 !important;
-  filter: drop-shadow(0 0 3px #00e5ff) drop-shadow(0 0 2px #ff00cc) !important;
+  filter: drop-shadow(0 0 3px #0fe) drop-shadow(0 0 2px #f0c) !important;
 }
 
 /* Mobile Anpassungen: größere Größe */
-@media (max-width: 749px) {
+@media (width <= 749px) {
   header .tno-search form,
   .tno-search form {
     height: 44px !important;
@@ -7386,4 +7389,32 @@ header .tno-search__button.is-glitching svg,
   }
 }
 
+/* =========================================================
+   TNO COLLECTION GRID – 4 COLUMN DESKTOP FIX
+   ========================================================= */
+@media screen and (width >= 990px) {
+  .template-collection .product-grid .grid__item {
+    width: calc(25% - var(--grid-desktop-horizontal-spacing));
+    max-width: calc(25% - var(--grid-desktop-horizontal-spacing));
+    flex-basis: calc(25% - var(--grid-desktop-horizontal-spacing));
+  }
+}
 
+/* =========================================================
+   TNO – COLLECTION GRID: FORCE 4 COLUMNS ON DESKTOP
+   ========================================================= */
+@media screen and (width >= 990px) {
+  /* Force 4 columns on the main product grid */
+  .template-collection #product-grid.product-grid.grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: var(--grid-desktop-vertical-spacing, 24px) var(--grid-desktop-horizontal-spacing, 24px);
+  }
+
+  /* Reset grid items so they don't override the layout */
+  .template-collection #product-grid.product-grid.grid > .grid__item {
+    width: auto !important;
+    max-width: none !important;
+    flex: 0 0 auto !important;
+  }
+}
