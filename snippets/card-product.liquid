@@ -10,9 +10,19 @@
   if lazy_load
     assign loading = 'lazy'
   endif
+
+  comment
+    Optional parameters for trust-style features:
+    - show_color_variants: Show color variant swatches (boolean)
+    - card_style: 'trust' for custom styling, default for standard
+    - show_custom_add_to_cart: Use custom add-to-cart button instead of quick_add
+  endcomment
+  assign show_color_variants = show_color_variants | default: false
+  assign card_style = card_style | default: 'default'
+  assign show_custom_add_to_cart = show_custom_add_to_cart | default: false
 -%}
 
-<div class="card-wrapper product-card-wrapper" data-product-id="{{ card_product.id }}">
+<div class="tno-card-product card-product{% if card_style == 'trust' %} card-product--trust tno-card-product--trust{% endif %}" data-product-id="{{ card_product.id }}">
   <div class="card card--product tno-card">
     <div class="card__inner">
       {%- comment -%}
@@ -72,14 +82,16 @@
             </span>
           {%- endif -%}
 
-          <h3 class="card__heading">
+          <h3 class="card__heading tno-card-title">
             <a href="{{ card_product.url }}" class="full-unstyled-link">
               {{ card_product.title | escape }}
             </a>
           </h3>
 
           <div class="card__meta">
-            {%- render 'price', product: card_product, price_class: 'price' -%}
+            <div class="tno-card-price">
+              {%- render 'price', product: card_product, price_class: 'price', trust_compact: card_style == 'trust' -%}
+            </div>
 
             {%- if show_rating and card_product.metafields.reviews.rating.value != blank -%}
               <span
@@ -113,12 +125,64 @@
               </span>
             {%- endif -%}
           </div>
+
+          {%- comment -%}
+            Color Variants (trust-style feature)
+          {%- endcomment -%}
+          {%- if show_color_variants and card_product.options_with_values.size > 0 -%}
+            {%- for option in card_product.options_with_values -%}
+              {%- if option.name == 'Color' or option.name == 'Colour' -%}
+                <div class="card__variants tno-card-variants">
+                  {%- for value in option.values limit: 5 -%}
+                    {%- assign variant = card_product.variants | where: 'option1', value | first -%}
+                    <button
+                      type="button"
+                      class="card__variant tno-card-variant {% if forloop.first %}tno-card-variant--selected{% endif %}"
+                      data-variant-id="{{ variant.id }}"
+                      data-price="{{ variant.price | money }}"
+                      aria-label="Select color: {{ value }}"
+                    >
+                      {{ value }}
+                    </button>
+                  {%- endfor -%}
+                  {%- if option.values.size > 5 -%}
+                    <span class="card__variant-more" style="font-family: var(--font-mono, monospace); color: var(--color-gray-dim, #666); font-size: 0.75rem;">
+                      +{{ option.values.size | minus: 5 }} more
+                    </span>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
         </div>
 
         {%- comment -%}
-          QUICK ADD (optional – gesteuert über section.settings.quick_add)
+          QUICK ADD / CUSTOM ADD TO CART
+          Supports both standard quick_add and trust-style custom button
         {%- endcomment -%}
-        {%- if quick_add == 'standard' and card_product.available -%}
+        {%- if show_custom_add_to_cart -%}
+          {%- comment -%} Trust-style custom add-to-cart button {%- endcomment -%}
+          <div class="card__actions">
+            <form method="post" action="{{ routes.cart_add_url }}" class="card__form tno-card-form">
+              <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+
+              <button
+                type="submit"
+                class="card__button tno-card-button"
+                {% unless card_product.available %}disabled{% endunless %}
+              >
+                <span>
+                  {%- if card_product.available -%}
+                    > Add to Cart
+                  {%- else -%}
+                    > Sold Out
+                  {%- endif -%}
+                </span>
+              </button>
+            </form>
+          </div>
+        {%- elsif quick_add == 'standard' and card_product.available -%}
+          {%- comment -%} Standard Shopify quick add {%- endcomment -%}
           <div class="card__actions">
             {% form 'product',
               card_product,
@@ -140,9 +204,7 @@
               </button>
             {% endform %}
           </div>
-        {%- endif -%}
-
-        {%- if quick_add == 'standard' and card_product.available == false -%}
+        {%- elsif quick_add == 'standard' and card_product.available == false -%}
           <div class="card__actions">
             <button
               type="button"

@@ -414,6 +414,241 @@
   }
 
   /**
+   * Initialize TNO Home Product Grid Carousel
+   * Mobile: scrolls 2 cards | Desktop: scrolls 4 cards
+   */
+  function initTnoHomeProductGridCarousel() {
+    const grids = document.querySelectorAll('.tno-home-product-grid');
+
+    grids.forEach((grid) => {
+      const track = grid.querySelector('.tno-home-product-grid__track');
+      const prevBtn = grid.querySelector('.tno-home-product-grid__control--prev');
+      const nextBtn = grid.querySelector('.tno-home-product-grid__control--next');
+
+      if (!track) {
+        return;
+      }
+
+      const getScrollAmount = () => {
+        const firstItem = track.querySelector('.tno-home-product-grid__item');
+        if (!firstItem) {
+          return 0;
+        }
+
+        const itemWidth = firstItem.offsetWidth;
+        const styles = window.getComputedStyle(track);
+        const gap = parseFloat(styles.columnGap || styles.gap || '16') || 16;
+
+        // Determine items per slide based on screen size
+        const isMobile = window.matchMedia('(max-width: 749px)').matches;
+        const itemsPerSlide = isMobile ? 2 : 4;
+
+        // Calculate scroll amount: itemsPerSlide items + gaps between them
+        return itemWidth * itemsPerSlide + gap * (itemsPerSlide - 1);
+      };
+
+      const scrollBySlide = (direction) => {
+        const amount = getScrollAmount();
+        if (!amount) {
+          return;
+        }
+
+        track.scrollBy({
+          left: direction * amount,
+          behavior: 'smooth',
+        });
+      };
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+          scrollBySlide(-1);
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          scrollBySlide(1);
+        });
+      }
+
+      // Touch/swipe support for mobile
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+
+      track.addEventListener('mousedown', (e) => {
+        isDown = true;
+        track.style.cursor = 'grabbing';
+        startX = e.pageX - track.offsetLeft;
+        scrollLeft = track.scrollLeft;
+      });
+
+      track.addEventListener('mouseleave', () => {
+        isDown = false;
+        track.style.cursor = 'grab';
+      });
+
+      track.addEventListener('mouseup', () => {
+        isDown = false;
+        track.style.cursor = 'grab';
+      });
+
+      track.addEventListener('mousemove', (e) => {
+        if (!isDown) {
+          return;
+        }
+        e.preventDefault();
+        const x = e.pageX - track.offsetLeft;
+        const walk = (x - startX) * 2; // Scroll speed multiplier
+        track.scrollLeft = scrollLeft - walk;
+      });
+
+      // Touch events for mobile swipe
+      let touchStartX = 0;
+      let touchScrollLeft = 0;
+
+      track.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].pageX - track.offsetLeft;
+        touchScrollLeft = track.scrollLeft;
+      }, { passive: true });
+
+      track.addEventListener('touchmove', (e) => {
+        if (!touchStartX) {
+          return;
+        }
+        const x = e.touches[0].pageX - track.offsetLeft;
+        const walk = (x - touchStartX) * 2;
+        track.scrollLeft = touchScrollLeft - walk;
+      }, { passive: true });
+
+      track.addEventListener('touchend', () => {
+        touchStartX = 0;
+      });
+    });
+  }
+
+  /**
+   * Initialize TNO TRUST Card Interactions
+   *
+   * Handles:
+   * - Add to Cart with conscious delay (400ms resistance to impulse)
+   * - Color variant selection
+   * - Loading and success states
+   */
+  function initTnoTrustCardInteractions() {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /**
+     * Add to Cart with Conscious Delay
+     */
+    const addToCartButtons = document.querySelectorAll('.tno-card-button');
+
+    addToCartButtons.forEach((button) => {
+      button.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const form = this.closest('form');
+        if (!form) {
+          return;
+        }
+
+        // Visual feedback: Loading state
+        this.classList.add('tno-card-button--loading');
+        const textEl = this.querySelector('span');
+        const originalText = textEl ? textEl.textContent : '';
+        if (textEl) {
+          textEl.textContent = 'Processing';
+        }
+
+        const doRequest = () => {
+          const formData = new FormData(form);
+          fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { Accept: 'application/json' },
+            body: formData,
+          })
+            .then((res) => (res.ok ? res.json() : Promise.reject(res)))
+            .then(() => {
+              this.classList.remove('tno-card-button--loading');
+              this.classList.add('tno-card-button--success');
+              if (textEl) {
+                textEl.textContent = 'Added';
+              }
+              // Optional: update cart count if theme exposes helper
+              if (window.theme && typeof window.theme.updateCartCount === 'function') {
+                try {
+                  window.theme.updateCartCount();
+                } catch (err) {
+                  // Silently fail if cart update helper doesn't exist
+                }
+              }
+              // Reset after 2s
+              setTimeout(() => {
+                this.classList.remove('tno-card-button--success');
+                if (textEl) {
+                  textEl.textContent = originalText;
+                }
+              }, 2000);
+            })
+            .catch(() => {
+              this.classList.remove('tno-card-button--loading');
+              if (textEl) {
+                textEl.textContent = 'Error';
+              }
+              setTimeout(() => {
+                if (textEl) {
+                  textEl.textContent = originalText;
+                }
+              }, 2000);
+            });
+        };
+
+        if (prefersReducedMotion) {
+          doRequest();
+        } else {
+          setTimeout(doRequest, 400); // Conscious delay
+        }
+      });
+    });
+
+    /**
+     * Color Variant Selection
+     */
+    const variantButtons = document.querySelectorAll('.tno-card-variant');
+
+    variantButtons.forEach((button) => {
+      button.addEventListener('click', function () {
+        const card = this.closest('.tno-card-product');
+        if (!card) {
+          return;
+        }
+        const variantId = this.dataset.variantId;
+        const variantInput = card.querySelector('input[name="id"]');
+        const allButtons = card.querySelectorAll('.tno-card-variant');
+        const newPrice = this.dataset.price;
+
+        // Update selected state
+        allButtons.forEach((b) => b.classList.remove('tno-card-variant--selected'));
+        this.classList.add('tno-card-variant--selected');
+
+        // Update form hidden input
+        if (variantInput && variantId) {
+          variantInput.value = variantId;
+        }
+
+        // Update price display (basic)
+        const priceEl = card.querySelector('.price');
+        if (priceEl && newPrice) {
+          const priceValue = card.querySelector('.price__regular, .price-item--regular');
+          if (priceValue) {
+            priceValue.textContent = newPrice;
+          }
+        }
+      });
+    });
+  }
+
+  /**
    * Initialize TNO Footer Accordion
    *
    * Handles mobile footer accordion toggle functionality.
@@ -471,6 +706,8 @@
     initTnoScrollReveal();
     initTnoProductMobileNavScroll();
     initTnoRelatedProductsCarousel();
+    initTnoHomeProductGridCarousel();
+    initTnoTrustCardInteractions();
     initTnoFooterAccordion();
 
     // console.log('[TNO] Theme initialization complete');

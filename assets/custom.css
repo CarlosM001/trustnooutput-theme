@@ -7883,35 +7883,250 @@ body {
    TNO – COLLECTION GRID: FORCE 2 COLUMNS ON MOBILE
    ========================================================= */
 @media (width <= 749px) {
-  /* Force 2 columns on the collection product grid on mobile */
-  body.template-collection #product-grid.product-grid.grid,
-  body.template-collection .product-grid.tno-collection-grid,
-  body.template-collection .product-grid.grid--2-col-tablet-down,
-  body.template-collection .product-grid.grid--1-col-tablet-down {
-    display: grid !important;
+  /* Collection grid mobile: 2 columns */
+  body.template-collection .tno-collection-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 1.25rem 0.75rem;
+    gap: var(--space-sm, 1rem) !important;
   }
 
   /* Ensure grid items fill their cells properly */
-  body.template-collection #product-grid.product-grid.grid > .grid__item,
-  body.template-collection .product-grid.tno-collection-grid > .grid__item,
-  body.template-collection .product-grid.grid--2-col-tablet-down > .grid__item,
-  body.template-collection .product-grid.grid--1-col-tablet-down > .grid__item {
+  body.template-collection .tno-collection-grid__item {
     width: 100% !important;
     max-width: 100% !important;
-    flex: 0 0 auto !important;
   }
 
   /* Ensure product cards fill their grid cells */
-  body.template-collection .product-grid .card {
+  body.template-collection .tno-collection-grid__item .tno-card-product {
     width: 100%;
   }
 }
 
 /* =========================================================
-   RELATED PRODUCTS – MOBILE CAROUSEL
+   TRUST.NO.OUTPUT — PRODUCT CARDS & GRIDS
+   - Base card styles
+   - TRUST variant
+   - Color variants
+   - Add to cart button
+   - Home product grid (slider)
+   - Related products carousel
    ========================================================= */
+
+/* =========================================================
+   1. BASE CARD STYLES
+   Shared foundation for all product cards rendered by card-product.liquid
+   ========================================================= */
+
+.tno-card-product {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.tno-card-product .card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Card typography */
+.tno-card-title {
+  margin: 0;
+}
+
+.tno-card-price {
+  margin: 0;
+}
+
+/* =========================================================
+   2. TRUST VARIANT MODIFIER
+   Extra visual flavor for card_style: 'trust'
+   ========================================================= */
+
+/* TRUST variant styles are applied via modifier class when card_style: 'trust' is set */
+
+/* =========================================================
+   3. COLOR VARIANT PILLS & CONTAINER
+   Terminal-style color variant display
+   ========================================================= */
+
+/* Color variant styles (.tno-card-variants, .tno-card-variant, .tno-card-variant--selected)
+   are defined in card-product.liquid or inherited from theme defaults */
+
+/* =========================================================
+   4. ADD-TO-CART BUTTON (TRUST STYLE)
+   Custom add-to-cart button with loading/success states
+   ========================================================= */
+
+/* Add-to-cart button styles (.tno-card-button) are handled via JavaScript state classes:
+   - .tno-card-button--loading (applied during cart add)
+   - .tno-card-button--success (applied after successful add)
+   Button base styles are inherited from theme defaults or defined inline in Liquid */
+
+/* =========================================================
+   5. HOME PRODUCT GRID SLIDER
+   Mobile: 2-column carousel | Desktop: 4-column carousel
+   ========================================================= */
+
+.tno-home-product-grid {
+  position: relative;
+  margin-top: 2rem;
+}
+
+/* Controls (arrow buttons) */
+.tno-home-product-grid__controls {
+  position: absolute;
+  top: -3rem;
+  right: 0;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 10;
+}
+
+.tno-home-product-grid__control {
+  background: none;
+  border: 1px solid var(--color-accent, #0ff);
+  color: var(--color-accent, #0ff);
+  padding: 0.35rem 0.65rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.tno-home-product-grid__control:hover {
+  background: rgb(0 255 255 / 10%);
+  border-color: var(--color-cyan, #00fff0);
+}
+
+/* Track - horizontal scrollable slider */
+.tno-home-product-grid__track {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  scroll-snap-type: x mandatory !important;
+  -webkit-overflow-scrolling: touch !important;
+  scroll-behavior: smooth;
+  gap: var(--space-md, 2rem);
+  padding-bottom: 1rem;
+  margin: 0;
+  list-style: none;
+}
+
+/* Override any grid classes */
+.tno-home-product-grid__track.grid,
+.tno-home-product-grid__track[class*="grid--"] {
+  display: flex !important;
+  grid-template-columns: none !important;
+}
+
+/* Items - MOBILE: 2 cards per slide */
+.tno-home-product-grid__item {
+  flex: 0 0 50% !important;
+  max-width: 50% !important;
+  width: 50% !important;
+  scroll-snap-align: start !important;
+  margin: 0 !important;
+  list-style: none;
+}
+
+/* DESKTOP: 4 cards per slide */
+@media (width >= 750px) {
+  .tno-home-product-grid__item {
+    flex: 0 0 25% !important;
+    max-width: 25% !important;
+    width: 25% !important;
+  }
+}
+
+/* Cards inside a slide fill the slide */
+.tno-home-product-grid__item .card,
+.tno-home-product-grid__item .tno-card-product {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* Hide scrollbar */
+.tno-home-product-grid__track::-webkit-scrollbar {
+  display: none !important;
+}
+
+.tno-home-product-grid__track {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+/* =========================================================
+   6. RELATED PRODUCTS CAROUSEL
+   Mobile: 2-column carousel | Desktop: 4-column carousel
+   ========================================================= */
+
+/* Related products wrapper and controls styles are defined in mobile media query below */
+
+/* Track - horizontal scrollable slider */
+.tno-related-products__track {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  scroll-snap-type: x mandatory !important;
+  -webkit-overflow-scrolling: touch !important;
+  gap: var(--space-md, 2rem);
+  padding-bottom: 1rem;
+  margin: 0;
+  list-style: none;
+}
+
+/* Override Shopify grid classes */
+.tno-related-products__track.grid,
+.tno-related-products__track[class*="grid--"] {
+  display: flex !important;
+  grid-template-columns: none !important;
+}
+
+/* Mobile: 2 cards per slide */
+.tno-related-products__item {
+  flex: 0 0 50% !important;
+  max-width: 50% !important;
+  width: 50% !important;
+  scroll-snap-align: start !important;
+  margin: 0 !important;
+  list-style: none;
+}
+
+/* Desktop: 4 cards per slide */
+@media (width >= 750px) {
+  .tno-related-products__item {
+    flex: 0 0 25% !important;
+    max-width: 25% !important;
+    width: 25% !important;
+  }
+}
+
+.tno-related-products__item .tno-card-product {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* Hide scrollbar */
+.tno-related-products__track::-webkit-scrollbar {
+  display: none !important;
+}
+
+.tno-related-products__track {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+/* Template-specific overrides for related products */
+body.template-product .tno-related-products__track::-webkit-scrollbar {
+  display: none !important;
+}
+
+body.template-product .tno-related-products__track {
+  scrollbar-width: none !important;
+}
+
+/* Mobile-specific related products carousel styles */
 @media (width <= 749px) {
   /* Outer container spans full width, no side gaps */
   body.template-product .tno-related-products {
@@ -7919,7 +8134,7 @@ body {
     padding-inline: 1.5rem;
   }
 
-  /* -------- CONTROLS (ARROW BUTTONS) -------- */
+  /* Controls (arrow buttons) */
   body.template-product .tno-related-products__controls {
     display: flex;
     justify-content: flex-end;
@@ -7949,8 +8164,7 @@ body {
     transform: translateY(-1px);
   }
 
-
-  /* -------- TRACK (UL) MUST BECOME A HORIZONTAL SLIDER -------- */
+  /* Track - horizontal slider */
   body.template-product .tno-related-products__track {
     display: flex !important;
     flex-wrap: nowrap !important;
@@ -7964,7 +8178,7 @@ body {
     grid-auto-columns: unset !important;
   }
 
-  /* -------- OVERRIDE SHOPIFY GRID WRAPPERS -------- */
+  /* Override Shopify grid wrappers */
   body.template-product .tno-related-products__track.grid {
     display: flex !important;
   }
@@ -7974,25 +8188,23 @@ body {
     grid-template-columns: none !important;
   }
 
-  /* -------- EACH ITEM IS A SLIDE – 2 PER VIEW -------- */
-  body.template-product .tno-related-products__item.grid__item {
-    flex: 0 0 calc(50% - 0.375rem) !important;
-    max-width: calc(50% - 0.375rem) !important;
-    width: calc(50% - 0.375rem) !important;
+  /* Each item is a slide - 2 per view (Mobile only) */
+  body.template-product .tno-related-products__item {
+    flex: 0 0 50% !important;
+    max-width: 50% !important;
+    width: 50% !important;
     scroll-snap-align: start !important;
-
-    /* remove leftover inline grid widths */
     margin: 0 !important;
   }
 
-  /* -------- CARD FULL WIDTH -------- */
+  /* Card full width */
   body.template-product .tno-related-products__item .card,
   body.template-product .tno-related-products__item .product-card {
     width: 100% !important;
     height: auto !important;
   }
 
-  /* -------- HIDE SCROLLBAR -------- */
+  /* Hide scrollbar */
   body.template-product .tno-related-products__track::-webkit-scrollbar {
     display: none !important;
   }
@@ -8000,6 +8212,38 @@ body {
   body.template-product .tno-related-products__track {
     scrollbar-width: none !important;
   }
+}
+
+/* =========================================================
+   7. COLLECTION GRID - Modern CSS Grid
+   ========================================================= */
+
+.tno-collection-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) !important;
+  gap: var(--space-md, 2rem) !important;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tno-collection-grid__item {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  list-style: none;
+}
+
+.tno-collection-grid__item .tno-card-product {
+  width: 100%;
+  height: 100%;
+}
+
+/* Override any Shopify grid classes */
+.tno-collection-grid.grid,
+.tno-collection-grid[class*="grid--"] {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) !important;
 }
 
 /* =========================================================

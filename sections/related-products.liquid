@@ -49,19 +49,14 @@
             </button>
           </div>
           <ul
-            class="
-              tno-related-products__track
-              grid product-grid
-              grid--{{ section.settings.columns_mobile }}-col-tablet-down
-              grid--{{ section.settings.columns_desktop }}-col-desktop
-            "
+            class="tno-related-products__track"
             id="product-grid-{{ section.id }}"
           >
             {%- if source == 'recommendations' -%}
               {%- for related_product in recommendations.products
                 limit: section.settings.products_to_show
               -%}
-                <li class="tno-related-products__item grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+                <li class="tno-related-products__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
                   {% render 'card-product',
                     card_product: related_product,
                     media_aspect_ratio: settings.card_image_ratio,
@@ -69,7 +64,10 @@
                     show_secondary_image: settings.card_show_secondary_image,
                     show_vendor: settings.card_show_vendor,
                     show_rating: settings.card_show_rating,
-                    section_id: section.id
+                    section_id: section.id,
+                    show_color_variants: true,
+                    show_custom_add_to_cart: true,
+                    card_style: 'trust'
                   %}
                 </li>
               {%- endfor -%}
@@ -80,7 +78,7 @@
                 {%- if related_product.id == product.id -%}
                   {%- continue -%}
                 {%- endif -%}
-                <li class="tno-related-products__item grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+                <li class="tno-related-products__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
                   {% render 'card-product',
                     card_product: related_product,
                     media_aspect_ratio: settings.card_image_ratio,
@@ -88,7 +86,10 @@
                     show_secondary_image: settings.card_show_secondary_image,
                     show_vendor: settings.card_show_vendor,
                     show_rating: settings.card_show_rating,
-                    section_id: section.id
+                    section_id: section.id,
+                    show_color_variants: true,
+                    show_custom_add_to_cart: true,
+                    card_style: 'trust'
                   %}
                 </li>
               {%- endfor -%}
