@@ -407,125 +407,181 @@
     </div>
 
     {%- comment %} Footer Content Grid {%- endcomment %}
-    <div class="footer-content">
+    <div class="footer-content tno-footer__columns">
       {%- comment %} Shop Column {%- endcomment %}
-      <div class="footer-column">
-        <h3 class="footer-column__title">Shop</h3>
-        <nav aria-label="Shop links">
-          <ul class="footer-column__list">
-          <li>
-            <a href="{{ routes.collections_url }}/apparel" class="footer-column__link">Apparel</a>
-          </li>
-          <li>
-            <a href="{{ routes.collections_url }}/accessories" class="footer-column__link"
-              >Accessories</a
-            >
-          </li>
-          <li>
-            <a href="{{ routes.collections_url }}/prints" class="footer-column__link">Prints</a>
-          </li>
-          <li>
-            <a href="{{ routes.all_products_collection_url }}" class="footer-column__link">All</a>
-          </li>
-          </ul>
-        </nav>
-      </div>
+      <section class="footer-column tno-footer-accordion" aria-label="Shop links">
+        <button
+          class="tno-footer-accordion__toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="tno-footer-panel-1"
+        >
+          <span class="tno-footer-accordion__label footer-column__title">Shop</span>
+          <span class="tno-footer-accordion__icon" aria-hidden="true"></span>
+        </button>
+        <div
+          id="tno-footer-panel-1"
+          class="tno-footer-accordion__panel"
+          hidden
+        >
+          <nav aria-label="Shop links">
+            <ul class="footer-column__list">
+            <li>
+              <a href="{{ routes.collections_url }}/apparel" class="footer-column__link">Apparel</a>
+            </li>
+            <li>
+              <a href="{{ routes.collections_url }}/accessories" class="footer-column__link"
+                >Accessories</a
+              >
+            </li>
+            <li>
+              <a href="{{ routes.collections_url }}/prints" class="footer-column__link">Prints</a>
+            </li>
+            <li>
+              <a href="{{ routes.all_products_collection_url }}" class="footer-column__link">All</a>
+            </li>
+            </ul>
+          </nav>
+        </div>
+      </section>
 
       {%- comment %} Info Column {%- endcomment %}
-      <div class="footer-column">
-        <h3 class="footer-column__title">Info</h3>
-        <nav aria-label="Information links">
-          <ul class="footer-column__list">
-          <li>
-            <a href="/pages/shipping" class="footer-column__link">Shipping</a>
-          </li>
-          <li>
-            <a href="/pages/returns" class="footer-column__link">Returns</a>
-          </li>
-          <li>
-            <a href="/pages/faq" class="footer-column__link">FAQ</a>
-          </li>
-          <li>
-            <a href="/pages/contact" class="footer-column__link">Contact</a>
-          </li>
-          </ul>
-        </nav>
-      </div>
+      <section class="footer-column tno-footer-accordion" aria-label="Information links">
+        <button
+          class="tno-footer-accordion__toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="tno-footer-panel-2"
+        >
+          <span class="tno-footer-accordion__label footer-column__title">Info</span>
+          <span class="tno-footer-accordion__icon" aria-hidden="true"></span>
+        </button>
+        <div
+          id="tno-footer-panel-2"
+          class="tno-footer-accordion__panel"
+          hidden
+        >
+          <nav aria-label="Information links">
+            <ul class="footer-column__list">
+            <li>
+              <a href="/pages/shipping" class="footer-column__link">Shipping</a>
+            </li>
+            <li>
+              <a href="/pages/returns" class="footer-column__link">Returns</a>
+            </li>
+            <li>
+              <a href="/pages/faq" class="footer-column__link">FAQ</a>
+            </li>
+            <li>
+              <a href="/pages/contact" class="footer-column__link">Contact</a>
+            </li>
+            </ul>
+          </nav>
+        </div>
+      </section>
 
       {%- comment %} Legal Column {%- endcomment %}
-      <div class="footer-column">
-        <h3 class="footer-column__title">Legal</h3>
-        <nav aria-label="Legal links">
-          <ul class="footer-column__list">
-          <li>
-            <a href="{{ shop.privacy_policy.url }}" class="footer-column__link">Privacy</a>
-          </li>
-          <li>
-            <a href="{{ shop.terms_of_service.url }}" class="footer-column__link">Terms</a>
-          </li>
-          <li>
-            <a href="{{ shop.refund_policy.url }}" class="footer-column__link">Refunds</a>
-          </li>
-          <li>
-            <a href="{{ shop.shipping_policy.url }}" class="footer-column__link">Shipping Policy</a>
-          </li>
-          </ul>
-        </nav>
-      </div>
+      <section class="footer-column tno-footer-accordion" aria-label="Legal links">
+        <button
+          class="tno-footer-accordion__toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="tno-footer-panel-3"
+        >
+          <span class="tno-footer-accordion__label footer-column__title">Legal</span>
+          <span class="tno-footer-accordion__icon" aria-hidden="true"></span>
+        </button>
+        <div
+          id="tno-footer-panel-3"
+          class="tno-footer-accordion__panel"
+          hidden
+        >
+          <nav aria-label="Legal links">
+            <ul class="footer-column__list">
+            <li>
+              <a href="{{ shop.privacy_policy.url }}" class="footer-column__link">Privacy</a>
+            </li>
+            <li>
+              <a href="{{ shop.terms_of_service.url }}" class="footer-column__link">Terms</a>
+            </li>
+            <li>
+              <a href="{{ shop.refund_policy.url }}" class="footer-column__link">Refunds</a>
+            </li>
+            <li>
+              <a href="{{ shop.shipping_policy.url }}" class="footer-column__link">Shipping Policy</a>
+            </li>
+            </ul>
+          </nav>
+        </div>
+      </section>
 
       {%- comment %} Social Column (Terminal Commands) {%- endcomment %}
-      <div class="footer-column">
-        <h3 class="footer-column__title">Connect</h3>
-        <div class="footer-social" aria-label="Social media links">
-          {%- if section.settings.instagram_url != blank -%}
-            <a
-              href="{{ section.settings.instagram_url }}"
-              class="footer-social__link"
-              target="_blank"
-              rel="noopener"
-              aria-label="Instagram"
-            >
-              connect.instagram
-            </a>
-          {%- endif -%}
+      <section class="footer-column tno-footer-accordion" aria-label="Social media links">
+        <button
+          class="tno-footer-accordion__toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="tno-footer-panel-4"
+        >
+          <span class="tno-footer-accordion__label footer-column__title">Connect</span>
+          <span class="tno-footer-accordion__icon" aria-hidden="true"></span>
+        </button>
+        <div
+          id="tno-footer-panel-4"
+          class="tno-footer-accordion__panel"
+          hidden
+        >
+          <div class="footer-social" aria-label="Social media links">
+            {%- if section.settings.instagram_url != blank -%}
+              <a
+                href="{{ section.settings.instagram_url }}"
+                class="footer-social__link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Instagram"
+              >
+                connect.instagram
+              </a>
+            {%- endif -%}
 
-          {%- if section.settings.twitter_url != blank -%}
-            <a
-              href="{{ section.settings.twitter_url }}"
-              class="footer-social__link"
-              target="_blank"
-              rel="noopener"
-              aria-label="Twitter"
-            >
-              follow.twitter
-            </a>
-          {%- endif -%}
+            {%- if section.settings.twitter_url != blank -%}
+              <a
+                href="{{ section.settings.twitter_url }}"
+                class="footer-social__link"
+                target="_blank"
+                rel="noopener"
+                aria-label="Twitter"
+              >
+                follow.twitter
+              </a>
+            {%- endif -%}
 
-          {%- if section.settings.youtube_url != blank -%}
-            <a
-              href="{{ section.settings.youtube_url }}"
-              class="footer-social__link"
-              target="_blank"
-              rel="noopener"
-              aria-label="YouTube"
-            >
-              watch.youtube
-            </a>
-          {%- endif -%}
+            {%- if section.settings.youtube_url != blank -%}
+              <a
+                href="{{ section.settings.youtube_url }}"
+                class="footer-social__link"
+                target="_blank"
+                rel="noopener"
+                aria-label="YouTube"
+              >
+                watch.youtube
+              </a>
+            {%- endif -%}
 
-          {%- if section.settings.tiktok_url != blank -%}
-            <a
-              href="{{ section.settings.tiktok_url }}"
-              class="footer-social__link"
-              target="_blank"
-              rel="noopener"
-              aria-label="TikTok"
-            >
-              view.tiktok
-            </a>
-          {%- endif -%}
+            {%- if section.settings.tiktok_url != blank -%}
+              <a
+                href="{{ section.settings.tiktok_url }}"
+                class="footer-social__link"
+                target="_blank"
+                rel="noopener"
+                aria-label="TikTok"
+              >
+                view.tiktok
+              </a>
+            {%- endif -%}
+          </div>
         </div>
-      </div>
+      </section>
     </div>
 
     {%- comment %} Optional: Inline Newsletter {%- endcomment %}

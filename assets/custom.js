@@ -355,6 +355,105 @@
   }
 
   /**
+   * Initialize TNO Related Products Carousel
+   *
+   * Handles left/right arrow button clicks to scroll the related products carousel
+   * horizontally on mobile product pages.
+   */
+  function initTnoRelatedProductsCarousel() {
+    const isProductPage = document.body.classList.contains('template-product');
+    const isMobile = window.matchMedia('(max-width: 749px)').matches;
+
+    if (!isProductPage || !isMobile) {
+      return;
+    }
+
+    const carousels = document.querySelectorAll('.tno-related-products');
+    if (!carousels.length) {
+      return;
+    }
+
+    carousels.forEach((carousel) => {
+      const track = carousel.querySelector('.tno-related-products__track');
+      const prevBtn = carousel.querySelector('.tno-related-products__control--prev');
+      const nextBtn = carousel.querySelector('.tno-related-products__control--next');
+
+      if (!track || !prevBtn || !nextBtn) {
+        return;
+      }
+
+      const getSlideAmount = () => {
+        const firstItem = track.querySelector('.tno-related-products__item');
+        if (!firstItem) {
+          return 0;
+        }
+
+        const itemWidth = firstItem.offsetWidth;
+        const styles = window.getComputedStyle(track);
+        const gap = parseFloat(styles.columnGap || styles.gap || '12') || 12;
+
+        /* We want to move TWO items at a time */
+        return itemWidth * 2 + gap * 2;
+      };
+
+      const scrollBySlide = (direction) => {
+        const amount = getSlideAmount();
+        if (!amount) {
+          return;
+        }
+
+        track.scrollBy({
+          left: direction * amount,
+          behavior: 'smooth',
+        });
+      };
+
+      prevBtn.addEventListener('click', () => scrollBySlide(-1));
+      nextBtn.addEventListener('click', () => scrollBySlide(1));
+    });
+  }
+
+  /**
+   * Initialize TNO Footer Accordion
+   *
+   * Handles mobile footer accordion toggle functionality.
+   * Only runs on mobile screens (max-width: 749px) to avoid interfering with desktop.
+   */
+  function initTnoFooterAccordion() {
+    const isMobile = window.matchMedia('(max-width: 749px)').matches;
+    if (!isMobile) {
+      return;
+    }
+
+    const accordionToggles = document.querySelectorAll('.tno-footer-accordion__toggle');
+    if (!accordionToggles.length) {
+      return;
+    }
+
+    accordionToggles.forEach((toggle) => {
+      toggle.addEventListener('click', function () {
+        const accordion = this.closest('.tno-footer-accordion');
+        const panel = accordion.querySelector('.tno-footer-accordion__panel');
+        const isOpen = accordion.classList.contains('is-open');
+
+        if (!accordion || !panel) {
+          return;
+        }
+
+        if (isOpen) {
+          accordion.classList.remove('is-open');
+          this.setAttribute('aria-expanded', 'false');
+          panel.setAttribute('hidden', '');
+        } else {
+          accordion.classList.add('is-open');
+          this.setAttribute('aria-expanded', 'true');
+          panel.removeAttribute('hidden');
+        }
+      });
+    });
+  }
+
+  /**
    * Main initialization function
    *
    * Runs when DOM is ready and initializes all TNO features.
@@ -371,6 +470,8 @@
     initTnoCartUpdates();
     initTnoScrollReveal();
     initTnoProductMobileNavScroll();
+    initTnoRelatedProductsCarousel();
+    initTnoFooterAccordion();
 
     // console.log('[TNO] Theme initialization complete');
   }
