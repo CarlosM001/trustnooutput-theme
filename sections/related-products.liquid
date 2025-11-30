@@ -24,47 +24,44 @@
       class="related-products__inner color-{{ section.settings.color_scheme }} gradient"
       style="display: {{ display_style }};"
     >
-      <div class="related-products__heading-wrapper">
-        <h2 class="related-products__heading h2">
-          {{ section.settings.heading | escape }}
-        </h2>
-      </div>
-
       {%- if source != '' -%}
-        <div class="tno-related-products">
-          <div class="tno-related-products__controls" aria-hidden="false">
+        <section class="product-related-trust">
+          <div class="product-related-trust__header">
+            <h2 class="product-related-trust__title">
+              {{ section.settings.heading | escape }}
+            </h2>
+          </div>
+
+          {%- comment -%} Arrow controls positioned above grid, right-aligned {%- endcomment -%}
+          <div class="product-related-trust__controls">
             <button
               type="button"
-              class="tno-related-products__control tno-related-products__control--prev"
-              aria-label="Previous related product"
+              class="product-related-trust__arrow product-related-trust__arrow--prev"
+              aria-label="Previous products"
             >
               ‹
             </button>
             <button
               type="button"
-              class="tno-related-products__control tno-related-products__control--next"
-              aria-label="Next related product"
+              class="product-related-trust__arrow product-related-trust__arrow--next"
+              aria-label="Next products"
             >
               ›
             </button>
           </div>
+
           <ul
-            class="tno-related-products__track"
+            class="product-related-trust__grid"
             id="product-grid-{{ section.id }}"
           >
             {%- if source == 'recommendations' -%}
               {%- for related_product in recommendations.products
                 limit: section.settings.products_to_show
               -%}
-                <li class="tno-related-products__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+                <li class="product-related-trust__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
                   {% render 'card-product',
                     card_product: related_product,
-                    media_aspect_ratio: settings.card_image_ratio,
-                    image_shape: settings.card_image_shape,
-                    show_secondary_image: settings.card_show_secondary_image,
-                    show_vendor: settings.card_show_vendor,
-                    show_rating: settings.card_show_rating,
-                    section_id: section.id,
+                    lazy_load: true,
                     show_color_variants: true,
                     show_custom_add_to_cart: true,
                     card_style: 'trust'
@@ -78,15 +75,10 @@
                 {%- if related_product.id == product.id -%}
                   {%- continue -%}
                 {%- endif -%}
-                <li class="tno-related-products__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+                <li class="product-related-trust__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
                   {% render 'card-product',
                     card_product: related_product,
-                    media_aspect_ratio: settings.card_image_ratio,
-                    image_shape: settings.card_image_shape,
-                    show_secondary_image: settings.card_show_secondary_image,
-                    show_vendor: settings.card_show_vendor,
-                    show_rating: settings.card_show_rating,
-                    section_id: section.id,
+                    lazy_load: true,
                     show_color_variants: true,
                     show_custom_add_to_cart: true,
                     card_style: 'trust'
@@ -95,7 +87,7 @@
               {%- endfor -%}
             {%- endif -%}
           </ul>
-        </div>
+        </section>
       {%- endif -%}
     </div>
   </product-recommendations>

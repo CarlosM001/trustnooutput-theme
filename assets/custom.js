@@ -360,30 +360,31 @@
    * Handles left/right arrow button clicks to scroll the related products carousel
    * horizontally on mobile product pages.
    */
+  /**
+   * Related Products Carousel - TRUST Style
+   * Desktop: 4 cards per view, slide by 4
+   * Mobile: 2 cards per view, slide by 2
+   */
   function initTnoRelatedProductsCarousel() {
-    const isProductPage = document.body.classList.contains('template-product');
-    const isMobile = window.matchMedia('(max-width: 749px)').matches;
-
-    if (!isProductPage || !isMobile) {
-      return;
-    }
-
-    const carousels = document.querySelectorAll('.tno-related-products');
+    const carousels = document.querySelectorAll('.product-related-trust');
     if (!carousels.length) {
       return;
     }
 
     carousels.forEach((carousel) => {
-      const track = carousel.querySelector('.tno-related-products__track');
-      const prevBtn = carousel.querySelector('.tno-related-products__control--prev');
-      const nextBtn = carousel.querySelector('.tno-related-products__control--next');
+      const track = carousel.querySelector('.product-related-trust__grid');
+      const prevBtn = carousel.querySelector('.product-related-trust__arrow--prev');
+      const nextBtn = carousel.querySelector('.product-related-trust__arrow--next');
 
       if (!track || !prevBtn || !nextBtn) {
         return;
       }
 
       const getSlideAmount = () => {
-        const firstItem = track.querySelector('.tno-related-products__item');
+        const isDesktop = window.matchMedia('(width >= 990px)').matches;
+        const cardsPerView = isDesktop ? 4 : 2;
+
+        const firstItem = track.querySelector('.product-related-trust__item');
         if (!firstItem) {
           return 0;
         }
@@ -392,8 +393,8 @@
         const styles = window.getComputedStyle(track);
         const gap = parseFloat(styles.columnGap || styles.gap || '12') || 12;
 
-        /* We want to move TWO items at a time */
-        return itemWidth * 2 + gap * 2;
+        /* Slide by cardsPerView: desktop = 4, mobile = 2 */
+        return itemWidth * cardsPerView + gap * (cardsPerView - 1);
       };
 
       const scrollBySlide = (direction) => {
