@@ -7827,6 +7827,7 @@ body {
    ========================================================= */
 @media (width <= 749px) {
   /* Collection grid mobile: 2 columns */
+  /* LEGACY COLLECTION GRID – no longer used after trust collection grid refactor (2025-01-30) */
   body.template-collection .tno-collection-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     gap: var(--space-sm, 1rem) !important;
@@ -8086,6 +8087,9 @@ body.template-product .tno-related-products__track {
    7. COLLECTION GRID - Modern CSS Grid
    ========================================================= */
 
+/* LEGACY COLLECTION GRID – no longer used after trust collection grid refactor (2025-01-30).
+   Kept for backward compatibility. New collection pages use .collection-grid-trust instead.
+*/
 .tno-collection-grid {
   display: grid !important;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) !important;
@@ -8639,11 +8643,14 @@ body.template-index .footer {
 
 /* =========================================================
    PRODUCT CARD STYLING - Hugo Boss Style
-   Scoped to Product Grid (TNO) section only
+   Applied to Product Grid (TNO) homepage section and Collection pages
    ========================================================= */
 
 /* Card wrapper - Hugo Boss style with subtle background and border */
-.product-grid-trust .tno-card-product {
+/* Applied to homepage Product Grid and Collection pages */
+.product-grid-trust .tno-card-product,
+body.template-collection .tno-card-product--trust,
+.collection-grid-trust .tno-card-product--trust {
   background: rgb(15 15 18); /* Very dark grey, not pure black */
   border: 1px solid rgb(255 255 255 / 8%);
   border-radius: 4px;
@@ -8655,7 +8662,9 @@ body.template-index .footer {
   flex-direction: column;
 }
 
-.product-grid-trust .tno-card-product:hover {
+.product-grid-trust .tno-card-product:hover,
+body.template-collection .tno-card-product--trust:hover,
+.collection-grid-trust .tno-card-product--trust:hover {
   border-color: rgb(255 255 255 / 15%);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
@@ -8663,7 +8672,13 @@ body.template-index .footer {
 /* Remove extra wrappers for trust style - ensure no spacing */
 .product-grid-trust .tno-card-product--trust .card,
 .product-grid-trust .tno-card-product--trust .card__inner,
-.product-grid-trust .tno-card-product--trust .card__media {
+.product-grid-trust .tno-card-product--trust .card__media,
+body.template-collection .tno-card-product--trust .card,
+body.template-collection .tno-card-product--trust .card__inner,
+body.template-collection .tno-card-product--trust .card__media,
+.collection-grid-trust .tno-card-product--trust .card,
+.collection-grid-trust .tno-card-product--trust .card__inner,
+.collection-grid-trust .tno-card-product--trust .card__media {
   margin: 0;
   padding: 0;
   height: auto;
@@ -8671,7 +8686,9 @@ body.template-index .footer {
 }
 
 /* Image wrapper with fixed aspect ratio (4:5) - directly at top */
-.product-grid-trust .tno-card-product__image-wrapper {
+.product-grid-trust .tno-card-product__image-wrapper,
+body.template-collection .tno-card-product--trust .tno-card-product__image-wrapper,
+.collection-grid-trust .tno-card-product--trust .tno-card-product__image-wrapper {
   position: relative;
   width: 100%;
   padding-top: 125%; /* 4:5 aspect ratio */
@@ -8681,7 +8698,9 @@ body.template-index .footer {
   flex-shrink: 0;
 }
 
-.product-grid-trust .tno-card-product__image-wrapper a {
+.product-grid-trust .tno-card-product__image-wrapper a,
+body.template-collection .tno-card-product--trust .tno-card-product__image-wrapper a,
+.collection-grid-trust .tno-card-product--trust .tno-card-product__image-wrapper a {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -8691,7 +8710,11 @@ body.template-index .footer {
 }
 
 .product-grid-trust .tno-card-product__image-wrapper img,
-.product-grid-trust .tno-card-product__image-wrapper .placeholder-svg {
+.product-grid-trust .tno-card-product__image-wrapper .placeholder-svg,
+body.template-collection .tno-card-product--trust .tno-card-product__image-wrapper img,
+body.template-collection .tno-card-product--trust .tno-card-product__image-wrapper .placeholder-svg,
+.collection-grid-trust .tno-card-product--trust .tno-card-product__image-wrapper img,
+.collection-grid-trust .tno-card-product--trust .tno-card-product__image-wrapper .placeholder-svg {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -8703,7 +8726,11 @@ body.template-index .footer {
 
 /* Card content area - stacked layout */
 .product-grid-trust .tno-card-product .card__content,
-.product-grid-trust .tno-card-product__content {
+.product-grid-trust .tno-card-product__content,
+body.template-collection .tno-card-product--trust .card__content,
+body.template-collection .tno-card-product--trust .tno-card-product__content,
+.collection-grid-trust .tno-card-product--trust .card__content,
+.collection-grid-trust .tno-card-product--trust .tno-card-product__content {
   padding: 0.75rem 1rem 1rem;
   display: flex;
   flex-direction: column;
@@ -8712,7 +8739,9 @@ body.template-index .footer {
 }
 
 /* Card information */
-.product-grid-trust .tno-card-product .card__information {
+.product-grid-trust .tno-card-product .card__information,
+body.template-collection .tno-card-product--trust .card__information,
+.collection-grid-trust .tno-card-product--trust .card__information {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -8720,7 +8749,11 @@ body.template-index .footer {
 
 /* Product title - max 2 lines with ellipsis */
 .product-grid-trust .tno-card-product .card__heading,
-.product-grid-trust .tno-card-product .tno-card-title {
+.product-grid-trust .tno-card-product .tno-card-title,
+body.template-collection .tno-card-product--trust .card__heading,
+body.template-collection .tno-card-product--trust .tno-card-title,
+.collection-grid-trust .tno-card-product--trust .card__heading,
+.collection-grid-trust .tno-card-product--trust .tno-card-title {
   font-size: 0.875rem;
   line-height: 1.4;
   margin: 0;
@@ -8732,22 +8765,32 @@ body.template-index .footer {
   min-height: 2.8em; /* Ensure consistent height for 2 lines */
 }
 
-.product-grid-trust .tno-card-product .card__heading a {
+.product-grid-trust .tno-card-product .card__heading a,
+body.template-collection .tno-card-product--trust .card__heading a,
+.collection-grid-trust .tno-card-product--trust .card__heading a {
   color: #ffffff;
   text-decoration: none;
 }
 
-.product-grid-trust .tno-card-product .card__heading a:hover {
+.product-grid-trust .tno-card-product .card__heading a:hover,
+body.template-collection .tno-card-product--trust .card__heading a:hover,
+.collection-grid-trust .tno-card-product--trust .card__heading a:hover {
   color: var(--color-cyan, #00fff0);
 }
 
 /* Price - left aligned */
-.product-grid-trust .tno-card-product .card__meta {
+.product-grid-trust .tno-card-product .card__meta,
+body.template-collection .tno-card-product--trust .card__meta,
+.collection-grid-trust .tno-card-product--trust .card__meta {
   margin-top: 0.25rem;
 }
 
 .product-grid-trust .tno-card-product .tno-card-price,
-.product-grid-trust .tno-card-product .price {
+.product-grid-trust .tno-card-product .price,
+body.template-collection .tno-card-product--trust .tno-card-price,
+body.template-collection .tno-card-product--trust .price,
+.collection-grid-trust .tno-card-product--trust .tno-card-price,
+.collection-grid-trust .tno-card-product--trust .price {
   font-size: 0.9375rem;
   font-weight: 500;
   color: #ffffff;
@@ -8755,7 +8798,9 @@ body.template-index .footer {
 }
 
 /* Badge overlay - positioned inside image wrapper */
-.product-grid-trust .tno-card-product__badge {
+.product-grid-trust .tno-card-product__badge,
+body.template-collection .tno-card-product--trust .tno-card-product__badge,
+.collection-grid-trust .tno-card-product--trust .tno-card-product__badge {
   position: absolute;
   top: 0.75rem;
   left: 0.75rem;
@@ -8790,12 +8835,16 @@ body.template-index .footer {
 }
 
 /* Add to cart button */
-.product-grid-trust .tno-card-product .card__actions {
+.product-grid-trust .tno-card-product .card__actions,
+body.template-collection .tno-card-product--trust .card__actions,
+.collection-grid-trust .tno-card-product--trust .card__actions {
   margin-top: auto;
   padding-top: 0.5rem;
 }
 
-.product-grid-trust .tno-card-product .tno-card-button {
+.product-grid-trust .tno-card-product .tno-card-button,
+body.template-collection .tno-card-product--trust .tno-card-button,
+.collection-grid-trust .tno-card-product--trust .tno-card-button {
   width: 100%;
   padding: 0.625rem 1rem;
   font-size: 0.8125rem;
@@ -8810,17 +8859,72 @@ body.template-index .footer {
   letter-spacing: 0.05em;
 }
 
-.product-grid-trust .tno-card-product .tno-card-button:hover {
+.product-grid-trust .tno-card-product .tno-card-button:hover,
+body.template-collection .tno-card-product--trust .tno-card-button:hover,
+.collection-grid-trust .tno-card-product--trust .tno-card-button:hover {
   background: rgb(0 246 255 / 10%);
   box-shadow: 0 0 10px rgba(0, 255, 240, 0.3);
 }
 
 /* Color variants */
-.product-grid-trust .tno-card-product .tno-card-variants {
+.product-grid-trust .tno-card-product .tno-card-variants,
+body.template-collection .tno-card-product--trust .tno-card-variants,
+.collection-grid-trust .tno-card-product--trust .tno-card-variants {
   margin-top: 0.5rem;
   display: flex;
   flex-wrap: wrap;
   gap: 0.375rem;
+}
+
+/* =========================================================
+   COLLECTION GRID - TRUST Style
+   Static grid layout (no slider) for collection pages
+   ========================================================= */
+
+/* Collection grid container - aligned with homepage container */
+.collection-grid-trust {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-inline: 1.5rem;
+}
+
+/* Collection grid inner - static responsive grid */
+.collection-grid-trust__inner {
+  display: grid;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-x: visible; /* No horizontal scrolling */
+}
+
+/* Desktop: 4 cards per row */
+@media screen and (width >= 990px) {
+  .collection-grid-trust__inner {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
+/* Mobile: 2 cards per row */
+@media screen and (max-width: 749px) {
+  .collection-grid-trust__inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+}
+
+/* Grid items */
+.collection-grid-trust__inner li {
+  list-style: none;
+  margin: 0;
+  width: 100%;
+}
+
+/* Ensure cards fill grid cells */
+.collection-grid-trust__inner .tno-card-product {
+  width: 100%;
+  height: 100%;
 }
 
 /* Ensure product images are visible */

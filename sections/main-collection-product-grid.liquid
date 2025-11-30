@@ -150,14 +150,14 @@
             </div>
           </div>
         {%- else -%}
-          {%- comment -%} Product grid + pagination {%- endcomment -%}
-          <div class="collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}">
+          {%- comment -%} Product grid + pagination - TRUST collection grid {%- endcomment -%}
+          <div class="collection-grid-trust">
             <div class="loading-overlay gradient"></div>
 
             <ul
               id="product-grid"
               data-id="{{ section.id }}"
-              class="tno-collection-grid{% if section.settings.quick_add == 'bulk' %} collection-quick-add-bulk{% endif %}"
+              class="collection-grid-trust__inner{% if section.settings.quick_add == 'bulk' %} collection-quick-add-bulk{% endif %}"
             >
               {% assign skip_card_product_styles = false %}
               {%- for product in collection.products -%}
