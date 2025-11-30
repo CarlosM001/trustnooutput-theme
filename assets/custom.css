@@ -7878,3 +7878,33 @@ body {
     display: none !important;
   }
 }
+
+/* =========================================================
+   TNO – COLLECTION GRID: FORCE 2 COLUMNS ON MOBILE
+   ========================================================= */
+@media (width <= 749px) {
+  /* Force 2 columns on the collection product grid on mobile */
+  body.template-collection #product-grid.product-grid.grid,
+  body.template-collection .product-grid.tno-collection-grid,
+  body.template-collection .product-grid.grid--2-col-tablet-down,
+  body.template-collection .product-grid.grid--1-col-tablet-down {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 1.25rem 0.75rem;
+  }
+
+  /* Ensure grid items fill their cells properly */
+  body.template-collection #product-grid.product-grid.grid > .grid__item,
+  body.template-collection .product-grid.tno-collection-grid > .grid__item,
+  body.template-collection .product-grid.grid--2-col-tablet-down > .grid__item,
+  body.template-collection .product-grid.grid--1-col-tablet-down > .grid__item {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 auto !important;
+  }
+
+  /* Ensure product cards fill their grid cells */
+  body.template-collection .product-grid .card {
+    width: 100%;
+  }
+}
