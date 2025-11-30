@@ -233,6 +233,128 @@
   }
 
   /**
+   * Initialize Product Page Mobile Bottom Nav Scroll Behavior
+   *
+   * On mobile product pages:
+   * - Scroll DOWN: Hide bottom nav, show only ADD TO CART bar at bottom
+   * - Scroll UP: Show bottom nav at bottom, move ADD TO CART bar above it
+   *
+   * Only runs on:
+   * - Product templates (body.template-product)
+   * - Mobile viewport (max-width: 749px)
+   */
+  function initTnoProductMobileNavScroll() {
+    // Check if we're on a product page
+    const isProductPage = document.body.classList.contains('template-product');
+    if (!isProductPage) {
+      return; // Not a product page, skip
+    }
+
+    // Check if we're on mobile
+    const isMobile = window.matchMedia('(max-width: 749px)').matches;
+    if (!isMobile) {
+      return; // Not mobile, skip
+    }
+
+    // Get elements - use more specific selectors
+    const bottomNav = document.querySelector('.tno-bottom-tabs') || document.getElementById('bottom-tabs');
+    const ctaBar = document.querySelector('.tno-product-actions');
+
+    // Debug logging (temporary - remove after testing)
+    // console.log('[TNO] Product mobile nav init:', {
+    //   isProductPage: isProductPage,
+    //   isMobile: isMobile,
+    //   bottomNav: bottomNav,
+    //   ctaBar: ctaBar,
+    //   bodyClasses: document.body.className
+    // });
+
+    // Null check - if elements don't exist, do nothing
+    if (!bottomNav || !ctaBar) {
+      // console.log('[TNO] Elements not found - bottomNav:', !!bottomNav, 'ctaBar:', !!ctaBar);
+      return; // Elements not found, fail gracefully
+    }
+
+    // Scroll detection state
+    let lastScrollY = window.scrollY || window.pageYOffset || 0;
+    let ticking = false;
+    const scrollThreshold = 8; // Minimum scroll distance to trigger change (px)
+
+    /**
+     * Update nav visibility based on scroll direction
+     */
+    function updateNavVisibility() {
+      const currentScrollY = window.scrollY || window.pageYOffset || 0;
+      const scrollDelta = currentScrollY - lastScrollY;
+
+      // Determine scroll direction
+      if (Math.abs(scrollDelta) < scrollThreshold) {
+        // Scroll distance too small, ignore
+        ticking = false;
+        return;
+      }
+
+      // At the very top of the page, always show nav
+      if (currentScrollY <= 10) {
+        document.body.classList.add('tno-bottom-nav-visible');
+        bottomNav.classList.remove('tno-bottom-tabs--hidden');
+        lastScrollY = currentScrollY;
+        ticking = false;
+        return;
+      }
+
+      if (scrollDelta > 0) {
+        // Scrolling DOWN: Hide bottom nav
+        document.body.classList.remove('tno-bottom-nav-visible');
+        bottomNav.classList.add('tno-bottom-tabs--hidden');
+      } else if (scrollDelta < 0) {
+        // Scrolling UP: Show bottom nav
+        document.body.classList.add('tno-bottom-nav-visible');
+        bottomNav.classList.remove('tno-bottom-tabs--hidden');
+      }
+
+      lastScrollY = currentScrollY;
+      ticking = false;
+    }
+
+    /**
+     * Throttled scroll handler using requestAnimationFrame
+     */
+    function handleScroll() {
+      if (!ticking) {
+        window.requestAnimationFrame(updateNavVisibility);
+        ticking = true;
+      }
+    }
+
+    // Initialize state: start with nav hidden on product pages
+    // Use setTimeout to ensure DOM is fully ready
+    setTimeout(function () {
+      document.body.classList.remove('tno-bottom-nav-visible');
+      if (bottomNav) {
+        bottomNav.classList.add('tno-bottom-tabs--hidden');
+      }
+    }, 100);
+
+    // Add scroll listener
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    // Handle resize: re-check mobile status
+    let resizeTimeout;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(function () {
+        const stillMobile = window.matchMedia('(max-width: 749px)').matches;
+        if (!stillMobile) {
+          // Switched to desktop: reset state
+          document.body.classList.remove('tno-bottom-nav-visible');
+          bottomNav.classList.remove('tno-bottom-tabs--hidden');
+        }
+      }, 150);
+    });
+  }
+
+  /**
    * Main initialization function
    *
    * Runs when DOM is ready and initializes all TNO features.
@@ -248,6 +370,7 @@
     initTnoGlitchEffects();
     initTnoCartUpdates();
     initTnoScrollReveal();
+    initTnoProductMobileNavScroll();
 
     // console.log('[TNO] Theme initialization complete');
   }

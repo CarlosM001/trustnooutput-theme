@@ -2355,6 +2355,64 @@ button.shopify-payment-button__button--unbranded {
   z-index: 1200; /* Highest layer - always above header (1100) and mobile menu (900) */
 }
 
+/* =========================================================
+   PRODUCT PAGE – MOBILE BOTTOM NAV + CTA STACKING
+   Scroll-based visibility: hide nav on scroll down, show on scroll up
+   ========================================================= */
+
+@media (width <= 749px) {
+  /* Bottom nav visibility states (product pages only) */
+  body.template-product .tno-bottom-tabs {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  body.template-product .tno-bottom-tabs.tno-bottom-tabs--hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(100%);
+    visibility: hidden;
+  }
+
+  /* Product CTA bar (buy buttons container) - sticky positioning */
+  body.template-product .tno-product-actions {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1190 !important; /* Just below bottom nav (1200) */
+    background: rgb(10 10 10 / 98%) !important;
+    border-top: 1px solid rgb(0 255 255 / 20%) !important;
+    backdrop-filter: blur(12px) !important;
+    padding: 1rem !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    transition: bottom 0.2s ease !important;
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  /* When bottom nav is visible, move CTA bar up */
+  body.template-product.tno-bottom-nav-visible .tno-product-actions {
+    bottom: 56px !important; /* Height of bottom nav */
+  }
+
+  /* When bottom nav is hidden, CTA bar sits at bottom */
+  body.template-product:not(.tno-bottom-nav-visible) .tno-product-actions {
+    bottom: 0 !important;
+  }
+}
+
+/* Respect reduced motion preference */
+@media (width <= 749px) and (prefers-reduced-motion: reduce) {
+  body.template-product .tno-bottom-tabs,
+  body.template-product .tno-product-actions {
+    transition: none !important;
+  }
+}
+
 .tno-tab::before,
 .tno-tab::after {
   pointer-events: none;
@@ -7646,5 +7704,177 @@ body {
 @media (width <= 768px) {
   body {
     padding-top: 120px;
+  }
+}
+
+/* =========================================================
+   MOBILE PRODUCT & COLLECTION PAGES – REMOVE ALL WHITE BACKGROUNDS
+   Comprehensive fix to ensure pure dark theme on mobile
+   ========================================================= */
+
+@media (width <= 749px) {
+  /* A. Global page backgrounds - force dark */
+  body.template-product,
+  body.template-collection {
+    background: #000 !important;
+  }
+
+  body.template-product #MainContent,
+  body.template-collection #MainContent {
+    background: transparent !important;
+  }
+
+  /* B. Remove white sections - all sections transparent */
+  body.template-product section,
+  body.template-collection section,
+  body.template-product .shopify-section,
+  body.template-collection .shopify-section {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* C. Remove white gaps from section spacing (but preserve internal content spacing) */
+  body.template-product .shopify-section,
+  body.template-collection .shopify-section {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Preserve internal spacing within sections */
+  body.template-product section .page-width,
+  body.template-collection section .page-width {
+    padding-top: inherit;
+    padding-bottom: inherit;
+  }
+
+  /* D. Remove Spotlight default card backgrounds */
+  body.template-product .card,
+  body.template-product .product-card,
+  body.template-product .collection-card,
+  body.template-product .product-grid-item,
+  body.template-collection .card,
+  body.template-collection .product-card,
+  body.template-collection .collection-card,
+  body.template-collection .product-grid-item,
+  body.template-collection .grid__item {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  /* E. Fix Related Products white background */
+  body.template-product #shopify-section-related-products,
+  body.template-product #shopify-section-product-recommendations,
+  body.template-product .related-products,
+  body.template-product .product-recommendations {
+    background: transparent !important;
+    background-color: transparent !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* F. Fix product CTA / PayPal Express white bar */
+  body.template-product .shopify-payment-button,
+  body.template-product .shopify-payment-button__button,
+  body.template-product .product-form,
+  body.template-product .product__info-container,
+  body.template-product .product__info-wrapper,
+  body.template-product .tno-product-actions {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* Override white gradient in .tno-product-actions */
+  body.template-product .tno-product-actions {
+    background: rgb(10 10 10 / 98%) !important;
+    background-image: none !important;
+  }
+
+  /* G. Collection Grid – Remove white cards */
+  body.template-collection .collection-list,
+  body.template-collection .collection-grid,
+  body.template-collection .collection-item,
+  body.template-collection .product-grid,
+  body.template-collection .grid__item {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* H. Remove leftover borders/spacers from pseudo-elements */
+  body.template-product section::before,
+  body.template-product section::after,
+  body.template-collection section::before,
+  body.template-collection section::after,
+  body.template-product .grid::before,
+  body.template-product .grid::after,
+  body.template-collection .grid::before,
+  body.template-collection .grid::after {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    display: none !important;
+  }
+
+  /* I. Fix accordion white backgrounds on product pages */
+  body.template-product .tno-accordion__item,
+  body.template-product .accordion__item {
+    background: transparent !important;
+    background-color: transparent !important;
+    border-color: rgb(0 255 255 / 20%) !important;
+  }
+
+  /* J. Remove any white backgrounds from form elements */
+  body.template-product input,
+  body.template-product textarea,
+  body.template-product select,
+  body.template-product .product-form__input {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* K. Newsletter sections - remove white backgrounds */
+  body.template-product section[id*="newsletter"],
+  body.template-collection section[id*="newsletter"],
+  body.template-product .newsletter,
+  body.template-collection .newsletter {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* L. Ensure color scheme classes don't add white backgrounds */
+  body.template-product .color-scheme-1,
+  body.template-product .color-scheme-2,
+  body.template-product .color-scheme-3,
+  body.template-product .gradient,
+  body.template-collection .color-scheme-1,
+  body.template-collection .color-scheme-2,
+  body.template-collection .color-scheme-3,
+  body.template-collection .gradient {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* M. Remove white backgrounds from color scheme pseudo-elements */
+  body.template-product .color-scheme-1::before,
+  body.template-product .color-scheme-2::before,
+  body.template-product .color-scheme-3::before,
+  body.template-product .gradient::before,
+  body.template-product .color-scheme-1::after,
+  body.template-product .color-scheme-2::after,
+  body.template-product .color-scheme-3::after,
+  body.template-product .gradient::after,
+  body.template-collection .color-scheme-1::before,
+  body.template-collection .color-scheme-2::before,
+  body.template-collection .color-scheme-3::before,
+  body.template-collection .gradient::before,
+  body.template-collection .color-scheme-1::after,
+  body.template-collection .color-scheme-2::after,
+  body.template-collection .color-scheme-3::after,
+  body.template-collection .gradient::after {
+    background: transparent !important;
+    background-color: transparent !important;
+    display: none !important;
   }
 }
