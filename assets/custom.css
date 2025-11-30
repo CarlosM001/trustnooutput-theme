@@ -2332,6 +2332,12 @@ button.shopify-payment-button__button--unbranded {
   z-index: 1100;
 }
 
+/* Keep the header group above page content */
+.shopify-section-group-header-group {
+  position: relative;
+  z-index: 40;
+}
+
 .mega-menu__content {
   z-index: 1050;
 }
@@ -6705,8 +6711,7 @@ body.template-search .product-grid-container {
   background: #050608;
 }
 
-body.template-collection .product-grid-container::before,
-body.template-search .product-grid-container::before {
+body.template-collection .product-grid-container::before {
   content: '';
   position: absolute;
   top: 0;
@@ -6717,6 +6722,8 @@ body.template-search .product-grid-container::before {
   pointer-events: none;
   z-index: 0;
 }
+
+/* Search template: overlay disabled in SEARCH PAGE - TRUST Grid Overrides section below */
 
 body.template-collection .product-grid,
 body.template-search .product-grid {
@@ -8651,11 +8658,12 @@ body.template-index .footer {
    ========================================================= */
 
 /* Card wrapper - Hugo Boss style with subtle background and border */
-/* Applied to homepage Product Grid, Collection pages, and Related Products */
+/* Applied to homepage Product Grid, Collection pages, Related Products, and Search */
 .product-grid-trust .tno-card-product,
 body.template-collection .tno-card-product--trust,
 .collection-grid-trust .tno-card-product--trust,
-.product-related-trust .tno-card-product--trust {
+.product-related-trust .tno-card-product--trust,
+.search-grid-trust .tno-card-product--trust {
   background: rgb(15 15 18); /* Very dark grey, not pure black */
   border: 1px solid rgb(255 255 255 / 8%);
   border-radius: 4px;
@@ -8670,7 +8678,8 @@ body.template-collection .tno-card-product--trust,
 .product-grid-trust .tno-card-product:hover,
 body.template-collection .tno-card-product--trust:hover,
 .collection-grid-trust .tno-card-product--trust:hover,
-.product-related-trust .tno-card-product--trust:hover {
+.product-related-trust .tno-card-product--trust:hover,
+.search-grid-trust .tno-card-product--trust:hover {
   border-color: rgb(255 255 255 / 15%);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
@@ -8684,7 +8693,10 @@ body.template-collection .tno-card-product--trust .card__inner,
 body.template-collection .tno-card-product--trust .card__media,
 .collection-grid-trust .tno-card-product--trust .card,
 .collection-grid-trust .tno-card-product--trust .card__inner,
-.collection-grid-trust .tno-card-product--trust .card__media {
+.collection-grid-trust .tno-card-product--trust .card__media,
+.search-grid-trust .tno-card-product--trust .card,
+.search-grid-trust .tno-card-product--trust .card__inner,
+.search-grid-trust .tno-card-product--trust .card__media {
   margin: 0;
   padding: 0;
   height: auto;
@@ -8695,7 +8707,8 @@ body.template-collection .tno-card-product--trust .card__media,
 .product-grid-trust .tno-card-product__image-wrapper,
 body.template-collection .tno-card-product--trust .tno-card-product__image-wrapper,
 .collection-grid-trust .tno-card-product--trust .tno-card-product__image-wrapper,
-.product-related-trust .tno-card-product--trust .tno-card-product__image-wrapper {
+.product-related-trust .tno-card-product--trust .tno-card-product__image-wrapper,
+.search-grid-trust .tno-card-product--trust .tno-card-product__image-wrapper {
   position: relative;
   width: 100%;
   padding-top: 125%; /* 4:5 aspect ratio */
@@ -8708,7 +8721,8 @@ body.template-collection .tno-card-product--trust .tno-card-product__image-wrapp
 .product-grid-trust .tno-card-product__image-wrapper a,
 body.template-collection .tno-card-product--trust .tno-card-product__image-wrapper a,
 .collection-grid-trust .tno-card-product--trust .tno-card-product__image-wrapper a,
-.product-related-trust .tno-card-product--trust .tno-card-product__image-wrapper a {
+.product-related-trust .tno-card-product--trust .tno-card-product__image-wrapper a,
+.search-grid-trust .tno-card-product--trust .tno-card-product__image-wrapper a {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -8724,7 +8738,9 @@ body.template-collection .tno-card-product--trust .tno-card-product__image-wrapp
 .collection-grid-trust .tno-card-product--trust .tno-card-product__image-wrapper img,
 .collection-grid-trust .tno-card-product--trust .tno-card-product__image-wrapper .placeholder-svg,
 .product-related-trust .tno-card-product--trust .tno-card-product__image-wrapper img,
-.product-related-trust .tno-card-product--trust .tno-card-product__image-wrapper .placeholder-svg {
+.product-related-trust .tno-card-product--trust .tno-card-product__image-wrapper .placeholder-svg,
+.search-grid-trust .tno-card-product--trust .tno-card-product__image-wrapper img,
+.search-grid-trust .tno-card-product--trust .tno-card-product__image-wrapper .placeholder-svg {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -8742,7 +8758,9 @@ body.template-collection .tno-card-product--trust .tno-card-product__content,
 .collection-grid-trust .tno-card-product--trust .card__content,
 .collection-grid-trust .tno-card-product--trust .tno-card-product__content,
 .product-related-trust .tno-card-product--trust .card__content,
-.product-related-trust .tno-card-product--trust .tno-card-product__content {
+.product-related-trust .tno-card-product--trust .tno-card-product__content,
+.search-grid-trust .tno-card-product--trust .card__content,
+.search-grid-trust .tno-card-product--trust .tno-card-product__content {
   padding: 0.75rem 1rem 1rem;
   display: flex;
   flex-direction: column;
@@ -8754,7 +8772,8 @@ body.template-collection .tno-card-product--trust .tno-card-product__content,
 .product-grid-trust .tno-card-product .card__information,
 body.template-collection .tno-card-product--trust .card__information,
 .collection-grid-trust .tno-card-product--trust .card__information,
-.product-related-trust .tno-card-product--trust .card__information {
+.product-related-trust .tno-card-product--trust .card__information,
+.search-grid-trust .tno-card-product--trust .card__information {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -8768,7 +8787,9 @@ body.template-collection .tno-card-product--trust .tno-card-title,
 .collection-grid-trust .tno-card-product--trust .card__heading,
 .collection-grid-trust .tno-card-product--trust .tno-card-title,
 .product-related-trust .tno-card-product--trust .card__heading,
-.product-related-trust .tno-card-product--trust .tno-card-title {
+.product-related-trust .tno-card-product--trust .tno-card-title,
+.search-grid-trust .tno-card-product--trust .card__heading,
+.search-grid-trust .tno-card-product--trust .tno-card-title {
   font-size: 0.875rem;
   line-height: 1.4;
   margin: 0;
@@ -8783,7 +8804,8 @@ body.template-collection .tno-card-product--trust .tno-card-title,
 .product-grid-trust .tno-card-product .card__heading a,
 body.template-collection .tno-card-product--trust .card__heading a,
 .collection-grid-trust .tno-card-product--trust .card__heading a,
-.product-related-trust .tno-card-product--trust .card__heading a {
+.product-related-trust .tno-card-product--trust .card__heading a,
+.search-grid-trust .tno-card-product--trust .card__heading a {
   color: #ffffff;
   text-decoration: none;
 }
@@ -8791,7 +8813,8 @@ body.template-collection .tno-card-product--trust .card__heading a,
 .product-grid-trust .tno-card-product .card__heading a:hover,
 body.template-collection .tno-card-product--trust .card__heading a:hover,
 .collection-grid-trust .tno-card-product--trust .card__heading a:hover,
-.product-related-trust .tno-card-product--trust .card__heading a:hover {
+.product-related-trust .tno-card-product--trust .card__heading a:hover,
+.search-grid-trust .tno-card-product--trust .card__heading a:hover {
   color: var(--color-cyan, #00fff0);
 }
 
@@ -8799,7 +8822,8 @@ body.template-collection .tno-card-product--trust .card__heading a:hover,
 .product-grid-trust .tno-card-product .card__meta,
 body.template-collection .tno-card-product--trust .card__meta,
 .collection-grid-trust .tno-card-product--trust .card__meta,
-.product-related-trust .tno-card-product--trust .card__meta {
+.product-related-trust .tno-card-product--trust .card__meta,
+.search-grid-trust .tno-card-product--trust .card__meta {
   margin-top: 0.25rem;
 }
 
@@ -8810,7 +8834,9 @@ body.template-collection .tno-card-product--trust .price,
 .collection-grid-trust .tno-card-product--trust .tno-card-price,
 .collection-grid-trust .tno-card-product--trust .price,
 .product-related-trust .tno-card-product--trust .tno-card-price,
-.product-related-trust .tno-card-product--trust .price {
+.product-related-trust .tno-card-product--trust .price,
+.search-grid-trust .tno-card-product--trust .tno-card-price,
+.search-grid-trust .tno-card-product--trust .price {
   font-size: 0.9375rem;
   font-weight: 500;
   color: #ffffff;
@@ -8821,7 +8847,8 @@ body.template-collection .tno-card-product--trust .price,
 .product-grid-trust .tno-card-product__badge,
 body.template-collection .tno-card-product--trust .tno-card-product__badge,
 .collection-grid-trust .tno-card-product--trust .tno-card-product__badge,
-.product-related-trust .tno-card-product--trust .tno-card-product__badge {
+.product-related-trust .tno-card-product--trust .tno-card-product__badge,
+.search-grid-trust .tno-card-product--trust .tno-card-product__badge {
   position: absolute;
   top: 0.75rem;
   left: 0.75rem;
@@ -8859,7 +8886,8 @@ body.template-collection .tno-card-product--trust .tno-card-product__badge,
 .product-grid-trust .tno-card-product .card__actions,
 body.template-collection .tno-card-product--trust .card__actions,
 .collection-grid-trust .tno-card-product--trust .card__actions,
-.product-related-trust .tno-card-product--trust .card__actions {
+.product-related-trust .tno-card-product--trust .card__actions,
+.search-grid-trust .tno-card-product--trust .card__actions {
   margin-top: auto;
   padding-top: 0.5rem;
 }
@@ -8867,7 +8895,8 @@ body.template-collection .tno-card-product--trust .card__actions,
 .product-grid-trust .tno-card-product .tno-card-button,
 body.template-collection .tno-card-product--trust .tno-card-button,
 .collection-grid-trust .tno-card-product--trust .tno-card-button,
-.product-related-trust .tno-card-product--trust .tno-card-button {
+.product-related-trust .tno-card-product--trust .tno-card-button,
+.search-grid-trust .tno-card-product--trust .tno-card-button {
   width: 100%;
   padding: 0.625rem 1rem;
   font-size: 0.8125rem;
@@ -8885,7 +8914,8 @@ body.template-collection .tno-card-product--trust .tno-card-button,
 .product-grid-trust .tno-card-product .tno-card-button:hover,
 body.template-collection .tno-card-product--trust .tno-card-button:hover,
 .collection-grid-trust .tno-card-product--trust .tno-card-button:hover,
-.product-related-trust .tno-card-product--trust .tno-card-button:hover {
+.product-related-trust .tno-card-product--trust .tno-card-button:hover,
+.search-grid-trust .tno-card-product--trust .tno-card-button:hover {
   background: rgb(0 246 255 / 10%);
   box-shadow: 0 0 10px rgba(0, 255, 240, 0.3);
 }
@@ -8894,7 +8924,8 @@ body.template-collection .tno-card-product--trust .tno-card-button:hover,
 .product-grid-trust .tno-card-product .tno-card-variants,
 body.template-collection .tno-card-product--trust .tno-card-variants,
 .collection-grid-trust .tno-card-product--trust .tno-card-variants,
-.product-related-trust .tno-card-product--trust .tno-card-variants {
+.product-related-trust .tno-card-product--trust .tno-card-variants,
+.search-grid-trust .tno-card-product--trust .tno-card-variants {
   margin-top: 0.5rem;
   display: flex;
   flex-wrap: wrap;
@@ -8907,14 +8938,18 @@ body.template-collection .tno-card-product--trust .tno-card-variants,
    ========================================================= */
 
 /* Collection grid container - aligned with homepage container */
-.collection-grid-trust {
+/* Shared with search grid */
+.collection-grid-trust,
+.search-grid-trust {
   max-width: 1200px;
   margin: 0 auto;
   padding-inline: 1.5rem;
 }
 
 /* Collection grid inner - static responsive grid */
-.collection-grid-trust__inner {
+/* Shared with search grid */
+.collection-grid-trust__inner,
+.search-grid-trust__inner {
   display: grid;
   gap: 1rem;
   list-style: none;
@@ -8925,7 +8960,8 @@ body.template-collection .tno-card-product--trust .tno-card-variants,
 
 /* Desktop: 4 cards per row */
 @media screen and (width >= 990px) {
-  .collection-grid-trust__inner {
+  .collection-grid-trust__inner,
+  .search-grid-trust__inner {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1rem;
   }
@@ -8933,23 +8969,186 @@ body.template-collection .tno-card-product--trust .tno-card-variants,
 
 /* Mobile: 2 cards per row */
 @media screen and (max-width: 749px) {
-  .collection-grid-trust__inner {
+  .collection-grid-trust__inner,
+  .search-grid-trust__inner {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.75rem;
   }
 }
 
 /* Grid items */
-.collection-grid-trust__inner li {
+.collection-grid-trust__inner li,
+.search-grid-trust__inner li {
   list-style: none;
   margin: 0;
   width: 100%;
 }
 
 /* Ensure cards fill grid cells */
-.collection-grid-trust__inner .tno-card-product {
+.collection-grid-trust__inner .tno-card-product,
+.search-grid-trust__inner .tno-card-product {
   width: 100%;
   height: 100%;
+}
+
+/* =========================================================
+   SEARCH PAGE - TRUST Grid Overrides
+   Fix dimming issues caused by search template overlays
+   ========================================================= */
+
+/* Step 1: Completely disable ALL overlays on product-grid-container for search template */
+body.template-search .product-grid-container::before,
+body.template-search .product-grid-container::after {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  content: none !important;
+}
+
+/* Step 2: Disable overlays on template-search__results container */
+body.template-search .template-search__results::before,
+body.template-search .template-search__results::after {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  content: none !important;
+}
+
+/* Step 3: Ensure template-search__results has no opacity/filter issues */
+/* Note: z-index removed to prevent content from overlapping header when scrolling */
+body.template-search .template-search__results {
+  position: relative;
+  z-index: auto;
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Step 4: Ensure search-grid-trust is fully visible */
+/* Note: z-index removed to prevent content from overlapping header when scrolling */
+body.template-search .search-grid-trust {
+  position: relative;
+  z-index: auto;
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  background: transparent;
+}
+
+/* Step 5: Ensure search-grid-trust__inner is fully visible */
+body.template-search .search-grid-trust__inner {
+  position: relative;
+  z-index: auto;
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Step 6: Ensure TRUST cards and ALL their children are not dimmed */
+body.template-search .search-grid-trust .tno-card-product--trust,
+body.template-search .search-grid-trust .tno-card-product--trust * {
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Step 7: Ensure TRUST card background is correct */
+body.template-search .search-grid-trust .tno-card-product--trust {
+  position: relative;
+  z-index: auto;
+  background: rgb(15 15 18) !important;
+}
+
+/* Step 8: Ensure card images are fully visible */
+body.template-search .search-grid-trust .tno-card-product--trust img,
+body.template-search .search-grid-trust .tno-card-product--trust .placeholder-svg,
+body.template-search .search-grid-trust .tno-card-product--trust .tno-card-product__image-wrapper img,
+body.template-search .search-grid-trust .tno-card-product--trust .tno-card-product__image-wrapper .placeholder-svg {
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Step 9: Ensure card content (text, prices, links) are fully visible */
+body.template-search .search-grid-trust .tno-card-product--trust .card__heading,
+body.template-search .search-grid-trust .tno-card-product--trust .tno-card-title,
+body.template-search .search-grid-trust .tno-card-product--trust .card__heading a,
+body.template-search .search-grid-trust .tno-card-product--trust .tno-card-price,
+body.template-search .search-grid-trust .tno-card-product--trust .price,
+body.template-search .search-grid-trust .tno-card-product--trust .card__information,
+body.template-search .search-grid-trust .tno-card-product--trust .card__content,
+body.template-search .search-grid-trust .tno-card-product--trust .tno-card-product__content {
+  opacity: 1 !important;
+  color: #ffffff !important;
+}
+
+/* =========================================================
+   TNO – SEARCH PAGE: empty state for no results
+   ========================================================= */
+
+body.template-search .search-grid-trust__empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  padding: 2.5rem 1.5rem;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+body.template-search .search-grid-trust__empty-inner {
+  max-width: 520px;
+  text-align: center;
+}
+
+body.template-search .search-grid-trust__empty-title {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: clamp(1.4rem, 1.7vw, 1.8rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0 0 0.75rem 0;
+}
+
+body.template-search .search-grid-trust__empty-text,
+body.template-search .search-grid-trust__empty-hint {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0 0 0.25rem 0;
+}
+
+body.template-search .search-grid-trust__empty-hint {
+  margin-bottom: 0;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* =========================================================
+   TNO – SEARCH PAGE: disable scroll-trigger dimming
+   Disable animation opacity/transform/filter effects on search results
+   ========================================================= */
+
+/* Ensure template-search__results container has no opacity/filter */
+body.template-search .template-search__results {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* Disable scroll-trigger animation dimming on all search result items */
+body.template-search .template-search__results .scroll-trigger,
+body.template-search .template-search__results .scroll-trigger.animate--slide-in,
+body.template-search .template-search__results .scroll-trigger.animate--fade-in,
+body.template-search .template-search__results .scroll-trigger[class*="animate--"] {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+/* Ensure all children of scroll-trigger elements are also fully visible */
+body.template-search .template-search__results .scroll-trigger * {
+  opacity: 1 !important;
+  filter: none !important;
 }
 
 /* =========================================================
