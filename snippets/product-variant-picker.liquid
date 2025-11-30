@@ -28,8 +28,8 @@
         endif
       -%}
       {%- if picker_type == 'swatch' -%}
-        <fieldset class="js product-form__input product-form__input--swatch">
-          <legend class="form__label">
+        <fieldset class="js product-form__input product-form__input--swatch product-main-trust__variants-control">
+          <legend class="form__label product-main-trust__variants-label">
             {{ option.name }}:
             <span data-selected-value>
               {{- option.selected_value -}}
@@ -43,8 +43,8 @@
           %}
         </fieldset>
       {%- elsif picker_type == 'button' -%}
-        <fieldset class="js product-form__input product-form__input--pill">
-          <legend class="form__label">{{ option.name }}</legend>
+        <fieldset class="js product-form__input product-form__input--pill product-main-trust__variants-control product-main-trust__variants-pills">
+          <legend class="form__label product-main-trust__variants-label">{{ option.name }}</legend>
           {% render 'product-variant-options',
             product: product,
             option: option,
@@ -53,11 +53,11 @@
           %}
         </fieldset>
       {%- else -%}
-        <div class="product-form__input product-form__input--dropdown">
-          <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
+        <div class="product-form__input product-form__input--dropdown product-main-trust__variants-control">
+          <label class="form__label product-main-trust__variants-label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
             {{ option.name }}
           </label>
-          <div class="select">
+          <div class="select product-main-trust__variants-select">
             {%- if picker_type == 'swatch_dropdown' -%}
               <span
                 data-selected-value

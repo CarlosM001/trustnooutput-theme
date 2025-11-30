@@ -9676,6 +9676,103 @@ body.template-product .product-main-trust__meta-card--reviews .product-main-trus
 }
 
 /* =========================================================
+   TNO – PRODUCT PAGE: Variant Picker TRUST Style
+   ========================================================= */
+
+/* Wrapper */
+body.template-product .product-main-trust__variants {
+  margin-top: clamp(1.25rem, 1.5vw, 1.75rem);
+  display: grid;
+  gap: 0.75rem;
+}
+
+/* Label Style */
+body.template-product .product-main-trust__variants-label {
+  font-family: var(--tno-font-mono, var(--font-body-family));
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Control Wrapper */
+body.template-product .product-main-trust__variants-control {
+  width: 100%;
+}
+
+/* Select / Dropdown im Pill-Style */
+body.template-product .product-main-trust__variants-control .select,
+body.template-product .product-main-trust__variants-select .select,
+body.template-product .product-main-trust__variants-control select {
+  width: 100%;
+  border-radius: 999px;
+  background: rgb(10, 11, 16);
+  border: 1px solid rgba(0, 255, 255, 0.28);
+  padding-inline: 1rem;
+  padding-block: 0.65rem;
+  color: #ffffff;
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+}
+
+body.template-product .product-main-trust__variants-control .select__select {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding-inline: 0;
+}
+
+/* Fokus- und Hoverzustand */
+body.template-product .product-main-trust__variants-control .select:focus-within,
+body.template-product .product-main-trust__variants-control select:focus {
+  border-color: var(--tno-color-accent-cyan, #00f0ff);
+  box-shadow: 0 0 0 1px rgba(0, 240, 255, 0.45), 0 0 18px rgba(0, 240, 255, 0.55);
+  background: rgb(8, 10, 14);
+}
+
+/* Radio Pills Style */
+body.template-product .product-main-trust__variants-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+body.template-product .product-main-trust__variants-pills input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.template-product .product-main-trust__variants-pills label {
+  cursor: pointer;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 255, 255, 0.25);
+  padding: 0.4rem 0.9rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgb(10, 11, 16);
+  transition: border-color 150ms ease, background-color 150ms ease, box-shadow 150ms ease, color 150ms ease;
+}
+
+body.template-product .product-main-trust__variants-pills input[type="radio"]:checked + label {
+  border-color: var(--tno-color-accent-cyan, #00f0ff);
+  background: radial-gradient(circle at 0% 0%, rgba(0, 240, 255, 0.18), transparent 55%),
+              rgb(8, 10, 14);
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.45);
+}
+
+body.template-product .product-main-trust__variants-pills label:hover {
+  border-color: rgba(0, 255, 255, 0.6);
+}
+
+/* =========================================================
    ÄNDERUNGEN ZUSAMMENFASSUNG / CHANGES SUMMARY
    =========================================================
 
@@ -9718,3 +9815,12 @@ body.template-product .product-main-trust__meta-card--reviews .product-main-trus
    ✅ Grid-Layout: 2 Desktop, 2 Mobile (updated 2025-01-30)
    ✅ Neon cyan glow effect on arrow buttons
    ========================================================= */
+
+/* TNO – PRODUCT PAGE: ensure variant selects are clickable */
+body.template-product .product-main-trust__variants-control,
+body.template-product .product-main-trust__variants-select,
+body.template-product .product-main-trust__variants-control select,
+body.template-product .product-main-trust__variants-control .select__select {
+  pointer-events: auto;
+  cursor: pointer;
+}
