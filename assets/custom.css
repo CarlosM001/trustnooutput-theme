@@ -8473,3 +8473,23 @@ body.template-index .footer {
     border-top: none;
   }
 }
+
+/* =========================================================
+   EMERGENCY FIX – Make sure product images are visible
+   ========================================================= */
+
+   .tno-card-product--trust .card__media,
+   .card--product .card__media {
+     opacity: 1 !important;
+     visibility: visible !important;
+     display: block !important;
+     height: auto !important;
+   }
+
+   .tno-card-product--trust .card__media img,
+   .card--product .card__media img {
+     display: block !important;
+     width: 100% !important;
+     height: auto !important;
+     object-fit: cover !important;
+   }
