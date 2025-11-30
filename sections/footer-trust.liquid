@@ -394,7 +394,7 @@
   assign current_year = 'now' | date: '%Y'
 -%}
 
-<footer class="site-footer" id="site-footer">
+<footer class="site-footer" id="site-footer" role="contentinfo">
   <div class="site-footer__container">
     {%- comment %} System Status Display {%- endcomment %}
     <div class="footer-status">
@@ -411,7 +411,8 @@
       {%- comment %} Shop Column {%- endcomment %}
       <div class="footer-column">
         <h3 class="footer-column__title">Shop</h3>
-        <ul class="footer-column__list">
+        <nav aria-label="Shop links">
+          <ul class="footer-column__list">
           <li>
             <a href="{{ routes.collections_url }}/apparel" class="footer-column__link">Apparel</a>
           </li>
@@ -426,13 +427,15 @@
           <li>
             <a href="{{ routes.all_products_collection_url }}" class="footer-column__link">All</a>
           </li>
-        </ul>
+          </ul>
+        </nav>
       </div>
 
       {%- comment %} Info Column {%- endcomment %}
       <div class="footer-column">
         <h3 class="footer-column__title">Info</h3>
-        <ul class="footer-column__list">
+        <nav aria-label="Information links">
+          <ul class="footer-column__list">
           <li>
             <a href="/pages/shipping" class="footer-column__link">Shipping</a>
           </li>
@@ -445,13 +448,15 @@
           <li>
             <a href="/pages/contact" class="footer-column__link">Contact</a>
           </li>
-        </ul>
+          </ul>
+        </nav>
       </div>
 
       {%- comment %} Legal Column {%- endcomment %}
       <div class="footer-column">
         <h3 class="footer-column__title">Legal</h3>
-        <ul class="footer-column__list">
+        <nav aria-label="Legal links">
+          <ul class="footer-column__list">
           <li>
             <a href="{{ shop.privacy_policy.url }}" class="footer-column__link">Privacy</a>
           </li>
@@ -464,19 +469,21 @@
           <li>
             <a href="{{ shop.shipping_policy.url }}" class="footer-column__link">Shipping Policy</a>
           </li>
-        </ul>
+          </ul>
+        </nav>
       </div>
 
       {%- comment %} Social Column (Terminal Commands) {%- endcomment %}
       <div class="footer-column">
         <h3 class="footer-column__title">Connect</h3>
-        <div class="footer-social">
+        <div class="footer-social" aria-label="Social media links">
           {%- if section.settings.instagram_url != blank -%}
             <a
               href="{{ section.settings.instagram_url }}"
               class="footer-social__link"
               target="_blank"
               rel="noopener"
+              aria-label="Instagram"
             >
               connect.instagram
             </a>
@@ -488,6 +495,7 @@
               class="footer-social__link"
               target="_blank"
               rel="noopener"
+              aria-label="Twitter"
             >
               follow.twitter
             </a>
@@ -499,6 +507,7 @@
               class="footer-social__link"
               target="_blank"
               rel="noopener"
+              aria-label="YouTube"
             >
               watch.youtube
             </a>
@@ -510,6 +519,7 @@
               class="footer-social__link"
               target="_blank"
               rel="noopener"
+              aria-label="TikTok"
             >
               view.tiktok
             </a>
@@ -522,7 +532,7 @@
     {%- if show_newsletter -%}
       <div class="footer-newsletter">
         <h3 class="footer-newsletter__title">Subscribe</h3>
-        <form class="footer-newsletter__form" action="/contact#newsletter" method="post">
+        <form class="footer-newsletter__form" action="/contact#newsletter" method="post" aria-label="Newsletter signup">
           <input type="hidden" name="contact[tags]" value="newsletter">
           <input
             type="email"

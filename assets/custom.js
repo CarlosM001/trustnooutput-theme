@@ -204,6 +204,35 @@
   }
 
   /**
+   * Initialize Scroll Reveal Animation
+   *
+   * Uses IntersectionObserver for efficient scroll-triggered animations.
+   * Moved from inline script in manifesto-trust.liquid for better performance.
+   */
+  function initTnoScrollReveal() {
+    const revealElements = document.querySelectorAll('[data-scroll-reveal]');
+
+    if (revealElements.length === 0) {
+      return; // No scroll reveal elements present on this page
+    }
+
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '0px 0px -50px 0px',
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, observerOptions);
+
+    revealElements.forEach((el) => observer.observe(el));
+  }
+
+  /**
    * Main initialization function
    *
    * Runs when DOM is ready and initializes all TNO features.
@@ -218,6 +247,7 @@
     initTnoMobileMenu();
     initTnoGlitchEffects();
     initTnoCartUpdates();
+    initTnoScrollReveal();
 
     // console.log('[TNO] Theme initialization complete');
   }
