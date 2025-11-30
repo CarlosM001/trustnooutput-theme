@@ -9440,6 +9440,148 @@ body.template-search .template-search__results .scroll-trigger * {
 }
 
 /* =========================================================
+   TNO – PRODUCT PAGE (TRUST Layout)
+   ========================================================= */
+
+body.template-product .product-main-trust {
+  padding-top: 3.5rem;
+  padding-bottom: 4rem;
+}
+
+body.template-product .product-main-trust__container {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+body.template-product .product-main-trust__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+/* Mobile: stacked */
+@media (max-width: 989px) {
+  body.template-product .product-main-trust__layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.25rem;
+  }
+
+  body.template-product .product-main-trust__gallery {
+    order: 0;
+  }
+
+  body.template-product .product-main-trust__info {
+    order: 1;
+  }
+}
+
+/* Title / price / meta */
+body.template-product .product-main-trust__title {
+  font-family: var(--tno-font-heading, system-ui, sans-serif);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: clamp(1.6rem, 2.1vw, 2.2rem);
+  margin-bottom: 0.75rem;
+  color: #ffffff;
+}
+
+body.template-product .product-main-trust__price {
+  margin-bottom: 1.25rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+body.template-product .product-main-trust__meta {
+  margin-bottom: 1.5rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Variants & form controls */
+body.template-product .product-main-trust__variants,
+body.template-product .product-main-trust__purchase {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+body.template-product .product-main-trust__variants select,
+body.template-product .product-main-trust__variants .select__select,
+body.template-product .product-main-trust__variants .product-form__input,
+body.template-product .product-main-trust__purchase .quantity__input {
+  background: rgb(12 15 20);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+/* Focus states for form inputs */
+body.template-product .product-main-trust__variants select:focus,
+body.template-product .product-main-trust__variants .select__select:focus,
+body.template-product .product-main-trust__variants .product-form__input:focus,
+body.template-product .product-main-trust__purchase .quantity__input:focus {
+  outline: none;
+  border-color: var(--tno-accent-cyan, #00f0ff);
+  box-shadow: 0 0 0 2px rgba(0, 240, 255, 0.2);
+}
+
+/* TRUST primary button – reuse card look */
+body.template-product .tno-button-primary,
+body.template-product .product-main-trust__add-to-cart {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--tno-accent-cyan, #00f0ff);
+  background: transparent;
+  color: #ffffff;
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.7);
+  transition: box-shadow 160ms ease-out, background-color 160ms ease-out,
+              border-color 160ms ease-out, transform 160ms ease-out;
+}
+
+body.template-product .tno-button-primary:hover,
+body.template-product .product-main-trust__add-to-cart:hover {
+  background: rgba(0, 240, 255, 0.08);
+  box-shadow: 0 0 18px rgba(0, 240, 255, 0.8);
+  transform: translateY(-1px);
+}
+
+/* Express checkout: smaller, less dominant */
+body.template-product .product-main-trust__express-checkout {
+  margin-top: 0.5rem;
+}
+
+body.template-product .product-main-trust__express-checkout button {
+  border-radius: 999px !important;
+  font-size: 0.8rem !important;
+}
+
+/* Versuch, den Dynamic Checkout Button an das Theme anzupassen */
+body.template-product .shopify-payment-button__button--unbranded {
+  background-color: transparent !important;
+  border: 1px solid var(--tno-accent-cyan, #00f0ff) !important;
+  color: #ffffff !important;
+  border-radius: 999px !important;
+}
+
+/* Falls es der lila "Shop Pay" Button ist, ist er schwer zu ändern.
+   Oft ist es besser, ihn in den Sektionseinstellungen im Editor einfach auszuschalten,
+   wenn er nicht zum Design passt. */
+
+/* =========================================================
    ÄNDERUNGEN ZUSAMMENFASSUNG / CHANGES SUMMARY
    =========================================================
 

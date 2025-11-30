@@ -15,7 +15,7 @@
 {% endcomment %}
 <section
   id="MainProduct-{{ section.id }}"
-  class="brand-product section-{{ section.id }}-padding"
+  class="product-main-trust brand-product section-{{ section.id }}-padding"
   data-section="{{ section.id }}"
   data-product-id="{{ product.id }}"
 >
@@ -66,10 +66,11 @@
     </a>
   </div>
 
-  <div class="page-width">
-    <div class="brand-product__grid">
-      {%- comment -%} ========== LEFT COLUMN: MEDIA ========== {%- endcomment -%}
-      <div class="brand-product__media-column">
+  {%- comment -%} TRUST Layout Wrapper {%- endcomment -%}
+  <div class="product-main-trust__container">
+    <div class="product-main-trust__layout">
+        {%- comment -%} ========== LEFT COLUMN: MEDIA ========== {%- endcomment -%}
+        <div class="product-main-trust__gallery brand-product__media-column">
         {%- comment -%} Main Featured Media {%- endcomment -%}
         <div class="brand-product__media-main" id="BrandMediaMain-{{ section.id }}">
           {%- comment -%} Label System corner hook (no content; styling via CSS) {%- endcomment -%}
@@ -121,10 +122,10 @@
             {%- endfor -%}
           </div>
         {%- endif -%}
-      </div>
+        </div>
 
-      {%- comment -%} ========== RIGHT COLUMN: INFO ========== {%- endcomment -%}
-      <div class="brand-product__info-column">
+        {%- comment -%} ========== RIGHT COLUMN: INFO ========== {%- endcomment -%}
+        <div class="product-main-trust__info brand-product__info-column">
         {%- comment -%} Eyebrow: Badges {%- endcomment -%}
         <div class="brand-product__eyebrow">
           <span class="brand-badge brand-badge--primary">{{ product.vendor | escape }}</span>
@@ -134,15 +135,15 @@
         </div>
 
         {%- comment -%} Product Title (H1) {%- endcomment -%}
-        <h1 class="brand-product__title">{{ product.title | escape }}</h1>
+        <h1 class="product-main-trust__title brand-product__title">{{ product.title | escape }}</h1>
 
         {%- comment -%} Price Block {%- endcomment -%}
-        <div class="brand-product__price-block">
+        <div class="product-main-trust__price brand-product__price-block">
           {% render 'price', product: product, use_variant: true, show_badges: true %}
         </div>
 
         {%- comment -%} Shipping Meta Row {%- endcomment -%}
-        <div class="brand-product__shipping-meta">
+        <div class="product-main-trust__meta brand-product__shipping-meta">
           <span>Worldwide shipping</span>
           <span class="brand-dot">•</span>
           <span>14-day returns</span>
@@ -163,7 +164,7 @@
 
             {%- comment -%} Variant Picker: Chip/Pill Style {%- endcomment -%}
             {%- unless product.has_only_default_variant -%}
-              <div class="brand-product__variants">
+              <div class="product-main-trust__variants brand-product__variants">
                 {% render 'product-variant-picker',
                   product: product,
                   block: section.blocks[0],
@@ -173,13 +174,13 @@
             {%- endunless -%}
 
             {%- comment -%} CTA Container (can be sticky on mobile) {%- endcomment -%}
-            <div class="brand-product__cta-container tno-product-actions">
+            <div class="product-main-trust__purchase brand-product__cta-container tno-product-actions">
               {%- comment -%} Primary CTA: Add to Cart {%- endcomment -%}
               <div class="brand-product__cta-row">
                 <button
                   type="submit"
                   name="add"
-                  class="brand-button brand-button--primary brand-button--full"
+                  class="product-main-trust__add-to-cart tno-button-primary brand-button brand-button--primary brand-button--full"
                   {% if product.selected_or_first_available_variant.available == false %}
                     disabled
                   {% endif %}
@@ -196,7 +197,7 @@
 
               {%- comment -%} Express Checkout Buttons {%- endcomment -%}
               {%- if section.settings.show_dynamic_checkout -%}
-                <div class="brand-product__express-checkout">
+                <div class="product-main-trust__express-checkout brand-product__express-checkout">
                   {{ form | payment_button }}
                 </div>
               {%- endif -%}
@@ -308,6 +309,7 @@
               {%- endif -%}
             </div>
           </details>
+        </div>
         </div>
       </div>
     </div>
@@ -443,7 +445,7 @@
         </section>
       {%- endif -%}
     </div>
-  </div>
+    </div>
 
   {%- comment -%} Minimal JS for Thumbnail Switching {%- endcomment -%}
   <script>
