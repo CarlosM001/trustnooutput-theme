@@ -400,23 +400,6 @@
   }
 }
 
-/* =========================================================
-   TNO – HEADER SEARCH: UNIFIED DESKTOP & MOBILE STYLING
-   Single source of truth - Desktop matches Mobile 1:1
-   ========================================================= */
-
-/*
-   NOTE: All other .tno-search rules in this file are intentionally
-   overridden by the final block at the end of this file.
-
-   Mobile reference values applied to desktop:
-   - Container: 46px height (48px mobile), pill shape, cyan border glow
-   - Input: transparent bg, white text, flex grow
-   - Button: 38x38px (42x42px mobile) cyan gradient circle, dark icon
-   - Background: rgba(0,0,0,0.5) semi-transparent
-   - Focus: single glow on container only
-*/
-
 /* ==========================================================================
    TRUST.NO.OUTPUT — custom.css (CLEAN)
    ========================================================================== */
@@ -2806,12 +2789,8 @@ button.shopify-payment-button__button--unbranded {
     box-shadow: 0 0 10px rgb(255 0 255 / 50%);
   }
 
-  /* Desktop search field styling */
+  /* Desktop search field styling - layout constraints only */
   .tno-header__desktop-utility .tno-search {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-
     /* Ensure cart icon stays visible on desktop: limit search width and let it shrink */
     flex: 1 1 auto;
     max-width: clamp(220px, 24vw, 360px);
