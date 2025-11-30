@@ -364,6 +364,7 @@
    * Related Products Carousel - TRUST Style
    * Desktop: 4 cards per view, slide by 4
    * Mobile: 2 cards per view, slide by 2
+   * Controls are hidden if totalCards <= cardsPerView
    */
   function initTnoRelatedProductsCarousel() {
     const carousels = document.querySelectorAll('.product-related-trust');
@@ -373,17 +374,31 @@
 
     carousels.forEach((carousel) => {
       const track = carousel.querySelector('.product-related-trust__grid');
+      const controlsWrapper = carousel.querySelector('.product-related-trust__controls');
       const prevBtn = carousel.querySelector('.product-related-trust__arrow--prev');
       const nextBtn = carousel.querySelector('.product-related-trust__arrow--next');
 
-      if (!track || !prevBtn || !nextBtn) {
+      if (!track || !prevBtn || !nextBtn || !controlsWrapper) {
         return;
       }
 
-      const getSlideAmount = () => {
-        const isDesktop = window.matchMedia('(width >= 990px)').matches;
-        const cardsPerView = isDesktop ? 4 : 2;
+      // Count total TRUST cards
+      const totalCards = track.querySelectorAll('.tno-card-product--trust').length;
 
+      // Determine cards per view based on screen size
+      const isDesktop = window.matchMedia('(width >= 990px)').matches;
+      const cardsPerView = isDesktop ? 4 : 2;
+
+      // Hide controls if totalCards <= cardsPerView
+      if (totalCards <= cardsPerView) {
+        controlsWrapper.classList.add('tno-slider-controls--hidden');
+        return; // Don't add event listeners if controls are hidden
+      }
+
+      // Remove hidden class if it exists (e.g., after resize)
+      controlsWrapper.classList.remove('tno-slider-controls--hidden');
+
+      const getSlideAmount = () => {
         const firstItem = track.querySelector('.product-related-trust__item');
         if (!firstItem) {
           return 0;
@@ -420,6 +435,7 @@
    * Latest Drops section carousel: Desktop shows 4 per row, Mobile shows 2 per row
    * Desktop: slides by 4 cards per click, Mobile: slides by 2 cards per click
    * Arrow buttons positioned above grid (top-right)
+   * Controls are hidden if totalCards <= cardsPerView
    */
   function initTnoLatestDropsCarousel() {
     const carousels = document.querySelectorAll('.tno-latest-drops');
@@ -431,12 +447,31 @@
       const track = carousel.querySelector('.tno-latest-drops__track');
       // Use new selectors for arrow buttons positioned above grid
       const section = carousel.closest('.product-grid-trust');
+      const controlsWrapper = section?.querySelector('.product-grid-trust__controls');
       const prevBtn = section?.querySelector('.product-grid-trust__arrow--prev');
       const nextBtn = section?.querySelector('.product-grid-trust__arrow--next');
 
-      if (!track || !prevBtn || !nextBtn) {
+      if (!track || !prevBtn || !nextBtn || !controlsWrapper) {
         return;
       }
+
+      // Count total TRUST cards
+      const totalCards = track.querySelectorAll('.tno-card-product--trust').length;
+
+      // Determine cards per view based on screen size
+      // Desktop (≥990px): 4 cards per row, slide by 4
+      // Mobile (≤749px): 2 cards per row, slide by 2
+      const isDesktop = window.innerWidth >= 990;
+      const cardsPerView = isDesktop ? 4 : 2;
+
+      // Hide controls if totalCards <= cardsPerView
+      if (totalCards <= cardsPerView) {
+        controlsWrapper.classList.add('tno-slider-controls--hidden');
+        return; // Don't add event listeners if controls are hidden
+      }
+
+      // Remove hidden class if it exists (e.g., after resize)
+      controlsWrapper.classList.remove('tno-slider-controls--hidden');
 
       const getSlideAmount = () => {
         const firstItem = track.querySelector('.tno-latest-drops__item');
@@ -447,12 +482,6 @@
         const itemWidth = firstItem.offsetWidth;
         const styles = window.getComputedStyle(track);
         const gap = parseFloat(styles.columnGap || styles.gap || '16') || 16;
-
-        // Determine cards per view based on screen size
-        // Desktop (≥990px): 4 cards per row, slide by 4
-        // Mobile (≤749px): 2 cards per row, slide by 2
-        const isDesktop = window.innerWidth >= 990;
-        const cardsPerView = isDesktop ? 4 : 2;
 
         // Calculate scroll amount: cardsPerView items + gaps between them
         return itemWidth * cardsPerView + gap * (cardsPerView - 1);

@@ -8987,6 +8987,11 @@ body.template-collection .tno-card-product--trust .tno-card-variants,
   margin-bottom: 2rem;
 }
 
+/* Hide slider controls when not needed (totalCards <= cardsPerView) */
+.tno-slider-controls--hidden {
+  display: none !important;
+}
+
 /* Arrow buttons - matching homepage style */
 .product-related-trust__arrow {
   width: 40px;
