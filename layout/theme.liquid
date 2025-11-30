@@ -63,10 +63,14 @@
     {% # theme-check-enable %}
 
     <title>
-      {{ page_title }}
-      {%- if current_tags %} – tagged "{{ current_tags | join: ', ' }}"{% endif -%}
-      {%- if current_page != 1 %} – Page {{ current_page }}{% endif -%}
-      {%- unless page_title contains shop.name %} – {{ shop.name }}{% endunless -%}
+      {%- if seo_title != blank -%}
+        {{ seo_title }}
+      {%- else -%}
+        {{ page_title }}
+        {%- if current_tags %} – tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+        {%- if current_page != 1 %} – Page {{ current_page }}{% endif -%}
+        {%- unless page_title contains shop.name %} – {{ shop.name }}{% endunless -%}
+      {%- endif -%}
     </title>
 
     {%- if page_description -%}
@@ -74,6 +78,75 @@
     {%- endif -%}
 
     {% render 'meta-tags' %}
+
+    {%- comment -%} Global Structured Data (JSON-LD) {%- endcomment -%}
+    {%- liquid
+      # Build social media URLs array (filter out blanks)
+      assign social_urls = ''
+      if settings.social_instagram_link != blank
+        assign social_urls = social_urls | append: settings.social_instagram_link | append: '|'
+      endif
+      if settings.social_twitter_link != blank
+        assign social_urls = social_urls | append: settings.social_twitter_link | append: '|'
+      endif
+      if settings.social_youtube_link != blank
+        assign social_urls = social_urls | append: settings.social_youtube_link | append: '|'
+      endif
+      if settings.social_tiktok_link != blank
+        assign social_urls = social_urls | append: settings.social_tiktok_link | append: '|'
+      endif
+      if settings.social_facebook_link != blank
+        assign social_urls = social_urls | append: settings.social_facebook_link | append: '|'
+      endif
+      if settings.social_pinterest_link != blank
+        assign social_urls = social_urls | append: settings.social_pinterest_link | append: '|'
+      endif
+    -%}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": {{ shop.name | json }},
+      "url": {{ shop.url | json }}{% if settings.logo != blank %},
+      "logo": {
+        "@type": "ImageObject",
+        "url": {{ settings.logo | image_url: width: 400 | prepend: 'https:' | json }},
+        "width": 400,
+        "height": {{ 400 | divided_by: settings.logo.aspect_ratio | round }}
+      }{% endif %}{% if social_urls != blank %},
+      "sameAs": [
+        {%- assign social_array = social_urls | split: '|' -%}
+        {%- for social_url in social_array -%}
+          {%- if social_url != blank -%}
+            {{ social_url | json }}{% unless forloop.last %},{% endunless %}
+          {%- endif -%}
+        {%- endfor -%}
+      ]{% endif %}
+    }
+    </script>
+
+    {%- comment -%} WebSite + SearchAction (Homepage only) {%- endcomment -%}
+    {%- if request.page_type == 'index' -%}
+      {%- liquid
+        assign search_action_target = request.origin | append: routes.search_url | append: '?q={search_term_string}'
+      -%}
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": {{ shop.name | json }},
+        "url": {{ shop.url | json }},
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": {{ search_action_target | json }}
+          },
+          "query-input": "required name=search_term_string"
+        }
+      }
+      </script>
+    {%- endif -%}
 
     {%- comment -%} Core JS (defer) {%- endcomment -%}
     <script src="{{ 'constants.js' | asset_url }}" defer></script>
