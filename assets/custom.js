@@ -413,24 +413,32 @@
     });
   }
 
+
   /**
-   * Initialize TNO Home Product Grid Carousel
-   * Mobile: scrolls 2 cards | Desktop: scrolls 4 cards
+   * Initialize TNO Latest Drops Carousel
+   * Latest Drops section carousel: Desktop shows 4 per row, Mobile shows 2 per row
+   * Desktop: slides by 4 cards per click, Mobile: slides by 2 cards per click
+   * Arrow buttons positioned above grid (top-right)
    */
-  function initTnoHomeProductGridCarousel() {
-    const grids = document.querySelectorAll('.tno-home-product-grid');
+  function initTnoLatestDropsCarousel() {
+    const carousels = document.querySelectorAll('.tno-latest-drops');
+    if (!carousels.length) {
+      return;
+    }
 
-    grids.forEach((grid) => {
-      const track = grid.querySelector('.tno-home-product-grid__track');
-      const prevBtn = grid.querySelector('.tno-home-product-grid__control--prev');
-      const nextBtn = grid.querySelector('.tno-home-product-grid__control--next');
+    carousels.forEach((carousel) => {
+      const track = carousel.querySelector('.tno-latest-drops__track');
+      // Use new selectors for arrow buttons positioned above grid
+      const section = carousel.closest('.product-grid-trust');
+      const prevBtn = section?.querySelector('.product-grid-trust__arrow--prev');
+      const nextBtn = section?.querySelector('.product-grid-trust__arrow--next');
 
-      if (!track) {
+      if (!track || !prevBtn || !nextBtn) {
         return;
       }
 
-      const getScrollAmount = () => {
-        const firstItem = track.querySelector('.tno-home-product-grid__item');
+      const getSlideAmount = () => {
+        const firstItem = track.querySelector('.tno-latest-drops__item');
         if (!firstItem) {
           return 0;
         }
@@ -439,16 +447,18 @@
         const styles = window.getComputedStyle(track);
         const gap = parseFloat(styles.columnGap || styles.gap || '16') || 16;
 
-        // Determine items per slide based on screen size
-        const isMobile = window.matchMedia('(max-width: 749px)').matches;
-        const itemsPerSlide = isMobile ? 2 : 4;
+        // Determine cards per view based on screen size
+        // Desktop (≥990px): 4 cards per row, slide by 4
+        // Mobile (≤749px): 2 cards per row, slide by 2
+        const isDesktop = window.innerWidth >= 990;
+        const cardsPerView = isDesktop ? 4 : 2;
 
-        // Calculate scroll amount: itemsPerSlide items + gaps between them
-        return itemWidth * itemsPerSlide + gap * (itemsPerSlide - 1);
+        // Calculate scroll amount: cardsPerView items + gaps between them
+        return itemWidth * cardsPerView + gap * (cardsPerView - 1);
       };
 
       const scrollBySlide = (direction) => {
-        const amount = getScrollAmount();
+        const amount = getSlideAmount();
         if (!amount) {
           return;
         }
@@ -459,71 +469,8 @@
         });
       };
 
-      if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-          scrollBySlide(-1);
-        });
-      }
-
-      if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-          scrollBySlide(1);
-        });
-      }
-
-      // Touch/swipe support for mobile
-      let isDown = false;
-      let startX;
-      let scrollLeft;
-
-      track.addEventListener('mousedown', (e) => {
-        isDown = true;
-        track.style.cursor = 'grabbing';
-        startX = e.pageX - track.offsetLeft;
-        scrollLeft = track.scrollLeft;
-      });
-
-      track.addEventListener('mouseleave', () => {
-        isDown = false;
-        track.style.cursor = 'grab';
-      });
-
-      track.addEventListener('mouseup', () => {
-        isDown = false;
-        track.style.cursor = 'grab';
-      });
-
-      track.addEventListener('mousemove', (e) => {
-        if (!isDown) {
-          return;
-        }
-        e.preventDefault();
-        const x = e.pageX - track.offsetLeft;
-        const walk = (x - startX) * 2; // Scroll speed multiplier
-        track.scrollLeft = scrollLeft - walk;
-      });
-
-      // Touch events for mobile swipe
-      let touchStartX = 0;
-      let touchScrollLeft = 0;
-
-      track.addEventListener('touchstart', (e) => {
-        touchStartX = e.touches[0].pageX - track.offsetLeft;
-        touchScrollLeft = track.scrollLeft;
-      }, { passive: true });
-
-      track.addEventListener('touchmove', (e) => {
-        if (!touchStartX) {
-          return;
-        }
-        const x = e.touches[0].pageX - track.offsetLeft;
-        const walk = (x - touchStartX) * 2;
-        track.scrollLeft = touchScrollLeft - walk;
-      }, { passive: true });
-
-      track.addEventListener('touchend', () => {
-        touchStartX = 0;
-      });
+      prevBtn.addEventListener('click', () => scrollBySlide(-1));
+      nextBtn.addEventListener('click', () => scrollBySlide(1));
     });
   }
 
@@ -706,7 +653,7 @@
     initTnoScrollReveal();
     initTnoProductMobileNavScroll();
     initTnoRelatedProductsCarousel();
-    initTnoHomeProductGridCarousel();
+    initTnoLatestDropsCarousel();
     initTnoTrustCardInteractions();
     initTnoFooterAccordion();
 
@@ -727,4 +674,11 @@
 
   // Expose init function globally for manual re-initialization if needed
   window.initTnoTheme = initTnoTheme;
+
+  // Re-initialize carousel when section loads in theme editor
+  document.addEventListener('shopify:section:load', (event) => {
+    if (event.detail.sectionId && document.querySelector('.tno-latest-drops')) {
+      initTnoLatestDropsCarousel();
+    }
+  });
 })();

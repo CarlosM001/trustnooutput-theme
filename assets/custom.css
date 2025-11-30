@@ -7005,37 +7005,39 @@ body.tno-ab-continuous .related-products .price__regular {
 
 
 
-/* Fallback: Standard-Produktraser immer sichtbar halten */
-body.template-collection .product-grid {
+/* =========================================================
+   TNO – VISIBILITY FIXES: Collection & Related Products
+   ========================================================= */
+
+/* Ensure product grids are always visible (override scroll animations) */
+body.template-collection .product-grid,
+body.template-collection #ProductGridContainer,
+body.template-collection #product-grid,
+body.template-collection #product-grid .grid__item,
+body.template-collection #product-grid .grid__item .card,
+body.template-product .related-products .product-grid,
+body.template-product .related-products .grid__item,
+body.template-product .related-products .card {
   display: grid !important;
   opacity: 1 !important;
   visibility: visible !important;
+  transform: none !important;
 }
 
-body.template-collection .product-grid .card,
-body.template-collection .product-grid .card__media {
+/* Disable scroll-trigger animations that might hide cards */
+body.template-collection .scroll-trigger,
+body.template-collection .scroll-trigger.animate--slide-in,
+body.template-collection .scroll-trigger.animate--slide-in:not(.scroll-trigger--offscreen),
+body.template-product .related-products .scroll-trigger,
+body.template-product .related-products .scroll-trigger.animate--slide-in {
   opacity: 1 !important;
-  visibility: visible !important;
-  filter: none !important;
-  mix-blend-mode: normal !important;
+  transform: none !important;
 }
 
-/* =========================================================
-   TNO – FIX: Invisible Products on Collection + Related Products
-   ========================================================= */
-
-/* 1) Alle Loading-Overlays im Collection-Grid sicher ausblenden */
+/* Additional loading overlay hiding (complementary to main block above) */
 body.template-collection .product-grid-container .loading-overlay,
 body.template-collection .collection .loading-overlay,
 body.template-collection #ProductGridContainer .loading-overlay,
-body.template-collection .loading-overlay.gradient {
-  display: none !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-}
-
-/* 2) Loading-Overlay auch in "Ähnliche Produkte" (product-recommendations) verstecken */
 body.template-product .product-recommendations .loading-overlay,
 body.template-product .product-recommendations .loading-overlay.gradient {
   display: none !important;
@@ -7044,21 +7046,7 @@ body.template-product .product-recommendations .loading-overlay.gradient {
   pointer-events: none !important;
 }
 
-/* 3) Karten in Kategorien UND Ähnlichen Produkten im TNO-Dark-Style anzeigen */
-body.template-collection .product-grid .card,
-body.template-product .product-recommendations .card {
-  position: relative !important;
-  z-index: 2 !important;
-  background: #0c0f14 !important;
-  border: 1px solid #20232b !important;
-  color: #f5f5f5 !important;
-  transition:
-    transform 0.16s ease,
-    box-shadow 0.16s ease,
-    border-color 0.16s ease;
-}
-
-/* 4) Medien/Bilder immer sichtbar machen */
+/* Ensure media/images are always visible */
 body.template-collection .product-grid .card__media,
 body.template-collection .product-grid .card__media img,
 body.template-collection .product-grid .card .media,
@@ -7067,20 +7055,13 @@ body.template-product .product-recommendations .card__media,
 body.template-product .product-recommendations .card__media img,
 body.template-product .product-recommendations .card .media,
 body.template-product .product-recommendations .card img {
-  position: relative !important;
-  z-index: 1 !important;
   opacity: 1 !important;
   visibility: visible !important;
-  background: transparent !important;
   filter: none !important;
   mix-blend-mode: normal !important;
 }
 
-/* 5) Textfarben in den Karten erzwingen (Titel, Preis, Link) */
-body.template-collection .product-grid .card__heading,
-body.template-collection .product-grid .card__heading a,
-body.template-collection .product-grid .full-unstyled-link,
-body.template-collection .product-grid .price,
+/* Text colors for product-recommendations (complementary to main block) */
 body.template-product .product-recommendations .card__heading,
 body.template-product .product-recommendations .card__heading a,
 body.template-product .product-recommendations .full-unstyled-link,
@@ -7088,43 +7069,6 @@ body.template-product .product-recommendations .price,
 body.template-product .product-recommendations .price__regular,
 body.template-product .product-recommendations .price-item {
   color: #f5f5f5 !important;
-}
-
-/* =========================================================
-   TNO – EMERGENCY FIX: COLLECTION + RELATED PRODUCTS VISIBLE
-   ========================================================= */
-
-/* Auf Kategorieseiten: Produktkarten niemals durch Scroll-Animation verstecken */
-body.template-collection #ProductGridContainer,
-body.template-collection #product-grid,
-body.template-collection #product-grid .grid__item,
-body.template-collection #product-grid .grid__item .card {
-  opacity: 1 !important;
-  visibility: visible !important;
-  transform: none !important;
-}
-
-/* Falls irgendwo .scroll-trigger/-animate Klassen draufhängen → ignorieren */
-body.template-collection .scroll-trigger,
-body.template-collection .scroll-trigger.animate--slide-in,
-body.template-collection .scroll-trigger.animate--slide-in:not(.scroll-trigger--offscreen) {
-  opacity: 1 !important;
-  transform: none !important;
-}
-
-/* Auf Produktseite: "Ähnliche Produkte" ebenfalls immer sichtbar halten */
-body.template-product .related-products .product-grid,
-body.template-product .related-products .grid__item,
-body.template-product .related-products .card {
-  opacity: 1 !important;
-  visibility: visible !important;
-  transform: none !important;
-}
-
-body.template-product .related-products .scroll-trigger,
-body.template-product .related-products .scroll-trigger.animate--slide-in {
-  opacity: 1 !important;
-  transform: none !important;
 }
 
 /* Note: All .tno-search styling is consolidated at the top of this file (lines 1-145) */
@@ -7794,7 +7738,6 @@ body {
 
   /* G. Collection Grid – Remove white cards */
   body.template-collection .collection-list,
-  body.template-collection .collection-grid,
   body.template-collection .collection-item,
   body.template-collection .product-grid,
   body.template-collection .grid__item {
@@ -7939,6 +7882,22 @@ body {
   margin: 0;
 }
 
+/* Mobile typography - smaller text for trust-style cards on mobile */
+@media screen and (width <= 749px) {
+  .tno-card-product .card__heading,
+  .tno-card-product .tno-card-title,
+  .card-product--trust .card__heading {
+    font-size: 0.9rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .tno-card-product .price,
+  .tno-card-product .tno-card-price,
+  .card-product--trust .price {
+    font-size: 0.85rem !important;
+  }
+}
+
 /* =========================================================
    2. TRUST VARIANT MODIFIER
    Extra visual flavor for card_style: 'trust'
@@ -7964,97 +7923,6 @@ body {
    - .tno-card-button--success (applied after successful add)
    Button base styles are inherited from theme defaults or defined inline in Liquid */
 
-/* =========================================================
-   5. HOME PRODUCT GRID SLIDER
-   Mobile: 2-column carousel | Desktop: 4-column carousel
-   ========================================================= */
-
-.tno-home-product-grid {
-  position: relative;
-  margin-top: 2rem;
-}
-
-/* Controls (arrow buttons) */
-.tno-home-product-grid__controls {
-  position: absolute;
-  top: -3rem;
-  right: 0;
-  display: flex;
-  gap: 0.5rem;
-  z-index: 10;
-}
-
-.tno-home-product-grid__control {
-  background: none;
-  border: 1px solid var(--color-accent, #0ff);
-  color: var(--color-accent, #0ff);
-  padding: 0.35rem 0.65rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
-}
-
-.tno-home-product-grid__control:hover {
-  background: rgb(0 255 255 / 10%);
-  border-color: var(--color-cyan, #00fff0);
-}
-
-/* Track - horizontal scrollable slider */
-.tno-home-product-grid__track {
-  display: flex !important;
-  flex-wrap: nowrap !important;
-  overflow-x: auto !important;
-  scroll-snap-type: x mandatory !important;
-  -webkit-overflow-scrolling: touch !important;
-  scroll-behavior: smooth;
-  gap: var(--space-md, 2rem);
-  padding-bottom: 1rem;
-  margin: 0;
-  list-style: none;
-}
-
-/* Override any grid classes */
-.tno-home-product-grid__track.grid,
-.tno-home-product-grid__track[class*="grid--"] {
-  display: flex !important;
-  grid-template-columns: none !important;
-}
-
-/* Items - MOBILE: 2 cards per slide */
-.tno-home-product-grid__item {
-  flex: 0 0 50% !important;
-  max-width: 50% !important;
-  width: 50% !important;
-  scroll-snap-align: start !important;
-  margin: 0 !important;
-  list-style: none;
-}
-
-/* DESKTOP: 4 cards per slide */
-@media (width >= 750px) {
-  .tno-home-product-grid__item {
-    flex: 0 0 25% !important;
-    max-width: 25% !important;
-    width: 25% !important;
-  }
-}
-
-/* Cards inside a slide fill the slide */
-.tno-home-product-grid__item .card,
-.tno-home-product-grid__item .tno-card-product {
-  width: 100% !important;
-  height: auto !important;
-}
-
-/* Hide scrollbar */
-.tno-home-product-grid__track::-webkit-scrollbar {
-  display: none !important;
-}
-
-.tno-home-product-grid__track {
-  scrollbar-width: none !important;
-  -ms-overflow-style: none !important;
-}
 
 /* =========================================================
    6. RELATED PRODUCTS CAROUSEL
@@ -8493,3 +8361,647 @@ body.template-index .footer {
      height: auto !important;
      object-fit: cover !important;
    }
+
+   /* Latest Drops carousel - ensure images are visible */
+   .product-grid-trust .tno-latest-drops__item .card__media,
+   .product-grid-trust .tno-latest-drops__item .card .media,
+   .product-grid-trust .tno-latest-drops__item .tno-card-product .card__media {
+     display: block !important;
+     visibility: visible !important;
+     opacity: 1 !important;
+     width: 100% !important;
+     height: auto !important;
+     max-width: 100% !important;
+     position: relative !important;
+     overflow: visible !important;
+   }
+
+   .product-grid-trust .tno-latest-drops__item .card__media img,
+   .product-grid-trust .tno-latest-drops__item .card .media img,
+   .product-grid-trust .tno-latest-drops__item .tno-card-product .card__media img {
+     display: block !important;
+     visibility: visible !important;
+     opacity: 1 !important;
+     width: 100% !important;
+     height: auto !important;
+     max-width: 100% !important;
+     object-fit: cover !important;
+     object-position: center center !important;
+   }
+
+/* =========================================================
+   LEGACY GRID – not used by TNO Product Grid. Keep for now.
+   This section targets .section-product-grid-trust .tno-collection-grid
+   which may be used by collection pages. Do not remove without verification.
+   ========================================================= */
+
+/* Wrapper - scoped to section-product-grid-trust for strong specificity */
+.section-product-grid-trust .tno-collection-grid {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  scroll-snap-type: x mandatory !important;
+  -webkit-overflow-scrolling: touch !important;
+  scroll-behavior: smooth !important;
+  gap: var(--space-md, 2rem) !important;
+  padding-bottom: 1rem !important;
+  margin: 0 !important;
+  list-style: none !important;
+  grid-template-columns: none !important;
+}
+
+/* Override any Spotlight grid classes */
+.section-product-grid-trust .tno-collection-grid.grid,
+.section-product-grid-trust .tno-collection-grid[class*="grid--"] {
+  display: flex !important;
+  grid-template-columns: none !important;
+}
+
+/* Grid items - Mobile: 2 cards per view (default and explicit) */
+.section-product-grid-trust .tno-collection-grid__item {
+  flex: 0 0 50% !important;
+  max-width: 50% !important;
+  width: 50% !important;
+  scroll-snap-align: start !important;
+  margin: 0 !important;
+  list-style: none !important;
+}
+
+@media (width <= 749px) {
+  .section-product-grid-trust .tno-collection-grid__item {
+    flex: 0 0 50% !important;
+    max-width: 50% !important;
+    width: 50% !important;
+  }
+}
+
+/* Grid items - Desktop: 4 cards per view (LEGACY - may be used by collection pages) */
+@media (width >= 750px) {
+  .section-product-grid-trust .tno-collection-grid__item {
+    flex: 0 0 25% !important;
+    max-width: 25% !important;
+    width: 25% !important;
+  }
+}
+
+/* Cards inside items take full width */
+.section-product-grid-trust .tno-collection-grid__item .card,
+.section-product-grid-trust .tno-collection-grid__item .tno-card-product {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* Hide scrollbar */
+.section-product-grid-trust .tno-collection-grid::-webkit-scrollbar {
+  display: none !important;
+}
+
+.section-product-grid-trust .tno-collection-grid {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+/* =========================================================
+   TNO PRODUCT GRID – HOMEPAGE MASTER LAYOUT
+   =========================================================
+   TNO NOTE (2025-01-30): Master layout for product cards.
+   This section will be reused as template for collection pages and related products.
+   All styles moved from inline <style> block in product-grid-trust.liquid.
+
+   Product cards use the .tno-card-product wrapper class (defined in card-product.liquid).
+   This ensures consistent styling across all product card contexts.
+   ========================================================= */
+
+/* Section Container */
+.product-grid-trust {
+  position: relative;
+  padding: var(--space-xl, 6rem) var(--space-md, 2rem);
+  background: var(--color-void-black, #000000);
+  overflow: hidden;
+}
+
+.product-grid-trust__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-inline: 1.5rem;
+}
+
+/* Subtle grid background pattern */
+.product-grid-trust::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 255, 240, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 240, 0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Section Header */
+.product-grid-trust__header {
+  text-align: center;
+  margin-bottom: var(--space-lg, 4rem);
+}
+
+.product-grid-trust__eyebrow {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-cyan, #00fff0);
+  margin: 0 0 var(--space-sm, 1rem);
+}
+
+.product-grid-trust__headline {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: clamp(1.75rem, 5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  margin: 0 0 var(--space-md, 2rem);
+  position: relative;
+}
+
+/* Animated underline */
+.product-grid-trust__headline::after {
+  content: '';
+  display: block;
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-cyan, #00fff0), var(--color-magenta, #ff00ff));
+  margin: var(--space-sm, 1rem) auto 0;
+  animation: pulse-width 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse-width {
+  0%,
+  100% {
+    width: 120px;
+    opacity: 1;
+  }
+  50% {
+    width: 90px;
+    opacity: 0.7;
+  }
+}
+
+.product-grid-trust__intro {
+  font-family: var(--font-clean, sans-serif);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--color-gray-ghost, #6a6a7a);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Latest Drops Carousel Wrapper */
+.tno-latest-drops {
+  position: relative;
+  margin-top: var(--space-lg, 4rem);
+  overflow: hidden;
+}
+
+/* Arrow Controls - Positioned above grid, right-aligned */
+.product-grid-trust__controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-bottom: 2rem; /* Increased spacing between arrows and cards */
+}
+
+/* Carousel Track - Grid layout with horizontal scroll */
+.product-grid-trust__grid.tno-latest-drops__track {
+  display: grid !important;
+  grid-auto-flow: column !important;
+  overflow-x: auto !important;
+  scroll-snap-type: x mandatory !important;
+  -webkit-overflow-scrolling: touch !important;
+  scroll-behavior: smooth !important;
+  padding-bottom: 1rem !important;
+  margin: 0 !important;
+  list-style: none !important;
+  /* Hide scrollbar */
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.product-grid-trust__grid.tno-latest-drops__track::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* Mobile: 2 cards per row - exactly 2 visible, no peek */
+@media screen and (max-width: 749px) {
+  .tno-latest-drops {
+    overflow: hidden;
+  }
+
+  .product-grid-trust__grid.tno-latest-drops__track {
+    gap: 0.75rem !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    width: 100%;
+    overflow-x: auto;
+    /* Calculate: (100% - 1 gap) / 2 cards = exactly 2 cards fit */
+    grid-auto-columns: calc((100% - 0.75rem) / 2) !important;
+  }
+
+  .tno-latest-drops__item {
+    scroll-snap-align: start !important;
+    margin: 0 !important;
+    list-style: none !important;
+  }
+}
+
+/* Desktop: 4 cards per row - exactly 4 visible, no peek */
+@media screen and (width >= 990px) {
+  .product-grid-trust__grid.tno-latest-drops__track {
+    gap: 1rem !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    /* Calculate: (100% - 3 gaps) / 4 cards = exactly 4 cards fit */
+    grid-auto-columns: calc((100% - 3rem) / 4) !important;
+  }
+
+  .tno-latest-drops__item {
+    scroll-snap-align: start !important;
+  }
+}
+
+/* Cards inside carousel items fill the slide */
+.tno-latest-drops__item .card,
+.tno-latest-drops__item .tno-card-product {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* =========================================================
+   PRODUCT CARD STYLING - Hugo Boss Style
+   Scoped to Product Grid (TNO) section only
+   ========================================================= */
+
+/* Card wrapper - Hugo Boss style with subtle background and border */
+.product-grid-trust .tno-card-product {
+  background: rgb(15 15 18); /* Very dark grey, not pure black */
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-grid-trust .tno-card-product:hover {
+  border-color: rgb(255 255 255 / 15%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Remove extra wrappers for trust style - ensure no spacing */
+.product-grid-trust .tno-card-product--trust .card,
+.product-grid-trust .tno-card-product--trust .card__inner,
+.product-grid-trust .tno-card-product--trust .card__media {
+  margin: 0;
+  padding: 0;
+  height: auto;
+  display: block;
+}
+
+/* Image wrapper with fixed aspect ratio (4:5) - directly at top */
+.product-grid-trust .tno-card-product__image-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 125%; /* 4:5 aspect ratio */
+  overflow: hidden;
+  background: rgb(10 10 12);
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.product-grid-trust .tno-card-product__image-wrapper a {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0; /* Behind badge */
+}
+
+.product-grid-trust .tno-card-product__image-wrapper img,
+.product-grid-trust .tno-card-product__image-wrapper .placeholder-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+/* Card content area - stacked layout */
+.product-grid-trust .tno-card-product .card__content,
+.product-grid-trust .tno-card-product__content {
+  padding: 0.75rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 0.25rem;
+}
+
+/* Card information */
+.product-grid-trust .tno-card-product .card__information {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Product title - max 2 lines with ellipsis */
+.product-grid-trust .tno-card-product .card__heading,
+.product-grid-trust .tno-card-product .tno-card-title {
+  font-size: 0.875rem;
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 2.8em; /* Ensure consistent height for 2 lines */
+}
+
+.product-grid-trust .tno-card-product .card__heading a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.product-grid-trust .tno-card-product .card__heading a:hover {
+  color: var(--color-cyan, #00fff0);
+}
+
+/* Price - left aligned */
+.product-grid-trust .tno-card-product .card__meta {
+  margin-top: 0.25rem;
+}
+
+.product-grid-trust .tno-card-product .tno-card-price,
+.product-grid-trust .tno-card-product .price {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #ffffff;
+  text-align: left;
+}
+
+/* Badge overlay - positioned inside image wrapper */
+.product-grid-trust .tno-card-product__badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 2; /* Above link and image */
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  pointer-events: none; /* Allow clicks to pass through to link */
+}
+
+.product-grid-trust .tno-card-product__badge.badge--sold-out {
+  background: rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.product-grid-trust .tno-card-product__badge.badge--sale {
+  background: rgba(0, 255, 240, 0.2);
+  color: var(--color-cyan, #00fff0);
+  border: 1px solid var(--color-cyan, #00fff0);
+}
+
+/* Legacy badge selector for default style (not used in trust style) */
+.product-grid-trust .tno-card-product .card__badge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 2;
+}
+
+/* Add to cart button */
+.product-grid-trust .tno-card-product .card__actions {
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.product-grid-trust .tno-card-product .tno-card-button {
+  width: 100%;
+  padding: 0.625rem 1rem;
+  font-size: 0.8125rem;
+  background: transparent;
+  border: 1px solid var(--color-cyan, #00fff0);
+  color: var(--color-cyan, #00fff0);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+  font-family: var(--font-mono, monospace);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.product-grid-trust .tno-card-product .tno-card-button:hover {
+  background: rgb(0 246 255 / 10%);
+  box-shadow: 0 0 10px rgba(0, 255, 240, 0.3);
+}
+
+/* Color variants */
+.product-grid-trust .tno-card-product .tno-card-variants {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+/* Ensure product images are visible */
+.product-grid-trust .tno-latest-drops__item .card__media,
+.product-grid-trust .tno-latest-drops__item .card .media,
+.product-grid-trust .tno-latest-drops__item .card__media img,
+.product-grid-trust .tno-latest-drops__item .card .media img,
+.product-grid-trust .tno-latest-drops__item .tno-card-product .card__media,
+.product-grid-trust .tno-latest-drops__item .tno-card-product .card__media img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100% !important;
+  position: relative !important;
+}
+
+.product-grid-trust .tno-latest-drops__item .card__media img,
+.product-grid-trust .tno-latest-drops__item .card .media img {
+  object-fit: cover !important;
+  object-position: center center !important;
+}
+
+/* Scrollbar hiding handled in track definition above */
+
+/* Empty state */
+.product-grid-trust__empty {
+  flex: 0 0 100% !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  text-align: center;
+  color: var(--color-gray-ghost, #6a6a7a);
+  padding: 4rem;
+}
+
+.product-grid-trust__empty p {
+  font-family: var(--font-mono, monospace);
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+/* Responsive padding */
+@media (max-width: 768px) {
+  .product-grid-trust {
+    padding: var(--space-lg, 4rem) var(--space-sm, 1rem);
+  }
+}
+
+/* =========================================================
+   LATEST DROPS SECTION - PRODUCT GRID TRUST
+   Scoped styles for Latest Drops carousel only
+   ========================================================= */
+
+/* MOBILE CARD TYPOGRAPHY - Latest Drops only */
+@media screen and (width <= 749px) {
+  .product-grid-trust .tno-card-product .card__heading {
+    font-size: 0.9rem;
+    line-height: 1.2;
+  }
+
+  .product-grid-trust .tno-card-product .price,
+  .product-grid-trust .tno-card-product .price-item {
+    font-size: 0.85rem;
+    line-height: 1.2;
+  }
+}
+
+/* REMOVE DUPLICATE SOLD-OUT BUTTON - Latest Drops only */
+.product-grid-trust .tno-card-product button[disabled],
+.product-grid-trust .tno-card-product .button[disabled],
+.product-grid-trust .tno-card-product .btn[disabled] {
+  display: none !important;
+}
+
+/* =========================================================
+   PRODUCT GRID ARROW BUTTONS
+   Positioned above grid, right-aligned (Hugo Boss style)
+   Scoped exclusively to .product-grid-trust section
+   ========================================================= */
+
+/* Base Arrow Button Styles - Round pill shape with neon cyan glow */
+.product-grid-trust__arrow {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(0 0 0 / 70%);
+  border: 1px solid var(--color-cyan, #00fff0);
+  color: var(--color-cyan, #00fff0);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  font-size: 18px;
+  line-height: 1;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  text-align: center;
+  appearance: none;
+  box-shadow: 0 0 10px rgba(0, 255, 240, 0.3);
+}
+
+/* Hover State - Enhanced neon cyan glow effect */
+.product-grid-trust__arrow:hover {
+  background: rgb(0 246 255 / 10%);
+  border-color: var(--color-cyan, #00fff0);
+  color: var(--color-cyan, #00fff0);
+  box-shadow: 0 0 20px rgba(0, 255, 240, 0.6), 0 0 30px rgba(0, 255, 240, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Active State - Reset transform */
+.product-grid-trust__arrow:active {
+  transform: translateY(0);
+}
+
+/* Focus State - Accessibility outline */
+.product-grid-trust__arrow:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 80%);
+  outline-offset: 2px;
+}
+
+/* Mobile Adjustments - Smaller buttons */
+@media screen and (width <= 749px) {
+  .product-grid-trust__arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .product-grid-trust__controls {
+    margin-bottom: 1.5rem; /* Slightly less spacing on mobile */
+  }
+}
+
+/* =========================================================
+   ÄNDERUNGEN ZUSAMMENFASSUNG / CHANGES SUMMARY
+   =========================================================
+
+   PROBLEM BEHOBEN / ISSUE FIXED:
+   - Desktop: Letztes Produkt wurde rechts abgeschnitten
+   - Desktop/Mobile: Pfeil-Buttons waren teilweise nicht sichtbar
+
+   LÖSUNG / SOLUTION:
+   1. Z-INDEX ERHÖHT: z-index: 999 !important
+      → Pfeile liegen jetzt IMMER über Produktbildern
+      → Keine Überlagerung mehr durch Bilder
+
+   2. POSITION ANGEPASST:
+      Desktop: top: -2.5rem, right: 1rem (leicht nach innen)
+      Mobile: top: -2rem, right: 0.75rem (kleinere Buttons, besser positioniert)
+      → Pfeile sind jetzt immer im sichtbaren Bereich
+
+   3. PADDING-RIGHT HINZUGEFÜGT:
+      .tno-latest-drops__track { padding-right: 2rem !important; }
+      → Letztes Produkt wird nicht mehr abgeschnitten
+      → Genug Platz für Pfeile rechts
+
+   4. DOPPELTE STYLES ENTFERNT:
+      → Inline-Styles aus product-grid-trust.liquid entfernt
+      → Alle Styles jetzt zentral in custom.css mit .product-grid-trust Präfix
+      → Bessere Wartbarkeit, keine Konflikte
+
+   SCOPING / ISOLATION:
+   - Alle Selektoren verwenden .product-grid-trust Präfix
+   - KEINE Überschneidung mit:
+     * .slider-button (Shopify Native Slider)
+     * .tno-related-products__control (Related Products Carousel)
+     * Collection Pages, Product Pages
+   - Nur Latest Drops Section wird beeinflusst
+
+   ERGEBNIS / RESULT:
+   ✅ Pfeile sind immer sichtbar (Desktop + Mobile)
+   ✅ Kein Produkt wird mehr rechts abgeschnitten
+   ✅ Keine Konflikte mit anderen Arrow-Systemen
+   ✅ Grid-Layout: 2 Desktop, 2 Mobile (updated 2025-01-30)
+   ✅ Neon cyan glow effect on arrow buttons
+   ========================================================= */

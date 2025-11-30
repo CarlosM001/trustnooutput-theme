@@ -1,139 +1,19 @@
 {% comment %}
-  TRUST.NO.OUTPUT — Product Grid Section
+  TRUST.NO.OUTPUT — Product Grid Section (Homepage Master Layout)
 
-  A cyberpunk-inspired product collection grid featuring:
-  - RGB glitch effects on hover
-  - Terminal-style color variant display
-  - Conscious "Add to Cart" interaction with delay
-  - Sold out state with glitch overlay
-  - Responsive grid layout (3-col → 1-col)
+  TNO NOTE (2025-01-30): This section is the master layout for product cards.
+  All styles have been moved to assets/custom.css for better maintainability.
+  This section will be reused as a template for collection pages and related products.
 
-  Philosophy: Products as digital artifacts. Shopping becomes
-  an act of conscious selection rather than impulse consumption.
+  Features:
+  - Grid layout: Desktop shows 4 cards per row, Mobile shows 2 cards per row
+  - Arrow buttons above grid (top-right) with neon cyan glow
+  - Smooth scrolling: Desktop slides by 4 cards, Mobile slides by 2 cards
+  - Trust-style product cards with color variants and custom add-to-cart
 {% endcomment %}
-
-<style>
-  /* ========================================
-     Product Grid Section
-     ======================================== */
-
-  .product-grid-trust {
-    position: relative;
-    padding: var(--space-xl, 6rem) var(--space-md, 2rem);
-    background: var(--color-void-black, #000000);
-    overflow: hidden;
-  }
-
-  .product-grid-trust__container {
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-
-  /* Subtle grid background pattern */
-  .product-grid-trust::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(0, 255, 240, 0.015) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 255, 240, 0.015) 1px, transparent 1px);
-    background-size: 60px 60px;
-    opacity: 0.5;
-    pointer-events: none;
-  }
-
-  /* ========================================
-     Section Header
-     ======================================== */
-
-  .product-grid-trust__header {
-    text-align: center;
-    margin-bottom: var(--space-lg, 4rem);
-  }
-
-  .product-grid-trust__eyebrow {
-    font-family: var(--font-mono, 'Space Mono', monospace);
-    font-size: clamp(0.75rem, 2vw, 0.875rem);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--color-cyan, #00fff0);
-    margin: 0 0 var(--space-sm, 1rem);
-  }
-
-  .product-grid-trust__headline {
-    font-family: var(--font-mono, 'Space Mono', monospace);
-    font-size: clamp(1.75rem, 5vw, 3rem);
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    color: #ffffff;
-    margin: 0 0 var(--space-md, 2rem);
-    position: relative;
-  }
-
-  /* Animated underline */
-  .product-grid-trust__headline::after {
-    content: '';
-    display: block;
-    width: 120px;
-    height: 2px;
-    background: linear-gradient(90deg, var(--color-cyan, #00fff0), var(--color-magenta, #ff00ff));
-    margin: var(--space-sm, 1rem) auto 0;
-    animation: pulse-width 2.4s ease-in-out infinite;
-  }
-
-  @keyframes pulse-width {
-    0%,
-    100% {
-      width: 120px;
-      opacity: 1;
-    }
-    50% {
-      width: 90px;
-      opacity: 0.7;
-    }
-  }
-
-  .product-grid-trust__intro {
-    font-family: var(--font-clean, sans-serif);
-    font-size: clamp(1rem, 2.5vw, 1.25rem);
-    font-weight: 300;
-    line-height: 1.7;
-    color: var(--color-gray-ghost, #6a6a7a);
-    max-width: 700px;
-    margin: 0 auto;
-  }
-
-  /* ========================================
-     Product Grid Layout
-     ======================================== */
-
-  .product-grid-trust__grid {
-    display: grid;
-    /* Columns controlled via section setting (desktop). Fallback to 3. */
-    grid-template-columns: repeat(var(--tno-columns, 3), minmax(0, 1fr));
-    gap: var(--space-md, 2rem);
-    margin-top: var(--space-lg, 4rem);
-  }
-
-  /* ========================================
-     Responsive Design
-     ======================================== */
-
-  @media (max-width: 768px) {
-    .product-grid-trust {
-      padding: var(--space-lg, 4rem) var(--space-sm, 1rem);
-    }
-
-    .product-grid-trust__grid {
-      grid-template-columns: 1fr;
-      gap: var(--space-sm, 1rem);
-    }
-  }
-</style>
 
 {%- liquid
   assign collection = collections[section.settings.collection] | default: collections.all
-  assign products_per_row = section.settings.products_per_row | default: 3
   assign eyebrow = section.settings.eyebrow | default: 'Digital Artifacts'
   assign headline = section.settings.headline | default: 'Products'
   assign intro = section.settings.intro | default: ''
@@ -156,25 +36,28 @@
       {%- endif -%}
     </div>
 
-    {%- comment %} Product Grid - Responsive carousel {%- endcomment %}
-    <div class="tno-home-product-grid">
-      <div class="tno-home-product-grid__controls">
+    {%- comment %} Latest Drops Carousel - Responsive product carousel {%- endcomment %}
+    <div class="tno-latest-drops" data-section-type="product-grid-trust">
+      {%- comment %} Arrow controls positioned above grid, right-aligned {%- endcomment %}
+      <div class="product-grid-trust__controls">
         <button
           type="button"
-          class="tno-home-product-grid__control tno-home-product-grid__control--prev"
+          class="product-grid-trust__arrow product-grid-trust__arrow--prev"
+          aria-label="Previous products"
         >
           ‹
         </button>
         <button
           type="button"
-          class="tno-home-product-grid__control tno-home-product-grid__control--next"
+          class="product-grid-trust__arrow product-grid-trust__arrow--next"
+          aria-label="Next products"
         >
           ›
         </button>
       </div>
-      <ul class="tno-home-product-grid__track">
+      <ul class="product-grid-trust__grid tno-latest-drops__track">
         {%- for product in collection.products limit: section.settings.products_to_show -%}
-          <li class="tno-home-product-grid__item">
+          <li class="tno-latest-drops__item">
             {% render 'card-product',
               card_product: product,
               card_style: 'trust',
@@ -185,8 +68,8 @@
           </li>
         {%- else -%}
           {%- comment %} Empty State {%- endcomment %}
-          <li class="tno-home-product-grid__item" style="text-align: center; padding: 4rem; color: var(--color-gray-ghost);">
-            <p style="font-family: var(--font-mono); letter-spacing: 0.05em;">
+          <li class="product-grid-trust__empty tno-latest-drops__item">
+            <p>
               System.Message: No products found in the selected collection.
             </p>
           </li>

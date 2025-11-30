@@ -129,7 +129,10 @@
                   show_rating: section.settings.show_rating,
                   skip_styles: skip_card_product_styles,
                   section_id: section.id,
-                  quick_add: section.settings.quick_add
+                  quick_add: section.settings.quick_add,
+                  card_style: 'trust',
+                  show_color_variants: true,
+                  show_custom_add_to_cart: true
                 %}
               </li>
               {%- assign skip_card_product_styles = true -%}
@@ -159,7 +162,10 @@
                 media_aspect_ratio: section.settings.image_ratio,
                 image_shape: section.settings.image_shape,
                 lazy_load: false,
-                placeholder_image: placeholder_image
+                placeholder_image: placeholder_image,
+                card_style: 'trust',
+                show_color_variants: true,
+                show_custom_add_to_cart: true
               %}
             </li>
           {%- endfor -%}

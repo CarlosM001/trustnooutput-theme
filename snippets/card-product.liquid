@@ -23,58 +23,97 @@
 -%}
 
 <div class="tno-card-product card-product{% if card_style == 'trust' %} card-product--trust tno-card-product--trust{% endif %}" data-product-id="{{ card_product.id }}">
-  <div class="card card--product tno-card">
-    <div class="card__inner">
-      {%- comment -%}
-        MEDIA
-      {%- endcomment -%}
-      <div class="card__media">
-        <a
-          href="{{ card_product.url }}"
-          class="full-unstyled-link"
-          aria-label="{{ card_product.title | escape }}"
-        >
-          {%- if featured_media -%}
-            <div class="media">
-              {{
-                featured_media
-                | image_url: width: 900
-                | image_tag:
-                  loading: loading,
-                  sizes: '(min-width: 1200px) 20vw, (min-width: 750px) 33vw, 100vw',
-                  alt: featured_media.alt
-                | escape
-              }}
+  {%- if card_style == 'trust' -%}
+    {%- comment -%} TRUST STYLE: Simplified structure {%- endcomment -%}
+    <div class="tno-card-product__image-wrapper">
+      {%- comment -%} Badge overlay inside image wrapper {%- endcomment -%}
+      {%- if card_product.available == false -%}
+        <span class="tno-card-product__badge badge badge--sold-out">
+          {{ 'products.product.sold_out' | t }}
+        </span>
+      {%- elsif card_product.compare_at_price > card_product.price -%}
+        <span class="tno-card-product__badge badge badge--sale">
+          {{ 'products.product.on_sale' | t }}
+        </span>
+      {%- endif -%}
+
+      <a
+        href="{{ card_product.url }}"
+        class="full-unstyled-link"
+        aria-label="{{ card_product.title | escape }}"
+      >
+        {%- if featured_media -%}
+          {{
+            featured_media
+            | image_url: width: 900
+            | image_tag:
+              loading: loading,
+              sizes: '(min-width: 1200px) 20vw, (min-width: 750px) 33vw, 100vw',
+              alt: featured_media.alt
+            | escape
+          }}
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </a>
+    </div>
+
+    <div class="tno-card-product__content">
+  {%- else -%}
+    {%- comment -%} DEFAULT STYLE: Original structure {%- endcomment -%}
+    <div class="card card--product tno-card">
+      <div class="card__inner">
+        {%- comment -%}
+          MEDIA
+        {%- endcomment -%}
+        <div class="card__media">
+          <a
+            href="{{ card_product.url }}"
+            class="full-unstyled-link"
+            aria-label="{{ card_product.title | escape }}"
+          >
+            {%- if featured_media -%}
+              <div class="media">
+                {{
+                  featured_media
+                  | image_url: width: 900
+                  | image_tag:
+                    loading: loading,
+                    sizes: '(min-width: 1200px) 20vw, (min-width: 750px) 33vw, 100vw',
+                    alt: featured_media.alt
+                  | escape
+                }}
+              </div>
+            {%- else -%}
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          </a>
+
+          {%- comment -%}
+            Badges: Sale / Sold out
+          {%- endcomment -%}
+          {%- if card_product.available == false
+            or card_product.compare_at_price > card_product.price
+          -%}
+            <div class="card__badge">
+              {%- if card_product.available == false -%}
+                <span class="badge badge--sold-out">
+                  {{ 'products.product.sold_out' | t }}
+                </span>
+              {%- elsif card_product.compare_at_price > card_product.price -%}
+                <span class="badge badge--sale">
+                  {{ 'products.product.on_sale' | t }}
+                </span>
+              {%- endif -%}
             </div>
-          {%- else -%}
-            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
           {%- endif -%}
-        </a>
+        </div>
 
         {%- comment -%}
-          Badges: Sale / Sold out
+          CONTENT
         {%- endcomment -%}
-        {%- if card_product.available == false
-          or card_product.compare_at_price > card_product.price
-        -%}
-          <div class="card__badge">
-            {%- if card_product.available == false -%}
-              <span class="badge badge--sold-out">
-                {{ 'products.product.sold_out' | t }}
-              </span>
-            {%- elsif card_product.compare_at_price > card_product.price -%}
-              <span class="badge badge--sale">
-                {{ 'products.product.on_sale' | t }}
-              </span>
-            {%- endif -%}
-          </div>
-        {%- endif -%}
-      </div>
-
-      {%- comment -%}
-        CONTENT
-      {%- endcomment -%}
-      <div class="card__content">
+        <div class="card__content">
+  {%- endif -%}
         <div class="card__information">
           {%- if show_vendor -%}
             <span class="card__vendor">
@@ -162,25 +201,21 @@
         {%- endcomment -%}
         {%- if show_custom_add_to_cart -%}
           {%- comment -%} Trust-style custom add-to-cart button {%- endcomment -%}
-          <div class="card__actions">
-            <form method="post" action="{{ routes.cart_add_url }}" class="card__form tno-card-form">
-              <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+          {%- comment -%} For trust-style cards: Only show button if product is available (sold out shown via badge only) {%- endcomment -%}
+          {%- if card_product.available -%}
+            <div class="card__actions">
+              <form method="post" action="{{ routes.cart_add_url }}" class="card__form tno-card-form">
+                <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
 
-              <button
-                type="submit"
-                class="card__button tno-card-button"
-                {% unless card_product.available %}disabled{% endunless %}
-              >
-                <span>
-                  {%- if card_product.available -%}
-                    > Add to Cart
-                  {%- else -%}
-                    > Sold Out
-                  {%- endif -%}
-                </span>
-              </button>
-            </form>
-          </div>
+                <button
+                  type="submit"
+                  class="card__button tno-card-button"
+                >
+                  <span>> Add to Cart</span>
+                </button>
+              </form>
+            </div>
+          {%- endif -%}
         {%- elsif quick_add == 'standard' and card_product.available -%}
           {%- comment -%} Standard Shopify quick add {%- endcomment -%}
           <div class="card__actions">
@@ -215,7 +250,11 @@
             </button>
           </div>
         {%- endif -%}
+      {%- if card_style == 'trust' -%}
+        </div>
+      {%- else -%}
+        </div>
       </div>
     </div>
-  </div>
+    {%- endif -%}
 </div>
