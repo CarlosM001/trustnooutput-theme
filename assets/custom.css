@@ -9582,6 +9582,100 @@ body.template-product .shopify-payment-button__button--unbranded {
    wenn er nicht zum Design passt. */
 
 /* =========================================================
+   TNO – PRODUCT PAGE: Meta cards (Story / Specs / Reviews)
+   ========================================================= */
+
+body.template-product .product-main-trust__meta-grid {
+  margin-top: 3rem;
+  display: grid;
+  gap: 1.75rem;
+}
+
+/* Desktop: two-column grid, reviews full width */
+@media (min-width: 990px) {
+  body.template-product .product-main-trust__meta-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body.template-product .product-main-trust__meta-card--reviews {
+    grid-column: 1 / -1;
+  }
+}
+
+body.template-product .product-main-trust__meta-card {
+  position: relative;
+  overflow: hidden;
+  background: rgb(12 12 16);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  padding: 1.5rem 1.75rem 1.75rem;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+}
+
+/* Glitchy gradient strip at the top of each card */
+body.template-product .product-main-trust__meta-card::before {
+  content: "";
+  position: absolute;
+  left: 1.75rem;
+  top: 0;
+  width: 72px;
+  height: 2px;
+  background: linear-gradient(90deg, #22f7ff, #a855f7, #f97316);
+  opacity: 0.9;
+}
+
+/* Header + title */
+body.template-product .product-main-trust__meta-header {
+  margin-bottom: 0.85rem;
+}
+
+body.template-product .product-main-trust__meta-header .product-main-trust__meta-title,
+body.template-product .product-main-trust__meta-header h2,
+body.template-product .product-main-trust__meta-header h3 {
+  margin: 0;
+  font-family: var(--tno-font-mono, "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);
+  font-size: clamp(0.95rem, 0.9rem + 0.2vw, 1.05rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+/* Body text */
+body.template-product .product-main-trust__meta-body {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+/* Make existing spec rows look clean inside the card */
+body.template-product .product-main-trust__meta-card--specs .brand-specs__item {
+  border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+  padding: 0.5rem 0;
+}
+
+body.template-product .product-main-trust__meta-card--specs .brand-specs__item:last-child {
+  border-bottom: none;
+}
+
+/* Labels vs values inside specs */
+body.template-product .product-main-trust__meta-card--specs .brand-specs__label {
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.95);
+}
+
+body.template-product .product-main-trust__meta-card--specs .brand-specs__value {
+  color: rgba(249, 250, 251, 0.95);
+}
+
+/* Reviews card: keep text a bit softer */
+body.template-product .product-main-trust__meta-card--reviews .product-main-trust__meta-body {
+  color: rgba(209, 213, 219, 0.9);
+  font-size: 0.88rem;
+}
+
+/* =========================================================
    ÄNDERUNGEN ZUSAMMENFASSUNG / CHANGES SUMMARY
    =========================================================
 

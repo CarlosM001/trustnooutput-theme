@@ -316,134 +316,154 @@
 
     {%- comment -%} ========== BELOW THE FOLD: STORY / SPEC / REVIEWS ========== {%- endcomment -%}
     <div class="brand-product__details">
-      {%- comment -%} 1. PRODUCT STORY (metafield or description) {%- endcomment -%}
-      {%- if section.settings.show_story_section -%}
-        {%- liquid
-          assign story_content = product.metafields.custom.story.value
-          if story_content == blank
-            assign story_content = product.description
-          endif
-        -%}
-        {%- if story_content != blank -%}
-          <section class="brand-details__section" aria-labelledby="brand-product-story-heading">
-            <h2
-              id="brand-product-story-heading"
-              class="brand-details__heading brand-section-heading label-system label-tech"
-            >
-              PRODUCT.STORY
-            </h2>
-            <div class="brand-details__content">
-              {{ story_content }}
+      <div class="product-main-trust__meta-grid">
+        {%- comment -%} 1. PRODUCT STORY (metafield or description) {%- endcomment -%}
+        {%- if section.settings.show_story_section -%}
+          {%- liquid
+            assign story_content = product.metafields.custom.story.value
+            if story_content == blank
+              assign story_content = product.description
+            endif
+          -%}
+          {%- if story_content != blank -%}
+            <div class="product-main-trust__meta-card product-main-trust__meta-card--story">
+              <header class="product-main-trust__meta-header">
+                <h2
+                  id="brand-product-story-heading"
+                  class="product-main-trust__meta-title brand-details__heading brand-section-heading label-system label-tech"
+                >
+                  PRODUCT.STORY
+                </h2>
+              </header>
+              <div class="product-main-trust__meta-body">
+                <section class="brand-details__section" aria-labelledby="brand-product-story-heading">
+                  <div class="brand-details__content">
+                    {{ story_content }}
+                  </div>
+                </section>
+              </div>
             </div>
-          </section>
+          {%- endif -%}
         {%- endif -%}
-      {%- endif -%}
 
-      {%- comment -%} 2. SPECIFICATIONS (proper 2-column grid) {%- endcomment -%}
-      {%- if section.settings.show_specs_section -%}
-        {%- liquid
-          assign has_material = false
-          assign has_fit = false
-          assign has_print = false
-          assign has_care = false
+        {%- comment -%} 2. SPECIFICATIONS (proper 2-column grid) {%- endcomment -%}
+        {%- if section.settings.show_specs_section -%}
+          {%- liquid
+            assign has_material = false
+            assign has_fit = false
+            assign has_print = false
+            assign has_care = false
 
-          if product.metafields.custom.material.value != blank or product.metafields.custom.spec_material.value != blank
-            assign has_material = true
-          endif
-          if product.metafields.custom.fit.value != blank or product.metafields.custom.spec_fit.value != blank
-            assign has_fit = true
-          endif
-          if product.metafields.custom.print.value != blank or product.metafields.custom.spec_print.value != blank
-            assign has_print = true
-          endif
-          if product.metafields.custom.care_instructions.value != blank
-            assign has_care = true
-          endif
+            if product.metafields.custom.material.value != blank or product.metafields.custom.spec_material.value != blank
+              assign has_material = true
+            endif
+            if product.metafields.custom.fit.value != blank or product.metafields.custom.spec_fit.value != blank
+              assign has_fit = true
+            endif
+            if product.metafields.custom.print.value != blank or product.metafields.custom.spec_print.value != blank
+              assign has_print = true
+            endif
+            if product.metafields.custom.care_instructions.value != blank
+              assign has_care = true
+            endif
 
-          assign has_any_specs = false
-          if has_material or has_fit or has_print or has_care
-            assign has_any_specs = true
-          endif
-        -%}
+            assign has_any_specs = false
+            if has_material or has_fit or has_print or has_care
+              assign has_any_specs = true
+            endif
+          -%}
 
-        {%- if has_any_specs -%}
-          <section class="brand-details__section" aria-labelledby="brand-product-specs-heading">
-            <h2
-              id="brand-product-specs-heading"
-              class="brand-details__heading brand-section-heading label-system label-tech"
-            >
-              SPECIFICATIONS
-            </h2>
-            <dl class="brand-specs">
-              {%- if has_material -%}
-                <div class="brand-specs__item">
-                  <dt class="brand-specs__label">MATERIAL</dt>
-                  <dd class="brand-specs__value">
-                    {{-
-                      product.metafields.custom.spec_material.value
-                      | default: product.metafields.custom.material.value
-                      | escape
-                    -}}
-                  </dd>
-                </div>
-              {%- endif -%}
+          {%- if has_any_specs -%}
+            <div class="product-main-trust__meta-card product-main-trust__meta-card--specs">
+              <header class="product-main-trust__meta-header">
+                <h2
+                  id="brand-product-specs-heading"
+                  class="product-main-trust__meta-title brand-details__heading brand-section-heading label-system label-tech"
+                >
+                  SPECIFICATIONS
+                </h2>
+              </header>
+              <div class="product-main-trust__meta-body">
+                <section class="brand-details__section" aria-labelledby="brand-product-specs-heading">
+                  <dl class="brand-specs">
+                  {%- if has_material -%}
+                    <div class="brand-specs__item">
+                      <dt class="brand-specs__label">MATERIAL</dt>
+                      <dd class="brand-specs__value">
+                        {{-
+                          product.metafields.custom.spec_material.value
+                          | default: product.metafields.custom.material.value
+                          | escape
+                        -}}
+                      </dd>
+                    </div>
+                  {%- endif -%}
 
-              {%- if has_fit -%}
-                <div class="brand-specs__item">
-                  <dt class="brand-specs__label">FIT</dt>
-                  <dd class="brand-specs__value">
-                    {{-
-                      product.metafields.custom.spec_fit.value
-                      | default: product.metafields.custom.fit.value
-                      | escape
-                    -}}
-                  </dd>
-                </div>
-              {%- endif -%}
+                  {%- if has_fit -%}
+                    <div class="brand-specs__item">
+                      <dt class="brand-specs__label">FIT</dt>
+                      <dd class="brand-specs__value">
+                        {{-
+                          product.metafields.custom.spec_fit.value
+                          | default: product.metafields.custom.fit.value
+                          | escape
+                        -}}
+                      </dd>
+                    </div>
+                  {%- endif -%}
 
-              {%- if has_print -%}
-                <div class="brand-specs__item">
-                  <dt class="brand-specs__label">PRINT</dt>
-                  <dd class="brand-specs__value">
-                    {{-
-                      product.metafields.custom.spec_print.value
-                      | default: product.metafields.custom.print.value
-                      | escape
-                    -}}
-                  </dd>
-                </div>
-              {%- endif -%}
+                  {%- if has_print -%}
+                    <div class="brand-specs__item">
+                      <dt class="brand-specs__label">PRINT</dt>
+                      <dd class="brand-specs__value">
+                        {{-
+                          product.metafields.custom.spec_print.value
+                          | default: product.metafields.custom.print.value
+                          | escape
+                        -}}
+                      </dd>
+                    </div>
+                  {%- endif -%}
 
-              {%- if has_care -%}
-                <div class="brand-specs__item">
-                  <dt class="brand-specs__label">CARE</dt>
-                  <dd class="brand-specs__value">
-                    {{-
-                      product.metafields.custom.care_instructions.value
-                      | escape
-                      | newline_to_br
-                    -}}
-                  </dd>
-                </div>
-              {%- endif -%}
-            </dl>
-          </section>
+                  {%- if has_care -%}
+                    <div class="brand-specs__item">
+                      <dt class="brand-specs__label">CARE</dt>
+                      <dd class="brand-specs__value">
+                        {{-
+                          product.metafields.custom.care_instructions.value
+                          | escape
+                          | newline_to_br
+                        -}}
+                      </dd>
+                    </div>
+                  {%- endif -%}
+                  </dl>
+                </section>
+              </div>
+            </div>
+          {%- endif -%}
         {%- endif -%}
-      {%- endif -%}
 
-      {%- comment -%} 3. REVIEWS.UGC {%- endcomment -%}
-      {%- if section.settings.show_reviews_section -%}
-        <section
-          class="brand-details__section"
-          id="brand-product-reviews"
-          aria-labelledby="brand-product-reviews-heading"
-        >
-          <h2 id="brand-product-reviews-heading" class="brand-details__heading">REVIEWS.UGC</h2>
-          <div class="brand-details__reviews-placeholder">
-            <p>Review integration placeholder • Connect your reviews app here</p>
+        {%- comment -%} 3. REVIEWS.UGC {%- endcomment -%}
+        {%- if section.settings.show_reviews_section -%}
+          <div class="product-main-trust__meta-card product-main-trust__meta-card--reviews">
+            <header class="product-main-trust__meta-header">
+              <h2 id="brand-product-reviews-heading" class="product-main-trust__meta-title brand-details__heading">REVIEWS.UGC</h2>
+            </header>
+            <div class="product-main-trust__meta-body">
+              <section
+                class="brand-details__section"
+                id="brand-product-reviews"
+                aria-labelledby="brand-product-reviews-heading"
+              >
+                <div class="brand-details__reviews-placeholder">
+                  <p>Review integration placeholder • Connect your reviews app here</p>
+                </div>
+              </section>
+            </div>
           </div>
-        </section>
-      {%- endif -%}
+        {%- endif -%}
+      </div>
     </div>
     </div>
 
