@@ -1,0 +1,47 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page-system",
+      "settings": {
+        "hero_label": "// SYSTEM",
+        "hero_title": "SYSTEM.STATUS: RUNNING",
+        "hero_subtitle": "<p>TRUST.NO.OUTPUT operates as a conscious system—examining the protocols that shape digital reality. Mode becomes our interface for questioning the predefined output.</p>",
+        "hero_meta": "BUILD: 0.1.0 | REALITY.LAYER: BETA",
+        "core_protocol_title": "Core Protocol",
+        "core_protocol_item_1": "Question predefined outputs",
+        "core_protocol_item_2": "Examine digital filters",
+        "core_protocol_item_3": "Operate in fluid boundaries",
+        "core_protocol_item_4": "Use mode as interface",
+        "core_protocol_item_5": "Maintain conscious awareness",
+        "execution_stack_title": "Execution Stack",
+        "execution_stack_item_1": "01 — Input: Human noise, signals, data streams",
+        "execution_stack_item_2": "02 — Process: Filter, glitch, simulate",
+        "execution_stack_item_3": "03 — Output: Artifacts, clothing, code",
+        "execution_stack_item_4": "04 — Feedback: Question, iterate, refine",
+        "execution_stack_item_5": "05 — Deploy: Wardrobe as statement",
+        "layer_1_label": "INPUT",
+        "layer_1_title": "SIGNAL / HUMAN.NOISE",
+        "layer_1_description": "<p>Raw data streams, human signals, and digital noise converge. We filter what matters.</p>",
+        "layer_2_label": "PROCESS",
+        "layer_2_title": "GLITCH / SIMULATE.MORE",
+        "layer_2_description": "<p>Conscious disruption of predefined patterns. We simulate alternatives to question reality.</p>",
+        "layer_3_label": "OUTPUT",
+        "layer_3_title": "ARTIFACTS / CLOTHING.AS.CODE",
+        "layer_3_description": "<p>Tangible artifacts emerge. Clothing becomes code—a statement encoded in fabric.</p>",
+        "cta_text": "ENTER.SYSTEM",
+        "cta_url": "/collections/all"
+      }
+    }
+  },
+  "order": ["main"]
+}
+

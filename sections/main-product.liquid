@@ -1,3 +1,9 @@
+{% comment %}
+  TRUST.NO.OUTPUT — Main Product Section
+  Refactored for clean structure and maintainability.
+  Preserves all TNO custom code and Dawn functionality.
+{% endcomment %}
+
 <product-info
   id="MainProduct-{{ section.id }}"
   class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}"
@@ -9,6 +15,9 @@
     data-zoom-on-hover
   {% endif %}
 >
+  {%- comment -%} =========================================================
+     Stylesheets
+     ========================================================= {%- endcomment -%}
   {{ 'section-main-product.css' | asset_url | stylesheet_tag }}
   {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
   {{ 'component-price.css' | asset_url | stylesheet_tag }}
@@ -25,6 +34,9 @@
     {{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
   {%- endif -%}
 
+  {%- comment -%} =========================================================
+     Section Padding Styles
+     ========================================================= {%- endcomment -%}
   {%- style -%}
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
@@ -39,6 +51,9 @@
     }
   {%- endstyle -%}
 
+  {%- comment -%} =========================================================
+     JavaScript Files
+     ========================================================= {%- endcomment -%}
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
   {%- if product.quantity_price_breaks_configured? -%}
@@ -53,6 +68,9 @@
     <script src="{{ 'theme-editor.js' | asset_url }}" defer="defer"></script>
   {%- endif -%}
 
+  {%- comment -%} =========================================================
+     3D Model Support
+     ========================================================= {%- endcomment -%}
   {%- assign first_3d_model = product.media | where: 'media_type', 'model' | first -%}
   {%- if first_3d_model -%}
     {{ 'component-product-model.css' | asset_url | stylesheet_tag }}
@@ -72,14 +90,20 @@
     >
   {%- endif -%}
 
+  {%- comment -%} =========================================================
+     Product Layout Grid
+     ========================================================= {%- endcomment -%}
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
   <div class="page-width">
-    <!-- TNO: Wrapped product grid for scoped styling -->
+    {%- comment -%} TNO: Wrapped product grid for scoped styling {%- endcomment -%}
     <div class="tno-product-layout">
       <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
         <div class="grid__item product__media-wrapper">
           {% render 'product-media-gallery', variant_images: variant_images %}
         </div>
+        {%- comment -%} =========================================================
+           Product Info Wrapper
+           ========================================================= {%- endcomment -%}
         <div class="product__info-wrapper grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
           <section
             id="ProductInfo-{{ section.id }}"
@@ -87,6 +111,9 @@
           >
             {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
+            {%- comment -%} =========================================================
+               Product Info Blocks (Theme Editor)
+               ========================================================= {%- endcomment -%}
             {%- for block in section.blocks -%}
               {%- case block.type -%}
                 {%- when '@app' -%}
@@ -99,12 +126,12 @@
                     {{- block.settings.text -}}
                   </p>
                 {%- when 'title' -%}
-                  <!-- TNO: Product Title + Dynamic Subtitle -->
+                  {%- comment -%} TNO: Product Title + Dynamic Subtitle {%- endcomment -%}
                   <div class="product__title tno-product-title" {{ block.shopify_attributes }}>
                     <h1 class="tno-product-title__text" data-text="{{ product.title | escape }}">
                       {{ product.title | escape }}
                     </h1>
-                    <!-- TNO: dynamic subtitle logic -->
+                    {%- comment -%} TNO: dynamic subtitle logic {%- endcomment -%}
                     {%- if product.metafields.custom.subtitle != blank -%}
                       <p class="tno-product-subtitle">
                         {{ product.metafields.custom.subtitle | escape }}
@@ -872,7 +899,10 @@
                   {% render 'icon-with-text', block: block %}
               {%- endcase -%}
             {%- endfor -%}
-            <!-- TNO: Compact accordion for extended details (scoped) -->
+
+            {%- comment -%} =========================================================
+               TNO: Compact Accordion for Extended Details
+               ========================================================= {%- endcomment -%}
             <div class="tno-product-accordion" role="region" aria-label="Product details">
               {%- if product.description != blank -%}
                 <details class="tno-accordion__item" open>
@@ -909,6 +939,8 @@
                 </details>
               {%- endif -%}
             </div>
+
+            {%- comment -%} View Full Details Link {%- endcomment -%}
             <a href="{{ product.url }}" class="link product__view-details animate-arrow">
               {{ 'products.product.view_full_details' | t }}
               <img
@@ -921,7 +953,10 @@
                 height="24"
               >
             </a>
-            <!-- TNO: Size Guide Drawer markup -->
+
+            {%- comment -%} =========================================================
+               TNO: Size Guide Drawer
+               ========================================================= {%- endcomment -%}
             <div
               id="SizeGuideDrawer"
               class="tno-size-guide-drawer"
@@ -950,8 +985,14 @@
       </div>
     </div>
 
+    {%- comment -%} =========================================================
+       Product Media Modal
+       ========================================================= {%- endcomment -%}
     {% render 'product-media-modal', variant_images: variant_images %}
 
+    {%- comment -%} =========================================================
+       Popup Modals
+       ========================================================= {%- endcomment -%}
     {% assign popups = section.blocks | where: 'type', 'popup' %}
     {%- for block in popups -%}
       <modal-dialog
@@ -990,11 +1031,17 @@
       </modal-dialog>
     {%- endfor -%}
 
+    {%- comment -%} =========================================================
+       Media Gallery Scripts
+       ========================================================= {%- endcomment -%}
     {%- if product.media.size > 0 -%}
       <script src="{{ 'product-modal.js' | asset_url }}" defer="defer"></script>
       <script src="{{ 'media-gallery.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
+    {%- comment -%} =========================================================
+       3D Model Scripts
+       ========================================================= {%- endcomment -%}
     {%- if first_3d_model -%}
       <script type="application/json" id="ProductJSON-{{ product.id }}">
         {{ product.media | where: 'media_type', 'model' | json }}
@@ -1002,12 +1049,18 @@
       <script src="{{ 'product-model.js' | asset_url }}" defer></script>
     {%- endif -%}
 
+    {%- comment -%} =========================================================
+       Structured Data (JSON-LD)
+       ========================================================= {%- endcomment -%}
     <script type="application/ld+json">
       {{ product | structured_data }}
     </script>
   </div>
 </product-info>
 
+{%- comment -%} =========================================================
+   Section Schema
+   ========================================================= {%- endcomment -%}
 {% schema %}
 {
   "name": "t:sections.main-product.name",

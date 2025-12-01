@@ -272,72 +272,127 @@
               data-id="{{ section.id }}"
             >
               <div class="loading-overlay gradient"></div>
-              <ul
-                class="grid product-grid  grid--{{ section.settings.columns_mobile }}-col-tablet-down grid--{{ section.settings.columns_desktop }}-col-desktop"
-                role="list"
-              >
-                {%- assign skip_card_product_styles = false -%}
-                {%- for item in search.results -%}
-                  {% assign lazy_load = false %}
-                  {%- if forloop.index > 2 -%}
-                    {%- assign lazy_load = true -%}
-                  {%- endif -%}
 
-                  <li
-                    class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-                    {% if settings.animations_reveal_on_scroll %}
-                      data-cascade
-                    {% endif %}
+              {%- comment -%} Separate products from non-products {%- endcomment -%}
+              {%- assign has_products = false -%}
+              {%- assign has_non_products = false -%}
+              {%- for item in search.results -%}
+                {%- if item.object_type == 'product' -%}
+                  {%- assign has_products = true -%}
+                {%- else -%}
+                  {%- assign has_non_products = true -%}
+                {%- endif -%}
+              {%- endfor -%}
+
+              {%- comment -%} Product results - TRUST grid layout {%- endcomment -%}
+              {%- if has_products -%}
+                <div class="search-grid-trust">
+                  <ul
+                    class="search-grid-trust__inner"
+                    role="list"
                   >
-                    {%- case item.object_type -%}
-                      {%- when 'product' -%}
-                        {% render 'card-product',
-                          card_product: item,
-                          media_aspect_ratio: section.settings.image_ratio,
-                          image_shape: section.settings.image_shape,
-                          show_secondary_image: section.settings.show_secondary_image,
-                          show_vendor: section.settings.show_vendor,
-                          show_rating: section.settings.show_rating,
-                          lazy_load: lazy_load,
-                          skip_styles: skip_card_product_styles
-                        %}
-                        {%- assign skip_card_product_styles = true -%}
-                      {%- when 'article' -%}
-                        {% render 'article-card',
-                          article: item,
-                          show_image: true,
-                          show_date: section.settings.article_show_date,
-                          show_author: section.settings.article_show_author,
-                          show_badge: true,
-                          media_aspect_ratio: 1,
-                          lazy_load: lazy_load
-                        %}
-                      {%- when 'page' -%}
-                        <div class="article-card-wrapper card-wrapper underline-links-hover">
-                          <div
-                            class="card card--card card--text ratio color-{{ settings.blog_card_color_scheme }}"
-                            style="--ratio-percent: 100%;"
-                          >
-                            <div class="card__content">
-                              <div class="card__information">
-                                <h3 class="card__heading">
-                                  <a href="{{ item.url }}" class="full-unstyled-link">
-                                    {{ item.title | truncate: 50 | escape }}
-                                  </a>
-                                </h3>
-                              </div>
-                              <div class="card__badge {{ settings.badge_position }}">
-                                <span class="badge color-{{ settings.color_schemes | first }}">
-                                  {{- 'templates.search.page' | t -}}
-                                </span>
+                    {%- for item in search.results -%}
+                      {%- if item.object_type == 'product' -%}
+                        {% assign lazy_load = false %}
+                        {%- if forloop.index > 2 -%}
+                          {%- assign lazy_load = true -%}
+                        {%- endif -%}
+
+                        <li
+                          class="{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                          {% if settings.animations_reveal_on_scroll %}
+                            data-cascade
+                            style="--animation-order: {{ forloop.index }};"
+                          {% endif %}
+                        >
+                          {% render 'card-product',
+                            card_product: item,
+                            lazy_load: lazy_load,
+                            card_style: 'trust',
+                            show_color_variants: true,
+                            show_custom_add_to_cart: true
+                          %}
+                        </li>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              {%- elsif search.performed and search.results_count == 0 -%}
+                {%- comment -%} Empty state: No results found {%- endcomment -%}
+                <div class="search-grid-trust search-grid-trust__empty-state">
+                  <div class="search-grid-trust__empty-inner">
+                    <h2 class="search-grid-trust__empty-title">
+                      No results found
+                    </h2>
+                    <p class="search-grid-trust__empty-text">
+                      We couldn't find anything matching "{{ search.terms | escape }}".
+                    </p>
+                    <p class="search-grid-trust__empty-hint">
+                      Try a different keyword (e.g. "hoodie", "t-shirt", "neo").
+                    </p>
+                  </div>
+                </div>
+              {%- endif -%}
+
+              {%- comment -%} Non-product results (articles, pages) - keep existing layout {%- endcomment -%}
+              {%- if has_non_products -%}
+                <ul
+                  class="grid product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down grid--{{ section.settings.columns_desktop }}-col-desktop"
+                  role="list"
+                >
+                  {%- for item in search.results -%}
+                    {%- unless item.object_type == 'product' -%}
+                      {% assign lazy_load = false %}
+                      {%- if forloop.index > 2 -%}
+                        {%- assign lazy_load = true -%}
+                      {%- endif -%}
+
+                      <li
+                        class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                        {% if settings.animations_reveal_on_scroll %}
+                          data-cascade
+                        {% endif %}
+                      >
+                        {%- case item.object_type -%}
+                          {%- when 'article' -%}
+                            {% render 'article-card',
+                              article: item,
+                              show_image: true,
+                              show_date: section.settings.article_show_date,
+                              show_author: section.settings.article_show_author,
+                              show_badge: true,
+                              media_aspect_ratio: 1,
+                              lazy_load: lazy_load
+                            %}
+                          {%- when 'page' -%}
+                            <div class="article-card-wrapper card-wrapper underline-links-hover">
+                              <div
+                                class="card card--card card--text ratio color-{{ settings.blog_card_color_scheme }}"
+                                style="--ratio-percent: 100%;"
+                              >
+                                <div class="card__content">
+                                  <div class="card__information">
+                                    <h3 class="card__heading">
+                                      <a href="{{ item.url }}" class="full-unstyled-link">
+                                        {{ item.title | truncate: 50 | escape }}
+                                      </a>
+                                    </h3>
+                                  </div>
+                                  <div class="card__badge {{ settings.badge_position }}">
+                                    <span class="badge color-{{ settings.color_schemes | first }}">
+                                      {{- 'templates.search.page' | t -}}
+                                    </span>
+                                  </div>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </div>
-                    {%- endcase -%}
-                  </li>
-                {%- endfor -%}
-              </ul>
+                        {%- endcase -%}
+                      </li>
+                    {%- endunless -%}
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+
               {%- if paginate.pages > 1 -%}
                 {% render 'pagination', paginate: paginate %}
               {%- endif -%}
