@@ -69,8 +69,8 @@
   {%- comment -%} TRUST Layout Wrapper {%- endcomment -%}
   <div class="product-main-trust__container">
     <div class="product-main-trust__layout">
-        {%- comment -%} ========== LEFT COLUMN: MEDIA ========== {%- endcomment -%}
-        <div class="product-main-trust__gallery brand-product__media-column">
+      {%- comment -%} ========== LEFT COLUMN: MEDIA ========== {%- endcomment -%}
+      <div class="product-main-trust__gallery brand-product__media-column">
         {%- comment -%} Main Featured Media {%- endcomment -%}
         <div class="brand-product__media-main" id="BrandMediaMain-{{ section.id }}">
           {%- comment -%} Label System corner hook (no content; styling via CSS) {%- endcomment -%}
@@ -122,10 +122,10 @@
             {%- endfor -%}
           </div>
         {%- endif -%}
-        </div>
+      </div>
 
-        {%- comment -%} ========== RIGHT COLUMN: INFO ========== {%- endcomment -%}
-        <div class="product-main-trust__info brand-product__info-column">
+      {%- comment -%} ========== RIGHT COLUMN: INFO ========== {%- endcomment -%}
+      <div class="product-main-trust__info brand-product__info-column">
         {%- comment -%} Eyebrow: Badges {%- endcomment -%}
         <div class="brand-product__eyebrow">
           <span class="brand-badge brand-badge--primary">{{ product.vendor | escape }}</span>
@@ -196,12 +196,12 @@
                 </button>
               </div>
 
-              {%- comment -%} Express Checkout Buttons {%- endcomment -%}
-              {%- if section.settings.show_dynamic_checkout -%}
-                <div class="product-main-trust__express-checkout brand-product__express-checkout">
-                  {{ form | payment_button }}
-                </div>
-              {%- endif -%}
+              {%- comment -%}
+                Express Checkout Buttons - HARD DISABLED
+                This section intentionally does not show express/dynamic checkout buttons
+                regardless of theme editor settings, to maintain consistent dev/prod behavior
+                and keep focus on the main ADD TO CART CTA.
+              {%- endcomment -%}
 
               {%- comment -%} Trust Icons Row {%- endcomment -%}
               {% render 'product-trust-icons' %}
@@ -263,7 +263,13 @@
             <details class="brand-accordion" open>
               <summary class="brand-accordion__summary">
                 <span>DETAILS</span>
-                <svg class="brand-accordion__icon" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+                <svg
+                  class="brand-accordion__icon"
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  aria-hidden="true"
+                >
                   <path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                 </svg>
               </summary>
@@ -277,7 +283,13 @@
           <details class="brand-accordion">
             <summary class="brand-accordion__summary">
               <span>MATERIAL &amp; CARE</span>
-              <svg class="brand-accordion__icon" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+              <svg
+                class="brand-accordion__icon"
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                aria-hidden="true"
+              >
                 <path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
               </svg>
             </summary>
@@ -302,7 +314,13 @@
           <details class="brand-accordion">
             <summary class="brand-accordion__summary">
               <span>SHIPPING &amp; RETURNS</span>
-              <svg class="brand-accordion__icon" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+              <svg
+                class="brand-accordion__icon"
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                aria-hidden="true"
+              >
                 <path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
               </svg>
             </summary>
@@ -318,82 +336,82 @@
             </div>
           </details>
         </div>
-        </div>
       </div>
     </div>
+  </div>
 
-    {%- comment -%} ========== BELOW THE FOLD: STORY / SPEC / REVIEWS ========== {%- endcomment -%}
-    <div class="brand-product__details">
-      <div class="product-main-trust__meta-grid">
-        {%- comment -%} 1. PRODUCT STORY (subtitle metafield or description fallback) {%- endcomment -%}
-        {%- if section.settings.show_story_section -%}
-          {%- liquid
-            assign story_content = product.metafields.custom.subtitle.value
-            if story_content == blank
-              assign story_content = product.description
-            endif
-          -%}
-          {%- if story_content != blank -%}
-            <div class="product-main-trust__meta-card product-main-trust__meta-card--story">
-              <header class="product-main-trust__meta-header">
-                <h2
-                  id="brand-product-story-heading"
-                  class="product-main-trust__meta-title brand-details__heading brand-section-heading label-system label-tech"
-                >
-                  PRODUCT.STORY
-                </h2>
-              </header>
-              <div class="product-main-trust__meta-body">
-                <section class="brand-details__section" aria-labelledby="brand-product-story-heading">
-                  <div class="brand-details__content">
-                    {{ story_content }}
-                  </div>
-                </section>
-              </div>
+  {%- comment -%} ========== BELOW THE FOLD: STORY / SPEC / REVIEWS ========== {%- endcomment -%}
+  <div class="brand-product__details">
+    <div class="product-main-trust__meta-grid">
+      {%- comment -%} 1. PRODUCT STORY (product_story metafield or description fallback) {%- endcomment -%}
+      {%- if section.settings.show_story_section -%}
+        {%- liquid
+          assign story_content = product.metafields.custom.product_story.value
+          if story_content == blank
+            assign story_content = product.description
+          endif
+        -%}
+        {%- if story_content != blank -%}
+          <div class="product-main-trust__meta-card product-main-trust__meta-card--story">
+            <header class="product-main-trust__meta-header">
+              <h2
+                id="brand-product-story-heading"
+                class="product-main-trust__meta-title brand-details__heading brand-section-heading label-system label-tech"
+              >
+                PRODUCT.STORY
+              </h2>
+            </header>
+            <div class="product-main-trust__meta-body">
+              <section class="brand-details__section" aria-labelledby="brand-product-story-heading">
+                <div class="brand-details__content">
+                  {{ story_content | escape | newline_to_br }}
+                </div>
+              </section>
             </div>
-          {%- endif -%}
+          </div>
         {%- endif -%}
+      {%- endif -%}
 
-        {%- comment -%} 2. SPECIFICATIONS (proper 2-column grid) {%- endcomment -%}
-        {%- if section.settings.show_specs_section -%}
-          {%- liquid
-            assign has_material = false
-            assign has_fit = false
-            assign has_print = false
-            assign has_care = false
+      {%- comment -%} 2. SPECIFICATIONS (proper 2-column grid) {%- endcomment -%}
+      {%- if section.settings.show_specs_section -%}
+        {%- liquid
+          assign has_material = false
+          assign has_fit = false
+          assign has_print = false
+          assign has_care = false
 
-            if product.metafields.custom.material.value != blank or product.metafields.custom.spec_material.value != blank
-              assign has_material = true
-            endif
-            if product.metafields.custom.fit.value != blank or product.metafields.custom.spec_fit.value != blank
-              assign has_fit = true
-            endif
-            if product.metafields.custom.print.value != blank or product.metafields.custom.spec_print.value != blank
-              assign has_print = true
-            endif
-            if product.metafields.custom.care_instructions.value != blank
-              assign has_care = true
-            endif
+          if product.metafields.custom.material.value != blank or product.metafields.custom.spec_material.value != blank
+            assign has_material = true
+          endif
+          if product.metafields.custom.fit.value != blank or product.metafields.custom.spec_fit.value != blank
+            assign has_fit = true
+          endif
+          if product.metafields.custom.print.value != blank or product.metafields.custom.spec_print.value != blank
+            assign has_print = true
+          endif
+          if product.metafields.custom.care_instructions.value != blank
+            assign has_care = true
+          endif
 
-            assign has_any_specs = false
-            if has_material or has_fit or has_print or has_care
-              assign has_any_specs = true
-            endif
-          -%}
+          assign has_any_specs = false
+          if has_material or has_fit or has_print or has_care
+            assign has_any_specs = true
+          endif
+        -%}
 
-          {%- if has_any_specs -%}
-            <div class="product-main-trust__meta-card product-main-trust__meta-card--specs">
-              <header class="product-main-trust__meta-header">
-                <h2
-                  id="brand-product-specs-heading"
-                  class="product-main-trust__meta-title brand-details__heading brand-section-heading label-system label-tech"
-                >
-                  SPECIFICATIONS
-                </h2>
-              </header>
-              <div class="product-main-trust__meta-body">
-                <section class="brand-details__section" aria-labelledby="brand-product-specs-heading">
-                  <dl class="brand-specs">
+        {%- if has_any_specs -%}
+          <div class="product-main-trust__meta-card product-main-trust__meta-card--specs">
+            <header class="product-main-trust__meta-header">
+              <h2
+                id="brand-product-specs-heading"
+                class="product-main-trust__meta-title brand-details__heading brand-section-heading label-system label-tech"
+              >
+                SPECIFICATIONS
+              </h2>
+            </header>
+            <div class="product-main-trust__meta-body">
+              <section class="brand-details__section" aria-labelledby="brand-product-specs-heading">
+                <dl class="brand-specs">
                   {%- if has_material -%}
                     <div class="brand-specs__item">
                       <dt class="brand-specs__label">MATERIAL</dt>
@@ -445,34 +463,39 @@
                       </dd>
                     </div>
                   {%- endif -%}
-                  </dl>
-                </section>
-              </div>
-            </div>
-          {%- endif -%}
-        {%- endif -%}
-
-        {%- comment -%} 3. REVIEWS.UGC {%- endcomment -%}
-        {%- if section.settings.show_reviews_section -%}
-          <div class="product-main-trust__meta-card product-main-trust__meta-card--reviews">
-            <header class="product-main-trust__meta-header">
-              <h2 id="brand-product-reviews-heading" class="product-main-trust__meta-title brand-details__heading">REVIEWS.UGC</h2>
-            </header>
-            <div class="product-main-trust__meta-body">
-              <section
-                class="brand-details__section"
-                id="brand-product-reviews"
-                aria-labelledby="brand-product-reviews-heading"
-              >
-                <div class="brand-details__reviews-placeholder">
-                  <p>Review integration placeholder &bull; Connect your reviews app here</p>
-                </div>
+                </dl>
               </section>
             </div>
           </div>
         {%- endif -%}
-      </div>
+      {%- endif -%}
+
+      {%- comment -%} 3. REVIEWS.UGC {%- endcomment -%}
+      {%- if section.settings.show_reviews_section -%}
+        <div class="product-main-trust__meta-card product-main-trust__meta-card--reviews">
+          <header class="product-main-trust__meta-header">
+            <h2
+              id="brand-product-reviews-heading"
+              class="product-main-trust__meta-title brand-details__heading"
+            >
+              REVIEWS.UGC
+            </h2>
+          </header>
+          <div class="product-main-trust__meta-body">
+            <section
+              class="brand-details__section"
+              id="brand-product-reviews"
+              aria-labelledby="brand-product-reviews-heading"
+            >
+              <div class="brand-details__reviews-placeholder">
+                <p>Review integration placeholder &bull; Connect your reviews app here</p>
+              </div>
+            </section>
+          </div>
+        </div>
+      {%- endif -%}
     </div>
+  </div>
 
   {%- comment -%} Minimal JS for Thumbnail Switching {%- endcomment -%}
   <script>
