@@ -9521,6 +9521,15 @@ body.template-product .product-main-trust__purchase .quantity__input {
   color: #ffffff;
 }
 
+/* Override: Force rectangular containers for product-main-trust variant controls */
+.product-main-trust .product-main-trust__variants-control,
+.product-main-trust .product-form__input {
+  border-radius: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
 /* Focus states for form inputs */
 body.template-product .product-main-trust__variants select:focus,
 body.template-product .product-main-trust__variants .select__select:focus,
@@ -9550,6 +9559,13 @@ body.template-product .product-main-trust__add-to-cart {
   box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.7);
   transition: box-shadow 160ms ease-out, background-color 160ms ease-out,
               border-color 160ms ease-out, transform 160ms ease-out;
+}
+
+/* Scoped Add-to-Cart button readability fix for product-main-trust section */
+.product-main-trust .product-main-trust__add-to-cart,
+.product-main-trust .product-main-trust__add-to-cart.brand-button--primary {
+  color: #000000;
+  font-weight: 700;
 }
 
 body.template-product .tno-button-primary:hover,
@@ -9772,6 +9788,42 @@ body.template-product .product-main-trust__variants-pills label:hover {
   border-color: rgba(0, 255, 255, 0.6);
 }
 
+/* Override: Force rectangular tiles for product-main-trust section (consolidated with main rules above) */
+.product-main-trust .product-main-trust__variants-pills {
+  gap: 10px !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+}
+
+.product-main-trust .product-main-trust__variants-pills label {
+  border-radius: 2px !important;
+  min-width: 56px !important;
+  height: 44px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  background: transparent !important;
+  color: #ffffff !important;
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  padding: 0 0.875rem !important;
+  box-shadow: none !important;
+  transition: all 0.15s ease !important;
+}
+
+.product-main-trust .product-main-trust__variants-pills input[type="radio"]:checked + label {
+  border-color: #00F0FF !important;
+  color: #00F0FF !important;
+  background: rgba(0, 240, 255, 0.1) !important;
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.3) !important;
+}
+
+.product-main-trust .product-main-trust__variants-pills input[type="radio"]:not(:disabled):not(:checked) + label:hover {
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
 /* =========================================================
    ÄNDERUNGEN ZUSAMMENFASSUNG / CHANGES SUMMARY
    =========================================================
@@ -9861,4 +9913,371 @@ body.template-product .product-main-trust__variants-control .select__select {
   position: relative;
   z-index: 5; /* Höher als der Link */
   pointer-events: auto;
+}
+
+/* =========================================
+   TNO – Product (Brand Neutral) – Variant Tiles
+   Consolidated with main polish rules below
+   ========================================= */
+
+/* Hide only inline images inside variant labels (to avoid broken icons) */
+.product-main-trust .product-form__input--pill label img,
+.product-main-trust .product-form__input--swatch label img {
+  display: none;
+}
+
+/* ============================================
+   TNO – PRODUCT MAIN TRUST: VARIANT POLISH
+   Rectangular tiles & containers
+   ============================================ */
+
+/* 1. Outer containers / fieldsets – Force rectangular, remove pill glow */
+.product-main-trust .product-main-trust__variants-control,
+.product-main-trust .product-form__input--pill,
+.product-main-trust .product-form__input--swatch,
+.product-main-trust fieldset.product-form__input {
+  border-radius: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0;
+  margin: 0;
+}
+
+/* 2. Remove any ::before pseudo-elements that create glow effects */
+.product-main-trust .product-form__input--pill input[type="radio"] + label::before {
+  display: none !important;
+}
+
+/* 3. Refine individual tiles – CSS Grid for perfect alignment */
+.product-main-trust .product-form__input--pill {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(56px, 1fr)) !important;
+  gap: 10px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Responsive grid adjustments */
+@media (width <= 480px) {
+  .product-main-trust .product-form__input--pill {
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr)) !important;
+    gap: 8px !important;
+  }
+}
+
+.product-main-trust .product-form__input--pill input[type="radio"] + label {
+  /* Shape */
+  border-radius: 2px !important;
+
+  /* Consistent sizing */
+  min-width: 56px !important;
+  height: 44px !important;
+
+  /* Layout */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 0.875rem !important;
+  margin: 0 !important;
+
+  /* Styling */
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  background: transparent !important;
+  color: #ffffff !important;
+
+  /* Typography */
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+
+  /* Effects */
+  box-shadow: none !important;
+  transition: all 0.15s ease !important;
+  cursor: pointer !important;
+}
+
+/* 4. Active state (selected variant) – Cyan accent with soft glow */
+.product-main-trust .product-form__input--pill input[type="radio"]:checked + label {
+  border-color: #00F0FF !important;
+  color: #00F0FF !important;
+  background: rgba(0, 240, 255, 0.1) !important;
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.3) !important;
+}
+
+/* Hover state for tiles */
+.product-main-trust .product-form__input--pill input[type="radio"]:not(:disabled):not(:checked) + label:hover {
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* 5. Disabled state (sold out) */
+.product-main-trust .product-form__input--pill input[type="radio"]:disabled + label,
+.product-main-trust .product-form__input--pill input[type="radio"].disabled + label {
+  opacity: 0.35 !important;
+  cursor: not-allowed !important;
+  text-decoration: line-through !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  box-shadow: none !important;
+}
+
+/* 7. Ensure legend/labels are clean */
+.product-main-trust .product-form__input--pill legend,
+.product-main-trust .product-main-trust__variants-label {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+/* ============================================
+   TNO – PRODUCT MAIN TRUST: TYPOGRAPHY HIERARCHY
+   Clean sans-serif for body, keep glitch for headings
+   ============================================ */
+
+/* Base font family for body content */
+.product-main-trust,
+.product-main-trust .brand-product__details {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Body text elements – Clean sans-serif */
+.product-main-trust p,
+.product-main-trust li,
+.product-main-trust .brand-accordion__content,
+.product-main-trust .brand-accordion__content p,
+.product-main-trust .brand-accordion__content li,
+.product-main-trust .brand-specs__label,
+.product-main-trust .brand-specs__value,
+.product-main-trust .product-main-trust__meta-body,
+.product-main-trust .brand-details__content,
+.product-main-trust .brand-details__content p,
+.product-main-trust .brand-details__content li,
+.product-main-trust .brand-product__key-points,
+.product-main-trust .brand-product__key-points li,
+.product-main-trust .brand-details__reviews-placeholder,
+.product-main-trust .brand-details__reviews-placeholder p {
+  font-family: inherit;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* Explicitly preserve glitch/mono font for headings */
+.product-main-trust .product-main-trust__title,
+.product-main-trust .brand-product__title,
+.product-main-trust .product-main-trust__meta-title,
+.product-main-trust .brand-details__heading,
+.product-main-trust .brand-section-heading,
+.product-main-trust h1,
+.product-main-trust h2,
+.product-main-trust h3,
+.product-main-trust .product-main-trust__variants-label,
+.product-main-trust legend.form__label {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace) !important;
+}
+
+/* ============================================
+   TNO – PRODUCT MAIN TRUST: SIZE GUIDE BUTTON
+   Clean secondary CTA matching variant tiles
+   ============================================ */
+
+/* Size Guide container */
+.product-main-trust .tno-size-guide {
+  margin-top: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+/* Size Guide link – Ghost button style */
+.product-main-trust .tno-size-guide__link {
+  /* Shape */
+  border-radius: 2px !important;
+
+  /* Layout */
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  padding: 0.5rem 0.875rem !important;
+
+  /* Styling */
+  background: transparent !important;
+  border: 1px solid rgba(0, 240, 255, 0.3) !important;
+  color: #ffffff !important;
+
+  /* Typography */
+  font-family: var(--font-mono, ui-monospace, monospace) !important;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  text-decoration: none !important;
+
+  /* Effects */
+  box-shadow: none !important;
+  transition: all 0.15s ease !important;
+  cursor: pointer !important;
+}
+
+/* Hover state – Subtle glow */
+.product-main-trust .tno-size-guide__link:hover {
+  border-color: rgba(0, 240, 255, 0.6) !important;
+  background: rgba(0, 240, 255, 0.05) !important;
+  box-shadow: 0 0 6px rgba(0, 240, 255, 0.2) !important;
+  color: #00F0FF !important;
+}
+
+/* Icon styling */
+.product-main-trust .tno-size-guide__icon {
+  width: 16px !important;
+  height: 16px !important;
+  stroke: currentColor !important;
+  fill: none !important;
+  stroke-width: 2 !important;
+  transition: stroke 0.15s ease !important;
+}
+
+/* ============================================
+   PRODUCT MAIN TRUST – GRID & TRUST ICONS
+   CSS Grid for variant tiles + Trust icons block
+   ============================================ */
+
+/* Trust Icons Container */
+.product-main-trust__trust-icons {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Trust Icons List */
+.product-main-trust__trust-icons-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Individual Trust Icon */
+.product-main-trust__trust-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.product-main-trust__trust-icon:hover {
+  opacity: 1;
+}
+
+/* Icon Label (placeholder text, will be replaced with SVGs) */
+.product-main-trust__trust-icon .trust-icon-label {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+}
+
+/* SVG styling (when SVGs are added) */
+.product-main-trust__trust-icon svg {
+  width: 32px;
+  height: 20px;
+  fill: rgba(255, 255, 255, 0.7);
+  transition: fill 0.2s ease;
+}
+
+.product-main-trust__trust-icon:hover svg {
+  fill: rgba(255, 255, 255, 0.9);
+}
+
+/* Responsive adjustments */
+@media (width <= 480px) {
+  .product-main-trust__trust-icons-list {
+    gap: 0.75rem;
+  }
+
+  .product-main-trust__trust-icon .trust-icon-label {
+    font-size: 0.6rem;
+  }
+
+  .product-main-trust__trust-icon svg {
+    width: 28px;
+    height: 18px;
+  }
+}
+
+/* ============================================
+   TNO – PRODUCT MAIN TRUST: CYBERPUNK NEON CTA
+   Rectangular Add-to-Cart button with neon glow
+   ============================================ */
+
+/* Base state – Rectangular cyberpunk button */
+.product-main-trust .product-main-trust__add-to-cart,
+.product-main-trust .product-main-trust__add-to-cart.brand-button--primary,
+.product-main-trust .product-main-trust__add-to-cart.tno-button-primary {
+  /* Shape */
+  border-radius: 2px !important;
+
+  /* Base styling */
+  background: #000000 !important;
+  border: 2px solid #00F0FF !important;
+  color: #ffffff !important;
+
+  /* Typography */
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+
+  /* Layout */
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  padding: 1rem 1.5rem !important;
+
+  /* Effects */
+  box-shadow: none !important;
+  transition: all 0.2s ease-out !important;
+
+  /* Remove any inherited styles */
+  transform: none !important;
+}
+
+/* Hover & Focus state – Neon glow activation */
+.product-main-trust .product-main-trust__add-to-cart:hover:not(:disabled),
+.product-main-trust .product-main-trust__add-to-cart:focus-visible:not(:disabled),
+.product-main-trust .product-main-trust__add-to-cart:focus:not(:disabled) {
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.1) 0%, rgba(0, 0, 0, 0.95) 100%) !important;
+  border-color: #00F0FF !important;
+  color: #ffffff !important;
+  box-shadow:
+    0 0 12px rgba(0, 240, 255, 0.7),
+    0 0 24px rgba(0, 240, 255, 0.5),
+    0 0 36px rgba(0, 240, 255, 0.3) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Active / Pressed state */
+.product-main-trust .product-main-trust__add-to-cart:active:not(:disabled) {
+  transform: translateY(1px) scale(0.99) !important;
+  box-shadow:
+    0 0 8px rgba(0, 240, 255, 0.5),
+    0 0 16px rgba(0, 240, 255, 0.3) !important;
+}
+
+/* Disabled state */
+.product-main-trust .product-main-trust__add-to-cart:disabled,
+.product-main-trust .product-main-trust__add-to-cart[disabled] {
+  opacity: 0.4 !important;
+  border-color: rgba(0, 240, 255, 0.3) !important;
+  color: rgba(255, 255, 255, 0.5) !important;
+  box-shadow: none !important;
+  cursor: not-allowed !important;
+  transform: none !important;
 }

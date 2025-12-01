@@ -168,7 +168,8 @@
                 {% render 'product-variant-picker',
                   product: product,
                   block: section.blocks[0],
-                  product_form_id: product_form_id
+                  product_form_id: product_form_id,
+                  force_pills: true
                 %}
               </div>
             {%- endunless -%}
@@ -201,6 +202,9 @@
                   {{ form | payment_button }}
                 </div>
               {%- endif -%}
+
+              {%- comment -%} Trust Icons Row {%- endcomment -%}
+              {% render 'product-trust-icons' %}
             </div>
           {%- endform -%}
         </product-form>
@@ -317,10 +321,10 @@
     {%- comment -%} ========== BELOW THE FOLD: STORY / SPEC / REVIEWS ========== {%- endcomment -%}
     <div class="brand-product__details">
       <div class="product-main-trust__meta-grid">
-        {%- comment -%} 1. PRODUCT STORY (metafield or description) {%- endcomment -%}
+        {%- comment -%} 1. PRODUCT STORY (subtitle metafield or description fallback) {%- endcomment -%}
         {%- if section.settings.show_story_section -%}
           {%- liquid
-            assign story_content = product.metafields.custom.story.value
+            assign story_content = product.metafields.custom.subtitle.value
             if story_content == blank
               assign story_content = product.description
             endif

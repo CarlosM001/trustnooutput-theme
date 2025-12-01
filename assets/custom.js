@@ -659,7 +659,7 @@
       // 1. Ist es eine TRUST-Karte?
       const card = e.target.closest('.tno-card-product');
 
-      if (!card) return; // Wenn nicht, lassen wir den Klick durch
+      if (!card) { return; } // Wenn nicht, lassen wir den Klick durch
 
       // 2. Interaktive Elemente schützen (Buttons, Inputs)
       const clickedElement = e.target;
