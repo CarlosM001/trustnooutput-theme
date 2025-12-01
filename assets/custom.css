@@ -9824,3 +9824,41 @@ body.template-product .product-main-trust__variants-control .select__select {
   pointer-events: auto;
   cursor: pointer;
 }
+
+/* =========================================================
+   FIX: Ghost Overlay Problem - Verhindert, dass Links aus Karten "ausbrechen"
+   =========================================================
+   PROBLEM: Der Link des letzten Produkts legt sich wie eine unsichtbare
+   Decke über alle anderen Produkte, weil .tno-card-product kein
+   position: relative hat.
+
+   LÖSUNG: position: relative auf der Karte + z-index Management
+   ========================================================= */
+
+/* FIX: Verhindert, dass der Link aus der Karte "ausbricht" */
+.tno-card-product {
+  position: relative !important;
+  z-index: 1;
+}
+
+/* Optional: Sicherstellen, dass der Link wirklich passt */
+.tno-card-product .full-unstyled-link::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2; /* Über dem Bild, aber unter Buttons */
+  pointer-events: auto;
+}
+
+/* WICHTIG: Buttons müssen ÜBER dem Link liegen */
+.tno-card-product button,
+.tno-card-product .tno-card-button,
+.tno-card-product .tno-card-variant,
+.tno-card-product form {
+  position: relative;
+  z-index: 5; /* Höher als der Link */
+  pointer-events: auto;
+}

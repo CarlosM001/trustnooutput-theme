@@ -22,7 +22,7 @@
   assign show_custom_add_to_cart = show_custom_add_to_cart | default: false
 -%}
 
-<div class="tno-card-product card-product{% if card_style == 'trust' %} card-product--trust tno-card-product--trust{% endif %}" data-product-id="{{ card_product.id }}">
+<div class="tno-card-product card-product{% if card_style == 'trust' %} card-product--trust tno-card-product--trust{% endif %}" data-product-id="{{ card_product.id }}" data-product-url="{{ card_product.url }}">
   {%- if card_style == 'trust' -%}
     {%- comment -%} TRUST STYLE: Simplified structure {%- endcomment -%}
     <div class="tno-card-product__image-wrapper">

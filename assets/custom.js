@@ -359,20 +359,24 @@
    *
    * Handles left/right arrow button clicks to scroll the related products carousel
    * horizontally on mobile product pages.
-   */
-  /**
+   *
    * Related Products Carousel - TRUST Style
    * Desktop: 4 cards per view, slide by 4
    * Mobile: 2 cards per view, slide by 2
    * Controls are hidden if totalCards <= cardsPerView
+   *
+   * IMPORTANT: This function is scoped to .product-related-trust containers only.
+   * It does NOT affect collection grid cards or any other product cards on the page.
    */
   function initTnoRelatedProductsCarousel() {
+    // Scope: Only select carousel containers, not individual cards globally
     const carousels = document.querySelectorAll('.product-related-trust');
     if (!carousels.length) {
       return;
     }
 
     carousels.forEach((carousel) => {
+      // All selectors are scoped to this specific carousel container
       const track = carousel.querySelector('.product-related-trust__grid');
       const controlsWrapper = carousel.querySelector('.product-related-trust__controls');
       const prevBtn = carousel.querySelector('.product-related-trust__arrow--prev');
@@ -382,7 +386,7 @@
         return;
       }
 
-      // Count total TRUST cards
+      // Count cards ONLY within this carousel's track (scoped selection)
       const totalCards = track.querySelectorAll('.tno-card-product--trust').length;
 
       // Determine cards per view based on screen size
@@ -399,6 +403,7 @@
       controlsWrapper.classList.remove('tno-slider-controls--hidden');
 
       const getSlideAmount = () => {
+        // Scoped to this carousel's track
         const firstItem = track.querySelector('.product-related-trust__item');
         if (!firstItem) {
           return 0;
@@ -418,12 +423,14 @@
           return;
         }
 
+        // Only scroll this specific carousel's track
         track.scrollBy({
           left: direction * amount,
           behavior: 'smooth',
         });
       };
 
+      // Only attach listeners to THIS carousel's buttons (scoped)
       prevBtn.addEventListener('click', () => scrollBySlide(-1));
       nextBtn.addEventListener('click', () => scrollBySlide(1));
     });
@@ -436,26 +443,36 @@
    * Desktop: slides by 4 cards per click, Mobile: slides by 2 cards per click
    * Arrow buttons positioned above grid (top-right)
    * Controls are hidden if totalCards <= cardsPerView
+   *
+   * IMPORTANT: This function is scoped to .tno-latest-drops containers only.
+   * It does NOT affect collection grid cards or any other product cards on the page.
    */
   function initTnoLatestDropsCarousel() {
+    // Scope: Only select carousel containers, not individual cards globally
     const carousels = document.querySelectorAll('.tno-latest-drops');
     if (!carousels.length) {
       return;
     }
 
     carousels.forEach((carousel) => {
+      // All selectors are scoped to this specific carousel container
       const track = carousel.querySelector('.tno-latest-drops__track');
       // Use new selectors for arrow buttons positioned above grid
+      // Scoped to the parent section containing this carousel
       const section = carousel.closest('.product-grid-trust');
-      const controlsWrapper = section?.querySelector('.product-grid-trust__controls');
-      const prevBtn = section?.querySelector('.product-grid-trust__arrow--prev');
-      const nextBtn = section?.querySelector('.product-grid-trust__arrow--next');
+      if (!section) {
+        return; // Safety check: ensure we're in the right container
+      }
+
+      const controlsWrapper = section.querySelector('.product-grid-trust__controls');
+      const prevBtn = section.querySelector('.product-grid-trust__arrow--prev');
+      const nextBtn = section.querySelector('.product-grid-trust__arrow--next');
 
       if (!track || !prevBtn || !nextBtn || !controlsWrapper) {
         return;
       }
 
-      // Count total TRUST cards
+      // Count cards ONLY within this carousel's track (scoped selection)
       const totalCards = track.querySelectorAll('.tno-card-product--trust').length;
 
       // Determine cards per view based on screen size
@@ -474,6 +491,7 @@
       controlsWrapper.classList.remove('tno-slider-controls--hidden');
 
       const getSlideAmount = () => {
+        // Scoped to this carousel's track
         const firstItem = track.querySelector('.tno-latest-drops__item');
         if (!firstItem) {
           return 0;
@@ -493,12 +511,14 @@
           return;
         }
 
+        // Only scroll this specific carousel's track
         track.scrollBy({
           left: direction * amount,
           behavior: 'smooth',
         });
       };
 
+      // Only attach listeners to THIS carousel's buttons (scoped)
       prevBtn.addEventListener('click', () => scrollBySlide(-1));
       nextBtn.addEventListener('click', () => scrollBySlide(1));
     });
@@ -626,6 +646,58 @@
   }
 
   /**
+   * Initialize TNO Product Card Click Behavior
+   *
+   * Uses Event Delegation with CAPTURE PHASE to intercept clicks BEFORE other scripts.
+   * The 'true' parameter enables capture phase (event flows from document → target).
+   * This ensures our handler runs first and can prevent other scripts from interfering.
+   */
+  function initTnoProductCardClicks() {
+    // Das 'true' am Ende aktiviert die CAPTURE PHASE.
+    // Das bedeutet: Wir fangen den Klick ab, BEVOR er das Element erreicht.
+    document.addEventListener('click', function (e) {
+      // 1. Ist es eine TRUST-Karte?
+      const card = e.target.closest('.tno-card-product');
+
+      if (!card) return; // Wenn nicht, lassen wir den Klick durch
+
+      // 2. Interaktive Elemente schützen (Buttons, Inputs)
+      const clickedElement = e.target;
+      if (
+        clickedElement.closest('a') ||
+        clickedElement.closest('button') ||
+        clickedElement.closest('.tno-card-button') ||
+        clickedElement.closest('.tno-card-variant')
+      ) {
+        // Wenn Nutzer auf Button klickt, machen wir nichts und lassen es durchlaufen
+        return;
+      }
+
+      // 3. Jetzt schlagen wir zu!
+      const productUrl = card.dataset.productUrl;
+
+      if (productUrl) {
+        // Wir stoppen SOFORT alle anderen Skripte (das "böse" Skript wird gekillt)
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+
+        // Wir führen unsere korrekte Navigation aus
+        if (e.metaKey || e.ctrlKey) {
+          window.open(productUrl, '_blank');
+        } else {
+          window.location.href = productUrl;
+        }
+      }
+    }, true); // <--- WICHTIG: Dieses 'true' sorgt dafür, dass wir ZUERST dran sind!
+
+    // Cursor Styling (optisch)
+    const style = document.createElement('style');
+    style.innerHTML = '.tno-card-product { cursor: pointer; }';
+    document.head.appendChild(style);
+  }
+
+  /**
    * Initialize TNO Footer Accordion
    *
    * Handles mobile footer accordion toggle functionality.
@@ -685,6 +757,7 @@
     initTnoRelatedProductsCarousel();
     initTnoLatestDropsCarousel();
     initTnoTrustCardInteractions();
+    initTnoProductCardClicks();
     initTnoFooterAccordion();
 
     // console.log('[TNO] Theme initialization complete');

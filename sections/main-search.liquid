@@ -291,7 +291,6 @@
                     class="search-grid-trust__inner"
                     role="list"
                   >
-                    {%- assign skip_card_product_styles = false -%}
                     {%- for item in search.results -%}
                       {%- if item.object_type == 'product' -%}
                         {% assign lazy_load = false %}
@@ -313,7 +312,6 @@
                             show_color_variants: true,
                             show_custom_add_to_cart: true
                           %}
-                          {%- assign skip_card_product_styles = true -%}
                         </li>
                       {%- endif -%}
                     {%- endfor -%}
