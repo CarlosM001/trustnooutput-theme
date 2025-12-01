@@ -1,123 +1,409 @@
 /* =========================================================
-<<<<<<< HEAD
-   TNO – SEARCH: FINAL LOOK (DESKTOP + MOBILE)
+   TNO – HEADER SEARCH: DESKTOP & MOBILE
+   Single source of truth for header search styling
+   Properly scoped to prevent conflicts with other contexts
+
+   States:
+   - IDLE: White border, white icon, transparent background, no glow
+   - HOVER/FOCUS: Neon cyan border (#00f6ff), cyan glow, glitch animation
    ========================================================= */
 
-/* Background always dark, border white by default */
-.tno-search form {
-  border-color: #fff !important;
-  /* stylelint-disable-next-line color-function-notation */
-  background: rgba(0, 0, 0, 50%) !important;
-
-/* On focus: cyan border + neon glow like header icons */
-.tno-search form:focus-within {
-  border-color: #0ff !important;
-  box-shadow: 0 0 16px rgba(0, 255, 255, 60%) !important;
-}
-
-/* Input: white text, transparent background */
-.tno-search__input {
-  color: #fff !important;
-  background: transparent !important;
-}
-
-.tno-search__input::placeholder {
-  color: rgba(255, 255, 255, 60%) !important;
-}
-
-/* Button: transparent like mobile version */
-.tno-search__button {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  outline: none !important;
-}
-
-/* Icon: cyan, fully visible */
-.tno-search__button svg,
-.tno-search__button .icon {
-  width: 16px;
-  height: 16px;
-  fill: #0ff !important;
-  stroke: #0ff !important;
-  opacity: 0.95;
-}
 /* =========================================================
-   TNO – SEARCH: FINAL LOOK (DESKTOP + MOBILE)
+   HEADER SEARCH – DESKTOP
    ========================================================= */
+@media (width >= 750px) {
+  /* Desktop search container wrapper */
+  .tno-header__desktop-utility .tno-search,
+  .tno-header__search .tno-search {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
 
-/* Background always dark, border white by default */
-.tno-search form {
-  border-color: #fff !important;
-  background: rgba(0, 0, 0, 50%) !important;
+  /* Form: Pill-shaped container - IDLE STATE */
+  .tno-header__desktop-utility .tno-search form,
+  .tno-header__search .tno-search form {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 1.25rem;
+    height: 46px;
+    border-radius: 999px;
+
+    /* White border in idle state - clearly visible */
+    border: 1px solid #fff;
+
+    /* Transparent background */
+    background: transparent;
+
+    /* Smooth transitions for hover/focus states */
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      background-color 0.2s ease,
+      transform 0.2s ease;
+
+    /* Prevent double borders */
+    outline: none;
+  }
+
+  /* HOVER STATE: Neon cyan border + glow + glitch pulse */
+  .tno-header__desktop-utility .tno-search:hover form,
+  .tno-header__search .tno-search:hover form {
+    border-color: #00f6ff;
+    box-shadow:
+      0 0 0 1px rgb(0 246 255 / 30%),
+      0 0 16px rgb(0 246 255 / 75%);
+    background: #05050c;
+    transform: translateY(-0.5px);
+    animation: tno-search-glitch-pulse 260ms linear;
+  }
+
+  /* FOCUS STATE: Same as hover (neon cyan border + glow) */
+  .tno-header__desktop-utility .tno-search form:focus-within,
+  .tno-header__search .tno-search form:focus-within {
+    border-color: #00f6ff;
+    box-shadow:
+      0 0 0 1px rgb(0 246 255 / 30%),
+      0 0 16px rgb(0 246 255 / 75%);
+    background: #05050c;
+    transform: translateY(-0.5px);
+    animation: tno-search-glitch-pulse 260ms linear;
+  }
+
+  /* Active class for JS-controlled state */
+  .tno-header__desktop-utility .tno-search.tno-search--active form,
+  .tno-header__search .tno-search.tno-search--active form {
+    border-color: #00f6ff;
+    box-shadow:
+      0 0 0 1px rgb(0 246 255 / 30%),
+      0 0 16px rgb(0 246 255 / 75%);
+    background: #05050c;
+    transform: translateY(-0.5px);
+  }
+
+  /* Input: White text, transparent background, no borders */
+  .tno-header__desktop-utility .tno-search__input,
+  .tno-header__search .tno-search__input {
+    flex: 1 1 auto;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    color: #fff;
+    padding: 0;
+    font-size: 0.875rem;
+    outline: none;
+    font-family: var(--font-mono, monospace);
+    line-height: 1.4;
+  }
+
+  .tno-header__desktop-utility .tno-search__input::placeholder,
+  .tno-header__search .tno-search__input::placeholder {
+    color: rgb(255 255 255 / 55%);
+  }
+
+  /* Button: Transparent background, white icon in idle state */
+  .tno-header__desktop-utility .tno-search__button,
+  .tno-header__search .tno-search__button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    outline: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: color 0.2s ease;
+
+    /* White icon in idle state */
+    color: #fff;
+  }
+
+  /* Icon: White in idle state, stroke-width 2, no filter/glow */
+  .tno-header__desktop-utility .tno-search__button svg,
+  .tno-header__desktop-utility .tno-search__button .icon,
+  .tno-header__search .tno-search__button svg,
+  .tno-header__search .tno-search__button .icon {
+    width: 18px;
+    height: 18px;
+    stroke: currentcolor;
+    fill: none;
+    stroke-width: 2;
+    transition:
+      color 0.2s ease,
+      filter 0.2s ease;
+
+    /* No filter/glow in idle state */
+    filter: none;
+  }
+
+  /* HOVER STATE: Icon becomes neon cyan with glow */
+  .tno-header__desktop-utility .tno-search:hover .tno-search__button,
+  .tno-header__desktop-utility .tno-search form:focus-within .tno-search__button,
+  .tno-header__desktop-utility .tno-search.tno-search--active .tno-search__button,
+  .tno-header__search .tno-search:hover .tno-search__button,
+  .tno-header__search .tno-search form:focus-within .tno-search__button,
+  .tno-header__search .tno-search.tno-search--active .tno-search__button {
+    color: #00f6ff;
+  }
+
+  .tno-header__desktop-utility .tno-search:hover .tno-search__button svg,
+  .tno-header__desktop-utility .tno-search:hover .tno-search__button .icon,
+  .tno-header__desktop-utility .tno-search form:focus-within .tno-search__button svg,
+  .tno-header__desktop-utility .tno-search form:focus-within .tno-search__button .icon,
+  .tno-header__desktop-utility .tno-search.tno-search--active .tno-search__button svg,
+  .tno-header__desktop-utility .tno-search.tno-search--active .tno-search__button .icon,
+  .tno-header__search .tno-search:hover .tno-search__button svg,
+  .tno-header__search .tno-search:hover .tno-search__button .icon,
+  .tno-header__search .tno-search form:focus-within .tno-search__button svg,
+  .tno-header__search .tno-search form:focus-within .tno-search__button .icon,
+  .tno-header__search .tno-search.tno-search--active .tno-search__button svg,
+  .tno-header__search .tno-search.tno-search--active .tno-search__button .icon {
+    color: #00f6ff;
+    filter: drop-shadow(0 0 6px rgb(0 246 255 / 90%));
+  }
+
+  /* Ensure no double outlines on input or button */
+  .tno-header__desktop-utility .tno-search__input:focus,
+  .tno-header__desktop-utility .tno-search__input:focus-visible,
+  .tno-header__desktop-utility .tno-search__button:focus,
+  .tno-header__desktop-utility .tno-search__button:focus-visible,
+  .tno-header__search .tno-search__input:focus,
+  .tno-header__search .tno-search__input:focus-visible,
+  .tno-header__search .tno-search__button:focus,
+  .tno-header__search .tno-search__button:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
 }
 
-/* On focus: cyan border + neon glow like header icons */
-.tno-search form:focus-within {
-  border-color: #0ff !important;
-  box-shadow: 0 0 16px rgba(0, 255, 255, 60%) !important;
-}
-
-/* Input: white text, transparent background */
-.tno-search__input {
-  color: #fff !important;
-  background: transparent !important;
-}
-
-.tno-search__input::placeholder {
-  color: rgba(255, 255, 255, 60%) !important;
-}
-
-/* Button: transparent like mobile version */
-.tno-search__button {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  outline: none !important;
-}
-
-/* Icon: cyan, fully visible */
-.tno-search__button svg,
-.tno-search__button .icon {
-  width: 16px;
-  height: 16px;
-  fill: #0ff !important;
-  stroke: #0ff !important;
-  opacity: 0.95;
-}
 /* =========================================================
-   TNO – HEADER SEARCH: UNIFIED DESKTOP & MOBILE STYLING
-   Single source of truth - Desktop matches Mobile 1:1
+   HEADER SEARCH – MOBILE
    ========================================================= */
+@media (width <= 749px) {
+  /* Mobile search container wrapper */
+  .tno-header__search-mobile .tno-search {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
 
-/*
-   NOTE: All other .tno-search rules in this file are intentionally
-   overridden by the final block at the end of this file.
+  /* Form: Pill-shaped container - IDLE STATE */
+  .tno-header__search-mobile .tno-search form {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 1rem;
+    height: 44px;
+    border-radius: 999px;
 
-   Mobile reference values applied to desktop:
-   - Container: 46px height (48px mobile), pill shape, cyan border glow
-   - Input: transparent bg, white text, flex grow
-   - Button: 38x38px (42x42px mobile) cyan gradient circle, dark icon
-   - Background: rgba(0,0,0,0.5) semi-transparent
-   - Focus: single glow on container only
-=======
-   TNO – HEADER SEARCH: CONSOLIDATED STYLING
-   Single source of truth - See final block at end of file
+    /* White border in idle state */
+    border: 1px solid #fff;
+
+    /* Transparent background */
+    background: transparent;
+
+    /* Smooth transitions */
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      background-color 0.2s ease,
+      transform 0.2s ease;
+    outline: none;
+  }
+
+  /* HOVER STATE: Neon cyan border + glow + glitch pulse */
+  .tno-header__search-mobile .tno-search:hover form {
+    border-color: #00f6ff;
+    box-shadow:
+      0 0 0 1px rgb(0 246 255 / 30%),
+      0 0 16px rgb(0 246 255 / 75%);
+    background: #05050c;
+    transform: translateY(-0.5px);
+    animation: tno-search-glitch-pulse 260ms linear;
+  }
+
+  /* FOCUS STATE: Same as hover */
+  .tno-header__search-mobile .tno-search form:focus-within {
+    border-color: #00f6ff;
+    box-shadow:
+      0 0 0 1px rgb(0 246 255 / 30%),
+      0 0 16px rgb(0 246 255 / 75%);
+    background: #05050c;
+    transform: translateY(-0.5px);
+    animation: tno-search-glitch-pulse 260ms linear;
+  }
+
+  /* Active class */
+  .tno-header__search-mobile .tno-search.tno-search--active form {
+    border-color: #00f6ff;
+    box-shadow:
+      0 0 0 1px rgb(0 246 255 / 30%),
+      0 0 16px rgb(0 246 255 / 75%);
+    background: #05050c;
+    transform: translateY(-0.5px);
+  }
+
+  /* Input */
+  .tno-header__search-mobile .tno-search__input {
+    flex: 1 1 auto;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    color: #fff;
+    padding: 0;
+    font-size: 0.875rem;
+    outline: none;
+    font-family: var(--font-mono, monospace);
+    line-height: 1.4;
+  }
+
+  .tno-header__search-mobile .tno-search__input::placeholder {
+    color: rgb(255 255 255 / 55%);
+  }
+
+  /* Button: Larger on mobile for touch targets */
+  .tno-header__search-mobile .tno-search__button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    outline: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: color 0.2s ease;
+
+    /* White icon in idle state */
+    color: #fff;
+  }
+
+  /* Icon: Larger on mobile */
+  .tno-header__search-mobile .tno-search__button svg,
+  .tno-header__search-mobile .tno-search__button .icon {
+    width: 20px;
+    height: 20px;
+    stroke: currentcolor;
+    fill: none;
+    stroke-width: 2;
+    transition:
+      color 0.2s ease,
+      filter 0.2s ease;
+
+    /* No filter/glow in idle state */
+    filter: none;
+  }
+
+  /* HOVER STATE: Icon becomes neon cyan with glow */
+  .tno-header__search-mobile .tno-search:hover .tno-search__button,
+  .tno-header__search-mobile .tno-search form:focus-within .tno-search__button,
+  .tno-header__search-mobile .tno-search.tno-search--active .tno-search__button {
+    color: #00f6ff;
+  }
+
+  .tno-header__search-mobile .tno-search:hover .tno-search__button svg,
+  .tno-header__search-mobile .tno-search:hover .tno-search__button .icon,
+  .tno-header__search-mobile .tno-search form:focus-within .tno-search__button svg,
+  .tno-header__search-mobile .tno-search form:focus-within .tno-search__button .icon,
+  .tno-header__search-mobile .tno-search.tno-search--active .tno-search__button svg,
+  .tno-header__search-mobile .tno-search.tno-search--active .tno-search__button .icon {
+    color: #00f6ff;
+    filter: drop-shadow(0 0 6px rgb(0 246 255 / 90%));
+  }
+
+  /* Ensure no double outlines */
+  .tno-header__search-mobile .tno-search__input:focus,
+  .tno-header__search-mobile .tno-search__input:focus-visible,
+  .tno-header__search-mobile .tno-search__button:focus,
+  .tno-header__search-mobile .tno-search__button:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+/* =========================================================
+   SHARED: Glitch pulse animation
    ========================================================= */
+@keyframes tno-search-glitch-pulse {
+  0% {
+    transform: translateY(-0.5px) scale(1);
+    box-shadow:
+      0 0 0 1px rgb(0 246 255 / 30%),
+      0 0 16px rgb(0 246 255 / 75%);
+  }
 
-/* 
-   SEARCH COMPONENT SPECIFICATION:
-   - Container: White 1px border by default, dark translucent bg (rgba(0,0,0,0.5))
-   - Focus: Cyan border and glow on :focus-within
-   - Input: No borders, white text, light-grey placeholders
-   - Button: NO gradient, NO border, NO background by default
-            Icon appears in cyan. Glitch effect on mousedown via .is-glitching
-   - Mobile: 44px button for larger touch targets
-   
-   NOTE: All other .tno-search rules in this file are overridden by 
-   the final block at the end of this file.
->>>>>>> 85a19bdab3ba0208a4ecaeaa741f5c0783babf19
-*/
+  25% {
+    transform: translateY(-0.5px) scale(1.01) translateX(-1px);
+    box-shadow:
+      0 0 0 1px rgb(0 246 255 / 50%),
+      0 0 20px rgb(0 246 255 / 90%),
+      -2px 0 8px rgb(255 0 255 / 40%),
+      2px 0 8px rgb(0 246 255 / 40%);
+  }
+
+  50% {
+    transform: translateY(-0.5px) scale(1.01) translateX(1px);
+    box-shadow:
+      0 0 0 1px rgb(0 246 255 / 40%),
+      0 0 18px rgb(0 246 255 / 80%),
+      2px 0 8px rgb(255 0 255 / 30%),
+      -2px 0 8px rgb(0 246 255 / 30%);
+  }
+
+  75% {
+    transform: translateY(-0.5px) scale(1.005) translateX(-0.5px);
+    box-shadow:
+      0 0 0 1px rgb(0 246 255 / 45%),
+      0 0 19px rgb(0 246 255 / 85%);
+  }
+
+  100% {
+    transform: translateY(-0.5px) scale(1);
+    box-shadow:
+      0 0 0 1px rgb(0 246 255 / 30%),
+      0 0 16px rgb(0 246 255 / 75%);
+  }
+}
+
+/* =========================================================
+   SHARED: Reduced motion preference
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .tno-header__desktop-utility .tno-search form,
+  .tno-header__search .tno-search form,
+  .tno-header__search-mobile .tno-search form,
+  .tno-header__desktop-utility .tno-search__button,
+  .tno-header__search .tno-search__button,
+  .tno-header__search-mobile .tno-search__button,
+  .tno-header__desktop-utility .tno-search__button svg,
+  .tno-header__search .tno-search__button svg,
+  .tno-header__search-mobile .tno-search__button svg {
+    transition: none;
+    animation: none;
+  }
+
+  .tno-header__desktop-utility .tno-search:hover form,
+  .tno-header__desktop-utility .tno-search form:focus-within,
+  .tno-header__search .tno-search:hover form,
+  .tno-header__search .tno-search form:focus-within,
+  .tno-header__search-mobile .tno-search:hover form,
+  .tno-header__search-mobile .tno-search form:focus-within {
+    animation: none;
+  }
+}
+
 /* ==========================================================================
    TRUST.NO.OUTPUT — custom.css (CLEAN)
    ========================================================================== */
@@ -474,25 +760,13 @@ a:hover {
 }
 
 /* === Add-on: Reveal + Motion Enhancements === */
+
+/* Note: .reveal is already defined earlier in the file (line ~275) */
 :root {
   --reveal-distance: 24px;
   --reveal-duration: 0.6s;
   --reveal-ease: cubic-bezier(0.2, 0.65, 0.3, 1);
   --glitch-duration: 1.2s;
-}
-
-.reveal {
-  opacity: 0;
-  transform: translateY(var(--reveal-distance));
-  transition:
-    opacity var(--reveal-duration) var(--reveal-ease),
-    transform var(--reveal-duration) var(--reveal-ease);
-  will-change: opacity, transform;
-}
-
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .glitch {
@@ -902,234 +1176,11 @@ button.shopify-payment-button__button--unbranded {
   transform: translateY(-1px);
 }
 
-
-/* =========================================================
-   TNO – HEADER SEARCH: Desktop & Mobile einheitlich
-   Keine Doppelrahmen, klarer Neon-Pill-Style
-   ========================================================= */
-
-/* Basis: Form selbst neutral halten */
-.tno-search form {
-  margin: 0;
-  padding: 0;
-  border: none !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-/* Pill-Container: wir nutzen die Dawn .field-Box als einzige Umrandung */
-.tno-search .field {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  height: 40px;
-  padding-left: 1rem;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(0, 0, 0, 0.85);
-  box-shadow: none;
-}
-
-/* Alle inneren Standardrahmen entfernen (diese machen die 2. Umrandung) */
-.tno-search .field,
-.tno-search .field:focus,
-.tno-search .field:focus-visible,
-.tno-search .field__input,
-.tno-search .search__input,
-.tno-search input[type='search'] {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-/* EINDEUTIGER Fokus: nur der äußere Pill-Container glüht */
-.tno-search .field:focus-within {
-  border-color: #0ff !important;
-  box-shadow: 0 0 0 2px rgba(0, 255, 255, 0.45) !important;
-}
-
-/* Suchfeld / Input selbst – vollständig rahmenlos im Inneren */
-.tno-search__input,
-.tno-search .field__input,
-.tno-search .search__input,
-.tno-search input[type='search'] {
-  flex: 1 1 auto;
-  min-width: 0;
-  border: none !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  color: #f5f5f5;
-  font-family: var(--font-mono, monospace);
-  font-size: 0.8125rem;
-  padding: 0;
-}
-
-.tno-search__input::placeholder,
-.tno-search .field__input::placeholder,
-.tno-search .search__input::placeholder {
-  color: rgba(245, 245, 245, 0.55);
-}
-
-/* Alle Outline-Varianten komplett killen (Input & Button) */
-.tno-search__input:focus,
-.tno-search__input:focus-visible,
-.tno-search__button:focus,
-.tno-search__button:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-/* Button rechts – exakt gleicher Stil auf Desktop & Mobile */
-.tno-search__button {
-  border: none !important;
-  outline: none !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  margin-left: 0.25rem;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #0ff, #0fc);
-  color: #050608;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    opacity 0.15s ease;
-}
-
-.tno-search__button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 0 12px color-mix(in srgb, #0ff 50%, transparent);
-}
-
-.tno-search__button svg,
-.tno-search__button .icon,
-.tno-search__button .icon-search {
-  width: 16px;
-  height: 16px;
-  color: #050608;
-  fill: currentColor;
-  stroke: currentColor;
-  stroke-width: 1.8;
-}
-
-@media (max-width: 749px) {
-  .tno-search .field {
-    height: 44px;
-    padding-left: 0.9rem;
-  }
-
-  .tno-search__button {
-    width: 44px;
-    height: 44px;
-  }
-}
-
-/* 07) REDUCED MOTION ACCESSIBILITY */
-@media (prefers-reduced-motion: reduce) {
-  /* Ensure glitch pseudo-elements are hidden */
-  .tno-glitch-strong::before,
-  .tno-glitch-strong::after,
-  .tno-glitch-soft::before,
-  .tno-glitch-soft::after {
-    opacity: 0 !important;
-  }
-
-  /* Hero image stays static */
-  .tno-hero-img {
-    transform: scale(1) !important;
-  }
-
-  /* Disable search button glitch animation */
-  .tno-search__button.is-glitching,
-  .tno-search button[type="submit"].is-glitching,
-  .tno-search .field__button.is-glitching {
-    animation: none !important;
-    transform: none !important;
-  }
-}
-
 /* ==========================================================================
    08) ANIMATIONS
    ========================================================================== */
-@keyframes tno-pan {
-  0%,
-  100% {
-    transform: scale(1.05) translateX(0);
-  }
 
-  50% {
-    transform: scale(1.1) translateX(-2%);
-  }
-}
-
-@keyframes glitch-1 {
-  0%,
-  100% {
-    clip-path: inset(0 0 100% 0);
-    transform: translateX(0);
-  }
-
-  10% {
-    clip-path: inset(0 0 80% 0);
-    transform: translateX(2px);
-  }
-
-  20% {
-    clip-path: inset(50% 0 30% 0);
-    transform: translateX(-2px);
-  }
-
-  30% {
-    clip-path: inset(20% 0 60% 0);
-    transform: translateX(1px);
-  }
-
-  40% {
-    clip-path: inset(80% 0 10% 0);
-    transform: translateX(-1px);
-  }
-
-  50% {
-    clip-path: inset(0 0 100% 0);
-    transform: translateX(0);
-  }
-}
-
-@keyframes glitch-2 {
-  0%,
-  100% {
-    clip-path: inset(100% 0 0 0);
-    transform: translateX(0);
-  }
-
-  15% {
-    clip-path: inset(80% 0 10% 0);
-    transform: translateX(-1px);
-  }
-
-  25% {
-    clip-path: inset(30% 0 50% 0);
-    transform: translateX(1px);
-  }
-
-  35% {
-    clip-path: inset(60% 0 20% 0);
-    transform: translateX(-2px);
-  }
-
-  45% {
-    clip-path: inset(10% 0 80% 0);
-    transform: translateX(2px);
-  }
-
-  55% {
-    clip-path: inset(100% 0 0 0);
-    transform: translateX(0);
-  }
-}
+/* Note: tno-pan keyframe is defined earlier in the file (line ~492) */
 
 /* ==========================================================================
    09) UTILITIES
@@ -2285,6 +2336,12 @@ button.shopify-payment-button__button--unbranded {
   z-index: 1100;
 }
 
+/* Keep the header group above page content */
+.shopify-section-group-header-group {
+  position: relative;
+  z-index: 40;
+}
+
 .mega-menu__content {
   z-index: 1050;
 }
@@ -2306,6 +2363,66 @@ button.shopify-payment-button__button--unbranded {
   right: 0;
   bottom: 0;
   z-index: 1200; /* Highest layer - always above header (1100) and mobile menu (900) */
+}
+
+/* =========================================================
+   PRODUCT PAGE – MOBILE BOTTOM NAV + CTA STACKING
+   Scroll-based visibility: hide nav on scroll down, show on scroll up
+   ========================================================= */
+
+@media (width <= 749px) {
+  /* Bottom nav visibility states (product pages only) */
+  body.template-product .tno-bottom-tabs {
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  body.template-product .tno-bottom-tabs.tno-bottom-tabs--hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(100%);
+    visibility: hidden;
+  }
+
+  /* Product CTA bar (buy buttons container) - sticky positioning */
+  body.template-product .tno-product-actions {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1190 !important; /* Just below bottom nav (1200) */
+    background: rgb(10 10 10 / 98%) !important;
+    border-top: 1px solid rgb(0 255 255 / 20%) !important;
+    backdrop-filter: blur(12px) !important;
+    padding: 1rem !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    transition: bottom 0.2s ease !important;
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  /* When bottom nav is visible, move CTA bar up */
+  body.template-product.tno-bottom-nav-visible .tno-product-actions {
+    bottom: 56px !important; /* Height of bottom nav */
+  }
+
+  /* When bottom nav is hidden, CTA bar sits at bottom */
+  body.template-product:not(.tno-bottom-nav-visible) .tno-product-actions {
+    bottom: 0 !important;
+  }
+}
+
+/* Respect reduced motion preference */
+@media (width <= 749px) and (prefers-reduced-motion: reduce) {
+  body.template-product .tno-bottom-tabs,
+  body.template-product .tno-product-actions {
+    transition: none !important;
+  }
 }
 
 .tno-tab::before,
@@ -2560,108 +2677,7 @@ button.shopify-payment-button__button--unbranded {
    These selectors target Spotlight card/link structures.
    ========================================================================== */
 
-/* DISABLED – caused white-on-white product cards, will be revisited later
-.card__heading .full-unstyled-link,
-.collection-list__item .card__caption {
-  color: #f5f5f5;
-}
-
-.grid__item .card__information .card__heading .full-unstyled-link,
-.grid__item .price__regular .price-item--regular {
-  color: #f5f5f5;
-}
-*/
-
 /* Product cards visibility - removed debug outline */
-
-/* ==========================================================================
-   12) SEARCH BAR (TNO)
-   ========================================================================== */
-.tno-search {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  height: 36px;
-  background: rgb(0 0 0 / 40%);
-  padding: 0 6px 0 10px;
-  border: 1px solid rgb(255 255 255 / 14%);
-  border-radius: 999px;
-}
-
-/* TNO header nav restructure – Expanded search input */
-.tno-search__input {
-  height: 100%;
-  width: 280px; /* Increased for 24-28 characters */
-  min-width: 240px;
-  background: transparent;
-  border: 0;
-  outline: none;
-  color: #fff;
-  font-family: var(--tno-mono, ui-monospace, monospace);
-  font-size: 0.95rem;
-  transition: all 0.2s ease;
-}
-
-.tno-search__input::placeholder {
-  color: rgb(255 255 255 / 60%);
-}
-
-/* TNO header nav restructure – Search focus state */
-.tno-search:has(.tno-search__input:focus) {
-  border-color: #0ff;
-  box-shadow: 0 0 12px rgb(0 255 255 / 35%);
-}
-
-.tno-search__button {
-  height: 28px;
-  min-width: 36px;
-  padding: 0 10px;
-  border: 0;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #0ff, #0cc);
-  color: #000;
-  font-weight: 800;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-}
-
-.tno-search__button:hover {
-  filter: saturate(1.2);
-}
-
-/* TRUST.NO.OUTPUT – Fix header search button alignment on desktop */
-@media (width >= 990px) {
-  /* Button im TNO-Suchfeld immer in einer Reihe mit dem Input anzeigen */
-  .tno-search button[type='submit'],
-  .tno-search .search__button,
-  .tno-search .field__button {
-    height: 28px;
-    min-width: 36px;
-    padding: 0 10px;
-    border: 0;
-    border-radius: 999px;
-    background: linear-gradient(135deg, #0ff, #0cc);
-    color: #000;
-    font-weight: 800;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0; /* entfernt das Standard-margin-top aus dem Theme */
-    position: static; /* falls das Theme irgendetwas Komisches setzt */
-  }
-
-  /* Sicherheit: Container zwingend als horizontale Flex-Leiste */
-  .tno-search {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    width: auto;
-  }
-}
 
 /* ==========================================================================
    13) HEADER—REQUESTED STYLE RULES (HIGHER PRIORITY)
@@ -2843,12 +2859,8 @@ button.shopify-payment-button__button--unbranded {
     box-shadow: 0 0 10px rgb(255 0 255 / 50%);
   }
 
-  /* Desktop search field styling */
+  /* Desktop search field styling - layout constraints only */
   .tno-header__desktop-utility .tno-search {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-
     /* Ensure cart icon stays visible on desktop: limit search width and let it shrink */
     flex: 1 1 auto;
     max-width: clamp(220px, 24vw, 360px);
@@ -3396,6 +3408,324 @@ button.shopify-payment-button__button--unbranded {
   .manifesto__content {
     font-size: 1.125rem;
     line-height: 1.75;
+  }
+}
+
+/* ==========================================================================
+   TNO – SYSTEM Page
+   Cyber-philosophy system architecture page with dark background
+   ========================================================================== */
+
+.tno-system {
+  position: relative;
+  padding: var(--space-xl, 3rem) var(--space-md, 1.5rem);
+  background: var(--color-deep-black, #0a0a0a);
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.tno-system__container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Subtle background grid pattern */
+.tno-system::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgb(0 255 240 / 2%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(0 255 240 / 2%) 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Hero Block */
+.tno-system__hero {
+  text-align: center;
+  margin-bottom: var(--space-xl, 3rem);
+}
+
+.tno-system__label {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-cyan, #0ff);
+  margin: 0 0 var(--space-sm, 1rem);
+  opacity: 0.8;
+}
+
+.tno-system__headline {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #fff;
+  margin: 0 0 var(--space-md, 1.5rem);
+  position: relative;
+  line-height: 1.1;
+}
+
+.tno-system__headline::after {
+  content: '';
+  display: block;
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-cyan, #0ff), var(--color-magenta, #f0f));
+  margin: var(--space-sm, 1rem) auto 0;
+  animation: system-underline-glitch 4s ease-in-out infinite;
+}
+
+@keyframes system-underline-glitch {
+  0%,
+  100% {
+    width: 120px;
+    opacity: 1;
+  }
+
+  50% {
+    width: 100px;
+    opacity: 0.7;
+  }
+}
+
+.tno-system__intro {
+  font-family: var(--font-clean, var(--font-body-family));
+  font-size: clamp(1rem, 2.5vw, 1.125rem);
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--color-gray-ghost, #a0a0b0);
+  max-width: 700px;
+  margin: 0 auto var(--space-md, 1.5rem);
+}
+
+.tno-system__meta {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 50%);
+  margin: 0;
+}
+
+/* Architecture Section */
+.tno-system__architecture {
+  margin-bottom: var(--space-xl, 3rem);
+}
+
+.tno-system__grid {
+  gap: var(--space-lg, 2.5rem);
+}
+
+.tno-system__col {
+  padding: var(--space-lg, 2.5rem);
+  background: rgb(255 255 255 / 2%);
+  border: 1px solid rgb(255 255 255 / 5%);
+  border-radius: 4px;
+}
+
+.tno-system__col-title {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-cyan, #0ff);
+  margin: 0 0 var(--space-md, 1.5rem);
+  padding-bottom: var(--space-sm, 1rem);
+  border-bottom: 1px solid rgb(0 255 255 / 20%);
+}
+
+.tno-system__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tno-system__list--numbered {
+  counter-reset: system-counter;
+}
+
+.tno-system__list--numbered .tno-system__list-item {
+  counter-increment: system-counter;
+  padding-left: 2rem;
+  position: relative;
+}
+
+.tno-system__list--numbered .tno-system__list-item::before {
+  content: counter(system-counter, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: 0.875rem;
+  color: var(--color-cyan, #0ff);
+  opacity: 0.6;
+}
+
+.tno-system__list-item {
+  font-family: var(--font-clean, var(--font-body-family));
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--color-gray-ghost, #a0a0b0);
+  margin-bottom: var(--space-sm, 1rem);
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.tno-system__list-item::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--color-cyan, #0ff);
+  opacity: 0.6;
+}
+
+.tno-system__list--numbered .tno-system__list-item::before {
+  content: counter(system-counter, decimal-leading-zero);
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: 0.875rem;
+}
+
+/* System Layers Section */
+.tno-system__layers {
+  margin-bottom: var(--space-xl, 3rem);
+}
+
+.tno-system__layers-title {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #fff;
+  text-align: center;
+  margin: 0 0 var(--space-lg, 2.5rem);
+}
+
+.tno-system__layers-grid {
+  gap: var(--space-md, 1.5rem);
+}
+
+.tno-system__layer-card {
+  padding: var(--space-lg, 2.5rem);
+  background: rgb(255 255 255 / 2%);
+  border: 1px solid rgb(255 255 255 / 5%);
+  border-radius: 4px;
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease,
+    transform 0.3s ease;
+}
+
+.tno-system__layer-card:hover {
+  border-color: rgb(0 255 255 / 30%);
+  background: rgb(255 255 255 / 4%);
+  transform: translateY(-2px);
+}
+
+.tno-system__layer-label {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-cyan, #0ff);
+  margin: 0 0 var(--space-xs, 0.5rem);
+  opacity: 0.8;
+}
+
+.tno-system__layer-title {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #fff;
+  margin: 0 0 var(--space-sm, 1rem);
+  line-height: 1.3;
+}
+
+.tno-system__layer-description {
+  font-family: var(--font-clean, var(--font-body-family));
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--color-gray-ghost, #a0a0b0);
+  margin: 0;
+}
+
+/* CTA Section */
+.tno-system__cta {
+  text-align: center;
+  margin-top: var(--space-xl, 3rem);
+}
+
+.tno-system__cta-button {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: 0.9375rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 1rem 2.5rem;
+}
+
+/* Mobile adjustments */
+@media (width <= 768px) {
+  .tno-system {
+    padding: var(--space-lg, 2.5rem) var(--space-md, 1.5rem);
+  }
+
+  .tno-system__hero {
+    margin-bottom: var(--space-lg, 2.5rem);
+  }
+
+  .tno-system__intro {
+    font-size: 1.0625rem;
+    line-height: 1.85;
+  }
+
+  .tno-system__col {
+    padding: var(--space-md, 1.5rem);
+  }
+
+  .tno-system__layer-card {
+    padding: var(--space-md, 1.5rem);
+  }
+
+  .tno-system__layers-title {
+    font-size: 1.5rem;
+    margin-bottom: var(--space-md, 1.5rem);
+  }
+}
+
+/* Desktop refinements */
+@media (width >= 769px) {
+  .tno-system__container {
+    max-width: 1200px;
+  }
+
+  .tno-system__architecture {
+    margin-bottom: var(--space-xl, 3rem);
+  }
+
+  .tno-system__layers-grid {
+    gap: var(--space-lg, 2.5rem);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .tno-system__headline::after {
+    animation: none;
+  }
+
+  .tno-system__layer-card {
+    transition: none;
+  }
+
+  .tno-system__layer-card:hover {
+    transform: none;
   }
 }
 
@@ -6387,8 +6717,7 @@ body.template-search .product-grid-container {
   background: #050608;
 }
 
-body.template-collection .product-grid-container::before,
-body.template-search .product-grid-container::before {
+body.template-collection .product-grid-container::before {
   content: '';
   position: absolute;
   top: 0;
@@ -6399,6 +6728,8 @@ body.template-search .product-grid-container::before {
   pointer-events: none;
   z-index: 0;
 }
+
+/* Search template: overlay disabled in SEARCH PAGE - TRUST Grid Overrides section below */
 
 body.template-collection .product-grid,
 body.template-search .product-grid {
@@ -6684,201 +7015,39 @@ body.tno-ab-continuous .related-products .price__regular {
   color: #f5f5f5 !important;
 }
 
-/* 5) HEADER SEARCH – Pill Style + Fokus ohne Doppelrahmen
-   ========================================================= */
-
-.tno-search {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-.tno-search form {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  background: rgb(0 0 0 / 85%);
-  border-radius: 999px;
-  border: 1px solid color-mix(in srgb, #fff 16%, transparent);
-  padding-left: 1rem;
-  height: 40px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-/* Wenn das Feld aktiv ist, nur EIN klarer Glow um die Pill-Form */
-.tno-search form:focus-within {
-  border-color: #0ff !important;
-  box-shadow: 0 0 0 2px rgb(0 255 255 / 45%) !important;
-}
-
-/* Innerer Input */
-.tno-search__input {
-  flex: 1 1 auto;
-  min-width: 0;
-  border: none !important;
-  outline: none !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  color: #f5f5f5;
-  font-family: var(--font-mono, monospace);
-  font-size: 0.8125rem;
-}
-
-.tno-search__input::placeholder {
-  color: rgb(245 245 245 / 55%);
-}
-
-/* Alle Standard-Outlines für Input + Button abschalten,
-   der sichtbare Fokus kommt über form:focus-within */
-.tno-search form:focus,
-.tno-search form:focus-visible,
-.tno-search__input:focus,
-.tno-search__input:focus-visible,
-.tno-search__button:focus,
-.tno-search__button:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-/* Button: cyan-Kreis rechts */
-.tno-search__button {
-  border: none !important;
-  outline: none !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  margin-left: 0.25rem;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #0ff, #0fc);
-  color: #000;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-/* Nur beim Hover leicht glühen – kein zusätzlicher Fokus-Rahmen */
-.tno-search__button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 0 12px color-mix(in srgb, #0ff 50%, transparent);
-}
-
-/* 6) HEADER SEARCH – Clean Line Fix (weiterhin nötig)
-   ========================================================= */
-
-.tno-search form::before,
-.tno-search form::after {
-  content: none !important;
-}
-
-.tno-search__input::-webkit-search-decoration,
-.tno-search__input::-webkit-search-cancel-button {
-  appearance: none;
-}
-
-
 /* =========================================================
-   TNO – HEADER SEARCH: Fokus ohne Doppelrahmen
+   TNO – VISIBILITY FIXES: Collection & Related Products
    ========================================================= */
 
-/* Wenn das Feld aktiv ist, nur EIN klarer Glow um die Pill-Form */
-.tno-search form:focus-within {
-  border-color: #0ff !important;
-  box-shadow: 0 0 0 2px rgb(0 255 255 / 45%) !important;
-}
-
-/* Alle Standard-Outlines für Input + Button abschalten */
-.tno-search form:focus,
-.tno-search form:focus-visible,
-.tno-search__input:focus,
-.tno-search__input:focus-visible,
-.tno-search__button:focus,
-.tno-search__button:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-/* Sicherstellen, dass der Input selbst keinen zweiten Rahmen bekommt */
-.tno-search__input {
-  border: none !important;
-}
-
-/* Optional: Button nur beim Hover leicht glühen lassen,
-   aber ohne zusätzlichen Fokus-Rahmen */
-.tno-search__button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 0 12px color-mix(in srgb, #0ff 50%, transparent);
-}
-
-/* =========================================================
-   TNO – HEADER SEARCH HARD OVERRIDE (kein Doppelrahmen)
-   ========================================================= */
-
-/* Alle inneren Input-/Button-Rahmen im Header-Suchfeld killen */
-header .tno-search input[type='search'],
-header .tno-search .field__input,
-header .tno-search .tno-search__input,
-header .tno-search button,
-header .tno-search .tno-search__button {
-  border: 0 !important;
-  outline: none !important;
-  box-shadow: none !important;
-  background-clip: padding-box;
-}
-
-/* Auch im Fokus-Zustand (Maus + Keyboard) nichts extra anzeigen */
-header .tno-search input[type='search']:focus,
-header .tno-search input[type='search']:focus-visible,
-header .tno-search .field__input:focus,
-header .tno-search .field__input:focus-visible,
-header .tno-search button:focus,
-header .tno-search button:focus-visible,
-header .tno-search .tno-search__button:focus,
-header .tno-search .tno-search__button:focus-visible {
-  border: 0 !important;
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-/* Der EINZIGE sichtbare Fokus bleibt der Glow um die Pill-Form */
-header .tno-search form:focus-within {
-  border-color: #0ff !important;
-  box-shadow: 0 0 0 2px rgb(0 255 255 / 45%) !important;
-}
-
-
-/* Fallback: Standard-Produktraser immer sichtbar halten */
-body.template-collection .product-grid {
+/* Ensure product grids are always visible (override scroll animations) */
+body.template-collection .product-grid,
+body.template-collection #ProductGridContainer,
+body.template-collection #product-grid,
+body.template-collection #product-grid .grid__item,
+body.template-collection #product-grid .grid__item .card,
+body.template-product .related-products .product-grid,
+body.template-product .related-products .grid__item,
+body.template-product .related-products .card {
   display: grid !important;
   opacity: 1 !important;
   visibility: visible !important;
+  transform: none !important;
 }
 
-body.template-collection .product-grid .card,
-body.template-collection .product-grid .card__media {
+/* Disable scroll-trigger animations that might hide cards */
+body.template-collection .scroll-trigger,
+body.template-collection .scroll-trigger.animate--slide-in,
+body.template-collection .scroll-trigger.animate--slide-in:not(.scroll-trigger--offscreen),
+body.template-product .related-products .scroll-trigger,
+body.template-product .related-products .scroll-trigger.animate--slide-in {
   opacity: 1 !important;
-  visibility: visible !important;
-  filter: none !important;
-  mix-blend-mode: normal !important;
+  transform: none !important;
 }
 
-/* =========================================================
-   TNO – FIX: Invisible Products on Collection + Related Products
-   ========================================================= */
-
-/* 1) Alle Loading-Overlays im Collection-Grid sicher ausblenden */
+/* Additional loading overlay hiding (complementary to main block above) */
 body.template-collection .product-grid-container .loading-overlay,
 body.template-collection .collection .loading-overlay,
 body.template-collection #ProductGridContainer .loading-overlay,
-body.template-collection .loading-overlay.gradient {
-  display: none !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-}
-
-/* 2) Loading-Overlay auch in "Ähnliche Produkte" (product-recommendations) verstecken */
 body.template-product .product-recommendations .loading-overlay,
 body.template-product .product-recommendations .loading-overlay.gradient {
   display: none !important;
@@ -6887,21 +7056,7 @@ body.template-product .product-recommendations .loading-overlay.gradient {
   pointer-events: none !important;
 }
 
-/* 3) Karten in Kategorien UND Ähnlichen Produkten im TNO-Dark-Style anzeigen */
-body.template-collection .product-grid .card,
-body.template-product .product-recommendations .card {
-  position: relative !important;
-  z-index: 2 !important;
-  background: #0c0f14 !important;
-  border: 1px solid #20232b !important;
-  color: #f5f5f5 !important;
-  transition:
-    transform 0.16s ease,
-    box-shadow 0.16s ease,
-    border-color 0.16s ease;
-}
-
-/* 4) Medien/Bilder immer sichtbar machen */
+/* Ensure media/images are always visible */
 body.template-collection .product-grid .card__media,
 body.template-collection .product-grid .card__media img,
 body.template-collection .product-grid .card .media,
@@ -6910,20 +7065,13 @@ body.template-product .product-recommendations .card__media,
 body.template-product .product-recommendations .card__media img,
 body.template-product .product-recommendations .card .media,
 body.template-product .product-recommendations .card img {
-  position: relative !important;
-  z-index: 1 !important;
   opacity: 1 !important;
   visibility: visible !important;
-  background: transparent !important;
   filter: none !important;
   mix-blend-mode: normal !important;
 }
 
-/* 5) Textfarben in den Karten erzwingen (Titel, Preis, Link) */
-body.template-collection .product-grid .card__heading,
-body.template-collection .product-grid .card__heading a,
-body.template-collection .product-grid .full-unstyled-link,
-body.template-collection .product-grid .price,
+/* Text colors for product-recommendations (complementary to main block) */
 body.template-product .product-recommendations .card__heading,
 body.template-product .product-recommendations .card__heading a,
 body.template-product .product-recommendations .full-unstyled-link,
@@ -6933,424 +7081,3314 @@ body.template-product .product-recommendations .price-item {
   color: #f5f5f5 !important;
 }
 
-/* =========================================================
-   TNO – EMERGENCY FIX: COLLECTION + RELATED PRODUCTS VISIBLE
-   ========================================================= */
-
-/* Auf Kategorieseiten: Produktkarten niemals durch Scroll-Animation verstecken */
-body.template-collection #ProductGridContainer,
-body.template-collection #product-grid,
-body.template-collection #product-grid .grid__item,
-body.template-collection #product-grid .grid__item .card {
-  opacity: 1 !important;
-  visibility: visible !important;
-  transform: none !important;
-}
-
-/* Falls irgendwo .scroll-trigger/-animate Klassen draufhängen → ignorieren */
-body.template-collection .scroll-trigger,
-body.template-collection .scroll-trigger.animate--slide-in,
-body.template-collection .scroll-trigger.animate--slide-in:not(.scroll-trigger--offscreen) {
-  opacity: 1 !important;
-  transform: none !important;
-}
-
-/* Auf Produktseite: "Ähnliche Produkte" ebenfalls immer sichtbar halten */
-body.template-product .related-products .product-grid,
-body.template-product .related-products .grid__item,
-body.template-product .related-products .card {
-  opacity: 1 !important;
-  visibility: visible !important;
-  transform: none !important;
-}
-
-body.template-product .related-products .scroll-trigger,
-body.template-product .related-products .scroll-trigger.animate--slide-in {
-  opacity: 1 !important;
-  transform: none !important;
-}
+/* Note: All .tno-search styling is consolidated at the top of this file (lines 1-145) */
 
 /* =========================================================
-   TNO – FINAL SEARCH STYLING: CONSOLIDATED & CLEANED
-   This is the SINGLE source of truth for .tno-search styling
-   All other .tno-search rules in this file are overridden here
-   
-   Spec:
-   - Container: White 1px border by default, dark translucent bg
-   - Focus: Cyan border and glow on :focus-within
-   - Input: No borders, white text, light-grey placeholders
-   - Button: NO gradient, NO border, NO background by default
-            Icon appears in cyan. Glitch effect on mousedown.
-   - Mobile: 44px button for larger touch targets
+   TNO COLLECTION GRID – 4 COLUMN DESKTOP FIX
    ========================================================= */
-
-/* Container wrapper */
-.tno-search {
-  display: flex !important;
-  align-items: center !important;
-}
-
-/* Form: Pill-shaped container */
-.tno-search form,
-.tno-search .tno-search__form {
-  display: flex !important;
-  align-items: center !important;
-  gap: 0 !important;
-  width: 100% !important;
-  max-width: 350px !important;
-  height: 40px !important;
-  padding: 0 4px 0 16px !important;
-  margin: 0 !important;
-  border-radius: 999px !important;
-  /* White 1px border by default */
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  /* Dark translucent background */
-  background: rgba(0, 0, 0, 0.5) !important;
-  box-shadow: none !important;
-  overflow: hidden !important;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
-}
-
-/* Focus state: Cyan border and glow */
-.tno-search form:focus-within,
-.tno-search .tno-search__form:focus-within {
-  border-color: #00ffff !important;
-  box-shadow: 0 0 12px rgba(0, 255, 255, 0.45) !important;
-}
-
-/* Input field: No borders, transparent bg, white text */
-.tno-search__input,
-.tno-search input[type="search"],
-.tno-search .field__input {
-  flex: 1 1 auto !important;
-  min-width: 0 !important;
-  height: 100% !important;
-  padding: 0 12px 0 0 !important;
-  border: none !important;
-  outline: none !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  color: #ffffff !important;
-  font-family: var(--font-mono, ui-monospace, monospace) !important;
-  font-size: 14px !important;
-}
-
-/* Placeholder: Light grey */
-.tno-search__input::placeholder,
-.tno-search input[type="search"]::placeholder,
-.tno-search .field__input::placeholder {
-  color: rgba(255, 255, 255, 0.5) !important;
-}
-
-/* Remove all focus outlines from inner elements */
-.tno-search__input:focus,
-.tno-search__input:focus-visible,
-.tno-search input[type="search"]:focus,
-.tno-search input[type="search"]:focus-visible,
-.tno-search .field__input:focus,
-.tno-search .field__input:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
-  border: none !important;
-}
-
-/* Button: NO gradient, NO border, NO background by default. Icon in cyan. */
-.tno-search__button,
-.tno-search button[type="submit"],
-.tno-search .field__button {
-  flex-shrink: 0 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 32px !important;
-  height: 32px !important;
-  margin: 0 4px 0 0 !important;
-  padding: 0 !important;
-  /* NO border, NO background */
-  border: none !important;
-  outline: none !important;
-  border-radius: 999px !important;
-  background: transparent !important;
-  /* Icon in cyan */
-  color: #00ffff !important;
-  cursor: pointer !important;
-  box-shadow: none !important;
-  transition: transform 0.15s ease, color 0.15s ease, box-shadow 0.15s ease !important;
-}
-
-/* Button hover: Slight glow effect */
-.tno-search__button:hover,
-.tno-search button[type="submit"]:hover,
-.tno-search .field__button:hover {
-  color: #00ffff !important;
-  transform: translateY(-1px) !important;
-  box-shadow: 0 0 8px rgba(0, 255, 255, 0.4) !important;
-}
-
-/* Button focus: No extra outline (form container handles focus) */
-.tno-search__button:focus,
-.tno-search__button:focus-visible,
-.tno-search button[type="submit"]:focus,
-.tno-search button[type="submit"]:focus-visible,
-.tno-search .field__button:focus,
-.tno-search .field__button:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-/* Glitch effect on mousedown via .is-glitching class */
-.tno-search__button.is-glitching,
-.tno-search button[type="submit"].is-glitching,
-.tno-search .field__button.is-glitching {
-  animation: tno-search-glitch 0.12s ease-out !important;
-  color: #ff00ff !important;
-}
-
-@keyframes tno-search-glitch {
-  0%, 100% { transform: translate(0, 0); }
-  25% { transform: translate(-2px, 1px); }
-  50% { transform: translate(2px, -1px); }
-  75% { transform: translate(-1px, -1px); }
-}
-
-/* Icon styling (SVG icons) - Cyan color */
-.tno-search__button svg,
-.tno-search__button .icon,
-.tno-search button[type="submit"] svg,
-.tno-search .field__button svg {
-  width: 18px !important;
-  height: 18px !important;
-  color: currentColor !important;
-  fill: currentColor !important;
-  stroke: currentColor !important;
-}
-
-/* Mobile adjustments: 44px button for larger touch targets */
-@media (max-width: 749px) {
-  .tno-search form,
-  .tno-search .tno-search__form {
-    height: 44px !important;
-    max-width: 100% !important;
-    padding: 0 6px 0 14px !important;
-  }
-
-  .tno-search__button,
-  .tno-search button[type="submit"],
-  .tno-search .field__button {
-    width: 44px !important;
-    height: 44px !important;
-  }
-  
-  .tno-search__button svg,
-  .tno-search button[type="submit"] svg,
-  .tno-search .field__button svg {
-    width: 20px !important;
-    height: 20px !important;
-  }
-}
-
-/* Desktop specific: Ensure consistent width */
-@media (min-width: 990px) {
-  .tno-search form,
-  .tno-search .tno-search__form {
-    min-width: 260px !important;
+@media screen and (width >= 990px) {
+  .template-collection .product-grid .grid__item {
+    width: calc(25% - var(--grid-desktop-horizontal-spacing));
+    max-width: calc(25% - var(--grid-desktop-horizontal-spacing));
+    flex-basis: calc(25% - var(--grid-desktop-horizontal-spacing));
   }
 }
 
 /* =========================================================
-   TNO – SEARCH: HARD RESET, NUR ÄUSSERES FORM HAT RAHMEN
+   TNO – COLLECTION GRID: FORCE 4 COLUMNS ON DESKTOP
    ========================================================= */
+@media screen and (width >= 990px) {
+  /* Force 4 columns on the main product grid */
+  .template-collection #product-grid.product-grid.grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: var(--grid-desktop-vertical-spacing, 24px) var(--grid-desktop-horizontal-spacing, 24px);
+  }
 
-/* 0) Alles im Such-Wrapper: keine eigenen Ränder, Glows, Pseudo-Elemente */
-.tno-search,
-.tno-search *,
-.tno-search *::before,
-.tno-search *::after {
-  outline: none !important;
-  box-shadow: none !important;
-  border: none !important;
+  /* Reset grid items so they don't override the layout */
+  .template-collection #product-grid.product-grid.grid > .grid__item {
+    width: auto !important;
+    max-width: none !important;
+    flex: 0 0 auto !important;
+  }
 }
 
-/* 1) ÄUSSERES FORM = einzige sichtbare Pill + Neon-Rahmen */
-.tno-search form {
-  position: relative;
+/* =========================================================
+   TNO HEADER (header-trust.liquid)
+   ========================================================= */
+
+/* ========================================
+   Header Base Styles
+   ======================================== */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+
+  /* Background handled by global CSS (.header--tno / .tno-header) and transparency setting */
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 1.5rem 2rem;
+  border: none;
+  box-shadow: none;
+}
+
+/* Scrolled state: Dark backdrop blur */
+.site-header.is-scrolled {
+  background: rgb(10 10 10 / 85%);
+  backdrop-filter: blur(20px);
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: none;
+  border: none;
+  padding: 1rem 2rem;
+}
+
+/* Mobile: compact header */
+@media (width <= 768px) {
+  .site-header {
+    padding: 0;
+    background: var(--color-body-bg, #0a0a0a);
+    border: none;
+    box-shadow: none;
+  }
+
+  .site-header.is-scrolled {
+    padding: 0;
+    background: rgb(10 10 10 / 95%);
+    box-shadow: none;
+    border-bottom: none;
+  }
+
+  /* Mobile: Two-row layout container */
+  .site-header__inner {
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+  }
+
+  /* Mobile Row 1: Top bar (burger + logo + icons) */
+  .tno-header__topbar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    min-height: 60px;
+    gap: 0.75rem;
+    background: var(--color-body-bg, #0a0a0a);
+  }
+
+  /* Mobile: Burger button (left) */
+  .tno-header__burger {
+    order: -1;
+    position: static;
+    margin-right: 0;
+    flex-shrink: 0;
+  }
+
+  /* Mobile: Logo (center) */
+  .tno-header__logo {
+    flex: 1;
+    text-align: center;
+    margin: 0;
+    padding: 0 0.5rem;
+  }
+
+  .tno-header__logo .header-logo__link {
+    font-size: 0.9375rem;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 100%;
+  }
+
+  /* Mobile: Icon group (right) - Account + Cart only */
+  .tno-header__icons {
+    display: flex !important;
+    gap: 0.5rem;
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  /* Mobile: Hide search icon from topbar (search bar below is sufficient) */
+  .tno-header__icons .header-icon--search {
+    display: none !important;
+  }
+
+  .tno-header__icon {
+    width: 20px;
+    height: 20px;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .tno-header__icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentcolor;
+    fill: none;
+    stroke-width: 2;
+  }
+
+  /* Mobile Row 2: Search bar - Uses unified .tno-search classes */
+  .tno-header__search-mobile {
+    width: 100%;
+    padding: 0 1rem 1rem;
+    display: block;
+    background: var(--color-body-bg, #0a0a0a);
+  }
+
+  /* Hide desktop navigation and desktop search on mobile */
+  .header-nav,
+  .tno-nav,
+  .tno-header__desktop-utility {
+    display: none !important;
+  }
+}
+
+/* TNO header cart fix: Ensure desktop utility icons are visible on desktop */
+@media (width >= 769px) {
+  .tno-header__desktop-utility {
+    display: flex !important;
+    align-items: center;
+    gap: 1.5rem;
+    flex-shrink: 0;
+  }
+}
+
+.site-header__inner {
+  max-width: 1600px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
-  height: 46px;
-  max-width: 360px;
-  padding: 0 6px 0 14px;
-  margin: 0;
-
-  border-radius: 999px;
-  border: 2px solid rgba(0, 255, 255, 0.7) !important;
-  background: rgba(0, 0, 0, 0.5);
-  overflow: hidden;
-
-  outline: none !important;
-  box-shadow: none !important;
+  justify-content: space-between;
+  gap: 2rem;
 }
 
-/* 2) EINZIGER Glow beim Fokus */
-.tno-search form:focus-within {
-  box-shadow: 0 0 18px rgba(0, 255, 255, 0.6) !important;
+/* Desktop: hide mobile-specific elements */
+@media (width >= 769px) {
+  .tno-header__topbar {
+    display: contents;
+  }
+
+  .tno-header__search-mobile {
+    display: none;
+  }
+
+  /* Desktop: Show unified search */
+  .tno-header__search {
+    display: block;
+  }
+
+  .tno-header__burger {
+    display: none;
+  }
+
+  /* Hide mobile topbar icons (account/cart) on desktop - they appear in desktop utility bar */
+  .tno-header__icons {
+    display: none !important;
+  }
 }
 
-/* 3) Input – durchsichtig, nimmt den Platz ein */
-.tno-search__input {
-  flex: 1;
+/* Mobile: hide mobile topbar icons (they appear in bottom tab bar) */
+@media (width <= 768px) {
+  .tno-header__icons {
+    display: none !important;
+  }
+}
+
+/* ========================================
+   Logo Area (Left)
+   ======================================== */
+
+.header-logo {
+  flex-shrink: 0;
+  position: relative;
+}
+
+.header-logo__link {
+  font-family: var(--font-mono, 'Space Mono', 'IBM Plex Mono', monospace);
+  font-size: clamp(0.875rem, 2vw, 1.25rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #eaeaea;
+  text-decoration: none;
+  display: inline-block;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+@media (width <= 768px) {
+  .header-logo__link {
+    font-size: 0.875rem;
+    letter-spacing: 0.03em;
+  }
+}
+
+/* Glitch effect on logo hover */
+.header-logo__link::before,
+.header-logo__link::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
-  padding: 0 10px;
-  background: transparent !important;
-  color: #fff;
-  font-size: 15px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
-/* 4) Button – runde Neon-Pill, kein eigener Rahmen/Glow */
-.tno-search__button {
-  width: 38px;
-  height: 38px;
-  margin-right: 2px;
+.header-logo__link::before {
+  color: #0ff;
+  z-index: -1;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
 
+.header-logo__link::after {
+  color: #f0f;
+  z-index: -2;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+}
+
+.header-logo__link:hover::before,
+.header-logo__link:hover::after {
+  opacity: 0.7;
+  animation: glitch-logo 0.3s ease;
+}
+
+@keyframes glitch-logo {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  25% {
+    transform: translate(-2px, 1px);
+  }
+
+  50% {
+    transform: translate(2px, -1px);
+  }
+
+  75% {
+    transform: translate(-1px, -1px);
+  }
+}
+
+/* Tooltip: "Reality is under construction" */
+.header-logo__link[data-tooltip]:hover::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgb(0 0 0 / 95%);
+  border: 1px solid #0ff;
+  color: #0ff;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  opacity: 1;
+  clip-path: none;
+  z-index: 10;
+  animation: none;
+  pointer-events: none;
+}
+
+/* ========================================
+   Navigation (Centered)
+   ======================================== */
+
+.header-nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.header-nav__list {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header-nav__item {
+  position: relative;
+}
+
+.header-nav__link {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #eaeaea;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-block;
+}
+
+.header-nav__link:hover {
+  color: #0ff;
+}
+
+.header-nav__link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #0ff, #f0f);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.header-nav__link:hover::after {
+  width: 100%;
+}
+
+.header-nav__link.is-active {
+  color: #0ff;
+}
+
+.header-nav__link.is-active::after {
+  width: 100%;
+}
+
+/* ========================================
+   Icon Area (Right)
+   ======================================== */
+
+.header-icons {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-shrink: 0;
+}
+
+.header-icon {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #eaeaea;
+  min-width: 40px;
+  min-height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  border-radius: 999px;
-  background: linear-gradient(135deg, #00ffee 0%, #00c2ff 100%);
-  cursor: pointer;
-
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
 }
 
-/* Fokus/Active auf Button explizit killen */
-.tno-search__button:focus,
-.tno-search__button:active {
-  outline: none !important;
-  box-shadow: none !important;
+@media (width <= 768px) {
+  .header-icons {
+    gap: 0.5rem;
+  }
+
+  .header-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Hide desktop search on mobile (mobile search bar is shown instead) */
+  .tno-header__search {
+    display: none;
+  }
 }
 
-/* 5) Icon gut sichtbar */
-.tno-search__button svg,
-.tno-search__button .icon {
-  width: 16px;
-  height: 16px;
-  fill: #000;
-  stroke: #000;
-  opacity: 0.9;
+/* TNO header cart fix: Enhanced hover state with glitch effect */
+.header-icon:hover {
+  color: #0ff;
+  transform: translateY(-2px);
+  text-shadow:
+    0 0 8px rgb(0 255 255 / 60%),
+    -1px 0 rgb(255 0 255 / 40%),
+    1px 0 rgb(0 255 255 / 40%);
+  filter: drop-shadow(0 0 4px rgb(0 255 255 / 50%));
 }
 
-/* ==========================================================================
-   TNO – HEADER SEARCH: minimalistischer Look & Glitch-Effekt
-   Diese Regeln überschreiben vorherige Suchfeld-Stile. Sie stellen sicher,
-   dass das Suchfeld einen weißen Rahmen mit schwarzem Hintergrund besitzt,
-   beim Fokus cyan leuchtet und der Such-Button minimalistisch sowie transparent
-   bleibt.  Ein kurzer Glitch-Effekt wird per Klasse "is-glitching" getriggert.
-   ========================================================================= */
+.header-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentcolor;
+  fill: none;
+  stroke-width: 2;
+}
 
-/* Container: Pillenform mit weißem Standardrahmen und dunklem Hintergrund */
-header .tno-search form,
-.tno-search form {
+.header-icon--cart {
+  position: relative;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  background: #f0f;
+  color: #000;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.625rem;
+  font-weight: 700;
+  border-radius: 9px;
   display: flex;
   align-items: center;
-  height: 40px !important;
-  padding-left: 1rem !important;
-  border: 1px solid #ffffff !important;
-  border-radius: 999px !important;
-  background: rgba(0, 0, 0, 0.5) !important;
-  box-shadow: none !important;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  justify-content: center;
+  box-shadow: 0 0 10px rgb(255 0 255 / 50%);
+  animation: pulse-badge 2s ease-in-out infinite;
 }
 
-/* Fokus: Cyan-Rahmen und sanfte Neon-Glut */
-header .tno-search form:focus-within,
-.tno-search form:focus-within {
-  border-color: #00e5ff !important;
-  box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.45) !important;
+@keyframes pulse-badge {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
 }
 
-/* Suchfeld (Input) – vollständig rahmenlos, weißer Text */
-header .tno-search__input,
-.tno-search__input {
-  flex: 1 1 auto !important;
-  min-width: 0 !important;
-  border: none !important;
+/* ======================================== Mobile Menu Toggle */
+.header-menu-toggle {
+  display: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  background: none;
+  border: none;
+  width: 32px;
+  height: 28px;
+  position: relative;
+  z-index: 1001;
+}
+
+.header-menu-toggle span {
+  width: 24px;
+  height: 2px;
+  background: #eaeaea;
+  transition: all 0.3s ease;
+}
+
+.header-menu-toggle:hover span {
+  background: #0ff;
+}
+
+.header-menu-toggle.is-active span:nth-child(1) {
+  transform: rotate(45deg) translateY(7px);
+}
+
+.header-menu-toggle.is-active span:nth-child(2) {
+  opacity: 0;
+}
+
+.header-menu-toggle.is-active span:nth-child(3) {
+  transform: rotate(-45deg) translateY(-7px);
+}
+
+/* Mobile Menu Overlay styles moved to assets/custom.css to avoid conflicts */
+
+/* ======================================== Responsive */
+@media (width <= 1024px) {
+  .header-nav__list {
+    gap: 1.5rem;
+  }
+
+  .header-nav__link {
+    font-size: 0.8rem;
+  }
+}
+
+@media (width <= 768px) {
+  .header-nav {
+    display: none;
+  }
+
+  /* Hide hamburger button on mobile - bottom tab MENU is the only trigger */
+  .header-menu-toggle {
+    display: none !important;
+  }
+}
+
+/* ======================================== Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .site-header,
+  .header-logo__link,
+  .header-nav__link,
+  .header-icon,
+  .mobile-menu,
+  .mobile-menu__item {
+    transition: none;
+    animation: none;
+  }
+
+  .header-logo__link::before,
+  .header-logo__link::after {
+    display: none;
+  }
+
+  .cart-badge {
+    animation: none;
+  }
+}
+
+/* ======================================== Optional Scanline (Disabled on mobile) */
+.site-header::before {
+  display: none;
+}
+
+/* ======================================== Body Padding */
+body {
+  padding-top: 80px;
+}
+
+@media (width <= 768px) {
+  body {
+    padding-top: 120px;
+  }
+}
+
+/* =========================================================
+   MOBILE PRODUCT & COLLECTION PAGES – REMOVE ALL WHITE BACKGROUNDS
+   Comprehensive fix to ensure pure dark theme on mobile
+   ========================================================= */
+
+@media (width <= 749px) {
+  /* A. Global page backgrounds - force dark */
+  body.template-product,
+  body.template-collection {
+    background: #000 !important;
+  }
+
+  body.template-product #MainContent,
+  body.template-collection #MainContent {
+    background: transparent !important;
+  }
+
+  /* B. Remove white sections - all sections transparent */
+  body.template-product section,
+  body.template-collection section,
+  body.template-product .shopify-section,
+  body.template-collection .shopify-section {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* C. Remove white gaps from section spacing (but preserve internal content spacing) */
+  body.template-product .shopify-section,
+  body.template-collection .shopify-section {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Preserve internal spacing within sections */
+  body.template-product section .page-width,
+  body.template-collection section .page-width {
+    padding-top: inherit;
+    padding-bottom: inherit;
+  }
+
+  /* D. Remove Spotlight default card backgrounds */
+  body.template-product .card,
+  body.template-product .product-card,
+  body.template-product .collection-card,
+  body.template-product .product-grid-item,
+  body.template-collection .card,
+  body.template-collection .product-card,
+  body.template-collection .collection-card,
+  body.template-collection .product-grid-item,
+  body.template-collection .grid__item {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  /* E. Fix Related Products white background */
+  body.template-product #shopify-section-related-products,
+  body.template-product #shopify-section-product-recommendations,
+  body.template-product .related-products,
+  body.template-product .product-recommendations {
+    background: transparent !important;
+    background-color: transparent !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* F. Fix product CTA / PayPal Express white bar */
+  body.template-product .shopify-payment-button,
+  body.template-product .shopify-payment-button__button,
+  body.template-product .product-form,
+  body.template-product .product__info-container,
+  body.template-product .product__info-wrapper,
+  body.template-product .tno-product-actions {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* Override white gradient in .tno-product-actions */
+  body.template-product .tno-product-actions {
+    background: rgb(10 10 10 / 98%) !important;
+    background-image: none !important;
+  }
+
+  /* G. Collection Grid – Remove white cards */
+  body.template-collection .collection-list,
+  body.template-collection .collection-item,
+  body.template-collection .product-grid,
+  body.template-collection .grid__item {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* H. Remove leftover borders/spacers from pseudo-elements */
+  body.template-product section::before,
+  body.template-product section::after,
+  body.template-collection section::before,
+  body.template-collection section::after,
+  body.template-product .grid::before,
+  body.template-product .grid::after,
+  body.template-collection .grid::before,
+  body.template-collection .grid::after {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    display: none !important;
+  }
+
+  /* I. Fix accordion white backgrounds on product pages */
+  body.template-product .tno-accordion__item,
+  body.template-product .accordion__item {
+    background: transparent !important;
+    background-color: transparent !important;
+    border-color: rgb(0 255 255 / 20%) !important;
+  }
+
+  /* J. Remove any white backgrounds from form elements */
+  body.template-product input,
+  body.template-product textarea,
+  body.template-product select,
+  body.template-product .product-form__input {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* K. Newsletter sections - remove white backgrounds */
+  body.template-product section[id*='newsletter'],
+  body.template-collection section[id*='newsletter'],
+  body.template-product .newsletter,
+  body.template-collection .newsletter {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* L. Ensure color scheme classes don't add white backgrounds */
+  body.template-product .color-scheme-1,
+  body.template-product .color-scheme-2,
+  body.template-product .color-scheme-3,
+  body.template-product .gradient,
+  body.template-collection .color-scheme-1,
+  body.template-collection .color-scheme-2,
+  body.template-collection .color-scheme-3,
+  body.template-collection .gradient {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* M. Remove white backgrounds from color scheme pseudo-elements */
+  body.template-product .color-scheme-1::before,
+  body.template-product .color-scheme-2::before,
+  body.template-product .color-scheme-3::before,
+  body.template-product .gradient::before,
+  body.template-product .color-scheme-1::after,
+  body.template-product .color-scheme-2::after,
+  body.template-product .color-scheme-3::after,
+  body.template-product .gradient::after,
+  body.template-collection .color-scheme-1::before,
+  body.template-collection .color-scheme-2::before,
+  body.template-collection .color-scheme-3::before,
+  body.template-collection .gradient::before,
+  body.template-collection .color-scheme-1::after,
+  body.template-collection .color-scheme-2::after,
+  body.template-collection .color-scheme-3::after,
+  body.template-collection .gradient::after {
+    background: transparent !important;
+    background-color: transparent !important;
+    display: none !important;
+  }
+}
+
+/* =========================================================
+   TNO – COLLECTION GRID: FORCE 2 COLUMNS ON MOBILE
+   ========================================================= */
+@media (width <= 749px) {
+  /* Collection grid mobile: 2 columns */
+  /* LEGACY COLLECTION GRID – no longer used after trust collection grid refactor (2025-01-30) */
+  body.template-collection .tno-collection-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: var(--space-sm, 1rem) !important;
+  }
+
+  /* Ensure grid items fill their cells properly */
+  body.template-collection .tno-collection-grid__item {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Ensure product cards fill their grid cells */
+  body.template-collection .tno-collection-grid__item .tno-card-product {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   TRUST.NO.OUTPUT — PRODUCT CARDS & GRIDS
+   - Base card styles
+   - TRUST variant
+   - Color variants
+   - Add to cart button
+   - Home product grid (slider)
+   - Related products carousel
+   ========================================================= */
+
+/* =========================================================
+   1. BASE CARD STYLES
+   Shared foundation for all product cards rendered by card-product.liquid
+   ========================================================= */
+
+.tno-card-product {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.tno-card-product .card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Card typography */
+.tno-card-title {
+  margin: 0;
+}
+
+.tno-card-price {
+  margin: 0;
+}
+
+/* Mobile typography - smaller text for trust-style cards on mobile */
+@media screen and (width <= 749px) {
+  .tno-card-product .card__heading,
+  .tno-card-product .tno-card-title,
+  .card-product--trust .card__heading {
+    font-size: 0.9rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .tno-card-product .price,
+  .tno-card-product .tno-card-price,
+  .card-product--trust .price {
+    font-size: 0.85rem !important;
+  }
+}
+
+/* =========================================================
+   2. TRUST VARIANT MODIFIER
+   Extra visual flavor for card_style: 'trust'
+   ========================================================= */
+
+/* TRUST variant styles are applied via modifier class when card_style: 'trust' is set */
+
+/* =========================================================
+   3. COLOR VARIANT PILLS & CONTAINER
+   Terminal-style color variant display
+   ========================================================= */
+
+/* Color variant styles (.tno-card-variants, .tno-card-variant, .tno-card-variant--selected)
+   are defined in card-product.liquid or inherited from theme defaults */
+
+/* =========================================================
+   4. ADD-TO-CART BUTTON (TRUST STYLE)
+   Custom add-to-cart button with loading/success states
+   ========================================================= */
+
+/* Add-to-cart button styles (.tno-card-button) are handled via JavaScript state classes:
+   - .tno-card-button--loading (applied during cart add)
+   - .tno-card-button--success (applied after successful add)
+   Button base styles are inherited from theme defaults or defined inline in Liquid */
+
+/* =========================================================
+   6. RELATED PRODUCTS CAROUSEL (LEGACY - replaced by .product-related-trust)
+   Mobile: 2-column carousel | Desktop: 4-column carousel
+   ========================================================= */
+
+/* LEGACY: Old related products styles - kept for backward compatibility
+   New related products section uses .product-related-trust classes (see below)
+   These styles may still be referenced elsewhere, so keeping them for now */
+
+/* Related products wrapper and controls styles are defined in mobile media query below */
+
+/* Track - horizontal scrollable slider */
+.tno-related-products__track {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  scroll-snap-type: x mandatory !important;
+  -webkit-overflow-scrolling: touch !important;
+  gap: var(--space-md, 2rem);
+  padding-bottom: 1rem;
+  margin: 0;
+  list-style: none;
+}
+
+/* Override Shopify grid classes */
+.tno-related-products__track.grid,
+.tno-related-products__track[class*='grid--'] {
+  display: flex !important;
+  grid-template-columns: none !important;
+}
+
+/* Mobile: 2 cards per slide */
+.tno-related-products__item {
+  flex: 0 0 50% !important;
+  max-width: 50% !important;
+  width: 50% !important;
+  scroll-snap-align: start !important;
+  margin: 0 !important;
+  list-style: none;
+}
+
+/* Desktop: 4 cards per slide */
+@media (width >= 750px) {
+  .tno-related-products__item {
+    flex: 0 0 25% !important;
+    max-width: 25% !important;
+    width: 25% !important;
+  }
+}
+
+.tno-related-products__item .tno-card-product {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* Hide scrollbar */
+.tno-related-products__track::-webkit-scrollbar {
+  display: none !important;
+}
+
+.tno-related-products__track {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+/* Template-specific overrides for related products */
+body.template-product .tno-related-products__track::-webkit-scrollbar {
+  display: none !important;
+}
+
+body.template-product .tno-related-products__track {
+  scrollbar-width: none !important;
+}
+
+/* Mobile-specific related products carousel styles */
+@media (width <= 749px) {
+  /* Outer container spans full width, no side gaps */
+  body.template-product .tno-related-products {
+    margin-inline: -1.5rem;
+    padding-inline: 1.5rem;
+  }
+
+  /* Controls (arrow buttons) */
+  body.template-product .tno-related-products__controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  body.template-product .tno-related-products__control {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    border: 1px solid rgb(255 255 255 / 40%);
+    background: rgb(0 0 0 / 70%);
+    color: #fff;
+    font-size: 18px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      transform 0.15s ease;
+  }
+
+  body.template-product .tno-related-products__control:hover {
+    border-color: #00f6ff;
+    background: rgb(0 246 255 / 10%);
+    transform: translateY(-1px);
+  }
+
+  /* Track - horizontal slider */
+  body.template-product .tno-related-products__track {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow: visible auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+    grid-template-columns: none !important;
+    grid-auto-flow: unset !important;
+    grid-auto-columns: unset !important;
+  }
+
+  /* Override Shopify grid wrappers */
+  body.template-product .tno-related-products__track.grid {
+    display: flex !important;
+  }
+
+  body.template-product .tno-related-products__track[class*='grid--'] {
+    display: flex !important;
+    grid-template-columns: none !important;
+  }
+
+  /* Each item is a slide - 2 per view (Mobile only) */
+  body.template-product .tno-related-products__item {
+    flex: 0 0 50% !important;
+    max-width: 50% !important;
+    width: 50% !important;
+    scroll-snap-align: start !important;
+    margin: 0 !important;
+  }
+
+  /* Card full width */
+  body.template-product .tno-related-products__item .card,
+  body.template-product .tno-related-products__item .product-card {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Hide scrollbar */
+  body.template-product .tno-related-products__track::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  body.template-product .tno-related-products__track {
+    scrollbar-width: none !important;
+  }
+}
+
+/* =========================================================
+   7. COLLECTION GRID - Modern CSS Grid
+   ========================================================= */
+
+/* LEGACY COLLECTION GRID – no longer used after trust collection grid refactor (2025-01-30).
+   Kept for backward compatibility. New collection pages use .collection-grid-trust instead.
+*/
+.tno-collection-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) !important;
+  gap: var(--space-md, 2rem) !important;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tno-collection-grid__item {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  list-style: none;
+}
+
+.tno-collection-grid__item .tno-card-product {
+  width: 100%;
+  height: 100%;
+}
+
+/* Override any Shopify grid classes */
+.tno-collection-grid.grid,
+.tno-collection-grid[class*='grid--'] {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) !important;
+}
+
+/* =========================================================
+   HOMEPAGE (TEMPLATE-INDEX) – REMOVE WHITE BACKGROUNDS & GAPS
+   Comprehensive fix to ensure pure dark theme on homepage
+   ========================================================= */
+
+/* A. Global page backgrounds - force dark (all screen sizes) */
+body.template-index {
+  background: #000 !important;
+}
+
+body.template-index #MainContent {
   background: transparent !important;
-  color: #ffffff !important;
-  font-size: 0.875rem !important;
-  outline: none !important;
+}
+
+/* B. Remove white sections - all sections transparent */
+body.template-index section,
+body.template-index .shopify-section {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* C. Remove white gaps from section spacing */
+body.template-index .shopify-section {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Preserve internal spacing within sections */
+body.template-index section .page-width,
+body.template-index .system-update-trust__container {
+  padding-top: inherit;
+  padding-bottom: inherit;
+}
+
+/* D. Specifically target System Update section wrapper */
+body.template-index .shopify-section[id*='system-update'],
+body.template-index .shopify-section.section-system-update-trust {
+  background: transparent !important;
+  background-color: transparent !important;
+  margin: 0 !important;
   padding: 0 !important;
 }
 
-header .tno-search__input::placeholder,
-.tno-search__input::placeholder {
-  color: rgba(255, 255, 255, 0.6) !important;
+/* E. Ensure System Update section itself maintains dark background */
+body.template-index .system-update-trust {
+  background: var(--color-void-black, #000) !important;
+  background-color: var(--color-void-black, #000) !important;
 }
 
-/* Such-Button – minimalistisch, transparent, ohne Rahmen */
-header .tno-search__button,
-.tno-search__button {
+/* F. Remove leftover borders/spacers from pseudo-elements */
+body.template-index section::before,
+body.template-index section::after,
+body.template-index .grid::before,
+body.template-index .grid::after {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  display: none !important;
+}
+
+/* G. Ensure color scheme classes don't add white backgrounds */
+body.template-index .color-scheme-1,
+body.template-index .color-scheme-2,
+body.template-index .color-scheme-3,
+body.template-index .gradient {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* H. Remove white backgrounds from color scheme pseudo-elements */
+body.template-index .color-scheme-1::before,
+body.template-index .color-scheme-2::before,
+body.template-index .color-scheme-3::before,
+body.template-index .gradient::before,
+body.template-index .color-scheme-1::after,
+body.template-index .color-scheme-2::after,
+body.template-index .color-scheme-3::after,
+body.template-index .gradient::after {
+  background: transparent !important;
+  background-color: transparent !important;
+  display: none !important;
+}
+
+/* I. Newsletter and footer sections - ensure dark background */
+body.template-index section[id*='newsletter'],
+body.template-index .newsletter,
+body.template-index section[id*='footer'],
+body.template-index .footer {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* =========================================================
+   TNO – FOOTER: MOBILE ACCORDION
+   ========================================================= */
+@media (width <= 749px) {
+  .site-footer {
+    /* ensure it blends into the global background and leaves room for bottom tabs */
+    background: var(--color-void-black, #000) !important;
+    padding-bottom: 80px;
+  }
+
+  .tno-footer__columns {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px solid rgb(255 255 255 / 8%);
+  }
+
+  .tno-footer-accordion {
+    border-bottom: 1px solid rgb(255 255 255 / 8%);
+  }
+
+  .tno-footer-accordion__toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.9rem 0;
+    background: transparent;
+    border: none;
+    color: var(--color-gray-ghost, #6a6a7a);
+    font-family: var(--font-mono, monospace);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+  }
+
+  .tno-footer-accordion__toggle:focus-visible {
+    outline: 2px solid #00f6ff;
+    outline-offset: 2px;
+  }
+
+  .tno-footer-accordion__icon {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .tno-footer-accordion__icon::before,
+  .tno-footer-accordion__icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 1px;
+    background: var(--color-gray-ghost, #6a6a7a);
+    transform: translate(-50%, -50%);
+    transition:
+      transform 0.18s ease,
+      opacity 0.18s ease;
+  }
+
+  /* vertical bar for "+" */
+  .tno-footer-accordion__icon::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  /* when open: turn "+" into "–" */
+  .tno-footer-accordion.is-open .tno-footer-accordion__icon::after {
+    opacity: 0;
+  }
+
+  .tno-footer-accordion__panel {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition:
+      max-height 0.24s ease,
+      opacity 0.24s ease;
+  }
+
+  .tno-footer-accordion.is-open .tno-footer-accordion__panel {
+    max-height: 600px; /* enough for list contents */
+    opacity: 1;
+  }
+
+  /* Lists inside accordion: tighten spacing slightly for mobile */
+  .tno-footer-accordion__panel ul {
+    padding: 0 0 0.75rem;
+    margin: 0;
+  }
+
+  /* Social links inside accordion */
+  .tno-footer-accordion__panel .footer-social {
+    padding-bottom: 0.75rem;
+  }
+}
+
+/* Desktop ≥ 750px unchanged – ensure existing grid/footer layout still applies */
+@media (width >= 750px) {
+  /* Hide accordion toggle buttons on desktop */
+  .tno-footer-accordion__toggle {
+    display: none;
+  }
+
+  /* Show panels by default on desktop */
+  .tno-footer-accordion__panel {
+    display: block !important;
+    max-height: none !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+  }
+
+  /* Remove hidden attribute styling on desktop */
+  .tno-footer-accordion__panel[hidden] {
+    display: block !important;
+  }
+
+  /* Ensure footer columns maintain grid layout on desktop */
+  .tno-footer__columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-lg, 4rem);
+  }
+
+  /* Remove accordion borders on desktop */
+  .tno-footer-accordion {
+    border-bottom: none;
+  }
+
+  .tno-footer__columns {
+    border-top: none;
+  }
+}
+
+/* =========================================================
+   EMERGENCY FIX – Make sure product images are visible
+   ========================================================= */
+
+.tno-card-product--trust .card__media,
+.card--product .card__media {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  height: auto !important;
+}
+
+.tno-card-product--trust .card__media img,
+.card--product .card__media img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  object-fit: cover !important;
+}
+
+/* Latest Drops carousel - ensure images are visible */
+.product-grid-trust .tno-latest-drops__item .card__media,
+.product-grid-trust .tno-latest-drops__item .card .media,
+.product-grid-trust .tno-latest-drops__item .tno-card-product .card__media {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100% !important;
+  position: relative !important;
+  overflow: visible !important;
+}
+
+.product-grid-trust .tno-latest-drops__item .card__media img,
+.product-grid-trust .tno-latest-drops__item .card .media img,
+.product-grid-trust .tno-latest-drops__item .tno-card-product .card__media img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+}
+
+/* =========================================================
+   LEGACY GRID – not used by TNO Product Grid. Keep for now.
+   This section targets .section-product-grid-trust .tno-collection-grid
+   which may be used by collection pages. Do not remove without verification.
+   ========================================================= */
+
+/* Wrapper - scoped to section-product-grid-trust for strong specificity */
+.section-product-grid-trust .tno-collection-grid {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  scroll-snap-type: x mandatory !important;
+  -webkit-overflow-scrolling: touch !important;
+  scroll-behavior: smooth !important;
+  gap: var(--space-md, 2rem) !important;
+  padding-bottom: 1rem !important;
+  margin: 0 !important;
+  list-style: none !important;
+  grid-template-columns: none !important;
+}
+
+/* Override any Spotlight grid classes */
+.section-product-grid-trust .tno-collection-grid.grid,
+.section-product-grid-trust .tno-collection-grid[class*='grid--'] {
+  display: flex !important;
+  grid-template-columns: none !important;
+}
+
+/* Grid items - Mobile: 2 cards per view (default and explicit) */
+.section-product-grid-trust .tno-collection-grid__item {
+  flex: 0 0 50% !important;
+  max-width: 50% !important;
+  width: 50% !important;
+  scroll-snap-align: start !important;
+  margin: 0 !important;
+  list-style: none !important;
+}
+
+@media (width <= 749px) {
+  .section-product-grid-trust .tno-collection-grid__item {
+    flex: 0 0 50% !important;
+    max-width: 50% !important;
+    width: 50% !important;
+  }
+}
+
+/* Grid items - Desktop: 4 cards per view (LEGACY - may be used by collection pages) */
+@media (width >= 750px) {
+  .section-product-grid-trust .tno-collection-grid__item {
+    flex: 0 0 25% !important;
+    max-width: 25% !important;
+    width: 25% !important;
+  }
+}
+
+/* Cards inside items take full width */
+.section-product-grid-trust .tno-collection-grid__item .card,
+.section-product-grid-trust .tno-collection-grid__item .tno-card-product {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* Hide scrollbar */
+.section-product-grid-trust .tno-collection-grid::-webkit-scrollbar {
+  display: none !important;
+}
+
+.section-product-grid-trust .tno-collection-grid {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+/* =========================================================
+   TNO PRODUCT GRID – HOMEPAGE MASTER LAYOUT
+   =========================================================
+   TNO NOTE (2025-01-30): Master layout for product cards.
+   This section will be reused as template for collection pages and related products.
+   All styles moved from inline <style> block in product-grid-trust.liquid.
+
+   Product cards use the .tno-card-product wrapper class (defined in card-product.liquid).
+   This ensures consistent styling across all product card contexts.
+   ========================================================= */
+
+/* Section Container */
+.product-grid-trust {
+  position: relative;
+  padding: var(--space-xl, 6rem) var(--space-md, 2rem);
+  background: var(--color-void-black, #000000);
+  overflow: hidden;
+}
+
+.product-grid-trust__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-inline: 1.5rem;
+}
+
+/* Subtle grid background pattern */
+.product-grid-trust::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 255, 240, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 240, 0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Section Header */
+.product-grid-trust__header {
+  text-align: center;
+  margin-bottom: var(--space-lg, 4rem);
+}
+
+.product-grid-trust__eyebrow {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-cyan, #00fff0);
+  margin: 0 0 var(--space-sm, 1rem);
+}
+
+.product-grid-trust__headline {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: clamp(1.75rem, 5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  margin: 0 0 var(--space-md, 2rem);
+  position: relative;
+}
+
+/* Animated underline */
+.product-grid-trust__headline::after {
+  content: '';
+  display: block;
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-cyan, #00fff0), var(--color-magenta, #ff00ff));
+  margin: var(--space-sm, 1rem) auto 0;
+  animation: pulse-width 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse-width {
+  0%,
+  100% {
+    width: 120px;
+    opacity: 1;
+  }
+  50% {
+    width: 90px;
+    opacity: 0.7;
+  }
+}
+
+.product-grid-trust__intro {
+  font-family: var(--font-clean, sans-serif);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--color-gray-ghost, #6a6a7a);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Latest Drops Carousel Wrapper */
+.tno-latest-drops {
+  position: relative;
+  margin-top: var(--space-lg, 4rem);
+  overflow: hidden;
+}
+
+/* Arrow Controls - Positioned above grid, right-aligned */
+.product-grid-trust__controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-bottom: 2rem; /* Increased spacing between arrows and cards */
+}
+
+/* Carousel Track - Grid layout with horizontal scroll */
+.product-grid-trust__grid.tno-latest-drops__track {
+  display: grid !important;
+  grid-auto-flow: column !important;
+  overflow-x: auto !important;
+  scroll-snap-type: x mandatory !important;
+  -webkit-overflow-scrolling: touch !important;
+  scroll-behavior: smooth !important;
+  padding-bottom: 1rem !important;
+  margin: 0 !important;
+  list-style: none !important;
+  /* Hide scrollbar */
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.product-grid-trust__grid.tno-latest-drops__track::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* Mobile: 2 cards per row - exactly 2 visible, no peek */
+@media screen and (max-width: 749px) {
+  .tno-latest-drops {
+    overflow: hidden;
+  }
+
+  .product-grid-trust__grid.tno-latest-drops__track {
+    gap: 0.75rem !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    width: 100%;
+    overflow-x: auto;
+    /* Calculate: (100% - 1 gap) / 2 cards = exactly 2 cards fit */
+    grid-auto-columns: calc((100% - 0.75rem) / 2) !important;
+  }
+
+  .tno-latest-drops__item {
+    scroll-snap-align: start !important;
+    margin: 0 !important;
+    list-style: none !important;
+  }
+}
+
+/* Desktop: 4 cards per row - exactly 4 visible, no peek */
+@media screen and (width >= 990px) {
+  .product-grid-trust__grid.tno-latest-drops__track {
+    gap: 1rem !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    /* Calculate: (100% - 3 gaps) / 4 cards = exactly 4 cards fit */
+    grid-auto-columns: calc((100% - 3rem) / 4) !important;
+  }
+
+  .tno-latest-drops__item {
+    scroll-snap-align: start !important;
+  }
+}
+
+/* Cards inside carousel items fill the slide */
+.tno-latest-drops__item .card,
+.tno-latest-drops__item .tno-card-product {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* =========================================================
+   PRODUCT CARD STYLING - Hugo Boss Style
+   Applied to Product Grid (TNO) homepage section and Collection pages
+   ========================================================= */
+
+/* Card wrapper - Hugo Boss style with subtle background and border */
+/* Applied to homepage Product Grid, Collection pages, Related Products, and Search */
+.product-grid-trust .tno-card-product,
+body.template-collection .tno-card-product--trust,
+.collection-grid-trust .tno-card-product--trust,
+.product-related-trust .tno-card-product--trust,
+.search-grid-trust .tno-card-product--trust {
+  background: rgb(15 15 18); /* Very dark grey, not pure black */
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-grid-trust .tno-card-product:hover,
+body.template-collection .tno-card-product--trust:hover,
+.collection-grid-trust .tno-card-product--trust:hover,
+.product-related-trust .tno-card-product--trust:hover,
+.search-grid-trust .tno-card-product--trust:hover {
+  border-color: rgb(255 255 255 / 15%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Remove extra wrappers for trust style - ensure no spacing */
+.product-grid-trust .tno-card-product--trust .card,
+.product-grid-trust .tno-card-product--trust .card__inner,
+.product-grid-trust .tno-card-product--trust .card__media,
+body.template-collection .tno-card-product--trust .card,
+body.template-collection .tno-card-product--trust .card__inner,
+body.template-collection .tno-card-product--trust .card__media,
+.collection-grid-trust .tno-card-product--trust .card,
+.collection-grid-trust .tno-card-product--trust .card__inner,
+.collection-grid-trust .tno-card-product--trust .card__media,
+.search-grid-trust .tno-card-product--trust .card,
+.search-grid-trust .tno-card-product--trust .card__inner,
+.search-grid-trust .tno-card-product--trust .card__media {
+  margin: 0;
+  padding: 0;
+  height: auto;
+  display: block;
+}
+
+/* Image wrapper with fixed aspect ratio (4:5) - directly at top */
+.product-grid-trust .tno-card-product__image-wrapper,
+body.template-collection .tno-card-product--trust .tno-card-product__image-wrapper,
+.collection-grid-trust .tno-card-product--trust .tno-card-product__image-wrapper,
+.product-related-trust .tno-card-product--trust .tno-card-product__image-wrapper,
+.search-grid-trust .tno-card-product--trust .tno-card-product__image-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 125%; /* 4:5 aspect ratio */
+  overflow: hidden;
+  background: rgb(10 10 12);
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.product-grid-trust .tno-card-product__image-wrapper a,
+body.template-collection .tno-card-product--trust .tno-card-product__image-wrapper a,
+.collection-grid-trust .tno-card-product--trust .tno-card-product__image-wrapper a,
+.product-related-trust .tno-card-product--trust .tno-card-product__image-wrapper a,
+.search-grid-trust .tno-card-product--trust .tno-card-product__image-wrapper a {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0; /* Behind badge */
+}
+
+.product-grid-trust .tno-card-product__image-wrapper img,
+.product-grid-trust .tno-card-product__image-wrapper .placeholder-svg,
+body.template-collection .tno-card-product--trust .tno-card-product__image-wrapper img,
+body.template-collection .tno-card-product--trust .tno-card-product__image-wrapper .placeholder-svg,
+.collection-grid-trust .tno-card-product--trust .tno-card-product__image-wrapper img,
+.collection-grid-trust .tno-card-product--trust .tno-card-product__image-wrapper .placeholder-svg,
+.product-related-trust .tno-card-product--trust .tno-card-product__image-wrapper img,
+.product-related-trust .tno-card-product--trust .tno-card-product__image-wrapper .placeholder-svg,
+.search-grid-trust .tno-card-product--trust .tno-card-product__image-wrapper img,
+.search-grid-trust .tno-card-product--trust .tno-card-product__image-wrapper .placeholder-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+/* Card content area - stacked layout */
+.product-grid-trust .tno-card-product .card__content,
+.product-grid-trust .tno-card-product__content,
+body.template-collection .tno-card-product--trust .card__content,
+body.template-collection .tno-card-product--trust .tno-card-product__content,
+.collection-grid-trust .tno-card-product--trust .card__content,
+.collection-grid-trust .tno-card-product--trust .tno-card-product__content,
+.product-related-trust .tno-card-product--trust .card__content,
+.product-related-trust .tno-card-product--trust .tno-card-product__content,
+.search-grid-trust .tno-card-product--trust .card__content,
+.search-grid-trust .tno-card-product--trust .tno-card-product__content {
+  padding: 0.75rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 0.25rem;
+}
+
+/* Card information */
+.product-grid-trust .tno-card-product .card__information,
+body.template-collection .tno-card-product--trust .card__information,
+.collection-grid-trust .tno-card-product--trust .card__information,
+.product-related-trust .tno-card-product--trust .card__information,
+.search-grid-trust .tno-card-product--trust .card__information {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Product title - max 2 lines with ellipsis */
+.product-grid-trust .tno-card-product .card__heading,
+.product-grid-trust .tno-card-product .tno-card-title,
+body.template-collection .tno-card-product--trust .card__heading,
+body.template-collection .tno-card-product--trust .tno-card-title,
+.collection-grid-trust .tno-card-product--trust .card__heading,
+.collection-grid-trust .tno-card-product--trust .tno-card-title,
+.product-related-trust .tno-card-product--trust .card__heading,
+.product-related-trust .tno-card-product--trust .tno-card-title,
+.search-grid-trust .tno-card-product--trust .card__heading,
+.search-grid-trust .tno-card-product--trust .tno-card-title {
+  font-size: 0.875rem;
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 2.8em; /* Ensure consistent height for 2 lines */
+}
+
+.product-grid-trust .tno-card-product .card__heading a,
+body.template-collection .tno-card-product--trust .card__heading a,
+.collection-grid-trust .tno-card-product--trust .card__heading a,
+.product-related-trust .tno-card-product--trust .card__heading a,
+.search-grid-trust .tno-card-product--trust .card__heading a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.product-grid-trust .tno-card-product .card__heading a:hover,
+body.template-collection .tno-card-product--trust .card__heading a:hover,
+.collection-grid-trust .tno-card-product--trust .card__heading a:hover,
+.product-related-trust .tno-card-product--trust .card__heading a:hover,
+.search-grid-trust .tno-card-product--trust .card__heading a:hover {
+  color: var(--color-cyan, #00fff0);
+}
+
+/* Price - left aligned */
+.product-grid-trust .tno-card-product .card__meta,
+body.template-collection .tno-card-product--trust .card__meta,
+.collection-grid-trust .tno-card-product--trust .card__meta,
+.product-related-trust .tno-card-product--trust .card__meta,
+.search-grid-trust .tno-card-product--trust .card__meta {
+  margin-top: 0.25rem;
+}
+
+.product-grid-trust .tno-card-product .tno-card-price,
+.product-grid-trust .tno-card-product .price,
+body.template-collection .tno-card-product--trust .tno-card-price,
+body.template-collection .tno-card-product--trust .price,
+.collection-grid-trust .tno-card-product--trust .tno-card-price,
+.collection-grid-trust .tno-card-product--trust .price,
+.product-related-trust .tno-card-product--trust .tno-card-price,
+.product-related-trust .tno-card-product--trust .price,
+.search-grid-trust .tno-card-product--trust .tno-card-price,
+.search-grid-trust .tno-card-product--trust .price {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #ffffff;
+  text-align: left;
+}
+
+/* Badge overlay - positioned inside image wrapper */
+.product-grid-trust .tno-card-product__badge,
+body.template-collection .tno-card-product--trust .tno-card-product__badge,
+.collection-grid-trust .tno-card-product--trust .tno-card-product__badge,
+.product-related-trust .tno-card-product--trust .tno-card-product__badge,
+.search-grid-trust .tno-card-product--trust .tno-card-product__badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 2; /* Above link and image */
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  pointer-events: none; /* Allow clicks to pass through to link */
+}
+
+.product-grid-trust .tno-card-product__badge.badge--sold-out {
+  background: rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.product-grid-trust .tno-card-product__badge.badge--sale {
+  background: rgba(0, 255, 240, 0.2);
+  color: var(--color-cyan, #00fff0);
+  border: 1px solid var(--color-cyan, #00fff0);
+}
+
+/* Legacy badge selector for default style (not used in trust style) */
+.product-grid-trust .tno-card-product .card__badge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 2;
+}
+
+/* Add to cart button */
+.product-grid-trust .tno-card-product .card__actions,
+body.template-collection .tno-card-product--trust .card__actions,
+.collection-grid-trust .tno-card-product--trust .card__actions,
+.product-related-trust .tno-card-product--trust .card__actions,
+.search-grid-trust .tno-card-product--trust .card__actions {
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.product-grid-trust .tno-card-product .tno-card-button,
+body.template-collection .tno-card-product--trust .tno-card-button,
+.collection-grid-trust .tno-card-product--trust .tno-card-button,
+.product-related-trust .tno-card-product--trust .tno-card-button,
+.search-grid-trust .tno-card-product--trust .tno-card-button {
+  width: 100%;
+  padding: 0.625rem 1rem;
+  font-size: 0.8125rem;
+  background: transparent;
+  border: 1px solid var(--color-cyan, #00fff0);
+  color: var(--color-cyan, #00fff0);
+  border-radius: 2px;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+  font-family: var(--font-mono, monospace);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.product-grid-trust .tno-card-product .tno-card-button:hover,
+body.template-collection .tno-card-product--trust .tno-card-button:hover,
+.collection-grid-trust .tno-card-product--trust .tno-card-button:hover,
+.product-related-trust .tno-card-product--trust .tno-card-button:hover,
+.search-grid-trust .tno-card-product--trust .tno-card-button:hover {
+  background: rgb(0 246 255 / 10%);
+  box-shadow: 0 0 10px rgba(0, 255, 240, 0.3);
+}
+
+/* Color variants */
+.product-grid-trust .tno-card-product .tno-card-variants,
+body.template-collection .tno-card-product--trust .tno-card-variants,
+.collection-grid-trust .tno-card-product--trust .tno-card-variants,
+.product-related-trust .tno-card-product--trust .tno-card-variants,
+.search-grid-trust .tno-card-product--trust .tno-card-variants {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+/* =========================================================
+   COLLECTION GRID - TRUST Style
+   Static grid layout (no slider) for collection pages
+   ========================================================= */
+
+/* Collection grid container - aligned with homepage container */
+/* Shared with search grid */
+.collection-grid-trust,
+.search-grid-trust {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-inline: 1.5rem;
+}
+
+/* Collection grid inner - static responsive grid */
+/* Shared with search grid */
+.collection-grid-trust__inner,
+.search-grid-trust__inner {
+  display: grid;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-x: visible; /* No horizontal scrolling */
+}
+
+/* Desktop: 4 cards per row */
+@media screen and (width >= 990px) {
+  .collection-grid-trust__inner,
+  .search-grid-trust__inner {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
+/* Mobile: 2 cards per row */
+@media screen and (max-width: 749px) {
+  .collection-grid-trust__inner,
+  .search-grid-trust__inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+}
+
+/* Grid items */
+.collection-grid-trust__inner li,
+.search-grid-trust__inner li {
+  list-style: none;
+  margin: 0;
+  width: 100%;
+}
+
+/* Ensure cards fill grid cells */
+.collection-grid-trust__inner .tno-card-product,
+.search-grid-trust__inner .tno-card-product {
+  width: 100%;
+  height: 100%;
+}
+
+/* =========================================================
+   SEARCH PAGE - TRUST Grid Overrides
+   Fix dimming issues caused by search template overlays
+   ========================================================= */
+
+/* Step 1: Completely disable ALL overlays on product-grid-container for search template */
+body.template-search .product-grid-container::before,
+body.template-search .product-grid-container::after {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  content: none !important;
+}
+
+/* Step 2: Disable overlays on template-search__results container */
+body.template-search .template-search__results::before,
+body.template-search .template-search__results::after {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  content: none !important;
+}
+
+/* Step 3: Ensure template-search__results has no opacity/filter issues */
+/* Note: z-index removed to prevent content from overlapping header when scrolling */
+body.template-search .template-search__results {
+  position: relative;
+  z-index: auto;
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Step 4: Ensure search-grid-trust is fully visible */
+/* Note: z-index removed to prevent content from overlapping header when scrolling */
+body.template-search .search-grid-trust {
+  position: relative;
+  z-index: auto;
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  background: transparent;
+}
+
+/* Step 5: Ensure search-grid-trust__inner is fully visible */
+body.template-search .search-grid-trust__inner {
+  position: relative;
+  z-index: auto;
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Step 6: Ensure TRUST cards and ALL their children are not dimmed */
+body.template-search .search-grid-trust .tno-card-product--trust,
+body.template-search .search-grid-trust .tno-card-product--trust * {
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Step 7: Ensure TRUST card background is correct */
+body.template-search .search-grid-trust .tno-card-product--trust {
+  position: relative;
+  z-index: auto;
+  background: rgb(15 15 18) !important;
+}
+
+/* Step 8: Ensure card images are fully visible */
+body.template-search .search-grid-trust .tno-card-product--trust img,
+body.template-search .search-grid-trust .tno-card-product--trust .placeholder-svg,
+body.template-search
+  .search-grid-trust
+  .tno-card-product--trust
+  .tno-card-product__image-wrapper
+  img,
+body.template-search
+  .search-grid-trust
+  .tno-card-product--trust
+  .tno-card-product__image-wrapper
+  .placeholder-svg {
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Step 9: Ensure card content (text, prices, links) are fully visible */
+body.template-search .search-grid-trust .tno-card-product--trust .card__heading,
+body.template-search .search-grid-trust .tno-card-product--trust .tno-card-title,
+body.template-search .search-grid-trust .tno-card-product--trust .card__heading a,
+body.template-search .search-grid-trust .tno-card-product--trust .tno-card-price,
+body.template-search .search-grid-trust .tno-card-product--trust .price,
+body.template-search .search-grid-trust .tno-card-product--trust .card__information,
+body.template-search .search-grid-trust .tno-card-product--trust .card__content,
+body.template-search .search-grid-trust .tno-card-product--trust .tno-card-product__content {
+  opacity: 1 !important;
+  color: #ffffff !important;
+}
+
+/* =========================================================
+   TNO – SEARCH PAGE: empty state for no results
+   ========================================================= */
+
+body.template-search .search-grid-trust__empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  padding: 2.5rem 1.5rem;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+body.template-search .search-grid-trust__empty-inner {
+  max-width: 520px;
+  text-align: center;
+}
+
+body.template-search .search-grid-trust__empty-title {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: clamp(1.4rem, 1.7vw, 1.8rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0 0 0.75rem 0;
+}
+
+body.template-search .search-grid-trust__empty-text,
+body.template-search .search-grid-trust__empty-hint {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0 0 0.25rem 0;
+}
+
+body.template-search .search-grid-trust__empty-hint {
+  margin-bottom: 0;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* =========================================================
+   TNO – SEARCH PAGE: disable scroll-trigger dimming
+   Disable animation opacity/transform/filter effects on search results
+   ========================================================= */
+
+/* Ensure template-search__results container has no opacity/filter */
+body.template-search .template-search__results {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* Disable scroll-trigger animation dimming on all search result items */
+body.template-search .template-search__results .scroll-trigger,
+body.template-search .template-search__results .scroll-trigger.animate--slide-in,
+body.template-search .template-search__results .scroll-trigger.animate--fade-in,
+body.template-search .template-search__results .scroll-trigger[class*='animate--'] {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+/* Ensure all children of scroll-trigger elements are also fully visible */
+body.template-search .template-search__results .scroll-trigger * {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* =========================================================
+   RELATED PRODUCTS - TRUST Style
+   Slider layout matching homepage Product Grid (TNO)
+   ========================================================= */
+
+/* Related products container - aligned with homepage container */
+.product-related-trust {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-inline: 1.5rem;
+}
+
+/* Related products header */
+.product-related-trust__header {
+  text-align: center;
+  margin-bottom: var(--space-lg, 4rem);
+}
+
+.product-related-trust__title {
+  font-family: var(--font-mono, 'Space Mono', monospace);
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* Arrow Controls - Positioned above grid, right-aligned */
+.product-related-trust__controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+/* Hide slider controls when not needed (totalCards <= cardsPerView) */
+.tno-slider-controls--hidden {
+  display: none !important;
+}
+
+/* Arrow buttons - matching homepage style */
+.product-related-trust__arrow {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(0 0 0 / 70%);
+  border: 1px solid var(--color-cyan, #00fff0);
+  color: var(--color-cyan, #00fff0);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  font-size: 18px;
+  line-height: 1;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  text-align: center;
+  appearance: none;
+  box-shadow: 0 0 10px rgba(0, 255, 240, 0.3);
+}
+
+.product-related-trust__arrow:hover {
+  background: rgb(0 246 255 / 10%);
+  border-color: var(--color-cyan, #00fff0);
+  color: var(--color-cyan, #00fff0);
+  box-shadow:
+    0 0 20px rgba(0, 255, 240, 0.6),
+    0 0 30px rgba(0, 255, 240, 0.4);
+  transform: translateY(-1px);
+}
+
+.product-related-trust__arrow:active {
+  transform: translateY(0);
+}
+
+.product-related-trust__arrow:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 80%);
+  outline-offset: 2px;
+}
+
+/* Related products grid - horizontal scrollable slider */
+.product-related-trust__grid {
+  display: grid !important;
+  grid-auto-flow: column !important;
+  overflow-x: auto !important;
+  scroll-snap-type: x mandatory !important;
+  -webkit-overflow-scrolling: touch !important;
+  scroll-behavior: smooth !important;
+  padding-bottom: 1rem !important;
+  margin: 0 !important;
+  list-style: none !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.product-related-trust__grid::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* Mobile: 2 cards per row */
+@media screen and (max-width: 749px) {
+  .product-related-trust__grid {
+    gap: 0.75rem !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    grid-auto-columns: calc((100% - 0.75rem) / 2) !important;
+  }
+
+  .product-related-trust__item {
+    scroll-snap-align: start !important;
+    margin: 0 !important;
+    list-style: none !important;
+  }
+
+  .product-related-trust__arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .product-related-trust__controls {
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Desktop: 4 cards per row */
+@media screen and (width >= 990px) {
+  .product-related-trust__grid {
+    gap: 1rem !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    grid-auto-columns: calc((100% - 3rem) / 4) !important;
+  }
+
+  .product-related-trust__item {
+    scroll-snap-align: start !important;
+  }
+}
+
+/* Ensure cards fill grid cells */
+.product-related-trust__item .tno-card-product {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* Ensure product images are visible */
+.product-grid-trust .tno-latest-drops__item .card__media,
+.product-grid-trust .tno-latest-drops__item .card .media,
+.product-grid-trust .tno-latest-drops__item .card__media img,
+.product-grid-trust .tno-latest-drops__item .card .media img,
+.product-grid-trust .tno-latest-drops__item .tno-card-product .card__media,
+.product-grid-trust .tno-latest-drops__item .tno-card-product .card__media img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100% !important;
+  position: relative !important;
+}
+
+.product-grid-trust .tno-latest-drops__item .card__media img,
+.product-grid-trust .tno-latest-drops__item .card .media img {
+  object-fit: cover !important;
+  object-position: center center !important;
+}
+
+/* Scrollbar hiding handled in track definition above */
+
+/* Empty state */
+.product-grid-trust__empty {
+  flex: 0 0 100% !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  text-align: center;
+  color: var(--color-gray-ghost, #6a6a7a);
+  padding: 4rem;
+}
+
+.product-grid-trust__empty p {
+  font-family: var(--font-mono, monospace);
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+/* Responsive padding */
+@media (max-width: 768px) {
+  .product-grid-trust {
+    padding: var(--space-lg, 4rem) var(--space-sm, 1rem);
+  }
+}
+
+/* =========================================================
+   LATEST DROPS SECTION - PRODUCT GRID TRUST
+   Scoped styles for Latest Drops carousel only
+   ========================================================= */
+
+/* MOBILE CARD TYPOGRAPHY - Latest Drops only */
+@media screen and (width <= 749px) {
+  .product-grid-trust .tno-card-product .card__heading {
+    font-size: 0.9rem;
+    line-height: 1.2;
+  }
+
+  .product-grid-trust .tno-card-product .price,
+  .product-grid-trust .tno-card-product .price-item {
+    font-size: 0.85rem;
+    line-height: 1.2;
+  }
+}
+
+/* REMOVE DUPLICATE SOLD-OUT BUTTON - Latest Drops only */
+.product-grid-trust .tno-card-product button[disabled],
+.product-grid-trust .tno-card-product .button[disabled],
+.product-grid-trust .tno-card-product .btn[disabled] {
+  display: none !important;
+}
+
+/* =========================================================
+   PRODUCT GRID ARROW BUTTONS
+   Positioned above grid, right-aligned (Hugo Boss style)
+   Scoped exclusively to .product-grid-trust section
+   ========================================================= */
+
+/* Base Arrow Button Styles - Round pill shape with neon cyan glow */
+.product-grid-trust__arrow {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(0 0 0 / 70%);
+  border: 1px solid var(--color-cyan, #00fff0);
+  color: var(--color-cyan, #00fff0);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  font-size: 18px;
+  line-height: 1;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  text-align: center;
+  appearance: none;
+  box-shadow: 0 0 10px rgba(0, 255, 240, 0.3);
+}
+
+/* Hover State - Enhanced neon cyan glow effect */
+.product-grid-trust__arrow:hover {
+  background: rgb(0 246 255 / 10%);
+  border-color: var(--color-cyan, #00fff0);
+  color: var(--color-cyan, #00fff0);
+  box-shadow:
+    0 0 20px rgba(0, 255, 240, 0.6),
+    0 0 30px rgba(0, 255, 240, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Active State - Reset transform */
+.product-grid-trust__arrow:active {
+  transform: translateY(0);
+}
+
+/* Focus State - Accessibility outline */
+.product-grid-trust__arrow:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 80%);
+  outline-offset: 2px;
+}
+
+/* Mobile Adjustments - Smaller buttons */
+@media screen and (width <= 749px) {
+  .product-grid-trust__arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .product-grid-trust__controls {
+    margin-bottom: 1.5rem; /* Slightly less spacing on mobile */
+  }
+}
+
+/* =========================================================
+   TNO – PRODUCT PAGE (TRUST Layout)
+   ========================================================= */
+
+body.template-product .product-main-trust {
+  padding-top: 3.5rem;
+  padding-bottom: 4rem;
+}
+
+body.template-product .product-main-trust__container {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+body.template-product .product-main-trust__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+/* Mobile: stacked */
+@media (max-width: 989px) {
+  body.template-product .product-main-trust__layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.25rem;
+  }
+
+  body.template-product .product-main-trust__gallery {
+    order: 0;
+  }
+
+  body.template-product .product-main-trust__info {
+    order: 1;
+  }
+}
+
+/* Title / price / meta */
+body.template-product .product-main-trust__title {
+  font-family: var(--tno-font-heading, system-ui, sans-serif);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: clamp(1.6rem, 2.1vw, 2.2rem);
+  margin-bottom: 0.75rem;
+  color: #ffffff;
+}
+
+body.template-product .product-main-trust__price {
+  margin-bottom: 1.25rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+body.template-product .product-main-trust__meta {
+  margin-bottom: 1.5rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Variants & form controls */
+body.template-product .product-main-trust__variants,
+body.template-product .product-main-trust__purchase {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+body.template-product .product-main-trust__variants select,
+body.template-product .product-main-trust__variants .select__select,
+body.template-product .product-main-trust__variants .product-form__input,
+body.template-product .product-main-trust__purchase .quantity__input {
+  background: rgb(12 15 20);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+/* Override: Force rectangular containers for product-main-trust variant controls */
+.product-main-trust .product-main-trust__variants-control,
+.product-main-trust .product-form__input {
+  border-radius: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Focus states for form inputs */
+body.template-product .product-main-trust__variants select:focus,
+body.template-product .product-main-trust__variants .select__select:focus,
+body.template-product .product-main-trust__variants .product-form__input:focus,
+body.template-product .product-main-trust__purchase .quantity__input:focus {
+  outline: none;
+  border-color: var(--tno-accent-cyan, #00f0ff);
+  box-shadow: 0 0 0 2px rgba(0, 240, 255, 0.2);
+}
+
+/* TRUST primary button – scoped to product-main-trust only (see comprehensive styles below) */
+
+/* Express checkout: smaller, less dominant */
+body.template-product .product-main-trust__express-checkout {
+  margin-top: 0.5rem;
+}
+
+body.template-product .product-main-trust__express-checkout button {
+  border-radius: 999px !important;
+  font-size: 0.8rem !important;
+}
+
+/* Versuch, den Dynamic Checkout Button an das Theme anzupassen */
+body.template-product .shopify-payment-button__button--unbranded {
+  background-color: transparent !important;
+  border: 1px solid var(--tno-accent-cyan, #00f0ff) !important;
+  color: #ffffff !important;
+  border-radius: 999px !important;
+}
+
+/* Falls es der lila "Shop Pay" Button ist, ist er schwer zu ändern.
+   Oft ist es besser, ihn in den Sektionseinstellungen im Editor einfach auszuschalten,
+   wenn er nicht zum Design passt. */
+
+/* =========================================================
+   TNO – PRODUCT PAGE: Meta cards (Story / Specs / Reviews)
+   ========================================================= */
+
+body.template-product .product-main-trust__meta-grid {
+  margin-top: 3rem;
+  display: grid;
+  gap: 1.75rem;
+}
+
+/* Desktop: two-column grid, reviews full width */
+@media (min-width: 990px) {
+  body.template-product .product-main-trust__meta-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body.template-product .product-main-trust__meta-card--reviews {
+    grid-column: 1 / -1;
+  }
+}
+
+body.template-product .product-main-trust__meta-card {
+  position: relative;
+  overflow: hidden;
+  background: rgb(12 12 16);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  padding: 1.5rem 1.75rem 1.75rem;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+}
+
+/* Glitchy gradient strip at the top of each card */
+body.template-product .product-main-trust__meta-card::before {
+  content: '';
+  position: absolute;
+  left: 1.75rem;
+  top: 0;
+  width: 72px;
+  height: 2px;
+  background: linear-gradient(90deg, #22f7ff, #a855f7, #f97316);
+  opacity: 0.9;
+}
+
+/* Header + title */
+body.template-product .product-main-trust__meta-header {
+  margin-bottom: 0.85rem;
+}
+
+body.template-product .product-main-trust__meta-header .product-main-trust__meta-title,
+body.template-product .product-main-trust__meta-header h2,
+body.template-product .product-main-trust__meta-header h3 {
+  margin: 0;
+  font-family: var(
+    --tno-font-mono,
+    'Space Mono',
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    'Liberation Mono',
+    'Courier New',
+    monospace
+  );
+  font-size: clamp(0.95rem, 0.9rem + 0.2vw, 1.05rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+/* Body text */
+body.template-product .product-main-trust__meta-body {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+/* Make existing spec rows look clean inside the card */
+body.template-product .product-main-trust__meta-card--specs .brand-specs__item {
+  border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+  padding: 0.5rem 0;
+}
+
+body.template-product .product-main-trust__meta-card--specs .brand-specs__item:last-child {
+  border-bottom: none;
+}
+
+/* Labels vs values inside specs */
+body.template-product .product-main-trust__meta-card--specs .brand-specs__label {
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.95);
+}
+
+body.template-product .product-main-trust__meta-card--specs .brand-specs__value {
+  color: rgba(249, 250, 251, 0.95);
+}
+
+/* Reviews card: keep text a bit softer */
+body.template-product .product-main-trust__meta-card--reviews .product-main-trust__meta-body {
+  color: rgba(209, 213, 219, 0.9);
+  font-size: 0.88rem;
+}
+
+/* =========================================================
+   TNO – PRODUCT PAGE: Variant Picker TRUST Style
+   ========================================================= */
+
+/* Wrapper */
+body.template-product .product-main-trust__variants {
+  margin-top: clamp(1.25rem, 1.5vw, 1.75rem);
+  display: grid;
+  gap: 0.75rem;
+}
+
+/* Label Style */
+body.template-product .product-main-trust__variants-label {
+  font-family: var(--tno-font-mono, var(--font-body-family));
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Control Wrapper */
+body.template-product .product-main-trust__variants-control {
+  width: 100%;
+}
+
+/* Select / Dropdown im Pill-Style */
+body.template-product .product-main-trust__variants-control .select,
+body.template-product .product-main-trust__variants-select .select,
+body.template-product .product-main-trust__variants-control select {
+  width: 100%;
+  border-radius: 999px;
+  background: rgb(10, 11, 16);
+  border: 1px solid rgba(0, 255, 255, 0.28);
+  padding-inline: 1rem;
+  padding-block: 0.65rem;
+  color: #ffffff;
+  font-size: 0.85rem;
+  outline: none;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    background-color 150ms ease;
+}
+
+body.template-product .product-main-trust__variants-control .select__select {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding-inline: 0;
+}
+
+/* Fokus- und Hoverzustand */
+body.template-product .product-main-trust__variants-control .select:focus-within,
+body.template-product .product-main-trust__variants-control select:focus {
+  border-color: var(--tno-color-accent-cyan, #00f0ff);
+  box-shadow:
+    0 0 0 1px rgba(0, 240, 255, 0.45),
+    0 0 18px rgba(0, 240, 255, 0.55);
+  background: rgb(8, 10, 14);
+}
+
+/* Radio Pills Style */
+body.template-product .product-main-trust__variants-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+body.template-product .product-main-trust__variants-pills input[type='radio'] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.template-product .product-main-trust__variants-pills label {
+  cursor: pointer;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 255, 255, 0.25);
+  padding: 0.4rem 0.9rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgb(10, 11, 16);
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease,
+    box-shadow 150ms ease,
+    color 150ms ease;
+}
+
+body.template-product .product-main-trust__variants-pills input[type='radio']:checked + label {
+  border-color: var(--tno-color-accent-cyan, #00f0ff);
+  background:
+    radial-gradient(circle at 0% 0%, rgba(0, 240, 255, 0.18), transparent 55%), rgb(8, 10, 14);
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.45);
+}
+
+body.template-product .product-main-trust__variants-pills label:hover {
+  border-color: rgba(0, 255, 255, 0.6);
+}
+
+/* Override: Force rectangular tiles for product-main-trust section (consolidated with main rules above) */
+.product-main-trust .product-main-trust__variants-pills {
+  gap: 10px !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+}
+
+.product-main-trust .product-main-trust__variants-pills label {
+  border-radius: 2px !important;
+  min-width: 56px !important;
+  height: 44px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  width: 40px !important;
-  height: 40px !important;
-  margin-left: 0.25rem !important;
-  border: none !important;
-  border-radius: 999px !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
   background: transparent !important;
-  color: #00e5ff !important;
+  color: #ffffff !important;
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  padding: 0 0.875rem !important;
+  box-shadow: none !important;
+  transition: all 0.15s ease !important;
+}
+
+.product-main-trust .product-main-trust__variants-pills input[type='radio']:checked + label {
+  border-color: #00f0ff !important;
+  color: #00f0ff !important;
+  background: rgba(0, 240, 255, 0.1) !important;
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.3) !important;
+}
+
+.product-main-trust
+  .product-main-trust__variants-pills
+  input[type='radio']:not(:disabled):not(:checked)
+  + label:hover {
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* =========================================================
+   ÄNDERUNGEN ZUSAMMENFASSUNG / CHANGES SUMMARY
+   =========================================================
+
+   PROBLEM BEHOBEN / ISSUE FIXED:
+   - Desktop: Letztes Produkt wurde rechts abgeschnitten
+   - Desktop/Mobile: Pfeil-Buttons waren teilweise nicht sichtbar
+
+   LÖSUNG / SOLUTION:
+   1. Z-INDEX ERHÖHT: z-index: 999 !important
+      → Pfeile liegen jetzt IMMER über Produktbildern
+      → Keine Überlagerung mehr durch Bilder
+
+   2. POSITION ANGEPASST:
+      Desktop: top: -2.5rem, right: 1rem (leicht nach innen)
+      Mobile: top: -2rem, right: 0.75rem (kleinere Buttons, besser positioniert)
+      → Pfeile sind jetzt immer im sichtbaren Bereich
+
+   3. PADDING-RIGHT HINZUGEFÜGT:
+      .tno-latest-drops__track { padding-right: 2rem !important; }
+      → Letztes Produkt wird nicht mehr abgeschnitten
+      → Genug Platz für Pfeile rechts
+
+   4. DOPPELTE STYLES ENTFERNT:
+      → Inline-Styles aus product-grid-trust.liquid entfernt
+      → Alle Styles jetzt zentral in custom.css mit .product-grid-trust Präfix
+      → Bessere Wartbarkeit, keine Konflikte
+
+   SCOPING / ISOLATION:
+   - Alle Selektoren verwenden .product-grid-trust Präfix
+   - KEINE Überschneidung mit:
+     * .slider-button (Shopify Native Slider)
+     * .tno-related-products__control (Related Products Carousel)
+     * Collection Pages, Product Pages
+   - Nur Latest Drops Section wird beeinflusst
+
+   ERGEBNIS / RESULT:
+   ✅ Pfeile sind immer sichtbar (Desktop + Mobile)
+   ✅ Kein Produkt wird mehr rechts abgeschnitten
+   ✅ Keine Konflikte mit anderen Arrow-Systemen
+   ✅ Grid-Layout: 2 Desktop, 2 Mobile (updated 2025-01-30)
+   ✅ Neon cyan glow effect on arrow buttons
+   ========================================================= */
+
+/* TNO – PRODUCT PAGE: ensure variant selects are clickable */
+body.template-product .product-main-trust__variants-control,
+body.template-product .product-main-trust__variants-select,
+body.template-product .product-main-trust__variants-control select,
+body.template-product .product-main-trust__variants-control .select__select {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* =========================================================
+   FIX: Ghost Overlay Problem - Verhindert, dass Links aus Karten "ausbrechen"
+   =========================================================
+   PROBLEM: Der Link des letzten Produkts legt sich wie eine unsichtbare
+   Decke über alle anderen Produkte, weil .tno-card-product kein
+   position: relative hat.
+
+   LÖSUNG: position: relative auf der Karte + z-index Management
+   ========================================================= */
+
+/* FIX: Verhindert, dass der Link aus der Karte "ausbricht" */
+.tno-card-product {
+  position: relative !important;
+  z-index: 1;
+}
+
+/* Optional: Sicherstellen, dass der Link wirklich passt */
+.tno-card-product .full-unstyled-link::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2; /* Über dem Bild, aber unter Buttons */
+  pointer-events: auto;
+}
+
+/* WICHTIG: Buttons müssen ÜBER dem Link liegen */
+.tno-card-product button,
+.tno-card-product .tno-card-button,
+.tno-card-product .tno-card-variant,
+.tno-card-product form {
+  position: relative;
+  z-index: 5; /* Höher als der Link */
+  pointer-events: auto;
+}
+
+/* =========================================
+   TNO – Product (Brand Neutral) – Variant Tiles
+   Consolidated with main polish rules below
+   ========================================= */
+
+/* Hide only inline images inside variant labels (to avoid broken icons) */
+.product-main-trust .product-form__input--pill label img,
+.product-main-trust .product-form__input--swatch label img {
+  display: none;
+}
+
+/* ============================================
+   TNO – PRODUCT MAIN TRUST: VARIANT POLISH
+   Rectangular tiles & containers
+   ============================================ */
+
+/* 1. Outer containers / fieldsets – Force rectangular, remove pill glow */
+.product-main-trust .product-main-trust__variants-control,
+.product-main-trust .product-form__input--pill,
+.product-main-trust .product-form__input--swatch,
+.product-main-trust fieldset.product-form__input {
+  border-radius: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0;
+  margin: 0;
+}
+
+/* 2. Remove any ::before pseudo-elements that create glow effects */
+.product-main-trust .product-form__input--pill input[type='radio'] + label::before {
+  display: none !important;
+}
+
+/* 3. Refine individual tiles – CSS Grid for perfect alignment */
+.product-main-trust .product-form__input--pill {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(56px, 1fr)) !important;
+  gap: 10px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Responsive grid adjustments */
+@media (width <= 480px) {
+  .product-main-trust .product-form__input--pill {
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr)) !important;
+    gap: 8px !important;
+  }
+}
+
+/* 2. VARIANT TILES – MAKE THEM CLEARER */
+.product-main-trust .product-form__input--pill input[type='radio'] + label,
+.product-main-trust .product-main-trust__variants-pills label {
+  /* Shape */
+  border-radius: 2px !important;
+
+  /* Consistent sizing */
+  min-width: 56px !important;
+  height: 44px !important;
+
+  /* Layout */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 0.875rem !important;
+  margin: 0 !important;
+
+  /* Styling – Brighter border for clarity */
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  background: transparent !important;
+  color: #ffffff !important;
+
+  /* Typography – Bolder text */
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+
+  /* Effects */
+  box-shadow: none !important;
+  transition: all 0.15s ease !important;
   cursor: pointer !important;
-  transition: transform 0.15s ease !important;
-  flex-shrink: 0 !important;
 }
 
-/* Button-Druckeffekt: leichtes Skalieren */
-header .tno-search__button:active,
-.tno-search__button:active {
-  transform: scale(0.95) !important;
+/* Selected variant – More visible cyan highlight */
+.product-main-trust .product-form__input--pill input[type='radio']:checked + label,
+.product-main-trust .product-main-trust__variants-pills input[type='radio']:checked + label {
+  border-color: #00f0ff !important;
+  color: #00f0ff !important;
+  background-color: rgba(0, 240, 255, 0.2) !important;
+  background: rgba(0, 240, 255, 0.2) !important;
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.3) !important;
 }
 
-/* Icon im Button */
-header .tno-search__button svg,
-.tno-search__button svg,
-header .tno-search__button .icon,
-.tno-search__button .icon {
+/* Hover state for tiles */
+.product-main-trust
+  .product-form__input--pill
+  input[type='radio']:not(:disabled):not(:checked)
+  + label:hover {
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* 5. Disabled state (sold out) */
+.product-main-trust .product-form__input--pill input[type='radio']:disabled + label,
+.product-main-trust .product-form__input--pill input[type='radio'].disabled + label {
+  opacity: 0.35 !important;
+  cursor: not-allowed !important;
+  text-decoration: line-through !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  box-shadow: none !important;
+}
+
+/* 7. Ensure legend/labels are clean */
+.product-main-trust .product-form__input--pill legend,
+.product-main-trust .product-main-trust__variants-label {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+/* ============================================
+   TNO – PRODUCT MAIN TRUST: TYPOGRAPHY HIERARCHY
+   Clean sans-serif for body, keep glitch for headings
+   ============================================ */
+
+/* Base font family for body content */
+.product-main-trust,
+.product-main-trust .brand-product__details {
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+}
+
+/* Body text elements – Clean sans-serif */
+.product-main-trust p,
+.product-main-trust li,
+.product-main-trust .brand-accordion__content,
+.product-main-trust .brand-accordion__content p,
+.product-main-trust .brand-accordion__content li,
+.product-main-trust .brand-specs__label,
+.product-main-trust .brand-specs__value,
+.product-main-trust .product-main-trust__meta-body,
+.product-main-trust .brand-details__content,
+.product-main-trust .brand-details__content p,
+.product-main-trust .brand-details__content li,
+.product-main-trust .brand-product__key-points,
+.product-main-trust .brand-product__key-points li,
+.product-main-trust .brand-details__reviews-placeholder,
+.product-main-trust .brand-details__reviews-placeholder p {
+  font-family: inherit;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* Explicitly preserve glitch/mono font for headings */
+.product-main-trust .product-main-trust__title,
+.product-main-trust .brand-product__title,
+.product-main-trust .product-main-trust__meta-title,
+.product-main-trust .brand-details__heading,
+.product-main-trust .brand-section-heading,
+.product-main-trust h1,
+.product-main-trust h2,
+.product-main-trust h3,
+.product-main-trust .product-main-trust__variants-label,
+.product-main-trust legend.form__label {
+  font-family: var(
+    --font-mono,
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    'Liberation Mono',
+    monospace
+  ) !important;
+}
+
+/* ============================================
+   TNO – PRODUCT MAIN TRUST: SIZE GUIDE BUTTON
+   Clean secondary CTA matching variant tiles
+   ============================================ */
+
+/* Size Guide container */
+.product-main-trust .tno-size-guide {
+  margin-top: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+/* Size Guide link – Clean secondary ghost button */
+.product-main-trust .tno-size-guide__link {
+  /* Shape – Rectangular, matching main CTA */
+  border-radius: 2px !important;
+
+  /* Layout */
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  padding: 0.5rem 0.875rem !important;
+
+  /* Styling – Transparent background, thin cyan border */
+  background: transparent !important;
+  border: 1px solid rgba(0, 240, 255, 0.4) !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+
+  /* Typography */
+  font-family: var(--font-mono, ui-monospace, monospace) !important;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  text-decoration: none !important;
+
+  /* Effects */
+  box-shadow: none !important;
+  transition:
+    border-color 0.18s ease,
+    background-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease !important;
+  cursor: pointer !important;
+}
+
+/* Hover state – Minimal glow, subtle border brightening */
+.product-main-trust .tno-size-guide__link:hover {
+  border-color: rgba(0, 240, 255, 0.7) !important;
+  background: rgba(0, 240, 255, 0.03) !important;
+  box-shadow: 0 0 4px rgba(0, 240, 255, 0.15) !important;
+  color: #00f0ff !important;
+}
+
+/* Icon styling */
+.product-main-trust .tno-size-guide__icon {
   width: 16px !important;
   height: 16px !important;
-  fill: currentColor !important;
   stroke: currentColor !important;
+  fill: none !important;
+  stroke-width: 2 !important;
+  transition: stroke 0.15s ease !important;
 }
 
-/* Glitch-Animation für das Icon – wird per JS getriggert */
-@keyframes tno-search-btn-glitch {
-  0%   { transform: translate(0, 0); }
-  20%  { transform: translate(-2px, 1px); }
-  40%  { transform: translate(2px, -1px); }
-  60%  { transform: translate(-1px, 2px); }
-  80%  { transform: translate(1px, -2px); }
-  100% { transform: translate(0, 0); }
+/* ============================================
+   PRODUCT MAIN TRUST – GRID & TRUST ICONS
+   CSS Grid for variant tiles + Trust icons block
+   ============================================ */
+
+/* Trust Icons Container */
+.product-main-trust__trust-icons {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-header .tno-search__button.is-glitching svg,
-.tno-search__button.is-glitching svg {
-  animation: tno-search-btn-glitch 0.3s steps(4) 1 !important;
-  filter: drop-shadow(0 0 3px #00e5ff) drop-shadow(0 0 2px #ff00cc) !important;
+/* Trust Icons List */
+.product-main-trust__trust-icons-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-/* Mobile Anpassungen: größere Größe */
-@media (max-width: 749px) {
-  header .tno-search form,
-  .tno-search form {
-    height: 44px !important;
+/* Individual Trust Icon */
+.product-main-trust__trust-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.product-main-trust__trust-icon:hover {
+  opacity: 1;
+}
+
+/* Icon Label (placeholder text, will be replaced with SVGs) */
+.product-main-trust__trust-icon .trust-icon-label {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+}
+
+/* SVG styling (when SVGs are added) */
+.product-main-trust__trust-icon svg {
+  width: 32px;
+  height: 20px;
+  fill: rgba(255, 255, 255, 0.7);
+  transition: fill 0.2s ease;
+}
+
+.product-main-trust__trust-icon:hover svg {
+  fill: rgba(255, 255, 255, 0.9);
+}
+
+/* Responsive adjustments */
+@media (width <= 480px) {
+  .product-main-trust__trust-icons-list {
+    gap: 0.75rem;
   }
 
-  header .tno-search__button,
-  .tno-search__button {
-    width: 44px !important;
-    height: 44px !important;
+  .product-main-trust__trust-icon .trust-icon-label {
+    font-size: 0.6rem;
+  }
+
+  .product-main-trust__trust-icon svg {
+    width: 28px;
+    height: 18px;
   }
 }
 
+/* ============================================
+   TNO – PRODUCT MAIN TRUST: CYBERPUNK NEON CTA
+   Rectangular Add-to-Cart button with neon glow
+   Scoped to .product-main-trust section only
+   ============================================ */
 
+/* =========================================================
+   TNO – PRODUCT MAIN TRUST: MASSIVE NEON BUTTON & VARIANT TILES
+   Bold cyan Add to Cart button with white hover effect
+   Enhanced variant tiles with clearer borders and cyan highlight
+   Scoped to .product-main-trust section only
+   ========================================================= */
+
+/* 1. ADD TO CART BUTTON – FORCED BRIGHT CYAN FILL */
+.product-main-trust button[name='add'],
+.product-main-trust .product-form__submit,
+.product-main-trust .product-main-trust__add-to-cart,
+.product-main-trust .product-main-trust__add-to-cart.brand-button--primary,
+.product-main-trust .product-main-trust__add-to-cart.tno-button-primary {
+  /* Shape – Rectangular, not pill */
+  border-radius: 2px !important;
+
+  /* Base styling – Bright cyan fill with black text */
+  background-color: #00f0ff !important;
+  background: #00f0ff !important;
+  color: #000000 !important;
+  border: 2px solid #00f0ff !important;
+
+  /* Typography – Extra bold, uppercase */
+  font-weight: 800 !important;
+  font-size: 0.875rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  line-height: 1.2 !important;
+  text-shadow: none !important;
+
+  /* Layout – Full width, centered content */
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  min-height: 56px !important;
+  padding: 1rem 1.5rem !important;
+  cursor: pointer !important;
+
+  /* Effects – Soft cyan glow */
+  opacity: 1 !important;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.4) !important;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease !important;
+
+  /* Remove any inherited styles */
+  transform: none !important;
+}
+
+/* Hover: Turn white for contrast with strong glow */
+.product-main-trust button[name='add']:hover:not(:disabled),
+.product-main-trust .product-form__submit:hover:not(:disabled),
+.product-main-trust .product-main-trust__add-to-cart:hover:not(:disabled),
+.product-main-trust .product-main-trust__add-to-cart:focus-visible:not(:disabled) {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.9) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Active / Pressed state */
+.product-main-trust button[name='add']:active:not(:disabled),
+.product-main-trust .product-form__submit:active:not(:disabled),
+.product-main-trust .product-main-trust__add-to-cart:active:not(:disabled) {
+  transform: translateY(0) !important;
+  background-color: #00f0ff !important;
+  background: #00f0ff !important;
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.6) !important;
+}
+
+/* Disabled state */
+.product-main-trust button[name='add']:disabled,
+.product-main-trust button[name='add'][disabled],
+.product-main-trust .product-form__submit:disabled,
+.product-main-trust .product-form__submit[disabled],
+.product-main-trust .product-main-trust__add-to-cart:disabled,
+.product-main-trust .product-main-trust__add-to-cart[disabled] {
+  opacity: 0.5 !important;
+  border-color: rgba(0, 240, 255, 0.3) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+  box-shadow: none !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  background-color: rgba(0, 240, 255, 0.2) !important;
+  background: rgba(0, 240, 255, 0.2) !important;
+}
+
+/* ============================================
+   TNO – PRODUCT MAIN TRUST: HIDE EXPRESS CHECKOUT
+   Hard-disable express/dynamic checkout buttons
+   Remove white backgrounds and spacing
+   ============================================ */
+
+/* Hide all Shopify payment buttons in product-main-trust section */
+.product-main-trust .shopify-payment-button,
+.product-main-trust .product-main-trust__express-checkout,
+.product-main-trust .brand-product__express-checkout {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Remove any white backgrounds from payment button wrappers */
+.product-main-trust .shopify-payment-button__button,
+.product-main-trust .shopify-payment-button__button--unbranded,
+.product-main-trust .shopify-payment-button__more-options {
+  display: none !important;
+  background: transparent !important;
+  border: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Ensure no white card/background remains */
+.product-main-trust .product-main-trust__purchase,
+.product-main-trust .brand-product__cta-container {
+  background: transparent !important;
+}
+
+/* Remove extra spacing that might leave gaps */
+.product-main-trust .brand-product__cta-row {
+  margin-bottom: 0 !important;
+}
