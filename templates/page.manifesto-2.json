@@ -17,7 +17,7 @@
         "padding_bottom": 28
       }
     },
-    "main_manifesto_MxBRdb": {
+    "main_manifesto_H8f4Pg": {
       "type": "main-manifesto",
       "name": "Manifesto",
       "settings": {
@@ -36,6 +36,6 @@
   },
   "order": [
     "main",
-    "main_manifesto_MxBRdb"
+    "main_manifesto_H8f4Pg"
   ]
 }

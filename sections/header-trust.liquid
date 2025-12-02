@@ -179,7 +179,46 @@
               {%- endif -%}
             </div>
 
-            {%- comment %} Column 3: PRINTS {%- endcomment %}
+            {%- comment %} Column 3: COLLECTIONS {%- endcomment %}
+            <div class="tno-mega__col">
+              <p class="tno-mega__title">// COLLECTIONS</p>
+              {%- assign collections_menu = linklists[section.settings.collections_menu] -%}
+              {%- if collections_menu and collections_menu.links and collections_menu.links.size > 0 -%}
+                <ul class="tno-mega__list">
+                  {%- for link in collections_menu.links -%}
+                    <li>
+                      <a class="tno-mega__link" href="{{ link.url }}">{{ link.title }}</a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- else -%}
+                {%- comment %} Fallback: Common collection series {%- endcomment %}
+                <ul class="tno-mega__list">
+                  <li>
+                    <a class="tno-mega__link" href="{{ routes.collections_url }}/glitch-series"
+                      >// GLITCH SERIES</a
+                    >
+                  </li>
+                  <li>
+                    <a class="tno-mega__link" href="{{ routes.collections_url }}/dark-aesthetics"
+                      >// DARK AESTHETICS</a
+                    >
+                  </li>
+                  <li>
+                    <a class="tno-mega__link" href="{{ routes.collections_url }}/source-code"
+                      >// SOURCE CODE</a
+                    >
+                  </li>
+                  <li>
+                    <a class="tno-mega__link" href="{{ routes.collections_url }}/limited-drops"
+                      >// LIMITED DROPS</a
+                    >
+                  </li>
+                </ul>
+              {%- endif -%}
+            </div>
+
+            {%- comment %} Column 4: PRINTS {%- endcomment %}
             <div class="tno-mega__col">
               <p class="tno-mega__title">// PRINTS</p>
               {%- assign prints_menu = linklists[section.settings.prints_menu] -%}
@@ -208,7 +247,7 @@
               {%- endif -%}
             </div>
 
-            {%- comment %} Column 4: FEATURED (merchandising tile or key links) {%- endcomment %}
+            {%- comment %} Column 5: FEATURED (merchandising tile or key links) {%- endcomment %}
             <div class="tno-mega__col tno-mega__col--featured">
               <p class="tno-mega__title">// FEATURED</p>
               {%- if section.settings.featured_collection != blank -%}
@@ -261,13 +300,13 @@
           </div>
         </li>
 
-        {%- comment %} SYSTEM {%- endcomment %}
+        {%- comment %} COLLECTIONS {%- endcomment %}
         <li class="header-nav__item tno-nav__item">
           <a
-            href="{{ pages.system.url | default: '/pages/system' }}"
-            class="header-nav__link tno-nav__link {% if request.page_handle == 'system' %}is-active{% endif %}"
+            href="{{ routes.collections_url }}"
+            class="header-nav__link tno-nav__link {% if template.name == 'collection' or template.name == 'list-collections' %}is-active{% endif %}"
           >
-            SYSTEM
+            COLLECTIONS
           </a>
         </li>
 
@@ -534,12 +573,12 @@
         {%- comment %} Secondary Navigation Section {%- endcomment %}
         <li class="tno-mobile-item tno-mobile-divider" aria-hidden="true"></li>
 
-        {%- comment %} SYSTEM {%- endcomment %}
+        {%- comment %} COLLECTIONS {%- endcomment %}
         <li class="tno-mobile-item">
           <a
-            href="{{ pages['system'].url | default: '/pages/system' }}"
+            href="{{ routes.collections_url }}"
             class="tno-mobile-link tno-mobile-link--secondary"
-            >SYSTEM</a
+            >COLLECTIONS</a
           >
         </li>
 
@@ -776,6 +815,12 @@
       "id": "accessories_menu",
       "label": "ACCESSORIES menu",
       "info": "Links for the ACCESSORIES column"
+    },
+    {
+      "type": "link_list",
+      "id": "collections_menu",
+      "label": "COLLECTIONS menu",
+      "info": "Links for the COLLECTIONS column (e.g., GLITCH SERIES, DARK AESTHETICS, SOURCE CODE, LIMITED DROPS)"
     },
     {
       "type": "link_list",

@@ -81,6 +81,49 @@
     </div>
 
     <div class="tno-card-product__content">
+      {%- comment -%} TRUST STYLE: Meta container with title, price, and color swatches {%- endcomment -%}
+      <div class="tno-card-product__meta">
+        <h3 class="tno-card-product__title">
+          <a href="{{ card_product.url }}" class="full-unstyled-link">
+            {{- card_product.title | escape -}}
+          </a>
+        </h3>
+
+        <div class="tno-card-product__price">
+          {%- render 'price', product: card_product, price_class: 'price--on-card' -%}
+        </div>
+
+        {%- comment -%} Color swatches row {%- endcomment -%}
+        <div class="tno-card-product__swatches">
+          {% assign color_option = nil %}
+          {% for option in card_product.options_with_values %}
+            {% assign option_name_downcase = option.name | downcase %}
+            {% if option_name_downcase == 'color' or option_name_downcase == 'farbe' %}
+              {% assign color_option = option %}
+            {% endif %}
+          {% endfor %}
+
+          {% if color_option %}
+            {% assign unique_values = color_option.values | uniq %}
+            <ul class="tno-color-swatch-list" aria-label="Available colors">
+              {% for value in unique_values limit: 4 %}
+                {% assign value_handle = value | handleize %}
+                <li class="tno-color-swatch" data-color-name="{{ value_handle }}">
+                  <span class="tno-color-swatch__dot" aria-hidden="true"></span>
+                  <span class="visually-hidden">{{ value }}</span>
+                </li>
+              {% endfor %}
+
+              {% if unique_values.size > 4 %}
+                <li class="tno-color-swatch tno-color-swatch--more">
+                  +{{ unique_values.size | minus: 4 }}
+                </li>
+              {% endif %}
+            </ul>
+          {% endif %}
+        </div>
+      </div>
+    </div>
   {%- else -%}
     {%- comment -%} DEFAULT STYLE: Original structure {%- endcomment -%}
     <div class="card card--product tno-card">
@@ -135,87 +178,86 @@
           CONTENT
         {%- endcomment -%}
         <div class="card__content">
-  {%- endif -%}
-        <div class="card__information">
-          {%- if show_vendor -%}
-            <span class="card__vendor">
-              {{ card_product.vendor }}
-            </span>
-          {%- endif -%}
-
-          <h3 class="card__heading tno-card-title">
-            <a href="{{ card_product.url }}" class="full-unstyled-link">
-              {{ card_product.title | escape }}
-            </a>
-          </h3>
-
-          <div class="card__meta">
-            <div class="tno-card-price">
-              {%- render 'price', product: card_product, price_class: 'price', trust_compact: card_style == 'trust' -%}
-            </div>
-
-            {%- if show_rating and card_product.metafields.reviews.rating.value != blank -%}
-              <span
-                class="tno-rating"
-                aria-label="Product rating: {{ card_product.metafields.reviews.rating.value }}/5"
-              >
-                {% assign rating = card_product.metafields.reviews.rating.value | round: 1 %}
-                {% for i in (1..5) %}
-                  {% if i <= rating %}
-                    <svg
-                      class="tno-star tno-star--filled"
-                      width="16"
-                      height="16"
-                      aria-hidden="true"
-                      focusable="false"
-                    >
-                      <use xlink:href="#icon-star-filled"></use>
-                    </svg>
-                  {% else %}
-                    <svg
-                      class="tno-star tno-star--empty"
-                      width="16"
-                      height="16"
-                      aria-hidden="true"
-                      focusable="false"
-                    >
-                      <use xlink:href="#icon-star-empty"></use>
-                    </svg>
-                  {% endif %}
-                {% endfor %}
+          <div class="card__information">
+            {%- if show_vendor -%}
+              <span class="card__vendor">
+                {{ card_product.vendor }}
               </span>
             {%- endif -%}
-          </div>
 
-          {%- comment -%}
-            Color Variants (trust-style feature)
-          {%- endcomment -%}
-          {%- if show_color_variants and card_product.options_with_values.size > 0 -%}
-            {%- for option in card_product.options_with_values -%}
-              {%- if option.name == 'Color' or option.name == 'Colour' -%}
-                <div class="card__variants tno-card-variants">
-                  {%- for value in option.values limit: 5 -%}
-                    {%- assign variant = card_product.variants | where: 'option1', value | first -%}
-                    <button
-                      type="button"
-                      class="card__variant tno-card-variant {% if forloop.first %}tno-card-variant--selected{% endif %}"
-                      data-variant-id="{{ variant.id }}"
-                      data-price="{{ variant.price | money }}"
-                      aria-label="Select color: {{ value }}"
-                    >
-                      {{ value }}
-                    </button>
-                  {%- endfor -%}
-                  {%- if option.values.size > 5 -%}
-                    <span class="card__variant-more" style="font-family: var(--font-mono, monospace); color: var(--color-gray-dim, #666); font-size: 0.75rem;">
-                      +{{ option.values.size | minus: 5 }} more
-                    </span>
-                  {%- endif -%}
-                </div>
+            <h3 class="card__heading tno-card-title">
+              <a href="{{ card_product.url }}" class="full-unstyled-link">
+                {{ card_product.title | escape }}
+              </a>
+            </h3>
+
+            <div class="card__meta">
+              <div class="tno-card-price">
+                {%- render 'price', product: card_product, price_class: 'price', trust_compact: card_style == 'trust' -%}
+              </div>
+
+              {%- if show_rating and card_product.metafields.reviews.rating.value != blank -%}
+                <span
+                  class="tno-rating"
+                  aria-label="Product rating: {{ card_product.metafields.reviews.rating.value }}/5"
+                >
+                  {% assign rating = card_product.metafields.reviews.rating.value | round: 1 %}
+                  {% for i in (1..5) %}
+                    {% if i <= rating %}
+                      <svg
+                        class="tno-star tno-star--filled"
+                        width="16"
+                        height="16"
+                        aria-hidden="true"
+                        focusable="false"
+                      >
+                        <use xlink:href="#icon-star-filled"></use>
+                      </svg>
+                    {% else %}
+                      <svg
+                        class="tno-star tno-star--empty"
+                        width="16"
+                        height="16"
+                        aria-hidden="true"
+                        focusable="false"
+                      >
+                        <use xlink:href="#icon-star-empty"></use>
+                      </svg>
+                    {% endif %}
+                  {% endfor %}
+                </span>
               {%- endif -%}
-            {%- endfor -%}
-          {%- endif -%}
-        </div>
+            </div>
+
+            {%- comment -%}
+              Color Variants (trust-style feature)
+            {%- endcomment -%}
+            {%- if show_color_variants and card_product.options_with_values.size > 0 -%}
+              {%- for option in card_product.options_with_values -%}
+                {%- if option.name == 'Color' or option.name == 'Colour' -%}
+                  <div class="card__variants tno-card-variants">
+                    {%- for value in option.values limit: 5 -%}
+                      {%- assign variant = card_product.variants | where: 'option1', value | first -%}
+                      <button
+                        type="button"
+                        class="card__variant tno-card-variant {% if forloop.first %}tno-card-variant--selected{% endif %}"
+                        data-variant-id="{{ variant.id }}"
+                        data-price="{{ variant.price | money }}"
+                        aria-label="Select color: {{ value }}"
+                      >
+                        {{ value }}
+                      </button>
+                    {%- endfor -%}
+                    {%- if option.values.size > 5 -%}
+                      <span class="card__variant-more" style="font-family: var(--font-mono, monospace); color: var(--color-gray-dim, #666); font-size: 0.75rem;">
+                        +{{ option.values.size | minus: 5 }} more
+                      </span>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
 
         {%- comment -%}
           QUICK ADD / CUSTOM ADD TO CART
@@ -272,11 +314,8 @@
             </button>
           </div>
         {%- endif -%}
-      {%- if card_style == 'trust' -%}
-        </div>
-      {%- else -%}
         </div>
       </div>
     </div>
-    {%- endif -%}
+  {%- endif -%}
 </div>

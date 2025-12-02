@@ -89,7 +89,7 @@
     }
   }
 
-  function scheduleCloseNavPanel(delay = 600) {
+  function scheduleCloseNavPanel(delay = 100) {
     // Clear existing timer
     if (STATE.hoverCloseTimer) {
       clearTimeout(STATE.hoverCloseTimer);
@@ -184,9 +184,9 @@
       navItem.addEventListener('mouseleave', () => {
         // Mark parent item as not hovered
         navItem.dataset.hovering = 'false';
-        // Schedule close with default buffer; enhanced delay handled in custom.js
+        // Schedule close with short delay (100ms) to prevent flicker on fast mouse movements
         // Will only close if panel is also not hovered
-        scheduleCloseNavPanel(600);
+        scheduleCloseNavPanel(100);
         dbg('desktop panel leave scheduling close', panelId);
       });
 
@@ -201,9 +201,9 @@
       panel.addEventListener('mouseleave', () => {
         // Mark panel as not hovered
         panel.dataset.hovering = 'false';
-        // Schedule close with default buffer; enhanced delay handled in custom.js
+        // Schedule close with short delay (100ms) to prevent flicker on fast mouse movements
         // Will only close if parent nav item is also not hovered
-        scheduleCloseNavPanel(600);
+        scheduleCloseNavPanel(100);
         dbg('panel leave scheduling close', panelId);
       });
     });
