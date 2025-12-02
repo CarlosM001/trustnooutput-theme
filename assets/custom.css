@@ -3399,6 +3399,156 @@ button.shopify-payment-button__button--unbranded {
   }
 }
 
+/* =========================================================
+   TNO – MANIFESTO SECTION STYLING (New Structure)
+   Alternating layout with neon borders and cyberpunk aesthetic
+   ========================================================= */
+
+.tno-manifesto__section {
+  margin-bottom: 6rem;
+  scroll-margin-top: 100px; /* Offset for anchor links */
+}
+
+.tno-manifesto__section:last-child {
+  margin-bottom: 0;
+}
+
+.tno-manifesto__grid {
+  gap: 3rem;
+  align-items: center;
+}
+
+@media screen and (min-width: 990px) {
+  .tno-manifesto__grid {
+    gap: 4rem;
+  }
+}
+
+/* Reverse grid for alternating layout */
+@media screen and (min-width: 750px) {
+  .tno-manifesto__grid--reverse {
+    direction: rtl;
+  }
+
+  .tno-manifesto__grid--reverse > * {
+    direction: ltr;
+  }
+}
+
+.tno-manifesto__content {
+  padding: 2rem 0;
+}
+
+@media screen and (min-width: 990px) {
+  .tno-manifesto__content {
+    padding: 3rem 0;
+  }
+}
+
+.tno-manifesto__title {
+  font-family: var(--tno-mono, ui-monospace, monospace);
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #fff;
+  margin: 0 0 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(0, 255, 255, 0.3);
+  text-shadow:
+    0 0 10px rgba(0, 255, 255, 0.3),
+    0 0 20px rgba(0, 255, 255, 0.1);
+  position: relative;
+}
+
+.tno-manifesto__title::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(0, 255, 255, 0.8), transparent);
+}
+
+.tno-manifesto__text {
+  font-family: var(--font-body-family, system-ui, sans-serif);
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.tno-manifesto__text p {
+  margin: 0 0 1.25rem;
+}
+
+.tno-manifesto__text p:last-child {
+  margin-bottom: 0;
+}
+
+.tno-manifesto__text strong {
+  color: #0ff;
+  font-weight: 600;
+}
+
+.tno-manifesto__media {
+  position: relative;
+}
+
+.tno-manifesto__image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 255, 255, 0.15);
+  box-shadow:
+    0 0 20px rgba(0, 255, 255, 0.1),
+    0 10px 40px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+}
+
+.tno-manifesto__image:hover {
+  border-color: rgba(0, 255, 255, 0.3);
+  box-shadow:
+    0 0 30px rgba(0, 255, 255, 0.2),
+    0 15px 50px rgba(0, 0, 0, 0.6);
+  transform: translateY(-2px);
+}
+
+.tno-manifesto__placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: rgba(0, 255, 255, 0.05);
+  border: 1px dashed rgba(0, 255, 255, 0.2);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tno-manifesto__placeholder svg {
+  opacity: 0.3;
+}
+
+/* Mobile adjustments */
+@media (width <= 749px) {
+  .tno-manifesto__section {
+    margin-bottom: 4rem;
+  }
+
+  .tno-manifesto__grid {
+    gap: 2rem;
+  }
+
+  .tno-manifesto__content {
+    padding: 1.5rem 0;
+  }
+
+  .tno-manifesto__title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+}
+
 /* Desktop refinements */
 @media (width >= 769px) {
   .manifesto__container {
@@ -7708,7 +7858,8 @@ body {
   body.template-product .product-card,
   body.template-product .collection-card,
   body.template-product .product-grid-item,
-  body.template-collection .card,
+  /* NOTE: Removed body.template-collection .card - too broad, affects other sections */
+  /* Trust product cards are handled separately with precise selectors */
   body.template-collection .product-card,
   body.template-collection .collection-card,
   body.template-collection .product-grid-item,
@@ -8666,10 +8817,9 @@ body.template-index .footer {
    ========================================================= */
 
 /* Card wrapper - Hugo Boss style with subtle background and border */
-/* Applied to homepage Product Grid, Collection pages, Related Products, and Search */
+/* Applied to homepage Product Grid, Related Products, and Search */
+/* NOTE: Collection pages (.template-collection) are handled separately with transparent backgrounds - see "TNO – COLLECTION GRID CARD BACKGROUND RESET" block at end of file */
 .product-grid-trust .tno-card-product,
-body.template-collection .tno-card-product--trust,
-.collection-grid-trust .tno-card-product--trust,
 .product-related-trust .tno-card-product--trust,
 .search-grid-trust .tno-card-product--trust {
   background: rgb(15 15 18); /* Very dark grey, not pure black */
@@ -8686,8 +8836,6 @@ body.template-collection .tno-card-product--trust,
 }
 
 .product-grid-trust .tno-card-product:hover,
-body.template-collection .tno-card-product--trust:hover,
-.collection-grid-trust .tno-card-product--trust:hover,
 .product-related-trust .tno-card-product--trust:hover,
 .search-grid-trust .tno-card-product--trust:hover {
   border-color: rgb(255 255 255 / 15%);
@@ -8758,6 +8906,87 @@ body.template-collection .tno-card-product--trust .tno-card-product__image-wrapp
   object-fit: cover;
   object-position: center center;
   display: block;
+}
+
+/* =========================================================
+   TNO – PRODUCT CARD: SECONDARY IMAGE ON HOVER
+   Reveal second image on hover for trust-style product cards
+   ========================================================= */
+
+/* Media container for stacked images */
+.product-grid-trust .tno-card-product__media,
+body.template-collection .tno-card-product--trust .tno-card-product__media,
+.collection-grid-trust .tno-card-product--trust .tno-card-product__media,
+.product-related-trust .tno-card-product--trust .tno-card-product__media,
+.search-grid-trust .tno-card-product--trust .tno-card-product__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Base image styles */
+.product-grid-trust .tno-card__image,
+body.template-collection .tno-card-product--trust .tno-card__image,
+.collection-grid-trust .tno-card-product--trust .tno-card__image,
+.product-related-trust .tno-card-product--trust .tno-card__image,
+.search-grid-trust .tno-card-product--trust .tno-card__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  transition: opacity 0.35s ease-out;
+}
+
+/* Primary image - visible by default */
+.product-grid-trust .tno-card__image-primary,
+body.template-collection .tno-card-product--trust .tno-card__image-primary,
+.collection-grid-trust .tno-card-product--trust .tno-card__image-primary,
+.product-related-trust .tno-card-product--trust .tno-card__image-primary,
+.search-grid-trust .tno-card-product--trust .tno-card__image-primary {
+  opacity: 1;
+}
+
+/* Secondary image - hidden by default, sits on top */
+.product-grid-trust .tno-card__image-secondary,
+body.template-collection .tno-card-product--trust .tno-card__image-secondary,
+.collection-grid-trust .tno-card-product--trust .tno-card__image-secondary,
+.product-related-trust .tno-card-product--trust .tno-card__image-secondary,
+.search-grid-trust .tno-card-product--trust .tno-card__image-secondary {
+  opacity: 0;
+  z-index: 1;
+}
+
+/* Hover: fade from primary to secondary */
+.product-grid-trust .tno-card-product:hover .tno-card__image-primary,
+body.template-collection .tno-card-product--trust:hover .tno-card__image-primary,
+.collection-grid-trust .tno-card-product--trust:hover .tno-card__image-primary,
+.product-related-trust .tno-card-product--trust:hover .tno-card__image-primary,
+.search-grid-trust .tno-card-product--trust:hover .tno-card__image-primary {
+  opacity: 0;
+}
+
+.product-grid-trust .tno-card-product:hover .tno-card__image-secondary,
+body.template-collection .tno-card-product--trust:hover .tno-card__image-secondary,
+.collection-grid-trust .tno-card-product--trust:hover .tno-card__image-secondary,
+.product-related-trust .tno-card-product--trust:hover .tno-card__image-secondary,
+.search-grid-trust .tno-card-product--trust:hover .tno-card__image-secondary {
+  opacity: 1;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .product-grid-trust .tno-card__image,
+  body.template-collection .tno-card-product--trust .tno-card__image,
+  .collection-grid-trust .tno-card-product--trust .tno-card__image,
+  .product-related-trust .tno-card-product--trust .tno-card__image,
+  .search-grid-trust .tno-card-product--trust .tno-card__image {
+    transition: none;
+  }
 }
 
 /* Card content area - stacked layout */
@@ -10391,4 +10620,324 @@ body.template-product .product-main-trust__variants-control .select__select {
 /* Remove extra spacing that might leave gaps */
 .product-main-trust .brand-product__cta-row {
   margin-bottom: 0 !important;
+}
+
+/* =========================================================
+   TRUST.NO.OUTPUT – WIDESCREEN COLLECTION LAYOUT (DESKTOP)
+   Edge-to-edge layout with minimal side spacing for 4-column grids
+   ========================================================= */
+@media screen and (min-width: 990px) {
+  /* Outer collection container – full width without overflow */
+  .template-collection .page-width,
+  .template-collection .collection,
+  .template-collection .collection .page-width,
+  .template-collection .tno-collection .page-width,
+  .template-collection .tno-collection-layout {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0.75rem !important; /* Tighter side gutters */
+    padding-right: 0.75rem !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Internal grids should not set 100vw; they just fill the container */
+  .template-collection .product-grid-trust,
+  .template-collection .collection-grid-trust {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Ensure the grid uses a clean 4-column layout with reasonable gaps */
+  .template-collection .product-grid-trust__grid,
+  .template-collection .collection-grid-trust {
+    gap: 2rem 1.5rem; /* row-gap column-gap */
+  }
+
+  /* Safety net: prevent horizontal overflow on collection pages */
+  body.template-collection {
+    overflow-x: hidden;
+  }
+}
+
+/* =========================================================
+   TNO – COLLECTION PAGE GUTTERS (ALL VIEWPORTS)
+   Reduce left/right padding so cards sit closer to edges
+   ========================================================= */
+.template-collection .page-width,
+.template-collection .collection .page-width {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   TNO – PRODUCT CARD TYPOGRAPHY (COLLECTION GRIDS - DESKTOP)
+   Cleaner title & price styling for trust-style cards
+   ========================================================= */
+@media screen and (min-width: 990px) {
+  /* Product title - premium, readable typography */
+  .product-grid-trust .tno-card-product .card__heading,
+  .product-grid-trust .tno-card-product .tno-card-title,
+  .collection-grid-trust .tno-card-product .card__heading,
+  .collection-grid-trust .tno-card-product .tno-card-title,
+  body.template-collection .tno-card-product--trust .card__heading,
+  body.template-collection .tno-card-product--trust .tno-card-title {
+    font-size: 0.95rem;
+    line-height: 1.3;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: #f9fafb;
+    margin-bottom: 0.35rem;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Price row - premium accent color */
+  .product-grid-trust .tno-card-product .price,
+  .product-grid-trust .tno-card-product .price-item,
+  .product-grid-trust .tno-card-product .tno-card-price,
+  .collection-grid-trust .tno-card-product .price,
+  .collection-grid-trust .tno-card-product .price-item,
+  .collection-grid-trust .tno-card-product .tno-card-price,
+  body.template-collection .tno-card-product--trust .price,
+  body.template-collection .tno-card-product--trust .price-item,
+  body.template-collection .tno-card-product--trust .tno-card-price {
+    font-size: 0.9rem;
+    line-height: 1.3;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: #e5f7ff; /* Light-cyan / premium look */
+    text-rendering: optimizeLegibility;
+  }
+}
+
+/* =========================================================
+   TNO – COLLECTION GRID CARD BACKGROUND RESET
+   Make trust cards transparent so they use page background
+   ========================================================= */
+
+/* Outer card container in collection grids - TRUST PRODUCT CARDS ONLY */
+.template-collection .product-grid-trust .tno-card-product,
+.template-collection .collection-grid-trust .tno-card-product {
+  background-color: transparent !important;
+  overflow: hidden; /* keep image + content neatly clipped to the radius */
+}
+
+/* Inner card shells */
+.template-collection .product-grid-trust .tno-card-product .card,
+.template-collection .collection-grid-trust .tno-card-product .card,
+.template-collection .product-grid-trust .tno-card-product .card__inner,
+.template-collection .collection-grid-trust .tno-card-product .card__inner {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Content / info areas (title + price wrapper) */
+.template-collection .product-grid-trust .tno-card-product .tno-card-product__content,
+.template-collection .collection-grid-trust .tno-card-product .tno-card-product__content,
+.template-collection .product-grid-trust .tno-card-product .tno-card-product__info,
+.template-collection .collection-grid-trust .tno-card-product .tno-card-product__info,
+.template-collection .product-grid-trust .tno-card-product .card__content,
+.template-collection .collection-grid-trust .tno-card-product .card__content,
+.template-collection .product-grid-trust .tno-card-product .card__information,
+.template-collection .collection-grid-trust .tno-card-product .card__information {
+  background-color: transparent !important;
+  border-top: none !important;
+  box-shadow: none !important;
+}
+
+/* Media wrapper should also not introduce a different background */
+.template-collection .product-grid-trust .tno-card-product__media,
+.template-collection .collection-grid-trust .tno-card-product__media {
+  background-color: transparent !important;
+}
+
+/* =========================================================
+   TNO – COLLECTION GRID TRUST CARD OUTLINE (SOFTER)
+   Very subtle outline + soft shadow for trust product cards only
+   ========================================================= */
+.template-collection .product-grid-trust .tno-card-product,
+.template-collection .collection-grid-trust .tno-card-product {
+  /* background stays transparent from reset block */
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.02); /* slightly softer outline */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35); /* softer, less intense depth */
+}
+
+/* Override hover states to maintain soft structure */
+.template-collection .product-grid-trust .tno-card-product:hover,
+.template-collection .collection-grid-trust .tno-card-product:hover,
+.template-collection .product-grid-trust .tno-card-product--trust:hover,
+.template-collection .collection-grid-trust .tno-card-product--trust:hover {
+  background-color: transparent !important;
+  background: transparent !important;
+  /* Maintain soft border and shadow on hover */
+  border: 1px solid rgba(255, 255, 255, 0.02) !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* =========================================================
+   TNO – COLLECTION GRID: TITLE, PRICE & COLOR SWATCHES
+   ========================================================= */
+
+.template-collection .product-grid-trust .tno-card-product__meta,
+.template-collection .collection-grid-trust .tno-card-product__meta {
+  padding: 1.1rem 1.6rem 1.45rem 1.4rem; /* slightly less left padding → text moves left */
+  background-color: transparent;
+}
+
+.template-collection .product-grid-trust .tno-card-product__title,
+.template-collection .collection-grid-trust .tno-card-product__title {
+  margin: 0 0 0.25rem;
+  font-size: 1.08rem; /* a bit larger than before */
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #f6f7ff;
+  text-align: left;
+}
+
+.template-collection .product-grid-trust .tno-card-product__title a,
+.template-collection .collection-grid-trust .tno-card-product__title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.template-collection .product-grid-trust .tno-card-product__price,
+.template-collection .collection-grid-trust .tno-card-product__price {
+  margin: 0 0 0.4rem; /* slightly closer to title */
+  font-size: 1.12rem; /* price a touch larger than title */
+  line-height: 1.3;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: left;
+}
+
+/* Swatch row layout */
+.template-collection .product-grid-trust .tno-card-product__swatches,
+.template-collection .collection-grid-trust .tno-card-product__swatches {
+  display: flex;
+  align-items: center;
+}
+
+/* TNO – COLLECTION GRID: COLOR SWATCHES AS RECTANGULAR CHIPS */
+
+.template-collection .product-grid-trust .tno-color-swatch-list,
+.template-collection .collection-grid-trust .tno-color-swatch-list {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.template-collection .product-grid-trust .tno-color-swatch,
+.template-collection .collection-grid-trust .tno-color-swatch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.template-collection .product-grid-trust .tno-color-swatch__dot,
+.template-collection .collection-grid-trust .tno-color-swatch__dot {
+  display: block;
+  width: 18px; /* slightly bigger swatch */
+  height: 12px;
+  border-radius: 3px; /* subtle rounding = rectangular chip */
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.9);
+  background: #111;
+}
+
+.template-collection .product-grid-trust .tno-color-swatch--more,
+.template-collection .collection-grid-trust .tno-color-swatch--more {
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
+  padding-left: 0.05rem;
+}
+
+.template-collection .product-grid-trust .tno-color-swatch--more::before,
+.template-collection .collection-grid-trust .tno-color-swatch--more::before {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 1px;
+  margin-right: 0.3rem;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Accessibility helper */
+.template-collection .product-grid-trust .visually-hidden,
+.template-collection .collection-grid-trust .visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* =========================================================
+   TNO – COLOR NAME → SWATCH COLOR (basic mapping)
+   ========================================================= */
+
+.template-collection .tno-color-swatch[data-color-name*='black'] .tno-color-swatch__dot {
+  background: #000;
+}
+
+.template-collection .tno-color-swatch[data-color-name*='white'] .tno-color-swatch__dot {
+  background: #fff;
+}
+
+.template-collection .tno-color-swatch[data-color-name*='purple'] .tno-color-swatch__dot {
+  background: #9b5bff;
+}
+
+.template-collection .tno-color-swatch[data-color-name*='blue'] .tno-color-swatch__dot {
+  background: #2fb5ff;
+}
+
+.template-collection .tno-color-swatch[data-color-name*='pink'] .tno-color-swatch__dot {
+  background: #ff4fa8;
+}
+
+.template-collection .tno-color-swatch[data-color-name*='red'] .tno-color-swatch__dot {
+  background: #ff3b3b;
+}
+
+.template-collection .tno-color-swatch[data-color-name*='green'] .tno-color-swatch__dot {
+  background: #2ecc71;
+}
+
+.template-collection .tno-color-swatch[data-color-name*='neon'] .tno-color-swatch__dot {
+  background: #00f0ff;
+}
+
+.template-collection .tno-color-swatch[data-color-name*='grey'] .tno-color-swatch__dot,
+.template-collection .tno-color-swatch[data-color-name*='gray'] .tno-color-swatch__dot {
+  background: #7a7e88;
+}
+
+/* =========================================================
+   TNO – HEADER MEGA MENU: CYBERPUNK GLASS PANEL
+   Floating sci-fi dropdown styling (desktop only)
+   ========================================================= */
+@media screen and (min-width: 990px) {
+  .header .tno-mega,
+  .header .mega-menu__content {
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
 }

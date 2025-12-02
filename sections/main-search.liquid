@@ -310,7 +310,7 @@
                             lazy_load: lazy_load,
                             card_style: 'trust',
                             show_color_variants: true,
-                            show_custom_add_to_cart: true
+                            show_custom_add_to_cart: false
                           %}
                         </li>
                       {%- endif -%}
@@ -321,9 +321,7 @@
                 {%- comment -%} Empty state: No results found {%- endcomment -%}
                 <div class="search-grid-trust search-grid-trust__empty-state">
                   <div class="search-grid-trust__empty-inner">
-                    <h2 class="search-grid-trust__empty-title">
-                      No results found
-                    </h2>
+                    <h2 class="search-grid-trust__empty-title">No results found</h2>
                     <p class="search-grid-trust__empty-text">
                       We couldn't find anything matching "{{ search.terms | escape }}".
                     </p>

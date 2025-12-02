@@ -261,13 +261,13 @@
           </div>
         </li>
 
-        {%- comment %} SYSTEM {%- endcomment %}
+        {%- comment %} COLLECTIONS {%- endcomment %}
         <li class="header-nav__item tno-nav__item">
           <a
             href="{{ pages.system.url | default: '/pages/system' }}"
             class="header-nav__link tno-nav__link {% if request.page_handle == 'system' %}is-active{% endif %}"
           >
-            SYSTEM
+            COLLECTIONS
           </a>
         </li>
 
@@ -534,12 +534,12 @@
         {%- comment %} Secondary Navigation Section {%- endcomment %}
         <li class="tno-mobile-item tno-mobile-divider" aria-hidden="true"></li>
 
-        {%- comment %} SYSTEM {%- endcomment %}
+        {%- comment %} COLLECTIONS {%- endcomment %}
         <li class="tno-mobile-item">
           <a
             href="{{ pages['system'].url | default: '/pages/system' }}"
             class="tno-mobile-link tno-mobile-link--secondary"
-            >SYSTEM</a
+            >COLLECTIONS</a
           >
         </li>
 
