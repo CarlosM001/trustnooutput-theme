@@ -41,7 +41,6 @@
 
 <section class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }} tno-collection template-collection">
   {%- paginate collection.products by section.settings.products_per_page -%}
-
     {%- comment -%} Vertical sort + count sidebar (Shopify default behaviour) {%- endcomment -%}
     {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' -%}
       <facet-filters-form class="facets facets-vertical-sort page-width small-hide">
@@ -185,7 +184,7 @@
                     quick_add: section.settings.quick_add,
                     section_id: section.id,
                     show_color_variants: true,
-                    show_custom_add_to_cart: true,
+                    show_custom_add_to_cart: false,
                     card_style: 'trust'
                   %}
                 </li>

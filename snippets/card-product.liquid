@@ -25,6 +25,10 @@
 <div class="tno-card-product card-product{% if card_style == 'trust' %} card-product--trust tno-card-product--trust{% endif %}" data-product-id="{{ card_product.id }}" data-product-url="{{ card_product.url }}">
   {%- if card_style == 'trust' -%}
     {%- comment -%} TRUST STYLE: Simplified structure {%- endcomment -%}
+    {%- liquid
+      assign primary_media = featured_media | default: card_product.media.first
+      assign secondary_media = card_product.media[1]
+    -%}
     <div class="tno-card-product__image-wrapper">
       {%- comment -%} Badge overlay inside image wrapper {%- endcomment -%}
       {%- if card_product.available == false -%}
@@ -42,19 +46,37 @@
         class="full-unstyled-link"
         aria-label="{{ card_product.title | escape }}"
       >
-        {%- if featured_media -%}
-          {{
-            featured_media
-            | image_url: width: 900
-            | image_tag:
-              loading: loading,
-              sizes: '(min-width: 1200px) 20vw, (min-width: 750px) 33vw, 100vw',
-              alt: featured_media.alt
-            | escape
-          }}
-        {%- else -%}
-          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-        {%- endif -%}
+        {%- comment -%} Media container for primary and secondary images {%- endcomment -%}
+        <div class="tno-card-product__media">
+          {%- if primary_media -%}
+            {{
+              primary_media
+              | image_url: width: 900
+              | image_tag:
+                loading: loading,
+                sizes: '(min-width: 1200px) 20vw, (min-width: 750px) 33vw, 100vw',
+                alt: primary_media.alt,
+                class: 'tno-card__image tno-card__image-primary'
+              | escape
+            }}
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+
+          {%- comment -%} Secondary image (only render if exists) {%- endcomment -%}
+          {%- if secondary_media -%}
+            {{
+              secondary_media
+              | image_url: width: 900
+              | image_tag:
+                loading: loading,
+                sizes: '(min-width: 1200px) 20vw, (min-width: 750px) 33vw, 100vw',
+                alt: secondary_media.alt,
+                class: 'tno-card__image tno-card__image-secondary'
+              | escape
+            }}
+          {%- endif -%}
+        </div>
       </a>
     </div>
 

@@ -8760,6 +8760,87 @@ body.template-collection .tno-card-product--trust .tno-card-product__image-wrapp
   display: block;
 }
 
+/* =========================================================
+   TNO – PRODUCT CARD: SECONDARY IMAGE ON HOVER
+   Reveal second image on hover for trust-style product cards
+   ========================================================= */
+
+/* Media container for stacked images */
+.product-grid-trust .tno-card-product__media,
+body.template-collection .tno-card-product--trust .tno-card-product__media,
+.collection-grid-trust .tno-card-product--trust .tno-card-product__media,
+.product-related-trust .tno-card-product--trust .tno-card-product__media,
+.search-grid-trust .tno-card-product--trust .tno-card-product__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Base image styles */
+.product-grid-trust .tno-card__image,
+body.template-collection .tno-card-product--trust .tno-card__image,
+.collection-grid-trust .tno-card-product--trust .tno-card__image,
+.product-related-trust .tno-card-product--trust .tno-card__image,
+.search-grid-trust .tno-card-product--trust .tno-card__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  transition: opacity 0.35s ease-out;
+}
+
+/* Primary image - visible by default */
+.product-grid-trust .tno-card__image-primary,
+body.template-collection .tno-card-product--trust .tno-card__image-primary,
+.collection-grid-trust .tno-card-product--trust .tno-card__image-primary,
+.product-related-trust .tno-card-product--trust .tno-card__image-primary,
+.search-grid-trust .tno-card-product--trust .tno-card__image-primary {
+  opacity: 1;
+}
+
+/* Secondary image - hidden by default, sits on top */
+.product-grid-trust .tno-card__image-secondary,
+body.template-collection .tno-card-product--trust .tno-card__image-secondary,
+.collection-grid-trust .tno-card-product--trust .tno-card__image-secondary,
+.product-related-trust .tno-card-product--trust .tno-card__image-secondary,
+.search-grid-trust .tno-card-product--trust .tno-card__image-secondary {
+  opacity: 0;
+  z-index: 1;
+}
+
+/* Hover: fade from primary to secondary */
+.product-grid-trust .tno-card-product:hover .tno-card__image-primary,
+body.template-collection .tno-card-product--trust:hover .tno-card__image-primary,
+.collection-grid-trust .tno-card-product--trust:hover .tno-card__image-primary,
+.product-related-trust .tno-card-product--trust:hover .tno-card__image-primary,
+.search-grid-trust .tno-card-product--trust:hover .tno-card__image-primary {
+  opacity: 0;
+}
+
+.product-grid-trust .tno-card-product:hover .tno-card__image-secondary,
+body.template-collection .tno-card-product--trust:hover .tno-card__image-secondary,
+.collection-grid-trust .tno-card-product--trust:hover .tno-card__image-secondary,
+.product-related-trust .tno-card-product--trust:hover .tno-card__image-secondary,
+.search-grid-trust .tno-card-product--trust:hover .tno-card__image-secondary {
+  opacity: 1;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .product-grid-trust .tno-card__image,
+  body.template-collection .tno-card-product--trust .tno-card__image,
+  .collection-grid-trust .tno-card-product--trust .tno-card__image,
+  .product-related-trust .tno-card-product--trust .tno-card__image,
+  .search-grid-trust .tno-card-product--trust .tno-card__image {
+    transition: none;
+  }
+}
+
 /* Card content area - stacked layout */
 .product-grid-trust .tno-card-product .card__content,
 .product-grid-trust .tno-card-product__content,
@@ -10391,4 +10472,26 @@ body.template-product .product-main-trust__variants-control .select__select {
 /* Remove extra spacing that might leave gaps */
 .product-main-trust .brand-product__cta-row {
   margin-bottom: 0 !important;
+}
+
+/* =========================================================
+   TRUST.NO.OUTPUT – WIDESCREEN COLLECTION LAYOUT (DESKTOP)
+   Make 4-column product cards larger by widening the grid
+   ========================================================= */
+@media screen and (min-width: 990px) {
+  /* Widen the main container on collection pages only */
+  .template-collection .page-width,
+  .template-collection .collection,
+  .template-collection .collection .page-width,
+  .template-collection .tno-collection .page-width,
+  .template-collection .tno-collection-layout,
+  .template-collection .product-grid-trust,
+  .template-collection .collection-grid-trust {
+    max-width: 1800px !important; /* Much wider than default */
+    width: min(95vw, 1800px) !important; /* Almost full width on large screens */
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 3rem !important; /* Breathing room on the sides */
+    padding-right: 3rem !important;
+  }
 }
