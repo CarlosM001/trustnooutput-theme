@@ -14,5 +14,7 @@
       "settings": {}
     }
   },
-  "order": ["manifesto"]
+  "order": [
+    "manifesto"
+  ]
 }
