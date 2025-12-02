@@ -27,3 +27,6 @@ pnpm-debug.log*
 # Backup directories (development artifacts)
 backup-phase1/
 *.bak
+
+# Ghost file
+erscarloDesktopShopifyTrustNoOutput git add .
